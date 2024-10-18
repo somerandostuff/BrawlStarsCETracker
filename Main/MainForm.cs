@@ -23,6 +23,7 @@ namespace Main
 
         public async void Fetcher()
         {
+            L_Status.Text = "Fetching...";
             using (var Client = new HttpClient())
             {
                 bool GetProgress, GetCountProgress;
@@ -116,10 +117,12 @@ namespace Main
                     L_Percent.Text = "(" + DecimalValue.ToString() + "%)";
                     L_LastUpd.Text = "Last refreshed: " + DateTime.Now.ToString("d/M/yyyy H:mm:ss");
                     BTN_Load.Enabled = false;
+                    L_Status.Text = "  ";
                 }
                 else
                 {
                     MessageBox.Show("Couldn't find anything from API!\nOh well...", "OOOOPS!!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    L_Status.Text = "Error!";
                     return;
                 }
                 if (DecimalValue >= 100)

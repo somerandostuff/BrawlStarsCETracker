@@ -37,6 +37,7 @@
             L_LastUpd = new Label();
             BTN_About = new Button();
             Chk_AutoRefresh = new CheckBox();
+            L_Status = new Label();
             SuspendLayout();
             // 
             // BTN_Load
@@ -118,11 +119,22 @@
             Chk_AutoRefresh.UseVisualStyleBackColor = true;
             Chk_AutoRefresh.CheckedChanged += Chk_AutoRefresh_CheckedChanged;
             // 
+            // L_Status
+            // 
+            L_Status.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            L_Status.Location = new Point(273, 9);
+            L_Status.Name = "L_Status";
+            L_Status.Size = new Size(170, 19);
+            L_Status.TabIndex = 10;
+            L_Status.Text = "  ";
+            L_Status.TextAlign = ContentAlignment.TopRight;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(455, 155);
+            Controls.Add(L_Status);
             Controls.Add(Chk_AutoRefresh);
             Controls.Add(BTN_About);
             Controls.Add(L_LastUpd);
@@ -152,5 +164,6 @@
         private Label L_LastUpd;
         private Button BTN_About;
         private CheckBox Chk_AutoRefresh;
+        private Label L_Status;
     }
 }
