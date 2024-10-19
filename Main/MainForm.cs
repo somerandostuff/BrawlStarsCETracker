@@ -117,7 +117,7 @@ namespace Main
                     L_Percent.Text = "(" + DecimalValue.ToString() + "%)";
                     L_LastUpd.Text = "Last refreshed: " + DateTime.Now.ToString("d/M/yyyy H:mm:ss");
                     BTN_Load.Enabled = false;
-                    L_Status.Text = "  ";
+                    StatusChanger();
                 }
                 else
                 {
@@ -170,14 +170,16 @@ namespace Main
                     BTN_Load.Enabled = true;
                 }
                 Fetcher();
+                return;
             }
+            StatusChanger();
         }
 
         private void Chk_AutoRefresh_CheckedChanged(object sender, EventArgs e)
         {
             if (Chk_AutoRefresh.Checked == true)
             {
-                MessageBox.Show("Auto-updater enabled! It'll auto-update when the minute is at 28 or 58.\n(Because the API updates once every 30mins and the update minute ends with 7 so yeah)", "Auto-update function enabled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Auto-updater enabled! It'll auto-update when the minute is at 29 or 59.\n(Because the API updates once every 30mins and the update minute ends with 7 so yeah)", "Auto-update function enabled", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 BTN_Load.Enabled = false;
                 if (Count == 0)
                 {
@@ -187,6 +189,38 @@ namespace Main
             else
             {
                 BTN_Load.Enabled = true;
+            }
+            StatusChanger();
+        }
+
+        private void StatusChanger()
+        {
+            if (Chk_AutoRefresh.Checked)
+            {
+                // Status updater
+                // 58: 30
+                // 59: 29
+                // 0: 28
+                // 1: 27
+                if (DateTime.Now.Minute >= 0 && DateTime.Now.Minute <= 28)
+                {
+                    L_Status.Text = "Next update in " + (29 - DateTime.Now.Minute) + "min";
+                    return;
+                }
+                if (DateTime.Now.Minute >= 30 && DateTime.Now.Minute <= 58)
+                {
+                    L_Status.Text = "Next update in " + (59 - DateTime.Now.Minute) + "min";
+                    return;
+                }
+                if (DateTime.Now.Minute == 29 || DateTime.Now.Minute == 59)
+                {
+                    L_Status.Text = "Updated! Next update in 30min";
+                    return;
+                }
+            }
+            else
+            {
+                L_Status.Text = "  ";
             }
         }
     }
