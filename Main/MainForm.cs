@@ -117,7 +117,7 @@ namespace Main
                     L_Percent.Text = "(" + DecimalValue.ToString() + "%)";
                     L_LastUpd.Text = "Last refreshed: " + DateTime.Now.ToString("d/M/yyyy H:mm:ss");
                     BTN_Load.Enabled = false;
-                    L_Status.Text = "  ";
+                    StatusChanger();
                 }
                 else
                 {
@@ -170,7 +170,9 @@ namespace Main
                     BTN_Load.Enabled = true;
                 }
                 Fetcher();
+                return;
             }
+            StatusChanger();
         }
 
         private void Chk_AutoRefresh_CheckedChanged(object sender, EventArgs e)
@@ -187,6 +189,44 @@ namespace Main
             else
             {
                 BTN_Load.Enabled = true;
+            }
+            StatusChanger();
+        }
+
+        private void StatusChanger()
+        {
+            if (Chk_AutoRefresh.Checked)
+            {
+                // Status updater
+                // 58: 30
+                // 59: 29
+                // 0: 28
+                // 1: 27
+
+                if (DateTime.Now.Minute >= 59)
+                {
+                    L_Status.Text = "Next update in 29min";
+                    return;
+                }
+                if (DateTime.Now.Minute >= 0 && DateTime.Now.Minute <= 27)
+                {
+                    L_Status.Text = "Next update in " + (28 - DateTime.Now.Minute) + "min";
+                    return;
+                }
+                if (DateTime.Now.Minute >= 29 && DateTime.Now.Minute <= 57)
+                {
+                    L_Status.Text = "Next update in " + (58 - DateTime.Now.Minute) + "min";
+                    return;
+                }
+                if (DateTime.Now.Minute == 28 || DateTime.Now.Minute == 58)
+                {
+                    L_Status.Text = "Updated! Next update in 30min";
+                    return;
+                }
+            }
+            else
+            {
+                L_Status.Text = "  ";
             }
         }
     }

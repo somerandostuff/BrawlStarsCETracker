@@ -75,9 +75,9 @@
             L_Version.AutoSize = true;
             L_Version.Location = new Point(12, 125);
             L_Version.Name = "L_Version";
-            L_Version.Size = new Size(51, 19);
+            L_Version.Size = new Size(47, 19);
             L_Version.TabIndex = 5;
-            L_Version.Text = "v1.0.0";
+            L_Version.Text = "v1.0.1";
             // 
             // L_Percent
             // 
