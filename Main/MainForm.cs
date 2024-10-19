@@ -117,7 +117,11 @@ namespace Main
                     L_Percent.Text = "(" + DecimalValue.ToString() + "%)";
                     L_LastUpd.Text = "Last refreshed: " + DateTime.Now.ToString("d/M/yyyy H:mm:ss");
                     BTN_Load.Enabled = false;
-                    L_Status.Text = "  ";
+
+                    if (Chk_AutoRefresh.Checked == false)
+                    {
+                        L_Status.Text = "  ";
+                    }
                 }
                 else
                 {
@@ -163,6 +167,12 @@ namespace Main
 
         private void AutoUpdaterAndButtonEnabler(object? sender, EventArgs e)
         {
+            AutoUpdaterChild();
+        }
+
+        private void AutoUpdaterChild()
+        {
+            // Fetch once every 30mins (at minute 28 and minute 58)
             if ((DateTime.Now.Minute == 28 || DateTime.Now.Minute == 58) && DecimalValue < 100)
             {
                 if (Chk_AutoRefresh.Checked == false)
@@ -170,6 +180,29 @@ namespace Main
                     BTN_Load.Enabled = true;
                 }
                 Fetcher();
+                L_Status.Text = "Updated! Next update in 30min";
+            }
+
+            // Status updater
+            // 58: 30
+            // 59: 29
+            // 0: 28
+            // 1: 27
+
+            if (DateTime.Now.Minute == 59)
+            {
+                L_Status.Text = "Next update in 29min";
+                return;
+            }
+            if (DateTime.Now.Minute >= 0 && DateTime.Now.Minute <= 27)
+            {
+                L_Status.Text = "Next update in " + (28 - DateTime.Now.Minute) + "min";
+                return;
+            }
+            if (DateTime.Now.Minute >= 29 && DateTime.Now.Minute <= 57)
+            {
+                L_Status.Text = "Next update in " + (58 - DateTime.Now.Minute) + "min";
+                return;
             }
         }
 
@@ -183,10 +216,12 @@ namespace Main
                 {
                     Fetcher();
                 }
+                AutoUpdaterChild();
             }
             else
             {
                 BTN_Load.Enabled = true;
+                L_Status.Text = "  ";
             }
         }
     }
