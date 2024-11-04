@@ -9,7 +9,7 @@ namespace Main
         string API_Route = "https://brawlstars.inbox.supercell.com/data/en/news/content.json";
         decimal DecimalValue = 0;
         byte Status = 0;
-        ulong Count = 0, MaxCount = 0;
+        ulong Count = 0, MaxCount = -1;
         Regex RegexAllTexts = new Regex(@"[\D]");
         Regex RegexAllNumbs = new Regex(@"[\d]");
         public MainForm()
