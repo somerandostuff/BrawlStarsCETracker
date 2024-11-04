@@ -8,6 +8,7 @@ namespace Main
     {
         string API_Route = "https://brawlstars.inbox.supercell.com/data/en/news/content.json";
         decimal DecimalValue = 0;
+        byte Status = 0;
         ulong Count = 0, MaxCount = 0;
         Regex RegexAllTexts = new Regex(@"[\D]");
         Regex RegexAllNumbs = new Regex(@"[\d]");
@@ -16,12 +17,12 @@ namespace Main
             InitializeComponent();
         }
 
-        private void BTN_Load_Click(object sender, EventArgs e)
+        private async void BTN_Load_Click(object sender, EventArgs e)
         {
-            Fetcher();
+            Status = await Fetcher()!;
         }
 
-        public async void Fetcher()
+        public async Task<byte>? Fetcher()
         {
             L_Status.Text = "Fetching...";
             using (var Client = new HttpClient())
@@ -71,7 +72,6 @@ namespace Main
                                 }
                             }
                             #endregion
-
                             break;
                         }
                         else
@@ -79,6 +79,7 @@ namespace Main
                             if (Tries == 5)
                             {
                                 MessageBox.Show("Data is unreachable!", "OOOOPS!!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return (byte)StatusCodes.Unfetchable;
                             }
                         }
                     }
@@ -86,15 +87,18 @@ namespace Main
                 catch (Exception)
                 {
                     MessageBox.Show("Data is unreachable!", "OOOOPS!!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    return (byte)StatusCodes.Unfetchable;
                 }
+
                 if (DecimalValue > 0)
                 {
                     if (MaxCount == 0)
                     {
                         MaxCount = 20_000_000_000;
                     }
+
                     Count = (ulong)(DecimalValue / 100 * MaxCount);
+
                     if (Count % 10_000 == 0)
                     {
                         if (Count >= 1_000_000 && Count <= 999_999_999)
@@ -122,14 +126,14 @@ namespace Main
                 else
                 {
                     MessageBox.Show("Couldn't find anything from API!\nOh well...", "OOOOPS!!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    L_Status.Text = "Error!";
-                    return;
+                    return (byte)StatusCodes.FetchSuccessButFoundNothing;
                 }
                 if (DecimalValue >= 100)
                 {
                     PlayFinishSound();
                     BTN_Load.Enabled = false;
                     MessageBox.Show("Event completed, GG! :)", "CONGRATULATIONS", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return (byte)StatusCodes.FetchSuccessAndCompleted;
                 }
                 else
                 {
@@ -137,6 +141,7 @@ namespace Main
                     {
                         MessageBox.Show("Fetching was successful!", "Nice", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
+                    return (byte)StatusCodes.FetchSuccess;
                 }
             }
         }
@@ -161,21 +166,22 @@ namespace Main
             Refresher.Start();
         }
 
-        private void AutoUpdaterAndButtonEnabler(object? sender, EventArgs e)
+        private async void AutoUpdaterAndButtonEnabler(object? sender, EventArgs e)
         {
-            if ((DateTime.Now.Minute == 28 || DateTime.Now.Minute == 58) && DecimalValue < 100)
+            if ((DateTime.Now.Minute == 29 || DateTime.Now.Minute == 59) && DecimalValue < 100)
             {
                 if (Chk_AutoRefresh.Checked == false)
                 {
                     BTN_Load.Enabled = true;
+                    return;
                 }
-                Fetcher();
+                Status = await Fetcher()!;
                 return;
             }
             StatusChanger();
         }
 
-        private void Chk_AutoRefresh_CheckedChanged(object sender, EventArgs e)
+        private async void Chk_AutoRefresh_CheckedChanged(object sender, EventArgs e)
         {
             if (Chk_AutoRefresh.Checked == true)
             {
@@ -183,7 +189,7 @@ namespace Main
                 BTN_Load.Enabled = false;
                 if (Count == 0)
                 {
-                    Fetcher();
+                    Status = await Fetcher()!;
                 }
             }
             else
@@ -191,6 +197,14 @@ namespace Main
                 BTN_Load.Enabled = true;
             }
             StatusChanger();
+        }
+
+        public enum StatusCodes
+        {
+            Unfetchable = 0,
+            FetchSuccessButFoundNothing = 1,
+            FetchSuccess = 2,
+            FetchSuccessAndCompleted = 3
         }
 
         private void StatusChanger()
@@ -202,6 +216,11 @@ namespace Main
                 // 59: 29
                 // 0: 28
                 // 1: 27
+                if (Status == (byte)StatusCodes.FetchSuccessAndCompleted)
+                {
+                    L_Status.Text = "Completed";
+                    return;
+                }
                 if (DateTime.Now.Minute >= 0 && DateTime.Now.Minute <= 28)
                 {
                     L_Status.Text = "Next update in " + (29 - DateTime.Now.Minute) + "min";
@@ -214,7 +233,7 @@ namespace Main
                 }
                 if (DateTime.Now.Minute == 29 || DateTime.Now.Minute == 59)
                 {
-                    L_Status.Text = "Updated! Next update in 30min";
+                    L_Status.Text = "Next update in 30min";
                     return;
                 }
             }
