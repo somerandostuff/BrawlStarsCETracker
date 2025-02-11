@@ -25,6 +25,11 @@ namespace Main
                                               .GetProperty("entries")
                                               .GetProperty("eventEntries")[Tries];
 
+                        Data.EventMilestone = TryFindEventData
+                                             .GetProperty("tracker")
+                                             .GetProperty("progress")
+                                             .GetInt32();
+
                         if (TryFindEventData.TryGetProperty("ctas", out TryFindEventData))
                         {
                             Index = Tries;
