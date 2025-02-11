@@ -1,12 +1,26 @@
 ﻿using Main.Others;
+using Main.Properties;
+using System.Drawing.Text;
+using System.Runtime.InteropServices;
 
 namespace Main
 {
     public partial class MainForm : Form
     {
+        private PrivateFontCollection FontColl = new PrivateFontCollection();
+
+        private Font? SmallFont;
+        private Font? MediumFont;
+        // private Font? LargeFont;
+
         public MainForm()
         {
             InitializeComponent();
+
+            LoadExternalFont();
+
+            Font = MediumFont;
+
             FetchData();
 
             EventTimeLeftUpdater.Enabled = true;
@@ -17,27 +31,6 @@ namespace Main
 
             VotesProgress.SetState(3);
         }
-
-        private void EventTimeLeftUpdater_Tick(object sender, EventArgs e)
-        {
-            var TimeCount = Utils.GetTimeLeft();
-            if (TimeCount >= TimeSpan.FromDays(1))
-            {
-                L_TimeLeft.Text = string.Format
-                    ("{0:D1}:{1:D2}:{2:D2}:{3:D2}", TimeCount.Days, TimeCount.Hours, TimeCount.Minutes, TimeCount.Seconds);
-            }
-            else
-            {
-                L_TimeLeft.Text = string.Format
-                    ("{0:D1}:{1:D2}:{2:D2}", TimeCount.Hours, TimeCount.Minutes, TimeCount.Seconds);
-            }
-        }
-
-        private void BTN_Refresh_Click(object sender, EventArgs e)
-        {
-            FetchData();
-        }
-
         private async void FetchData()
         {
             L_Status.ForeColor = Color.Yellow;
@@ -132,6 +125,53 @@ namespace Main
 
                 BTN_Refresh.Enabled = true;
             }
+        }
+        private void LoadExternalFont()
+        {
+            byte[] FontData = Resources.DeterminationMonoWebNew;
+            IntPtr FontPointer = Marshal.AllocCoTaskMem(FontData.Length);
+            Marshal.Copy(FontData, 0, FontPointer, FontData.Length);
+            uint Dummy = 0;
+            FontColl.AddMemoryFont(FontPointer, Resources.DeterminationMonoWebNew.Length);
+            LoadFontIntoMemory.AddFontMemResourceEx(FontPointer, (uint)Resources.DeterminationMonoWebNew.Length, IntPtr.Zero, ref Dummy);
+            Marshal.FreeCoTaskMem(FontPointer);
+
+            SmallFont = new Font(FontColl.Families[0], 12);
+            MediumFont = new Font(FontColl.Families[0], 24);
+            // LargeFont = new Font(FontColl.Families[0], 36);
+
+            L_TimeLeftContext.Font = SmallFont;
+            L_Version.Font = SmallFont;
+            L_Status.Font = SmallFont;
+            Link_About.Font = SmallFont;
+            L_VotesSentSubtext.Font = SmallFont;
+            L_VotesPercent.Font = SmallFont;
+
+            L_Brawler1.Font = SmallFont;
+            L_Brawler2.Font = SmallFont;
+            L_Brawler3.Font = SmallFont;
+            L_Brawler4.Font = SmallFont;
+            L_Brawler5.Font = SmallFont;
+        }
+
+        private void EventTimeLeftUpdater_Tick(object sender, EventArgs e)
+        {
+            var TimeCount = Utils.GetTimeLeft();
+            if (TimeCount >= TimeSpan.FromDays(1))
+            {
+                L_TimeLeft.Text = string.Format
+                    ("{0:D1}:{1:D2}:{2:D2}:{3:D2}", TimeCount.Days, TimeCount.Hours, TimeCount.Minutes, TimeCount.Seconds);
+            }
+            else
+            {
+                L_TimeLeft.Text = string.Format
+                    ("{0:D1}:{1:D2}:{2:D2}", TimeCount.Hours, TimeCount.Minutes, TimeCount.Seconds);
+            }
+        }
+
+        private void BTN_Refresh_Click(object sender, EventArgs e)
+        {
+            FetchData();
         }
 
         private void AutoUpdater_Tick(object sender, EventArgs e)

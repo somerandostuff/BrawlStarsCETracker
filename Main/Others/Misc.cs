@@ -11,4 +11,12 @@ namespace Main.Others
             SendMessage(ProgBar.Handle, 1040, State, IntPtr.Zero);
         }
     }
+
+    public class LoadFontIntoMemory
+    {
+
+        [DllImport("gdi32.dll")]
+        public static extern IntPtr AddFontMemResourceEx(IntPtr PbFont, uint CbFont,
+            IntPtr Pdv, [In] ref uint PcFonts);
+    }
 }
