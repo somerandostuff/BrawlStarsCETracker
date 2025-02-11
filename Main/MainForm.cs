@@ -1,246 +1,165 @@
-using System.Media;
-using System.Text.Json;
-using System.Text.RegularExpressions;
+﻿using Main.Others;
 
 namespace Main
 {
     public partial class MainForm : Form
     {
-        string API_Route = "https://brawlstars.inbox.supercell.com/data/en/news/content.json";
-        decimal DecimalValue = 0;
-        byte Status = 0;
-        ulong Count = 0, MaxCount = 0;
-        Regex RegexAllTexts = new Regex(@"[\D]");
-        Regex RegexAllNumbs = new Regex(@"[\d]");
         public MainForm()
         {
             InitializeComponent();
+            FetchData();
+
+            EventTimeLeftUpdater.Enabled = true;
+            EventTimeLeftUpdater.Interval = 1;
+
+            AutoUpdater.Enabled = false;
+            AutoUpdater.Interval = 1000;
+
+            VotesProgress.SetState(3);
         }
 
-        private async void BTN_Load_Click(object sender, EventArgs e)
+        private void EventTimeLeftUpdater_Tick(object sender, EventArgs e)
         {
-            Status = await Fetcher()!;
-        }
-
-        public async Task<byte>? Fetcher()
-        {
-            L_Status.Text = "Fetching...";
-            using (var Client = new HttpClient())
+            var TimeCount = Utils.GetTimeLeft();
+            if (TimeCount >= TimeSpan.FromDays(1))
             {
-                bool GetProgress, GetCountProgress;
-                string Content = await Client.GetStringAsync(API_Route);
-                JsonDocument JSONedDoc = JsonDocument.Parse(Content);
-                JsonElement JSONedDoc_DecimalValueChild, JSONedDoc_AbbreviationChild;
-                try
+                L_TimeLeft.Text = string.Format
+                    ("{0:D1}:{1:D2}:{2:D2}:{3:D2}", TimeCount.Days, TimeCount.Hours, TimeCount.Minutes, TimeCount.Seconds);
+            }
+            else
+            {
+                L_TimeLeft.Text = string.Format
+                    ("{0:D1}:{1:D2}:{2:D2}", TimeCount.Hours, TimeCount.Minutes, TimeCount.Seconds);
+            }
+        }
+
+        private void BTN_Refresh_Click(object sender, EventArgs e)
+        {
+            FetchData();
+        }
+
+        private async void FetchData()
+        {
+            L_Status.ForeColor = Color.Yellow;
+            L_Status.Text = "Fetching...";
+
+            var EventData = await Utils.FetchData();
+            if (EventData != null)
+            {
+                L_EventName.Text = EventData.PollTitle;
+                switch (EventData.AvailablePollChoices)
                 {
-                    for (int Tries = 0; Tries < 5; Tries++) // this is just to "check 5 times" by scanning 5 diff areas since it's also the max areas anyway
-                    {
-                        GetProgress = JSONedDoc.RootElement
-                                    .GetProperty("entries")
-                                    .GetProperty("eventEntries")[Tries]
-                                    .TryGetProperty("tracker", out JSONedDoc_DecimalValueChild);
-                        if (GetProgress == true)
+                    case 3:
                         {
-                            JSONedDoc_DecimalValueChild.GetProperty("progress").TryGetDecimal(out DecimalValue);
+                            // Put images at center
+                            L_Brawler2.Text = EventData.Brawlers[0].BrawlerName;
+                            L_Brawler3.Text = EventData.Brawlers[1].BrawlerName;
+                            L_Brawler4.Text = EventData.Brawlers[2].BrawlerName;
 
-                            #region EXPERIMENTAL CODE - MIGHT CHANGE LATER
-
-                            GetCountProgress = JSONedDoc.RootElement
-                                        .GetProperty("entries")
-                                        .GetProperty("eventEntries")[Tries]
-                                        .TryGetProperty("milestones", out JSONedDoc_AbbreviationChild);
-                            if (GetCountProgress == true)
-                            {
-                                string GetAbbreviation = RegexAllNumbs.Replace(JSONedDoc_AbbreviationChild[2].GetProperty("label").GetString()!, string.Empty);
-                                int GetPercentMile = JSONedDoc_AbbreviationChild[2].GetProperty("progress").GetInt32();
-                                int GetAbbreviatedNumber = Convert.ToInt32(RegexAllTexts.Replace(JSONedDoc_AbbreviationChild[2].GetProperty("label").GetString()!, string.Empty));
-                                switch (GetAbbreviation)
-                                {
-                                    case "B":
-                                        MaxCount = (ulong)GetAbbreviatedNumber * 1_000_000_000 / (ulong)GetPercentMile * 100;
-                                        break;
-                                    case "M":
-
-                                        MaxCount = (ulong)GetAbbreviatedNumber * 1_000_000 / (ulong)GetPercentMile * 100;
-                                        break;
-                                    case "T":
-                                        MaxCount = (ulong)GetAbbreviatedNumber * 1_000_000_000_000 / (ulong)GetPercentMile * 100;
-                                        break;
-                                    default:
-                                        MaxCount = 0;
-                                        break;
-                                }
-                            }
-                            #endregion
+                            Pic_Brawler2.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[0].BrawlerImage ?? [])!;
+                            Pic_Brawler3.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[1].BrawlerImage ?? [])!;
+                            Pic_Brawler4.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[2].BrawlerImage ?? [])!;
                             break;
                         }
-                        else
+                    case 1:
                         {
-                            if (Tries == 5)
+                            // Put images at center
+                            L_Brawler3.Text = EventData.Brawlers[0].BrawlerName;
+
+                            Pic_Brawler3.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[1].BrawlerImage ?? [])!;
+                            break;
+                        }
+                    case 2:
+                        {
+                            // First image at slot 2, second image at slot 4
+                            L_Brawler2.Text = EventData.Brawlers[0].BrawlerName;
+                            L_Brawler4.Text = EventData.Brawlers[1].BrawlerName;
+
+                            Pic_Brawler2.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[0].BrawlerImage ?? [])!;
+                            Pic_Brawler4.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[1].BrawlerImage ?? [])!;
+                            break;
+                        }
+                    default:
+                        {
+                            L_Brawler1.Text = EventData.Brawlers[0].BrawlerName;
+                            L_Brawler2.Text = EventData.Brawlers[1].BrawlerName;
+                            L_Brawler3.Text = EventData.Brawlers[2].BrawlerName;
+                            L_Brawler4.Text = EventData.Brawlers[3].BrawlerName;
+
+                            Pic_Brawler1.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[0].BrawlerImage ?? [])!;
+                            Pic_Brawler2.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[1].BrawlerImage ?? [])!;
+                            Pic_Brawler3.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[2].BrawlerImage ?? [])!;
+                            Pic_Brawler4.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[3].BrawlerImage ?? [])!;
+
+                            if (EventData.AvailablePollChoices >= 5)
                             {
-                                MessageBox.Show("Data is unreachable!", "OOOOPS!!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return (byte)StatusCodes.Unfetchable;
+                                L_Brawler5.Text = EventData.Brawlers[4].BrawlerName;
+                                Pic_Brawler5.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[4].BrawlerImage ?? [])!;
                             }
+                            break;
                         }
-                    }
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Data is unreachable!", "OOOOPS!!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return (byte)StatusCodes.Unfetchable;
                 }
 
-                if (DecimalValue > 0)
+                VotesProgress.SetState(1);
+                VotesProgress.Maximum = (int)EventData.VotesGoal;
+                if (EventData.VotesSent >= EventData.VotesGoal)
                 {
-                    if (MaxCount == 0)
-                    {
-                        MaxCount = 20_000_000_000;
-                    }
-
-                    Count = (ulong)(DecimalValue / 100 * MaxCount);
-
-                    if (Count % 10_000 == 0)
-                    {
-                        if (Count >= 1_000_000 && Count <= 999_999_999)
-                        {
-                            L_ProgressCount.Text = ((decimal)Count / 1_000_000).ToString("#.##") + " million";
-                        }
-                        else if (Count >= 1_000_000_000 && Count <= 999_999_999_999)
-                        {
-                            L_ProgressCount.Text = ((decimal)Count / 1_000_000_000).ToString("#.##") + " billion";
-                        }
-                        else
-                        {
-                            L_ProgressCount.Text = Count.ToString("N0");
-                        }
-                    }
-                    else
-                    {
-                        L_ProgressCount.Text = Count.ToString("N0");
-                    }
-                    L_Percent.Text = "(" + DecimalValue.ToString() + "%)";
-                    L_LastUpd.Text = "Last refreshed: " + DateTime.Now.ToString("d/M/yyyy H:mm:ss");
-                    BTN_Load.Enabled = false;
-                    StatusChanger();
+                    VotesProgress.Value = VotesProgress.Maximum;
+                    VotesProgress.SetState(2);
                 }
                 else
                 {
-                    MessageBox.Show("Couldn't find anything from API!\nOh well...", "OOOOPS!!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return (byte)StatusCodes.FetchSuccessButFoundNothing;
+                    VotesProgress.Value = (int)EventData.VotesSent;
+                    VotesProgress.SetState(3);
                 }
-                if (DecimalValue >= 100)
-                {
-                    PlayFinishSound();
-                    BTN_Load.Enabled = false;
-                    MessageBox.Show("Event completed, GG! :)", "CONGRATULATIONS", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return (byte)StatusCodes.FetchSuccessAndCompleted;
-                }
-                else
-                {
-                    if (Chk_AutoRefresh.Checked == false)
-                    {
-                        MessageBox.Show("Fetching was successful!", "Nice", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    return (byte)StatusCodes.FetchSuccess;
-                }
-            }
-        }
 
-        public void PlayFinishSound()
-        {
-            Stream SoundStream = Properties.Resources.Snd_WorldRecord;
-            SoundPlayer Player = new SoundPlayer(SoundStream);
-            Player.Play();
-        }
+                L_VotesVoted.Text = EventData.VotesSent.ToString("#,##0");
+                L_VotesSummit.Text = EventData.VotesGoal.ToString("#,##0");
+                L_VotesPercent.Text = (EventData.VotesSent / (decimal)EventData.VotesGoal * 100).ToString("#.##").Replace('.', ',') + "%";
 
-        private void BTN_About_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Simple community event tracker.\nMade by c&bt w/ help from xale", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            System.Windows.Forms.Timer Refresher = new();
-            Refresher.Interval = 60 * 1000;
-            Refresher.Tick += AutoUpdaterAndButtonEnabler;
-            Refresher.Start();
-        }
-
-        private async void AutoUpdaterAndButtonEnabler(object? sender, EventArgs e)
-        {
-            if ((DateTime.Now.Minute == 29 || DateTime.Now.Minute == 59) && DecimalValue < 100)
-            {
-                if (Chk_AutoRefresh.Checked == false)
-                {
-                    BTN_Load.Enabled = true;
-                    return;
-                }
-                Status = await Fetcher()!;
-                return;
-            }
-            StatusChanger();
-        }
-
-        private async void Chk_AutoRefresh_CheckedChanged(object sender, EventArgs e)
-        {
-            if (Chk_AutoRefresh.Checked == true)
-            {
-                MessageBox.Show("Auto-updater enabled! It'll auto-update when the minute is at 29 or 59.\n(Because the API updates once every 30mins and the update minute ends with 7 so yeah)", "Auto-update function enabled", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                BTN_Load.Enabled = false;
-                if (Count == 0)
-                {
-                    Status = await Fetcher()!;
-                }
+                L_Status.ForeColor = Color.FromArgb(0, 255, 0);
+                L_Status.Text = "Idle";
+                ChkBox_AutoRefresh.Enabled = true;
             }
             else
             {
-                BTN_Load.Enabled = true;
+                L_Status.ForeColor = Color.Red;
+                L_Status.Text = "Failed :(";
+                MessageBox.Show("Cannot find data from server!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                ChkBox_AutoRefresh.Enabled = false;
+                ChkBox_AutoRefresh.Checked = false;
+
+                BTN_Refresh.Enabled = true;
             }
-            StatusChanger();
         }
 
-        public enum StatusCodes
+        private void AutoUpdater_Tick(object sender, EventArgs e)
         {
-            Unfetchable = 0,
-            FetchSuccessButFoundNothing = 1,
-            FetchSuccess = 2,
-            FetchSuccessAndCompleted = 3
-        }
-
-        private void StatusChanger()
-        {
-            if (Chk_AutoRefresh.Checked)
+            if (DateTimeOffset.UtcNow.Second == 0)
             {
-                // Status updater
-                // 58: 30
-                // 59: 29
-                // 0: 28
-                // 1: 27
-                if (Status == (byte)StatusCodes.FetchSuccessAndCompleted)
-                {
-                    L_Status.Text = "Completed";
-                    return;
-                }
-                if (DateTime.Now.Minute >= 0 && DateTime.Now.Minute <= 28)
-                {
-                    L_Status.Text = "Next update in " + (29 - DateTime.Now.Minute) + "min";
-                    return;
-                }
-                if (DateTime.Now.Minute >= 30 && DateTime.Now.Minute <= 58)
-                {
-                    L_Status.Text = "Next update in " + (59 - DateTime.Now.Minute) + "min";
-                    return;
-                }
-                if (DateTime.Now.Minute == 29 || DateTime.Now.Minute == 59)
-                {
-                    L_Status.Text = "Next update in 30min";
-                    return;
-                }
+                FetchData();
+            }
+        }
+
+        private void ChkBox_AutoRefresh_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ChkBox_AutoRefresh.Checked)
+            {
+                AutoUpdater.Enabled = true;
+                BTN_Refresh.Enabled = false;
+                MessageBox.Show("Auto-updater is enabled! It'll refresh every minute.", "Info!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                L_Status.Text = "  ";
+                AutoUpdater.Enabled = false;
+                BTN_Refresh.Enabled = true;
             }
+        }
+
+        private void Link_About_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            MessageBox.Show("v1.0.3 -- updated on 11/2/2025\n\nMade by somerandostuff & xale, thankyou for the contributions!", "About tracker", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
