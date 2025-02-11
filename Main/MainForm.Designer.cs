@@ -55,6 +55,7 @@
             AutoUpdater = new System.Windows.Forms.Timer(components);
             ChkBox_AutoRefresh = new CheckBox();
             Link_About = new LinkLabel();
+            L_EventState = new Label();
             ((System.ComponentModel.ISupportInitialize)Pic_Brawler1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Pic_Brawler2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Pic_Brawler3).BeginInit();
@@ -241,7 +242,7 @@
             // 
             L_VotesVoted.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             L_VotesVoted.AutoSize = true;
-            L_VotesVoted.Location = new Point(12, 269);
+            L_VotesVoted.Location = new Point(13, 269);
             L_VotesVoted.Margin = new Padding(4, 0, 4, 0);
             L_VotesVoted.Name = "L_VotesVoted";
             L_VotesVoted.RightToLeft = RightToLeft.No;
@@ -253,7 +254,7 @@
             // L_VotesSummit
             // 
             L_VotesSummit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            L_VotesSummit.Location = new Point(622, 269);
+            L_VotesSummit.Location = new Point(621, 269);
             L_VotesSummit.Margin = new Padding(4, 0, 4, 0);
             L_VotesSummit.Name = "L_VotesSummit";
             L_VotesSummit.RightToLeft = RightToLeft.No;
@@ -340,11 +341,23 @@
             Link_About.Text = "About tracker...";
             Link_About.LinkClicked += Link_About_LinkClicked;
             // 
+            // L_EventState
+            // 
+            L_EventState.AutoSize = true;
+            L_EventState.Font = new Font("Determination Mono Web", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            L_EventState.Location = new Point(14, 43);
+            L_EventState.Margin = new Padding(5, 0, 5, 0);
+            L_EventState.Name = "L_EventState";
+            L_EventState.Size = new Size(31, 33);
+            L_EventState.TabIndex = 23;
+            L_EventState.Text = " ";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(16F, 33F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(902, 417);
+            Controls.Add(L_EventState);
             Controls.Add(Link_About);
             Controls.Add(ChkBox_AutoRefresh);
             Controls.Add(L_Status);
@@ -411,5 +424,6 @@
         private System.Windows.Forms.Timer AutoUpdater;
         private CheckBox ChkBox_AutoRefresh;
         private LinkLabel Link_About;
+        private Label L_EventState;
     }
 }

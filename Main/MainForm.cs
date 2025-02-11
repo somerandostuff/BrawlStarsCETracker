@@ -93,6 +93,29 @@ namespace Main
                         }
                 }
 
+                switch (EventData.EventMilestone)
+                {
+                    case 20:
+                        L_EventState.Text = "Extras: Double XP Event";
+                        break;
+                    case 30:
+                    case 40:
+                        L_EventState.Text = "Extras: Double XP Event + 50% Mastery Bonus";
+                        break;
+                    case 50:
+                    case 60:
+                        L_EventState.Text = "Extras: Double XP Event + 50% Mastery Bonus + Double Starr Drops";
+                        break;
+                    case 70:
+                    case 80:
+                    case 90:
+                    case 100:
+                        L_EventState.Text = "Extras: Double XP Event + 50% Mastery Bonus + Double Starr Drops + 100% Mastery Bonus";
+                        break;
+                    default:
+                        break;
+                }
+
                 VotesProgress.SetState(1);
                 VotesProgress.Maximum = (int)EventData.VotesGoal;
                 if (EventData.VotesSent >= EventData.VotesGoal)
@@ -146,6 +169,7 @@ namespace Main
             Link_About.Font = SmallFont;
             L_VotesSentSubtext.Font = SmallFont;
             L_VotesPercent.Font = SmallFont;
+            L_EventState.Font = SmallFont;
 
             L_Brawler1.Font = SmallFont;
             L_Brawler2.Font = SmallFont;
