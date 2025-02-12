@@ -13,6 +13,8 @@ namespace Main
         private Font? MediumFont;
         // private Font? LargeFont;
 
+        ulong OldMilestone_Persistent = 0;
+
         public MainForm()
         {
             InitializeComponent();
@@ -116,6 +118,12 @@ namespace Main
                         break;
                 }
 
+                if (EventData.VotesSent - OldMilestone_Persistent != 0 && OldMilestone_Persistent != 0)
+                {
+                    L_AddedVotes.Text = $"(+{EventData.VotesSent - OldMilestone_Persistent:#,##0})";
+                }
+                OldMilestone_Persistent = EventData.VotesSent;
+
                 VotesProgress.SetState(1);
                 VotesProgress.Maximum = (int)EventData.VotesGoal;
                 if (EventData.VotesSent >= EventData.VotesGoal)
@@ -171,6 +179,7 @@ namespace Main
             L_VotesSentSubtext.Font = SmallFont;
             L_VotesPercent.Font = SmallFont;
             L_EventState.Font = SmallFont;
+            L_AddedVotes.Font = SmallFont;
 
             L_Brawler1.Font = SmallFont;
             L_Brawler2.Font = SmallFont;

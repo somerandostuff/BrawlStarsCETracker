@@ -57,6 +57,7 @@
             Link_About = new LinkLabel();
             L_EventState = new Label();
             TimeLeftProgress = new ProgressBar();
+            L_AddedVotes = new Label();
             ((System.ComponentModel.ISupportInitialize)Pic_Brawler1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Pic_Brawler2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Pic_Brawler3).BeginInit();
@@ -362,11 +363,26 @@
             TimeLeftProgress.Step = 1;
             TimeLeftProgress.TabIndex = 24;
             // 
+            // L_AddedVotes
+            // 
+            L_AddedVotes.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            L_AddedVotes.AutoSize = true;
+            L_AddedVotes.ForeColor = Color.FromArgb(255, 128, 0);
+            L_AddedVotes.Location = new Point(14, 259);
+            L_AddedVotes.Margin = new Padding(4, 0, 4, 0);
+            L_AddedVotes.Name = "L_AddedVotes";
+            L_AddedVotes.RightToLeft = RightToLeft.No;
+            L_AddedVotes.Size = new Size(31, 33);
+            L_AddedVotes.TabIndex = 25;
+            L_AddedVotes.Text = " ";
+            L_AddedVotes.TextAlign = ContentAlignment.TopRight;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(16F, 33F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(902, 417);
+            Controls.Add(L_AddedVotes);
             Controls.Add(TimeLeftProgress);
             Controls.Add(L_EventState);
             Controls.Add(Link_About);
@@ -437,5 +453,6 @@
         private LinkLabel Link_About;
         private Label L_EventState;
         private ProgressBar TimeLeftProgress;
+        private Label L_AddedVotes;
     }
 }
