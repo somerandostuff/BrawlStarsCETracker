@@ -96,17 +96,17 @@ namespace Main
                 switch (EventData.EventMilestone)
                 {
                     case 20:
+                    case 30:
                         L_EventState.Text = "Extras: Double XP Event";
                         break;
-                    case 30:
                     case 40:
+                    case 50:
                         L_EventState.Text = "Extras: Double XP Event + 50% Mastery Bonus";
                         break;
-                    case 50:
                     case 60:
+                    case 70:
                         L_EventState.Text = "Extras: Double XP Event + 50% Mastery Bonus + Double Starr Drops";
                         break;
-                    case 70:
                     case 80:
                     case 90:
                     case 100:
@@ -120,6 +120,7 @@ namespace Main
                 VotesProgress.Maximum = (int)EventData.VotesGoal;
                 if (EventData.VotesSent >= EventData.VotesGoal)
                 {
+                    L_VotesVoted.ForeColor = Color.FromArgb(0, 255, 0);
                     VotesProgress.Value = VotesProgress.Maximum;
                     VotesProgress.SetState(2);
                 }
@@ -131,7 +132,7 @@ namespace Main
 
                 L_VotesVoted.Text = EventData.VotesSent.ToString("#,##0");
                 L_VotesSummit.Text = EventData.VotesGoal.ToString("#,##0");
-                L_VotesPercent.Text = (EventData.VotesSent / (decimal)EventData.VotesGoal * 100).ToString("#.##").Replace('.', ',') + "%";
+                L_VotesPercent.Text = (EventData.VotesSent / (decimal)EventData.VotesGoal * 100).ToString("0.##").Replace('.', ',') + "%";
 
                 L_Status.ForeColor = Color.FromArgb(0, 255, 0);
                 L_Status.Text = "Idle";
