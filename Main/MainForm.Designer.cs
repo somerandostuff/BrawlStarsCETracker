@@ -59,6 +59,7 @@
             TimeLeftProgress = new ProgressBar();
             L_AddedVotes = new Label();
             LastUpdatedUpdater = new System.Windows.Forms.Timer(components);
+            L_LastUpdatedSubtext = new Label();
             ((System.ComponentModel.ISupportInitialize)Pic_Brawler1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Pic_Brawler2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Pic_Brawler3).BeginInit();
@@ -87,7 +88,7 @@
             L_TimeLeft.Size = new Size(175, 33);
             L_TimeLeft.TabIndex = 1;
             L_TimeLeft.Text = "0:00:00";
-            L_TimeLeft.TextAlign = ContentAlignment.TopRight;
+            L_TimeLeft.TextAlign = ContentAlignment.TopCenter;
             // 
             // EventTimeLeftUpdater
             // 
@@ -382,11 +383,32 @@
             // 
             LastUpdatedUpdater.Tick += LastUpdatedUpdater_Tick;
             // 
+            // L_LastUpdatedSubtext
+            // 
+            L_LastUpdatedSubtext.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            L_LastUpdatedSubtext.AutoSize = true;
+            L_LastUpdatedSubtext.Location = new Point(190, 350);
+            L_LastUpdatedSubtext.Margin = new Padding(4, 0, 4, 0);
+            L_LastUpdatedSubtext.Name = "L_LastUpdatedSubtext";
+            L_LastUpdatedSubtext.RightToLeft = RightToLeft.No;
+            L_LastUpdatedSubtext.Size = new Size(31, 33);
+            L_LastUpdatedSubtext.TabIndex = 26;
+            L_LastUpdatedSubtext.Text = " ";
+            L_LastUpdatedSubtext.TextAlign = ContentAlignment.TopRight;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(16F, 33F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(902, 417);
+            Controls.Add(L_TimeLeft);
+            Controls.Add(Pic_Brawler5);
+            Controls.Add(Pic_Brawler4);
+            Controls.Add(Pic_Brawler3);
+            Controls.Add(Pic_Brawler2);
+            Controls.Add(Pic_Brawler1);
+            Controls.Add(VotesProgress);
+            Controls.Add(L_LastUpdatedSubtext);
             Controls.Add(L_AddedVotes);
             Controls.Add(TimeLeftProgress);
             Controls.Add(L_EventState);
@@ -399,19 +421,12 @@
             Controls.Add(L_VotesSummit);
             Controls.Add(L_VotesVoted);
             Controls.Add(L_VotesSentSubtext);
-            Controls.Add(VotesProgress);
             Controls.Add(L_Brawler5);
             Controls.Add(L_Brawler4);
             Controls.Add(L_Brawler3);
             Controls.Add(L_Brawler2);
             Controls.Add(L_Brawler1);
-            Controls.Add(Pic_Brawler5);
-            Controls.Add(Pic_Brawler4);
-            Controls.Add(Pic_Brawler3);
-            Controls.Add(Pic_Brawler2);
-            Controls.Add(Pic_Brawler1);
             Controls.Add(L_TimeLeftContext);
-            Controls.Add(L_TimeLeft);
             Controls.Add(L_EventName);
             Font = new Font("Determination Mono Web", 24F, FontStyle.Regular, GraphicsUnit.Point, 163);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -460,5 +475,6 @@
         private ProgressBar TimeLeftProgress;
         private Label L_AddedVotes;
         private System.Windows.Forms.Timer LastUpdatedUpdater;
+        private Label L_LastUpdatedSubtext;
     }
 }

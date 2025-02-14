@@ -185,6 +185,7 @@ namespace Main
             L_VotesPercent.Font = SmallFont;
             L_EventState.Font = SmallFont;
             L_AddedVotes.Font = SmallFont;
+            L_LastUpdatedSubtext.Font = SmallFont;
 
             L_Brawler1.Font = SmallFont;
             L_Brawler2.Font = SmallFont;
@@ -246,23 +247,22 @@ namespace Main
         private void LastUpdatedUpdater_Tick(object sender, EventArgs e)
         {
             TimeSpan SpanSinceLastFetched = TimeSpan.FromSeconds(DateTimeOffset.UtcNow.ToUnixTimeSeconds()) - LastFetchedPoint;
-            L_VotesSentSubtext.Text = "votes sent ";
 
             if (SpanSinceLastFetched.TotalSeconds < 60)
             {
-                L_VotesSentSubtext.Text += $"- updated {(int)SpanSinceLastFetched.TotalSeconds}s ago";
+                L_LastUpdatedSubtext.Text = $"Updated {(int)SpanSinceLastFetched.TotalSeconds}s ago";
             }
             else if (SpanSinceLastFetched.TotalMinutes < 60)
             {
-                L_VotesSentSubtext.Text += $"- updated {(int)SpanSinceLastFetched.TotalMinutes}m {(int)SpanSinceLastFetched.TotalSeconds % 60}s ago";
+                L_LastUpdatedSubtext.Text = $"Updated {(int)SpanSinceLastFetched.TotalMinutes}m {(int)SpanSinceLastFetched.TotalSeconds % 60}s ago";
             }
             else if (SpanSinceLastFetched.TotalHours < 24)
             {
-                L_VotesSentSubtext.Text += $"- updated {(int)SpanSinceLastFetched.TotalHours}h {(int)SpanSinceLastFetched.TotalMinutes % 60}m ago";
+                L_LastUpdatedSubtext.Text = $"Updated {(int)SpanSinceLastFetched.TotalHours}h {(int)SpanSinceLastFetched.TotalMinutes % 60}m ago";
             }
             else
             {
-                L_VotesSentSubtext.Text += $"- updated {(long)SpanSinceLastFetched.TotalDays}d {(int)SpanSinceLastFetched.TotalHours % 24}h ago";
+                L_LastUpdatedSubtext.Text = $"Updated {(long)SpanSinceLastFetched.TotalDays}d {(int)SpanSinceLastFetched.TotalHours % 24}h ago";
             }
         }
     }
