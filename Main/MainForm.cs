@@ -14,6 +14,7 @@ namespace Main
         // private Font? LargeFont;
 
         ulong OldMilestone_Persistent = 0;
+        TimeSpan LastFetchedPoint = TimeSpan.Zero;
 
         public MainForm()
         {
@@ -28,6 +29,8 @@ namespace Main
             EventTimeLeftUpdater.Enabled = true;
             EventTimeLeftUpdater.Interval = 1;
 
+            LastUpdatedUpdater.Enabled = false;
+
             AutoUpdater.Enabled = false;
             AutoUpdater.Interval = 1000;
 
@@ -40,7 +43,7 @@ namespace Main
 
             var EventData = await Utils.FetchData();
             if (EventData != null)
-            {
+            {                
                 L_EventName.Text = EventData.PollTitle;
                 switch (EventData.AvailablePollChoices)
                 {
@@ -120,6 +123,8 @@ namespace Main
 
                 if (EventData.VotesSent - OldMilestone_Persistent != 0 && OldMilestone_Persistent != 0)
                 {
+                    LastFetchedPoint = TimeSpan.FromSeconds(DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+                    LastUpdatedUpdater.Enabled = true;
                     L_AddedVotes.Text = $"(+{EventData.VotesSent - OldMilestone_Persistent:#,##0})";
                 }
                 OldMilestone_Persistent = EventData.VotesSent;
@@ -236,6 +241,29 @@ namespace Main
         private void Link_About_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             MessageBox.Show("v1.0.3 -- updated on 11/2/2025\n\nMade by somerandostuff & xale, thankyou for the contributions!", "About tracker", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void LastUpdatedUpdater_Tick(object sender, EventArgs e)
+        {
+            TimeSpan SpanSinceLastFetched = TimeSpan.FromSeconds(DateTimeOffset.UtcNow.ToUnixTimeSeconds()) - LastFetchedPoint;
+            L_VotesSentSubtext.Text = "votes sent ";
+
+            if (SpanSinceLastFetched.TotalSeconds < 60)
+            {
+                L_VotesSentSubtext.Text += $"- updated {(int)SpanSinceLastFetched.TotalSeconds}s ago";
+            }
+            else if (SpanSinceLastFetched.TotalMinutes < 60)
+            {
+                L_VotesSentSubtext.Text += $"- updated {(int)SpanSinceLastFetched.TotalMinutes}m {(int)SpanSinceLastFetched.TotalSeconds % 60}s ago";
+            }
+            else if (SpanSinceLastFetched.TotalHours < 24)
+            {
+                L_VotesSentSubtext.Text += $"- updated {(int)SpanSinceLastFetched.TotalHours}h {(int)SpanSinceLastFetched.TotalMinutes % 60}m ago";
+            }
+            else
+            {
+                L_VotesSentSubtext.Text += $"- updated {(long)SpanSinceLastFetched.TotalDays}d {(int)SpanSinceLastFetched.TotalHours % 24}h ago";
+            }
         }
     }
 }

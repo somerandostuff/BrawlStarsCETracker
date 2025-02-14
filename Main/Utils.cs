@@ -13,7 +13,7 @@ namespace Main
 
             using (var Client = new HttpClient())
             {
-                byte Index = 0;
+                byte NewsIndex = 0;
 
                 var Content = JsonDocument.Parse(await Client.GetStringAsync(BrawlFeedLinks.NewsAPI));
 
@@ -32,7 +32,7 @@ namespace Main
 
                         if (TryFindEventData.TryGetProperty("ctas", out TryFindEventData))
                         {
-                            Index = Tries;
+                            NewsIndex = Tries;
 
                             Data.PollID = TryFindEventData
                                          .GetProperty("6kjQMmOUtIi7L2adA3YlUI")
@@ -47,7 +47,7 @@ namespace Main
 
                 var NewsPollData = Content.RootElement
                                   .GetProperty("entries")
-                                  .GetProperty("eventEntries")[Index + 1];
+                                  .GetProperty("eventEntries")[NewsIndex + 1];
 
                 Data.PollTitle = NewsPollData.GetProperty("pollTitle").GetString();
                 Data.CampaignID = NewsPollData.GetProperty("targeting").GetProperty("campaignId").GetString();

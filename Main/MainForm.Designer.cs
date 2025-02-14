@@ -58,6 +58,7 @@
             L_EventState = new Label();
             TimeLeftProgress = new ProgressBar();
             L_AddedVotes = new Label();
+            LastUpdatedUpdater = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)Pic_Brawler1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Pic_Brawler2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Pic_Brawler3).BeginInit();
@@ -377,6 +378,10 @@
             L_AddedVotes.Text = " ";
             L_AddedVotes.TextAlign = ContentAlignment.TopRight;
             // 
+            // LastUpdatedUpdater
+            // 
+            LastUpdatedUpdater.Tick += LastUpdatedUpdater_Tick;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(16F, 33F);
@@ -454,5 +459,6 @@
         private Label L_EventState;
         private ProgressBar TimeLeftProgress;
         private Label L_AddedVotes;
+        private System.Windows.Forms.Timer LastUpdatedUpdater;
     }
 }
