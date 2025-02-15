@@ -14,7 +14,7 @@ namespace Main
         // private Font? LargeFont;
 
         ulong OldMilestone_Persistent = 0;
-        TimeSpan LastFetchedPoint = TimeSpan.Zero;
+        TimeSpan LastFetchedPoint = TimeSpan.FromSeconds(DateTimeOffset.UtcNow.ToUnixTimeSeconds());
 
         public MainForm()
         {
@@ -218,7 +218,9 @@ namespace Main
 
         private void AutoUpdater_Tick(object sender, EventArgs e)
         {
-            if (DateTimeOffset.UtcNow.Second == 0)
+            // This'll be more accurate since the last check was kinda half-assed
+            // (New data appears every minute since last check since cache has "max-age=60")
+            if (DateTimeOffset.UtcNow.ToUnixTimeSeconds() - LastFetchedPoint.TotalSeconds >= 60)
             {
                 FetchData();
             }
@@ -241,7 +243,7 @@ namespace Main
 
         private void Link_About_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            MessageBox.Show("v1.0.3 -- updated on 11/2/2025\n\nMade by somerandostuff & xale, thankyou for the contributions!", "About tracker", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("v1.0.3 -- updated on 15/2/2025\n\nMade by somerandostuff & xale, thankyou for the contributions!", "About tracker", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void LastUpdatedUpdater_Tick(object sender, EventArgs e)
