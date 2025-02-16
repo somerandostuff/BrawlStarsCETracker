@@ -121,11 +121,22 @@ namespace Main
                         break;
                 }
 
-                if (EventData.VotesSent - OldMilestone_Persistent != 0 && OldMilestone_Persistent != 0)
+                if (EventData.VotesSent - OldMilestone_Persistent > 0 && OldMilestone_Persistent != 0)
                 {
                     LastFetchedPoint = TimeSpan.FromSeconds(DateTimeOffset.UtcNow.ToUnixTimeSeconds());
                     LastUpdatedUpdater.Enabled = true;
-                    L_AddedVotes.Text = $"(+{EventData.VotesSent - OldMilestone_Persistent:#,##0})";
+
+                    // Since every reset makes the calculation just roll back to +18 billion if the votes sent deducting the last updated old counter,
+                    // this check will be used inside here.
+                    // You can pretty much use it after getting how much votes have added in or put it inside the check but whatever...
+                    // I suckass at explaining!!! :/
+                    if (EventData.VotesSent < OldMilestone_Persistent)
+                    {
+                        int Seed = Random.Shared.Next(0, 10);
+                        if (Seed == 6) { L_AddedVotes.Text = "(Restaurant...)"; } else L_AddedVotes.Text = "(Reset...)";
+                    }
+                    else L_AddedVotes.Text = $"(+{EventData.VotesSent - OldMilestone_Persistent:#,##0})";
+
                 }
                 OldMilestone_Persistent = EventData.VotesSent;
 
@@ -243,7 +254,7 @@ namespace Main
 
         private void Link_About_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            MessageBox.Show("v1.0.3 -- updated on 15/2/2025\n\nMade by somerandostuff & xale, thankyou for the contributions!", "About tracker", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("v1.0.3 -- updated on 16/2/2025\n\nMade by somerandostuff & xale, thankyou for the contributions!", "About tracker", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void LastUpdatedUpdater_Tick(object sender, EventArgs e)
