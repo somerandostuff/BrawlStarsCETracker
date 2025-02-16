@@ -60,6 +60,7 @@
             L_AddedVotes = new Label();
             LastUpdatedUpdater = new System.Windows.Forms.Timer(components);
             L_LastUpdatedSubtext = new Label();
+            L_EstimatedTimeSubtext = new Label();
             ((System.ComponentModel.ISupportInitialize)Pic_Brawler1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Pic_Brawler2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Pic_Brawler3).BeginInit();
@@ -396,11 +397,24 @@
             L_LastUpdatedSubtext.Text = " ";
             L_LastUpdatedSubtext.TextAlign = ContentAlignment.TopRight;
             // 
+            // L_EstimatedTimeSubtext
+            // 
+            L_EstimatedTimeSubtext.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            L_EstimatedTimeSubtext.Location = new Point(319, 301);
+            L_EstimatedTimeSubtext.Margin = new Padding(4, 0, 4, 0);
+            L_EstimatedTimeSubtext.Name = "L_EstimatedTimeSubtext";
+            L_EstimatedTimeSubtext.RightToLeft = RightToLeft.No;
+            L_EstimatedTimeSubtext.Size = new Size(263, 16);
+            L_EstimatedTimeSubtext.TabIndex = 27;
+            L_EstimatedTimeSubtext.Text = " ";
+            L_EstimatedTimeSubtext.TextAlign = ContentAlignment.TopCenter;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(16F, 33F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(902, 417);
+            Controls.Add(L_EstimatedTimeSubtext);
             Controls.Add(L_TimeLeft);
             Controls.Add(Pic_Brawler5);
             Controls.Add(Pic_Brawler4);
@@ -476,5 +490,6 @@
         private Label L_AddedVotes;
         private System.Windows.Forms.Timer LastUpdatedUpdater;
         private Label L_LastUpdatedSubtext;
+        private Label L_EstimatedTimeSubtext;
     }
 }

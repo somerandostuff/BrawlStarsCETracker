@@ -2,6 +2,7 @@
 using Main.Properties;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 
 namespace Main
 {
@@ -115,7 +116,7 @@ namespace Main
                     case 80:
                     case 90:
                     case 100:
-                        L_EventState.Text = "Extras: Double XP Event + 50% Mastery Bonus + Double Starr Drops + 100% Mastery Bonus";
+                        L_EventState.Text = "Extras: Double XP Event + 100% Mastery Bonus + Double Starr Drops";
                         break;
                     default:
                         break;
@@ -138,18 +139,53 @@ namespace Main
                     else L_AddedVotes.Text = $"(+{EventData.VotesSent - OldMilestone_Persistent:#,##0})";
 
                 }
-                OldMilestone_Persistent = EventData.VotesSent;
+                
 
                 VotesProgress.SetState(1);
                 VotesProgress.Maximum = (int)EventData.VotesGoal;
                 if (EventData.VotesSent >= EventData.VotesGoal)
                 {
+                    if (ChkBox_AutoRefresh.Checked)
+                    {
+                        L_EstimatedTimeSubtext.Text = "COMPLETED!!!";
+                    }
                     L_VotesVoted.ForeColor = Color.FromArgb(0, 255, 0);
                     VotesProgress.Value = VotesProgress.Maximum;
                     VotesProgress.SetState(2);
                 }
                 else
                 {
+                    L_VotesVoted.ForeColor = Color.White;
+                    if (ChkBox_AutoRefresh.Checked && OldMilestone_Persistent != 0)
+                    {
+                        ulong VotesGainedThisMinute = EventData.VotesSent - OldMilestone_Persistent;
+                        if (VotesGainedThisMinute > 0)
+                        {
+                            var EstimatedFinishTimeSpanByMinutes = TimeSpan.FromMinutes((EventData.VotesGoal - EventData.VotesSent) / VotesGainedThisMinute);
+
+                            if (EstimatedFinishTimeSpanByMinutes.TotalSeconds < 60)
+                            {
+                                L_EstimatedTimeSubtext.Text = $"ETA: Less than a minute!";
+                            }
+                            else if (EstimatedFinishTimeSpanByMinutes.TotalMinutes < 60)
+                            {
+                                L_EstimatedTimeSubtext.Text = $"ETA: {(int)EstimatedFinishTimeSpanByMinutes.TotalMinutes}m left";
+                            }
+                            else if (EstimatedFinishTimeSpanByMinutes.TotalHours < 24)
+                            {
+                                L_EstimatedTimeSubtext.Text = $"ETA: {(int)EstimatedFinishTimeSpanByMinutes.TotalHours}h {(int)EstimatedFinishTimeSpanByMinutes.TotalMinutes % 60}m left";
+                            }
+                            else
+                            {
+                                L_EstimatedTimeSubtext.Text = $"ETA: {(long)EstimatedFinishTimeSpanByMinutes.TotalDays}d {(int)EstimatedFinishTimeSpanByMinutes.TotalHours % 24}h left";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        L_EstimatedTimeSubtext.Text = "";
+                    }
+
                     VotesProgress.Value = (int)EventData.VotesSent;
                     VotesProgress.SetState(3);
                 }
@@ -160,6 +196,11 @@ namespace Main
 
                 L_Status.ForeColor = Color.FromArgb(0, 255, 0);
                 L_Status.Text = "Idle";
+
+                // Preserve current milestone for next update
+                OldMilestone_Persistent = EventData.VotesSent;
+
+                // Re-enable when fetch successfully (since if you fetch in startup fails, it'll disable itself)
                 ChkBox_AutoRefresh.Enabled = true;
             }
             else
@@ -197,6 +238,7 @@ namespace Main
             L_EventState.Font = SmallFont;
             L_AddedVotes.Font = SmallFont;
             L_LastUpdatedSubtext.Font = SmallFont;
+            L_EstimatedTimeSubtext.Font = SmallFont;
 
             L_Brawler1.Font = SmallFont;
             L_Brawler2.Font = SmallFont;
@@ -247,6 +289,7 @@ namespace Main
             }
             else
             {
+                L_EstimatedTimeSubtext.Text = "";
                 AutoUpdater.Enabled = false;
                 BTN_Refresh.Enabled = true;
             }
