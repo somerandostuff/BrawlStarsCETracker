@@ -1,6 +1,7 @@
 ﻿using Main.Others;
 using Main.Properties;
 using System.Drawing.Text;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
@@ -16,6 +17,9 @@ namespace Main
 
         ulong OldMilestone_Persistent = 0;
         TimeSpan LastFetchedPoint = TimeSpan.FromSeconds(DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+
+        // Get only five!
+        Queue<decimal> LastAddedVotes = new Queue<decimal>();
 
         public MainForm()
         {
@@ -135,6 +139,9 @@ namespace Main
                     {
                         int Seed = Random.Shared.Next(0, 10);
                         if (Seed == 6) { L_AddedVotes.Text = "(Restaurant...)"; } else L_AddedVotes.Text = "(Reset...)";
+
+                        // Reset if suddenly the votes count is smaller than the last vote count (possibly a reset happened)
+                        LastAddedVotes.Clear();
                     }
                     else L_AddedVotes.Text = $"(+{EventData.VotesSent - OldMilestone_Persistent:#,##0})";
 
@@ -161,7 +168,14 @@ namespace Main
                         ulong VotesGainedThisMinute = EventData.VotesSent - OldMilestone_Persistent;
                         if (VotesGainedThisMinute > 0)
                         {
-                            var EstimatedFinishTimeSpanByMinutes = TimeSpan.FromMinutes((EventData.VotesGoal - EventData.VotesSent) / VotesGainedThisMinute);
+                            // Max history is 10
+                            if (LastAddedVotes.Count == 10)
+                            {
+                                LastAddedVotes.Dequeue();
+                            }
+                            LastAddedVotes.Enqueue(VotesGainedThisMinute);
+
+                            var EstimatedFinishTimeSpanByMinutes = TimeSpan.FromMinutes((EventData.VotesGoal - EventData.VotesSent) / (ulong)LastAddedVotes.Average());
 
                             if (EstimatedFinishTimeSpanByMinutes.TotalSeconds < 60)
                             {
@@ -290,6 +304,7 @@ namespace Main
             else
             {
                 L_EstimatedTimeSubtext.Text = "";
+                LastAddedVotes.Clear();
                 AutoUpdater.Enabled = false;
                 BTN_Refresh.Enabled = true;
             }
