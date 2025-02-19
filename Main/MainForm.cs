@@ -60,7 +60,7 @@ namespace Main
 
                 DisplayEventProgress(EventData);
 
-                GetVotesData(EventData);
+                ScanAndDisplayVotes(EventData);
 
                 L_Status.ForeColor = Color.FromArgb(0, 255, 0);
                 L_Status.Text = "Idle";
@@ -80,7 +80,7 @@ namespace Main
             }
         }
 
-        private void GetVotesData(EventData EventData)
+        private void ScanAndDisplayVotes(EventData EventData)
         {
             if (EventData.VotesSent - OldMilestone_Persistent > 0 && OldMilestone_Persistent != 0)
             {
@@ -100,6 +100,7 @@ namespace Main
 
             VotesProgress.SetState(ProgressBarState.Warning);
             VotesProgress.Maximum = (int)EventData.VotesGoal;
+
             if (EventData.VotesSent >= EventData.VotesGoal)
             {
                 if (ChkBox_AutoRefresh.Checked)
