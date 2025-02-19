@@ -1,4 +1,5 @@
-﻿using Main.Others;
+﻿using Main.Models;
+using Main.Others;
 using Main.Properties;
 using System.Drawing.Text;
 using System.Linq;
@@ -27,10 +28,13 @@ namespace Main
 
             LoadExternalFont();
 
-            Font = MediumFont;
-
             FetchData();
 
+            UseDefaultOptions();
+        }
+
+        private void UseDefaultOptions()
+        {
             EventTimeLeftUpdater.Enabled = true;
             EventTimeLeftUpdater.Interval = 1;
 
@@ -39,8 +43,9 @@ namespace Main
             AutoUpdater.Enabled = false;
             AutoUpdater.Interval = 1000;
 
-            VotesProgress.SetState(3);
+            VotesProgress.SetState(ProgressBarState.Stopped);
         }
+
         private async void FetchData()
         {
             L_Status.ForeColor = Color.Yellow;
@@ -48,172 +53,17 @@ namespace Main
 
             var EventData = await Utils.FetchData();
             if (EventData != null)
-            {                
+            {
                 L_EventName.Text = EventData.PollTitle;
-                switch (EventData.AvailablePollChoices)
-                {
-                    case 3:
-                        {
-                            // Put images at center
-                            L_Brawler2.Text = EventData.Brawlers[0].BrawlerName;
-                            L_Brawler3.Text = EventData.Brawlers[1].BrawlerName;
-                            L_Brawler4.Text = EventData.Brawlers[2].BrawlerName;
 
-                            Pic_Brawler2.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[0].BrawlerImage ?? [])!;
-                            Pic_Brawler3.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[1].BrawlerImage ?? [])!;
-                            Pic_Brawler4.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[2].BrawlerImage ?? [])!;
-                            break;
-                        }
-                    case 1:
-                        {
-                            // Put images at center
-                            L_Brawler3.Text = EventData.Brawlers[0].BrawlerName;
+                EmbedBrawlerImages(EventData);
 
-                            Pic_Brawler3.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[1].BrawlerImage ?? [])!;
-                            break;
-                        }
-                    case 2:
-                        {
-                            // First image at slot 2, second image at slot 4
-                            L_Brawler2.Text = EventData.Brawlers[0].BrawlerName;
-                            L_Brawler4.Text = EventData.Brawlers[1].BrawlerName;
+                DisplayEventProgress(EventData);
 
-                            Pic_Brawler2.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[0].BrawlerImage ?? [])!;
-                            Pic_Brawler4.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[1].BrawlerImage ?? [])!;
-                            break;
-                        }
-                    default:
-                        {
-                            L_Brawler1.Text = EventData.Brawlers[0].BrawlerName;
-                            L_Brawler2.Text = EventData.Brawlers[1].BrawlerName;
-                            L_Brawler3.Text = EventData.Brawlers[2].BrawlerName;
-                            L_Brawler4.Text = EventData.Brawlers[3].BrawlerName;
-
-                            Pic_Brawler1.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[0].BrawlerImage ?? [])!;
-                            Pic_Brawler2.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[1].BrawlerImage ?? [])!;
-                            Pic_Brawler3.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[2].BrawlerImage ?? [])!;
-                            Pic_Brawler4.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[3].BrawlerImage ?? [])!;
-
-                            if (EventData.AvailablePollChoices >= 5)
-                            {
-                                L_Brawler5.Text = EventData.Brawlers[4].BrawlerName;
-                                Pic_Brawler5.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[4].BrawlerImage ?? [])!;
-                            }
-                            break;
-                        }
-                }
-
-                switch (EventData.EventMilestone)
-                {
-                    case 20:
-                    case 30:
-                        L_EventState.Text = "Extras: Double XP Event";
-                        break;
-                    case 40:
-                    case 50:
-                        L_EventState.Text = "Extras: Double XP Event + 50% Mastery Bonus";
-                        break;
-                    case 60:
-                    case 70:
-                        L_EventState.Text = "Extras: Double XP Event + 50% Mastery Bonus + Double Starr Drops";
-                        break;
-                    case 80:
-                    case 90:
-                    case 100:
-                        L_EventState.Text = "Extras: Double XP Event + 100% Mastery Bonus + Double Starr Drops";
-                        break;
-                    default:
-                        break;
-                }
-
-                if (EventData.VotesSent - OldMilestone_Persistent > 0 && OldMilestone_Persistent != 0)
-                {
-                    LastFetchedPoint = TimeSpan.FromSeconds(DateTimeOffset.UtcNow.ToUnixTimeSeconds());
-                    LastUpdatedUpdater.Enabled = true;
-
-                    // Since every reset makes the calculation just roll back to +18 billion if the votes sent deducting the last updated old counter,
-                    // this check will be used inside here.
-                    // You can pretty much use it after getting how much votes have added in or put it inside the check but whatever...
-                    // I suckass at explaining!!! :/
-                    if (EventData.VotesSent < OldMilestone_Persistent)
-                    {
-                        int Seed = Random.Shared.Next(0, 10);
-                        if (Seed == 6) { L_AddedVotes.Text = "(Restaurant...)"; } else L_AddedVotes.Text = "(Reset...)";
-
-                        // Reset if suddenly the votes count is smaller than the last vote count (possibly a reset happened)
-                        LastAddedVotes.Clear();
-                    }
-                    else L_AddedVotes.Text = $"(+{EventData.VotesSent - OldMilestone_Persistent:#,##0})";
-
-                }
-                
-
-                VotesProgress.SetState(1);
-                VotesProgress.Maximum = (int)EventData.VotesGoal;
-                if (EventData.VotesSent >= EventData.VotesGoal)
-                {
-                    if (ChkBox_AutoRefresh.Checked)
-                    {
-                        L_EstimatedTimeSubtext.Text = "COMPLETED!!!";
-                    }
-                    L_VotesVoted.ForeColor = Color.FromArgb(0, 255, 0);
-                    VotesProgress.Value = VotesProgress.Maximum;
-                    VotesProgress.SetState(2);
-                }
-                else
-                {
-                    L_VotesVoted.ForeColor = Color.White;
-                    if (ChkBox_AutoRefresh.Checked && OldMilestone_Persistent != 0)
-                    {
-                        ulong VotesGainedThisMinute = EventData.VotesSent - OldMilestone_Persistent;
-                        if (VotesGainedThisMinute > 0)
-                        {
-                            // Max history is 10
-                            if (LastAddedVotes.Count == 10)
-                            {
-                                LastAddedVotes.Dequeue();
-                            }
-                            LastAddedVotes.Enqueue(VotesGainedThisMinute);
-
-                            var EstimatedFinishTimeSpanByMinutes = TimeSpan.FromMinutes((EventData.VotesGoal - EventData.VotesSent) / (ulong)LastAddedVotes.Average());
-
-                            if (EstimatedFinishTimeSpanByMinutes.TotalSeconds < 60)
-                            {
-                                L_EstimatedTimeSubtext.Text = $"ETA: Less than a minute!";
-                            }
-                            else if (EstimatedFinishTimeSpanByMinutes.TotalMinutes < 60)
-                            {
-                                L_EstimatedTimeSubtext.Text = $"ETA: {(int)EstimatedFinishTimeSpanByMinutes.TotalMinutes}m left";
-                            }
-                            else if (EstimatedFinishTimeSpanByMinutes.TotalHours < 24)
-                            {
-                                L_EstimatedTimeSubtext.Text = $"ETA: {(int)EstimatedFinishTimeSpanByMinutes.TotalHours}h {(int)EstimatedFinishTimeSpanByMinutes.TotalMinutes % 60}m left";
-                            }
-                            else
-                            {
-                                L_EstimatedTimeSubtext.Text = $"ETA: {(long)EstimatedFinishTimeSpanByMinutes.TotalDays}d {(int)EstimatedFinishTimeSpanByMinutes.TotalHours % 24}h left";
-                            }
-                        }
-                    }
-                    else
-                    {
-                        L_EstimatedTimeSubtext.Text = "";
-                    }
-
-                    VotesProgress.Value = (int)EventData.VotesSent;
-                    VotesProgress.SetState(3);
-                }
-
-                L_VotesVoted.Text = EventData.VotesSent.ToString("#,##0");
-                L_VotesSummit.Text = EventData.VotesGoal.ToString("#,##0");
-                L_VotesPercent.Text = (EventData.VotesSent / (decimal)EventData.VotesGoal * 100).ToString("0.##").Replace('.', ',') + "%";
+                GetVotesData(EventData);
 
                 L_Status.ForeColor = Color.FromArgb(0, 255, 0);
                 L_Status.Text = "Idle";
-
-                // Preserve current milestone for next update
-                OldMilestone_Persistent = EventData.VotesSent;
-
                 // Re-enable when fetch successfully (since if you fetch in startup fails, it'll disable itself)
                 ChkBox_AutoRefresh.Enabled = true;
             }
@@ -229,6 +79,176 @@ namespace Main
                 BTN_Refresh.Enabled = true;
             }
         }
+
+        private void GetVotesData(EventData EventData)
+        {
+            if (EventData.VotesSent - OldMilestone_Persistent > 0 && OldMilestone_Persistent != 0)
+            {
+                LastFetchedPoint = TimeSpan.FromSeconds(DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+                LastUpdatedUpdater.Enabled = true;
+
+                if (EventData.VotesSent < OldMilestone_Persistent)
+                {
+                    int Seed = Random.Shared.Next(0, 10);
+                    if (Seed == 6) { L_AddedVotes.Text = "(Restaurant...)"; } else L_AddedVotes.Text = "(Reset...)";
+
+                    LastAddedVotes.Clear();
+                }
+                else L_AddedVotes.Text = $"(+{EventData.VotesSent - OldMilestone_Persistent:#,##0})";
+
+            }
+
+            VotesProgress.SetState(ProgressBarState.Warning);
+            VotesProgress.Maximum = (int)EventData.VotesGoal;
+            if (EventData.VotesSent >= EventData.VotesGoal)
+            {
+                if (ChkBox_AutoRefresh.Checked)
+                {
+                    L_EstimatedTimeSubtext.Text = "COMPLETED!!!";
+                }
+                L_VotesVoted.ForeColor = Color.FromArgb(0, 255, 0);
+                VotesProgress.Value = VotesProgress.Maximum;
+                VotesProgress.SetState(ProgressBarState.Stopped);
+            }
+            else
+            {
+                L_VotesVoted.ForeColor = Color.White;
+                CalculateETA(EventData);
+
+                VotesProgress.Value = (int)EventData.VotesSent;
+                VotesProgress.SetState(ProgressBarState.Stopped);
+            }
+
+            L_VotesVoted.Text = EventData.VotesSent.ToString("#,##0");
+            L_VotesSummit.Text = EventData.VotesGoal.ToString("#,##0");
+            L_VotesPercent.Text = (EventData.VotesSent / (decimal)EventData.VotesGoal * 100).ToString("0.##").Replace('.', ',') + "%";
+
+            // Preserve current milestone for next update
+            OldMilestone_Persistent = EventData.VotesSent;
+        }
+
+        private void CalculateETA(EventData EventData)
+        {
+            if (ChkBox_AutoRefresh.Checked && OldMilestone_Persistent != 0)
+            {
+                ulong VotesGainedThisMinute = EventData.VotesSent - OldMilestone_Persistent;
+                if (VotesGainedThisMinute > 0)
+                {
+                    // Max history is 10
+                    if (LastAddedVotes.Count == 10)
+                    {
+                        LastAddedVotes.Dequeue();
+                    }
+                    LastAddedVotes.Enqueue(VotesGainedThisMinute);
+
+                    var EstimatedFinishTimeSpanByMinutes = TimeSpan.FromMinutes((EventData.VotesGoal - EventData.VotesSent) / (ulong)LastAddedVotes.Average());
+
+                    if (EstimatedFinishTimeSpanByMinutes.TotalSeconds < 60)
+                    {
+                        L_EstimatedTimeSubtext.Text = $"ETA: Less than a minute!";
+                    }
+                    else if (EstimatedFinishTimeSpanByMinutes.TotalMinutes < 60)
+                    {
+                        L_EstimatedTimeSubtext.Text = $"ETA: {(int)EstimatedFinishTimeSpanByMinutes.TotalMinutes}m left";
+                    }
+                    else if (EstimatedFinishTimeSpanByMinutes.TotalHours < 24)
+                    {
+                        L_EstimatedTimeSubtext.Text = $"ETA: {(int)EstimatedFinishTimeSpanByMinutes.TotalHours}h {(int)EstimatedFinishTimeSpanByMinutes.TotalMinutes % 60}m left";
+                    }
+                    else
+                    {
+                        L_EstimatedTimeSubtext.Text = $"ETA: {(long)EstimatedFinishTimeSpanByMinutes.TotalDays}d {(int)EstimatedFinishTimeSpanByMinutes.TotalHours % 24}h left";
+                    }
+                }
+            }
+            else
+            {
+                L_EstimatedTimeSubtext.Text = "";
+            }
+        }
+
+        private void DisplayEventProgress(EventData EventData)
+        {
+            switch (EventData.EventMilestone)
+            {
+                case 20:
+                case 30:
+                    L_EventState.Text = "Extras: Double XP Event";
+                    break;
+                case 40:
+                case 50:
+                    L_EventState.Text = "Extras: Double XP Event + 50% Mastery Bonus";
+                    break;
+                case 60:
+                case 70:
+                    L_EventState.Text = "Extras: Double XP Event + 50% Mastery Bonus + Double Starr Drops";
+                    break;
+                case 80:
+                case 90:
+                case 100:
+                    L_EventState.Text = "Extras: Double XP Event + 100% Mastery Bonus + Double Starr Drops";
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void EmbedBrawlerImages(EventData EventData)
+        {
+            switch (EventData.AvailablePollChoices)
+            {
+                case 3:
+                    {
+                        // Put images at center
+                        L_Brawler2.Text = EventData.Brawlers[0].BrawlerName;
+                        L_Brawler3.Text = EventData.Brawlers[1].BrawlerName;
+                        L_Brawler4.Text = EventData.Brawlers[2].BrawlerName;
+
+                        Pic_Brawler2.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[0].BrawlerImage ?? [])!;
+                        Pic_Brawler3.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[1].BrawlerImage ?? [])!;
+                        Pic_Brawler4.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[2].BrawlerImage ?? [])!;
+                        break;
+                    }
+                case 1:
+                    {
+                        // Put images at center
+                        L_Brawler3.Text = EventData.Brawlers[0].BrawlerName;
+
+                        Pic_Brawler3.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[1].BrawlerImage ?? [])!;
+                        break;
+                    }
+                case 2:
+                    {
+                        // First image at slot 2, second image at slot 4
+                        L_Brawler2.Text = EventData.Brawlers[0].BrawlerName;
+                        L_Brawler4.Text = EventData.Brawlers[1].BrawlerName;
+
+                        Pic_Brawler2.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[0].BrawlerImage ?? [])!;
+                        Pic_Brawler4.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[1].BrawlerImage ?? [])!;
+                        break;
+                    }
+                default:
+                    {
+                        L_Brawler1.Text = EventData.Brawlers[0].BrawlerName;
+                        L_Brawler2.Text = EventData.Brawlers[1].BrawlerName;
+                        L_Brawler3.Text = EventData.Brawlers[2].BrawlerName;
+                        L_Brawler4.Text = EventData.Brawlers[3].BrawlerName;
+
+                        Pic_Brawler1.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[0].BrawlerImage ?? [])!;
+                        Pic_Brawler2.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[1].BrawlerImage ?? [])!;
+                        Pic_Brawler3.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[2].BrawlerImage ?? [])!;
+                        Pic_Brawler4.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[3].BrawlerImage ?? [])!;
+
+                        if (EventData.AvailablePollChoices >= 5)
+                        {
+                            L_Brawler5.Text = EventData.Brawlers[4].BrawlerName;
+                            Pic_Brawler5.Image = (Image)new ImageConverter().ConvertFrom(EventData.Brawlers[4].BrawlerImage ?? [])!;
+                        }
+                        break;
+                    }
+            }
+        }
+
         private void LoadExternalFont()
         {
             byte[] FontData = Resources.DeterminationMonoWebNew;
@@ -259,6 +279,8 @@ namespace Main
             L_Brawler3.Font = SmallFont;
             L_Brawler4.Font = SmallFont;
             L_Brawler5.Font = SmallFont;
+
+            Font = MediumFont;
         }
 
         private void EventTimeLeftUpdater_Tick(object sender, EventArgs e)
@@ -312,7 +334,7 @@ namespace Main
 
         private void Link_About_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            MessageBox.Show("v1.0.3 -- updated on 16/2/2025\n\nMade by somerandostuff & xale, thankyou for the contributions!", "About tracker", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("v1.0.3 -- updated on 17/2/2025\n\nMade by somerandostuff & xale, thankyou for the contributions!", "About tracker", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void LastUpdatedUpdater_Tick(object sender, EventArgs e)
