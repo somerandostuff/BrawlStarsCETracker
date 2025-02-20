@@ -1,5 +1,7 @@
 # Brawl Stars Community Event tracker
 
+STATUS: on hiatus - event is finished
+
 yeah that's all it is, just a simple event tracker
 ashdskjfshdkfkjlnmvcxvnxmlkds
 
