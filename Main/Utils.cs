@@ -9,6 +9,60 @@ namespace Main
         public static async Task<EventData?> FetchData()
         {
             EventData Data = new EventData();
+            using (var Client = new HttpClient())
+            {
+                var Content = JsonDocument.Parse(await Client.GetStringAsync(BrawlFeedLinks.NewsAPI));
+                if (Content != null)
+                {
+                    for (int Tries = 0; Tries < 5; Tries++)
+                    {
+                        var EventData = Content.RootElement
+                                              .GetProperty("events")[Tries];
+                        Data.Pregress = EventData
+                                       .GetProperty("tracker")
+                                       .GetProperty("progress")
+                                       .GetDecimal();
+
+                        if (EventData.TryGetProperty("milestones", out EventData))
+                        {
+                            int TotalEventMilestones = EventData.GetArrayLength();
+                            // 6 might be the maximum amount of milestones that can be displayed on screen
+                            if (TotalEventMilestones < 6)
+                            {
+                                Data.Milestones.Add(new() { BarPercent = 0, MilestoneLabel = "0B" });
+                            }
+                            for (int Idx = 0; Idx < TotalEventMilestones; Idx++)
+                            {
+                                Milestone Milestone = new Milestone();
+
+                                Milestone.MilestoneLabel = EventData[Idx].GetProperty("label").GetString();
+                                Milestone.BarPercent = EventData[Idx].GetProperty("progress").GetByte();
+
+                                Data.Milestones.Add(Milestone);
+                            }
+                            break;
+                        }
+                    }
+                    return Data;
+                }
+                else return null;
+            }
+        }
+
+        public static TimeSpan GetTimeLeft()
+        {
+            var Seconds = EventTime.EventEndEpochTime - DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            return Seconds > 0 ? TimeSpan.FromSeconds(Seconds) : TimeSpan.Zero;
+        }
+
+        public static TimeSpan GetTimeLeftUntilDeltaruneIsReleased()
+        {
+            var Seconds = EventTime.DeltaruneReleaseTime - DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            return Seconds > 0 ? TimeSpan.FromSeconds(Seconds) : TimeSpan.Zero;
+        }
+
+        /*
+            EventData_202502 Data = new EventData_202502();
             List<Brawler> Brawlers = new List<Brawler>();
 
             using (var Client = new HttpClient())
@@ -20,6 +74,7 @@ namespace Main
                 if (Content != null)
                 {
                     for (byte Tries = 0; Tries < 5; Tries++)
+
                     {
                         var TryFindEventData = Content.RootElement
                                               .GetProperty("entries")
@@ -81,12 +136,6 @@ namespace Main
 
                 return Data;
             }
-        }
-
-        public static TimeSpan GetTimeLeft()
-        {
-            var Seconds = EventTime.EventEndEpochTime - DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            return Seconds > 0 ? TimeSpan.FromSeconds(Seconds) : TimeSpan.Zero;
-        }
+         */
     }
 }

@@ -1,606 +1,315 @@
 {
-  "entries": {
-    "eventEntries": [
-      {
-        "id": "7tqlickrkqrHfrQ3pHXXvF",
-        "metadata": {
-          "id": "7tqlickrkqrHfrQ3pHXXvF",
-          "publishedAt": "2025-02-10T10:10:24.380Z",
-          "publishedVersion": 95
+  "events": [
+    {
+      "id": "9G480VRXdZ3hNFftpLQ0L",
+      "metadata": {
+        "id": "9G480VRXdZ3hNFftpLQ0L",
+        "publishedAt": "2025-04-14T09:41:07.939Z",
+        "publishedVersion": 63
+      },
+      "targeting": {
+        "country": [],
+        "platform": [],
+        "builderHallLevel": [],
+        "townHallLevel": [],
+        "campaignId": "plasma-wraith",
+        "avatarIds": [],
+        "hideFromYoungPlayer": false
+      },
+      "postDate": 1744620917299,
+      "sortDate": 1744620917299,
+      "lang": "en",
+      "title": "Community Event April 23",
+      "ctas": [
+        {
+          "title": null,
+          "type": "url",
+          "urlType": "url",
+          "id": "3s2imljMsnalZEZ33j1qsb",
+          "order": "0",
+          "variant": "red",
+          "url": "https://youtu.be/w6vCF0DbBsE",
+          "label": "Watch!"
         },
-        "targeting": {
-          "country": [],
-          "platform": [],
-          "builderHallLevel": [],
-          "townHallLevel": [],
-          "campaignId": "bochelor",
-          "avatarIds": [],
-          "hideFromYoungPlayer": false
-        },
-        "postDate": "1739177549",
-        "sortDate": "1739177549",
-        "lang": "en",
-        "title": "Rewards Available On:",
-        "type": "progressTrackerEntry",
-
-        "ctas": {
-          "6kjQMmOUtIi7L2adA3YlUI": {
-            "title": null,
-            "type": "article",
-            "urlType": "article",
-            "id": "6kjQMmOUtIi7L2adA3YlUI",
-            "order": "0",
-            "variant": "pink",
-            "label": "VOTE!",
-            "url": {
-              // USE THIS
-              "id": "7qPPG69EByxUh2VIPjZPpg",
-              "section": "carouselEventPollEntry"
-            },
-            "article": [
-              {
-                "id": "7qPPG69EByxUh2VIPjZPpg",
-                "section": "carouselEventPollEntry"
-              }
-            ]
+        {
+          "title": null,
+          "type": "article",
+          "urlType": "article",
+          "id": "NE4TN8yFy71XJQUAZiaB5",
+          "order": "1",
+          "variant": "gold",
+          "label": "More info!",
+          "url": {
+            "id": "2vvZjkFZQgvkYO6etfMXS2",
+            "section": "newsEntries"
           },
-          "5YIC9Er77efhLfK5Ot3VaV": {
-            "title": null,
-            "type": "url",
-            "urlType": "url",
-            "id": "5YIC9Er77efhLfK5Ot3VaV",
-            "order": "1",
-            "variant": "twitch",
-            "url": "https://youtu.be/jdX5xwV829s",
-            "label": "Watch"
+          "article": {
+            "id": "2vvZjkFZQgvkYO6etfMXS2",
+            "section": "newsEntries"
           }
+        }
+      ],
+      "type": "progressTrackerEntry",
+      "background": {
+        "small": {
+          "title": "bg-plasma-wraith.jpg",
+          "path": "/xdjcscmv3zo3/1a6apbB4ZVg9KSz5E6xmCG/a286f4cebcf9757eb1a379631c2112f9/bg-plasma-wraith.jpg?w=160&h=232&f=center&fit=fill",
+          "width": 160,
+          "height": 232
         },
-
-        "milestones": [
-          {
-            "unlocked": true,
-            "voucherId": null,
-            "eventId": null,
-            "progress": 10,
-            "image": {
-              "small": {
-                "title": "02 heart_JACKY VS CHARLIE_420x256 2.png",
-                "path": "/xdjcscmv3zo3/2rpvYVpDOQtI8rZTnlBSP1/cb87ed0a1ef748cc0cfc894e58ba1552/02_heart_JACKY_VS_CHARLIE_420x256_2.png?w=84&h=51&f=center&fit=fill",
-                "width": 84,
-                "height": 51
-              },
-              "smallRetina": {
-                "title": "02 heart_JACKY VS CHARLIE_420x256 2.png",
-                "path": "/xdjcscmv3zo3/2rpvYVpDOQtI8rZTnlBSP1/cb87ed0a1ef748cc0cfc894e58ba1552/02_heart_JACKY_VS_CHARLIE_420x256_2.png?w=168&h=102&f=center&fit=fill",
-                "width": 168,
-                "height": 102
-              },
-              "medium": {
-                "title": "02 heart_JACKY VS CHARLIE_420x256 2.png",
-                "path": "/xdjcscmv3zo3/2rpvYVpDOQtI8rZTnlBSP1/cb87ed0a1ef748cc0cfc894e58ba1552/02_heart_JACKY_VS_CHARLIE_420x256_2.png?w=210&h=128&f=center&fit=fill",
-                "width": 210,
-                "height": 128
-              },
-              "mediumRetina": {
-                "title": "02 heart_JACKY VS CHARLIE_420x256 2.png",
-                "path": "/xdjcscmv3zo3/2rpvYVpDOQtI8rZTnlBSP1/cb87ed0a1ef748cc0cfc894e58ba1552/02_heart_JACKY_VS_CHARLIE_420x256_2.png?w=252&h=154&f=center&fit=fill",
-                "width": 252,
-                "height": 154
-              },
-              "large": {
-                "title": "02 heart_JACKY VS CHARLIE_420x256 2.png",
-                "path": "/xdjcscmv3zo3/2rpvYVpDOQtI8rZTnlBSP1/cb87ed0a1ef748cc0cfc894e58ba1552/02_heart_JACKY_VS_CHARLIE_420x256_2.png?w=336&h=205&f=center&fit=fill",
-                "width": 336,
-                "height": 205
-              },
-              "largeRetina": {
-                "title": "02 heart_JACKY VS CHARLIE_420x256 2.png",
-                "path": "/xdjcscmv3zo3/2rpvYVpDOQtI8rZTnlBSP1/cb87ed0a1ef748cc0cfc894e58ba1552/02_heart_JACKY_VS_CHARLIE_420x256_2.png?w=420&h=256&f=center&fit=fill",
-                "width": 420,
-                "height": 256
-              }
-            },
-            "label": ""
-          },
-          {
-            "unlocked": false,
-            "progress": 20,
-            "image": {
-              "small": {
-                "title": "03 rewards_420x256 2.png",
-                "path": "/xdjcscmv3zo3/39uXaxsCM8gfs399Lc7nN8/cc11f040d7f60094c6a3c206efac6fa2/03_rewards_420x256_2.png?w=84&h=51&f=center&fit=fill",
-                "width": 84,
-                "height": 51
-              },
-              "smallRetina": {
-                "title": "03 rewards_420x256 2.png",
-                "path": "/xdjcscmv3zo3/39uXaxsCM8gfs399Lc7nN8/cc11f040d7f60094c6a3c206efac6fa2/03_rewards_420x256_2.png?w=168&h=102&f=center&fit=fill",
-                "width": 168,
-                "height": 102
-              },
-              "medium": {
-                "title": "03 rewards_420x256 2.png",
-                "path": "/xdjcscmv3zo3/39uXaxsCM8gfs399Lc7nN8/cc11f040d7f60094c6a3c206efac6fa2/03_rewards_420x256_2.png?w=210&h=128&f=center&fit=fill",
-                "width": 210,
-                "height": 128
-              },
-              "mediumRetina": {
-                "title": "03 rewards_420x256 2.png",
-                "path": "/xdjcscmv3zo3/39uXaxsCM8gfs399Lc7nN8/cc11f040d7f60094c6a3c206efac6fa2/03_rewards_420x256_2.png?w=252&h=154&f=center&fit=fill",
-                "width": 252,
-                "height": 154
-              },
-              "large": {
-                "title": "03 rewards_420x256 2.png",
-                "path": "/xdjcscmv3zo3/39uXaxsCM8gfs399Lc7nN8/cc11f040d7f60094c6a3c206efac6fa2/03_rewards_420x256_2.png?w=336&h=205&f=center&fit=fill",
-                "width": 336,
-                "height": 205
-              },
-              "largeRetina": {
-                "title": "03 rewards_420x256 2.png",
-                "path": "/xdjcscmv3zo3/39uXaxsCM8gfs399Lc7nN8/cc11f040d7f60094c6a3c206efac6fa2/03_rewards_420x256_2.png?w=420&h=256&f=center&fit=fill",
-                "width": 420,
-                "height": 256
-              }
-            },
-            "label": ""
-          },
-          {
-            "unlocked": false,
-            "progress": 30,
-            "image": {
-              "small": {
-                "title": "02 heart_MANDY VS LOLA_420x256 2.png",
-                "path": "/xdjcscmv3zo3/1TSBLCQMItRqWpqSxOQrLk/2df9ecc85afc98ca2130eba27fb9116c/02_heart_MANDY_VS_LOLA_420x256_2.png?w=84&h=51&f=center&fit=fill",
-                "width": 84,
-                "height": 51
-              },
-              "smallRetina": {
-                "title": "02 heart_MANDY VS LOLA_420x256 2.png",
-                "path": "/xdjcscmv3zo3/1TSBLCQMItRqWpqSxOQrLk/2df9ecc85afc98ca2130eba27fb9116c/02_heart_MANDY_VS_LOLA_420x256_2.png?w=168&h=102&f=center&fit=fill",
-                "width": 168,
-                "height": 102
-              },
-              "medium": {
-                "title": "02 heart_MANDY VS LOLA_420x256 2.png",
-                "path": "/xdjcscmv3zo3/1TSBLCQMItRqWpqSxOQrLk/2df9ecc85afc98ca2130eba27fb9116c/02_heart_MANDY_VS_LOLA_420x256_2.png?w=210&h=128&f=center&fit=fill",
-                "width": 210,
-                "height": 128
-              },
-              "mediumRetina": {
-                "title": "02 heart_MANDY VS LOLA_420x256 2.png",
-                "path": "/xdjcscmv3zo3/1TSBLCQMItRqWpqSxOQrLk/2df9ecc85afc98ca2130eba27fb9116c/02_heart_MANDY_VS_LOLA_420x256_2.png?w=252&h=154&f=center&fit=fill",
-                "width": 252,
-                "height": 154
-              },
-              "large": {
-                "title": "02 heart_MANDY VS LOLA_420x256 2.png",
-                "path": "/xdjcscmv3zo3/1TSBLCQMItRqWpqSxOQrLk/2df9ecc85afc98ca2130eba27fb9116c/02_heart_MANDY_VS_LOLA_420x256_2.png?w=336&h=205&f=center&fit=fill",
-                "width": 336,
-                "height": 205
-              },
-              "largeRetina": {
-                "title": "02 heart_MANDY VS LOLA_420x256 2.png",
-                "path": "/xdjcscmv3zo3/1TSBLCQMItRqWpqSxOQrLk/2df9ecc85afc98ca2130eba27fb9116c/02_heart_MANDY_VS_LOLA_420x256_2.png?w=420&h=256&f=center&fit=fill",
-                "width": 420,
-                "height": 256
-              }
-            },
-            "label": ""
-          },
-          {
-            "unlocked": false,
-            "progress": 40,
-            "image": {
-              "small": {
-                "title": "03 rewards_50% Mastery bonus_420x256 2.png",
-                "path": "/xdjcscmv3zo3/7KXADDcpZHIFORfndq48ra/2f875994489bfe36cde272e4a9fe4efb/03_rewards_50__Mastery_bonus_420x256_2.png?w=84&h=51&f=center&fit=fill",
-                "width": 84,
-                "height": 51
-              },
-              "smallRetina": {
-                "title": "03 rewards_50% Mastery bonus_420x256 2.png",
-                "path": "/xdjcscmv3zo3/7KXADDcpZHIFORfndq48ra/2f875994489bfe36cde272e4a9fe4efb/03_rewards_50__Mastery_bonus_420x256_2.png?w=168&h=102&f=center&fit=fill",
-                "width": 168,
-                "height": 102
-              },
-              "medium": {
-                "title": "03 rewards_50% Mastery bonus_420x256 2.png",
-                "path": "/xdjcscmv3zo3/7KXADDcpZHIFORfndq48ra/2f875994489bfe36cde272e4a9fe4efb/03_rewards_50__Mastery_bonus_420x256_2.png?w=210&h=128&f=center&fit=fill",
-                "width": 210,
-                "height": 128
-              },
-              "mediumRetina": {
-                "title": "03 rewards_50% Mastery bonus_420x256 2.png",
-                "path": "/xdjcscmv3zo3/7KXADDcpZHIFORfndq48ra/2f875994489bfe36cde272e4a9fe4efb/03_rewards_50__Mastery_bonus_420x256_2.png?w=252&h=154&f=center&fit=fill",
-                "width": 252,
-                "height": 154
-              },
-              "large": {
-                "title": "03 rewards_50% Mastery bonus_420x256 2.png",
-                "path": "/xdjcscmv3zo3/7KXADDcpZHIFORfndq48ra/2f875994489bfe36cde272e4a9fe4efb/03_rewards_50__Mastery_bonus_420x256_2.png?w=336&h=205&f=center&fit=fill",
-                "width": 336,
-                "height": 205
-              },
-              "largeRetina": {
-                "title": "03 rewards_50% Mastery bonus_420x256 2.png",
-                "path": "/xdjcscmv3zo3/7KXADDcpZHIFORfndq48ra/2f875994489bfe36cde272e4a9fe4efb/03_rewards_50__Mastery_bonus_420x256_2.png?w=420&h=256&f=center&fit=fill",
-                "width": 420,
-                "height": 256
-              }
-            },
-            "label": ""
-          },
-          {
-            "unlocked": false,
-            "progress": 50,
-            "image": {
-              "small": {
-                "title": "02 heart_ANGELO VS AMBER_420x256 2.png",
-                "path": "/xdjcscmv3zo3/nDteHiZbd7Y0j5TRLLWYJ/61e7d5b2d4af30f1a0910d1b5c3f9cff/02_heart_ANGELO_VS_AMBER_420x256_2.png?w=84&h=51&f=center&fit=fill",
-                "width": 84,
-                "height": 51
-              },
-              "smallRetina": {
-                "title": "02 heart_ANGELO VS AMBER_420x256 2.png",
-                "path": "/xdjcscmv3zo3/nDteHiZbd7Y0j5TRLLWYJ/61e7d5b2d4af30f1a0910d1b5c3f9cff/02_heart_ANGELO_VS_AMBER_420x256_2.png?w=168&h=102&f=center&fit=fill",
-                "width": 168,
-                "height": 102
-              },
-              "medium": {
-                "title": "02 heart_ANGELO VS AMBER_420x256 2.png",
-                "path": "/xdjcscmv3zo3/nDteHiZbd7Y0j5TRLLWYJ/61e7d5b2d4af30f1a0910d1b5c3f9cff/02_heart_ANGELO_VS_AMBER_420x256_2.png?w=210&h=128&f=center&fit=fill",
-                "width": 210,
-                "height": 128
-              },
-              "mediumRetina": {
-                "title": "02 heart_ANGELO VS AMBER_420x256 2.png",
-                "path": "/xdjcscmv3zo3/nDteHiZbd7Y0j5TRLLWYJ/61e7d5b2d4af30f1a0910d1b5c3f9cff/02_heart_ANGELO_VS_AMBER_420x256_2.png?w=252&h=154&f=center&fit=fill",
-                "width": 252,
-                "height": 154
-              },
-              "large": {
-                "title": "02 heart_ANGELO VS AMBER_420x256 2.png",
-                "path": "/xdjcscmv3zo3/nDteHiZbd7Y0j5TRLLWYJ/61e7d5b2d4af30f1a0910d1b5c3f9cff/02_heart_ANGELO_VS_AMBER_420x256_2.png?w=336&h=205&f=center&fit=fill",
-                "width": 336,
-                "height": 205
-              },
-              "largeRetina": {
-                "title": "02 heart_ANGELO VS AMBER_420x256 2.png",
-                "path": "/xdjcscmv3zo3/nDteHiZbd7Y0j5TRLLWYJ/61e7d5b2d4af30f1a0910d1b5c3f9cff/02_heart_ANGELO_VS_AMBER_420x256_2.png?w=420&h=256&f=center&fit=fill",
-                "width": 420,
-                "height": 256
-              }
-            },
-            "label": ""
-          },
-          {
-            "unlocked": false,
-            "progress": 60,
-            "image": {
-              "small": {
-                "title": "03 rewards_Double Starr Drops_420x256 2.png",
-                "path": "/xdjcscmv3zo3/2j2a2z9GoBJQzfIhuVUrRO/267175bf3ca3ed75b669862b2a61fe66/03_rewards_Double_Starr_Drops_420x256_2.png?w=84&h=51&f=center&fit=fill",
-                "width": 84,
-                "height": 51
-              },
-              "smallRetina": {
-                "title": "03 rewards_Double Starr Drops_420x256 2.png",
-                "path": "/xdjcscmv3zo3/2j2a2z9GoBJQzfIhuVUrRO/267175bf3ca3ed75b669862b2a61fe66/03_rewards_Double_Starr_Drops_420x256_2.png?w=168&h=102&f=center&fit=fill",
-                "width": 168,
-                "height": 102
-              },
-              "medium": {
-                "title": "03 rewards_Double Starr Drops_420x256 2.png",
-                "path": "/xdjcscmv3zo3/2j2a2z9GoBJQzfIhuVUrRO/267175bf3ca3ed75b669862b2a61fe66/03_rewards_Double_Starr_Drops_420x256_2.png?w=210&h=128&f=center&fit=fill",
-                "width": 210,
-                "height": 128
-              },
-              "mediumRetina": {
-                "title": "03 rewards_Double Starr Drops_420x256 2.png",
-                "path": "/xdjcscmv3zo3/2j2a2z9GoBJQzfIhuVUrRO/267175bf3ca3ed75b669862b2a61fe66/03_rewards_Double_Starr_Drops_420x256_2.png?w=252&h=154&f=center&fit=fill",
-                "width": 252,
-                "height": 154
-              },
-              "large": {
-                "title": "03 rewards_Double Starr Drops_420x256 2.png",
-                "path": "/xdjcscmv3zo3/2j2a2z9GoBJQzfIhuVUrRO/267175bf3ca3ed75b669862b2a61fe66/03_rewards_Double_Starr_Drops_420x256_2.png?w=336&h=205&f=center&fit=fill",
-                "width": 336,
-                "height": 205
-              },
-              "largeRetina": {
-                "title": "03 rewards_Double Starr Drops_420x256 2.png",
-                "path": "/xdjcscmv3zo3/2j2a2z9GoBJQzfIhuVUrRO/267175bf3ca3ed75b669862b2a61fe66/03_rewards_Double_Starr_Drops_420x256_2.png?w=420&h=256&f=center&fit=fill",
-                "width": 420,
-                "height": 256
-              }
-            },
-            "label": ""
-          },
-          {
-            "unlocked": false,
-            "progress": 70,
-            "image": {
-              "small": {
-                "title": "02 heart_PIPER VS RICO_420x256 2.png",
-                "path": "/xdjcscmv3zo3/5hJhxVMQMII1xLeqUepSt1/e588bfd2d72e648b8a0375f5b5df11ec/02_heart_PIPER_VS_RICO_420x256_2.png?w=84&h=51&f=center&fit=fill",
-                "width": 84,
-                "height": 51
-              },
-              "smallRetina": {
-                "title": "02 heart_PIPER VS RICO_420x256 2.png",
-                "path": "/xdjcscmv3zo3/5hJhxVMQMII1xLeqUepSt1/e588bfd2d72e648b8a0375f5b5df11ec/02_heart_PIPER_VS_RICO_420x256_2.png?w=168&h=102&f=center&fit=fill",
-                "width": 168,
-                "height": 102
-              },
-              "medium": {
-                "title": "02 heart_PIPER VS RICO_420x256 2.png",
-                "path": "/xdjcscmv3zo3/5hJhxVMQMII1xLeqUepSt1/e588bfd2d72e648b8a0375f5b5df11ec/02_heart_PIPER_VS_RICO_420x256_2.png?w=210&h=128&f=center&fit=fill",
-                "width": 210,
-                "height": 128
-              },
-              "mediumRetina": {
-                "title": "02 heart_PIPER VS RICO_420x256 2.png",
-                "path": "/xdjcscmv3zo3/5hJhxVMQMII1xLeqUepSt1/e588bfd2d72e648b8a0375f5b5df11ec/02_heart_PIPER_VS_RICO_420x256_2.png?w=252&h=154&f=center&fit=fill",
-                "width": 252,
-                "height": 154
-              },
-              "large": {
-                "title": "02 heart_PIPER VS RICO_420x256 2.png",
-                "path": "/xdjcscmv3zo3/5hJhxVMQMII1xLeqUepSt1/e588bfd2d72e648b8a0375f5b5df11ec/02_heart_PIPER_VS_RICO_420x256_2.png?w=336&h=205&f=center&fit=fill",
-                "width": 336,
-                "height": 205
-              },
-              "largeRetina": {
-                "title": "02 heart_PIPER VS RICO_420x256 2.png",
-                "path": "/xdjcscmv3zo3/5hJhxVMQMII1xLeqUepSt1/e588bfd2d72e648b8a0375f5b5df11ec/02_heart_PIPER_VS_RICO_420x256_2.png?w=420&h=256&f=center&fit=fill",
-                "width": 420,
-                "height": 256
-              }
-            },
-            "label": ""
-          },
-          {
-            "unlocked": false,
-            "progress": 80,
-            "image": {
-              "small": {
-                "title": "03 rewards_100% Mastery bonus_420x256 2.png",
-                "path": "/xdjcscmv3zo3/4115rEpEm6qGwvHskRW0Wb/3fbc8cabd4c3199d3b34ea113768ac4a/03_rewards_100__Mastery_bonus_420x256_2.png?w=84&h=51&f=center&fit=fill",
-                "width": 84,
-                "height": 51
-              },
-              "smallRetina": {
-                "title": "03 rewards_100% Mastery bonus_420x256 2.png",
-                "path": "/xdjcscmv3zo3/4115rEpEm6qGwvHskRW0Wb/3fbc8cabd4c3199d3b34ea113768ac4a/03_rewards_100__Mastery_bonus_420x256_2.png?w=168&h=102&f=center&fit=fill",
-                "width": 168,
-                "height": 102
-              },
-              "medium": {
-                "title": "03 rewards_100% Mastery bonus_420x256 2.png",
-                "path": "/xdjcscmv3zo3/4115rEpEm6qGwvHskRW0Wb/3fbc8cabd4c3199d3b34ea113768ac4a/03_rewards_100__Mastery_bonus_420x256_2.png?w=210&h=128&f=center&fit=fill",
-                "width": 210,
-                "height": 128
-              },
-              "mediumRetina": {
-                "title": "03 rewards_100% Mastery bonus_420x256 2.png",
-                "path": "/xdjcscmv3zo3/4115rEpEm6qGwvHskRW0Wb/3fbc8cabd4c3199d3b34ea113768ac4a/03_rewards_100__Mastery_bonus_420x256_2.png?w=252&h=154&f=center&fit=fill",
-                "width": 252,
-                "height": 154
-              },
-              "large": {
-                "title": "03 rewards_100% Mastery bonus_420x256 2.png",
-                "path": "/xdjcscmv3zo3/4115rEpEm6qGwvHskRW0Wb/3fbc8cabd4c3199d3b34ea113768ac4a/03_rewards_100__Mastery_bonus_420x256_2.png?w=336&h=205&f=center&fit=fill",
-                "width": 336,
-                "height": 205
-              },
-              "largeRetina": {
-                "title": "03 rewards_100% Mastery bonus_420x256 2.png",
-                "path": "/xdjcscmv3zo3/4115rEpEm6qGwvHskRW0Wb/3fbc8cabd4c3199d3b34ea113768ac4a/03_rewards_100__Mastery_bonus_420x256_2.png?w=420&h=256&f=center&fit=fill",
-                "width": 420,
-                "height": 256
-              }
-            },
-            "label": ""
-          },
-          {
-            "unlocked": false,
-            "progress": 90,
-            "image": {
-              "small": {
-                "title": "02 heart_MORTIS VS MELODIE_420x256 2.png",
-                "path": "/xdjcscmv3zo3/3ymKaoD5Kf75s5AsvQCQR8/420a0b89acee4cd1e12d1568a16e6eb5/02_heart_MORTIS_VS_MELODIE_420x256_2.png?w=84&h=51&f=center&fit=fill",
-                "width": 84,
-                "height": 51
-              },
-              "smallRetina": {
-                "title": "02 heart_MORTIS VS MELODIE_420x256 2.png",
-                "path": "/xdjcscmv3zo3/3ymKaoD5Kf75s5AsvQCQR8/420a0b89acee4cd1e12d1568a16e6eb5/02_heart_MORTIS_VS_MELODIE_420x256_2.png?w=168&h=102&f=center&fit=fill",
-                "width": 168,
-                "height": 102
-              },
-              "medium": {
-                "title": "02 heart_MORTIS VS MELODIE_420x256 2.png",
-                "path": "/xdjcscmv3zo3/3ymKaoD5Kf75s5AsvQCQR8/420a0b89acee4cd1e12d1568a16e6eb5/02_heart_MORTIS_VS_MELODIE_420x256_2.png?w=210&h=128&f=center&fit=fill",
-                "width": 210,
-                "height": 128
-              },
-              "mediumRetina": {
-                "title": "02 heart_MORTIS VS MELODIE_420x256 2.png",
-                "path": "/xdjcscmv3zo3/3ymKaoD5Kf75s5AsvQCQR8/420a0b89acee4cd1e12d1568a16e6eb5/02_heart_MORTIS_VS_MELODIE_420x256_2.png?w=252&h=154&f=center&fit=fill",
-                "width": 252,
-                "height": 154
-              },
-              "large": {
-                "title": "02 heart_MORTIS VS MELODIE_420x256 2.png",
-                "path": "/xdjcscmv3zo3/3ymKaoD5Kf75s5AsvQCQR8/420a0b89acee4cd1e12d1568a16e6eb5/02_heart_MORTIS_VS_MELODIE_420x256_2.png?w=336&h=205&f=center&fit=fill",
-                "width": 336,
-                "height": 205
-              },
-              "largeRetina": {
-                "title": "02 heart_MORTIS VS MELODIE_420x256 2.png",
-                "path": "/xdjcscmv3zo3/3ymKaoD5Kf75s5AsvQCQR8/420a0b89acee4cd1e12d1568a16e6eb5/02_heart_MORTIS_VS_MELODIE_420x256_2.png?w=420&h=256&f=center&fit=fill",
-                "width": 420,
-                "height": 256
-              }
-            },
-            "label": ""
-          }
-        ],
-        "tracker": {
-          "progress": 10,
-          "direction": "vertical",
-          "color": "#3178F5"
+        "smallRetina": {
+          "title": "bg-plasma-wraith.jpg",
+          "path": "/xdjcscmv3zo3/1a6apbB4ZVg9KSz5E6xmCG/a286f4cebcf9757eb1a379631c2112f9/bg-plasma-wraith.jpg?w=320&h=464&f=center&fit=fill",
+          "width": 320,
+          "height": 464
+        },
+        "medium": {
+          "title": "bg-plasma-wraith.jpg",
+          "path": "/xdjcscmv3zo3/1a6apbB4ZVg9KSz5E6xmCG/a286f4cebcf9757eb1a379631c2112f9/bg-plasma-wraith.jpg?w=400&h=581&f=center&fit=fill",
+          "width": 400,
+          "height": 581
+        },
+        "mediumRetina": {
+          "title": "bg-plasma-wraith.jpg",
+          "path": "/xdjcscmv3zo3/1a6apbB4ZVg9KSz5E6xmCG/a286f4cebcf9757eb1a379631c2112f9/bg-plasma-wraith.jpg?w=480&h=697&f=center&fit=fill",
+          "width": 480,
+          "height": 697
+        },
+        "large": {
+          "title": "bg-plasma-wraith.jpg",
+          "path": "/xdjcscmv3zo3/1a6apbB4ZVg9KSz5E6xmCG/a286f4cebcf9757eb1a379631c2112f9/bg-plasma-wraith.jpg?w=640&h=929&f=center&fit=fill",
+          "width": 640,
+          "height": 929
+        },
+        "largeRetina": {
+          "title": "bg-plasma-wraith.jpg",
+          "path": "/xdjcscmv3zo3/1a6apbB4ZVg9KSz5E6xmCG/a286f4cebcf9757eb1a379631c2112f9/bg-plasma-wraith.jpg?w=800&h=1161&f=center&fit=fill",
+          "width": 800,
+          "height": 1161
         }
       },
-      {
-        "id": "7qPPG69EByxUh2VIPjZPpg",
-        "metadata": {
-          "id": "7qPPG69EByxUh2VIPjZPpg",
-          "publishedAt": "2025-02-10T08:53:16.275Z",
-          "publishedVersion": 82
-        },
-        "targeting": {
-          "country": [],
-          "platform": [],
-          "builderHallLevel": [],
-          "townHallLevel": [],
-          "campaignId": "bochelor-poll-gift6x-2000000",
-          "avatarIds": [],
-          "hideFromYoungPlayer": false
-        },
-        "postDate": "1739177522",
-        "sortDate": "1739177522",
-        "lang": "en",
-        "title": "Pick A Perfect Match for Bo!",
-        "hideTitle": false,
-        "background": {
-          "small": {
-            "title": "Bo-Valentine-800x1161_vote.jpg",
-            "path": "/xdjcscmv3zo3/3Zmd6C3D2B2imaTAvHi80Z/43e818dc632dc297c1bde1f1a918d1af/Bo-Valentine-800x1161_vote.jpg?w=160&h=232&f=center&fit=fill",
-            "width": 160,
-            "height": 232
-          },
-          "smallRetina": {
-            "title": "Bo-Valentine-800x1161_vote.jpg",
-            "path": "/xdjcscmv3zo3/3Zmd6C3D2B2imaTAvHi80Z/43e818dc632dc297c1bde1f1a918d1af/Bo-Valentine-800x1161_vote.jpg?w=320&h=464&f=center&fit=fill",
-            "width": 320,
-            "height": 464
-          },
-          "medium": {
-            "title": "Bo-Valentine-800x1161_vote.jpg",
-            "path": "/xdjcscmv3zo3/3Zmd6C3D2B2imaTAvHi80Z/43e818dc632dc297c1bde1f1a918d1af/Bo-Valentine-800x1161_vote.jpg?w=400&h=581&f=center&fit=fill",
-            "width": 400,
-            "height": 581
-          },
-          "mediumRetina": {
-            "title": "Bo-Valentine-800x1161_vote.jpg",
-            "path": "/xdjcscmv3zo3/3Zmd6C3D2B2imaTAvHi80Z/43e818dc632dc297c1bde1f1a918d1af/Bo-Valentine-800x1161_vote.jpg?w=480&h=697&f=center&fit=fill",
-            "width": 480,
-            "height": 697
-          },
-          "large": {
-            "title": "Bo-Valentine-800x1161_vote.jpg",
-            "path": "/xdjcscmv3zo3/3Zmd6C3D2B2imaTAvHi80Z/43e818dc632dc297c1bde1f1a918d1af/Bo-Valentine-800x1161_vote.jpg?w=640&h=929&f=center&fit=fill",
-            "width": 640,
-            "height": 929
-          },
-          "largeRetina": {
-            "title": "Bo-Valentine-800x1161_vote.jpg",
-            "path": "/xdjcscmv3zo3/3Zmd6C3D2B2imaTAvHi80Z/43e818dc632dc297c1bde1f1a918d1af/Bo-Valentine-800x1161_vote.jpg?w=800&h=1161&f=center&fit=fill",
-            "width": 800,
-            "height": 1161
-          }
-        },
-        "type": "pollEntry",
-        "pollTitle": "Pick A Perfect Match for Bo!",
-        "options": [
-          {
-            "id": "1",
-            "title": "Jacky",
-            "image": {
-              "small": {
-                "title": "jacky.png",
-                "path": "/xdjcscmv3zo3/4r9dfcytInxKK3Lnzgc2aF/25eca1ffb7714e8006daab03900bff5e/jacky.png?w=60&h=80&f=center&fit=fill",
-                "width": 60,
-                "height": 80
-              },
-              "smallRetina": {
-                "title": "jacky.png",
-                "path": "/xdjcscmv3zo3/4r9dfcytInxKK3Lnzgc2aF/25eca1ffb7714e8006daab03900bff5e/jacky.png?w=120&h=160&f=center&fit=fill",
-                "width": 120,
-                "height": 160
-              },
-              "medium": {
-                "title": "jacky.png",
-                "path": "/xdjcscmv3zo3/4r9dfcytInxKK3Lnzgc2aF/25eca1ffb7714e8006daab03900bff5e/jacky.png?w=150&h=200&f=center&fit=fill",
-                "width": 150,
-                "height": 200
-              },
-              "mediumRetina": {
-                "title": "jacky.png",
-                "path": "/xdjcscmv3zo3/4r9dfcytInxKK3Lnzgc2aF/25eca1ffb7714e8006daab03900bff5e/jacky.png?w=180&h=240&f=center&fit=fill",
-                "width": 180,
-                "height": 240
-              },
-              "large": {
-                "title": "jacky.png",
-                "path": "/xdjcscmv3zo3/4r9dfcytInxKK3Lnzgc2aF/25eca1ffb7714e8006daab03900bff5e/jacky.png?w=240&h=320&f=center&fit=fill",
-                "width": 240,
-                "height": 320
-              },
-              "largeRetina": {
-                "title": "jacky.png",
-                "path": "/xdjcscmv3zo3/4r9dfcytInxKK3Lnzgc2aF/25eca1ffb7714e8006daab03900bff5e/jacky.png?w=300&h=400&f=center&fit=fill",
-                "width": 300,
-                "height": 400
-              }
+      "milestones": [
+        {
+          "unlocked": false,
+          "progress": 20,
+          "image": {
+            "small": {
+              "title": "P2W_Milestone01.png",
+              "path": "/xdjcscmv3zo3/4PwVYvd54v7mNpikf1qtjA/8f94bbb61658c56bdbf5cc14c374e3d9/P2W_Milestone01.png?w=102&h=102&f=center&fit=fill",
+              "width": 102,
+              "height": 102
+            },
+            "smallRetina": {
+              "title": "P2W_Milestone01.png",
+              "path": "/xdjcscmv3zo3/4PwVYvd54v7mNpikf1qtjA/8f94bbb61658c56bdbf5cc14c374e3d9/P2W_Milestone01.png?w=205&h=205&f=center&fit=fill",
+              "width": 205,
+              "height": 205
+            },
+            "medium": {
+              "title": "P2W_Milestone01.png",
+              "path": "/xdjcscmv3zo3/4PwVYvd54v7mNpikf1qtjA/8f94bbb61658c56bdbf5cc14c374e3d9/P2W_Milestone01.png?w=256&h=256&f=center&fit=fill",
+              "width": 256,
+              "height": 256
+            },
+            "mediumRetina": {
+              "title": "P2W_Milestone01.png",
+              "path": "/xdjcscmv3zo3/4PwVYvd54v7mNpikf1qtjA/8f94bbb61658c56bdbf5cc14c374e3d9/P2W_Milestone01.png?w=307&h=307&f=center&fit=fill",
+              "width": 307,
+              "height": 307
+            },
+            "large": {
+              "title": "P2W_Milestone01.png",
+              "path": "/xdjcscmv3zo3/4PwVYvd54v7mNpikf1qtjA/8f94bbb61658c56bdbf5cc14c374e3d9/P2W_Milestone01.png?w=410&h=410&f=center&fit=fill",
+              "width": 410,
+              "height": 410
+            },
+            "largeRetina": {
+              "title": "P2W_Milestone01.png",
+              "path": "/xdjcscmv3zo3/4PwVYvd54v7mNpikf1qtjA/8f94bbb61658c56bdbf5cc14c374e3d9/P2W_Milestone01.png?w=512&h=512&f=center&fit=fill",
+              "width": 512,
+              "height": 512
             }
           },
-          {
-            "id": "2",
-            "title": "Charlie",
-            "image": {
-              "small": {
-                "title": "charlie.png",
-                "path": "/xdjcscmv3zo3/6H46yyJoNspqT1jyZnuhw3/9f33bde72fd5c616565d33ab07c202a1/charlie.png?w=60&h=80&f=center&fit=fill",
-                "width": 60,
-                "height": 80
-              },
-              "smallRetina": {
-                "title": "charlie.png",
-                "path": "/xdjcscmv3zo3/6H46yyJoNspqT1jyZnuhw3/9f33bde72fd5c616565d33ab07c202a1/charlie.png?w=120&h=160&f=center&fit=fill",
-                "width": 120,
-                "height": 160
-              },
-              "medium": {
-                "title": "charlie.png",
-                "path": "/xdjcscmv3zo3/6H46yyJoNspqT1jyZnuhw3/9f33bde72fd5c616565d33ab07c202a1/charlie.png?w=150&h=200&f=center&fit=fill",
-                "width": 150,
-                "height": 200
-              },
-              "mediumRetina": {
-                "title": "charlie.png",
-                "path": "/xdjcscmv3zo3/6H46yyJoNspqT1jyZnuhw3/9f33bde72fd5c616565d33ab07c202a1/charlie.png?w=180&h=240&f=center&fit=fill",
-                "width": 180,
-                "height": 240
-              },
-              "large": {
-                "title": "charlie.png",
-                "path": "/xdjcscmv3zo3/6H46yyJoNspqT1jyZnuhw3/9f33bde72fd5c616565d33ab07c202a1/charlie.png?w=240&h=320&f=center&fit=fill",
-                "width": 240,
-                "height": 320
-              },
-              "largeRetina": {
-                "title": "charlie.png",
-                "path": "/xdjcscmv3zo3/6H46yyJoNspqT1jyZnuhw3/9f33bde72fd5c616565d33ab07c202a1/charlie.png?w=300&h=400&f=center&fit=fill",
-                "width": 300,
-                "height": 400
-              }
+          "label": "1B"
+        },
+        {
+          "unlocked": false,
+          "progress": 40,
+          "image": {
+            "small": {
+              "title": "P2W_Milestone02.png",
+              "path": "/xdjcscmv3zo3/628hf05UKQTlQZy6u0Sq8a/4fa5f2d78a9c0dabec7e10d574de6cf1/P2W_Milestone02.png?w=102&h=102&f=center&fit=fill",
+              "width": 102,
+              "height": 102
+            },
+            "smallRetina": {
+              "title": "P2W_Milestone02.png",
+              "path": "/xdjcscmv3zo3/628hf05UKQTlQZy6u0Sq8a/4fa5f2d78a9c0dabec7e10d574de6cf1/P2W_Milestone02.png?w=205&h=205&f=center&fit=fill",
+              "width": 205,
+              "height": 205
+            },
+            "medium": {
+              "title": "P2W_Milestone02.png",
+              "path": "/xdjcscmv3zo3/628hf05UKQTlQZy6u0Sq8a/4fa5f2d78a9c0dabec7e10d574de6cf1/P2W_Milestone02.png?w=256&h=256&f=center&fit=fill",
+              "width": 256,
+              "height": 256
+            },
+            "mediumRetina": {
+              "title": "P2W_Milestone02.png",
+              "path": "/xdjcscmv3zo3/628hf05UKQTlQZy6u0Sq8a/4fa5f2d78a9c0dabec7e10d574de6cf1/P2W_Milestone02.png?w=307&h=307&f=center&fit=fill",
+              "width": 307,
+              "height": 307
+            },
+            "large": {
+              "title": "P2W_Milestone02.png",
+              "path": "/xdjcscmv3zo3/628hf05UKQTlQZy6u0Sq8a/4fa5f2d78a9c0dabec7e10d574de6cf1/P2W_Milestone02.png?w=410&h=410&f=center&fit=fill",
+              "width": 410,
+              "height": 410
+            },
+            "largeRetina": {
+              "title": "P2W_Milestone02.png",
+              "path": "/xdjcscmv3zo3/628hf05UKQTlQZy6u0Sq8a/4fa5f2d78a9c0dabec7e10d574de6cf1/P2W_Milestone02.png?w=512&h=512&f=center&fit=fill",
+              "width": 512,
+              "height": 512
             }
-          }
-        ]
+          },
+          "label": "2B"
+        },
+        {
+          "unlocked": false,
+          "progress": 60,
+          "image": {
+            "small": {
+              "title": "P2W_Milestone03.png",
+              "path": "/xdjcscmv3zo3/2i2OlXFtBzCueSihAzjbNl/602b4b0838a9e4489e45850801bcdcdb/P2W_Milestone03.png?w=102&h=102&f=center&fit=fill",
+              "width": 102,
+              "height": 102
+            },
+            "smallRetina": {
+              "title": "P2W_Milestone03.png",
+              "path": "/xdjcscmv3zo3/2i2OlXFtBzCueSihAzjbNl/602b4b0838a9e4489e45850801bcdcdb/P2W_Milestone03.png?w=205&h=205&f=center&fit=fill",
+              "width": 205,
+              "height": 205
+            },
+            "medium": {
+              "title": "P2W_Milestone03.png",
+              "path": "/xdjcscmv3zo3/2i2OlXFtBzCueSihAzjbNl/602b4b0838a9e4489e45850801bcdcdb/P2W_Milestone03.png?w=256&h=256&f=center&fit=fill",
+              "width": 256,
+              "height": 256
+            },
+            "mediumRetina": {
+              "title": "P2W_Milestone03.png",
+              "path": "/xdjcscmv3zo3/2i2OlXFtBzCueSihAzjbNl/602b4b0838a9e4489e45850801bcdcdb/P2W_Milestone03.png?w=307&h=307&f=center&fit=fill",
+              "width": 307,
+              "height": 307
+            },
+            "large": {
+              "title": "P2W_Milestone03.png",
+              "path": "/xdjcscmv3zo3/2i2OlXFtBzCueSihAzjbNl/602b4b0838a9e4489e45850801bcdcdb/P2W_Milestone03.png?w=410&h=410&f=center&fit=fill",
+              "width": 410,
+              "height": 410
+            },
+            "largeRetina": {
+              "title": "P2W_Milestone03.png",
+              "path": "/xdjcscmv3zo3/2i2OlXFtBzCueSihAzjbNl/602b4b0838a9e4489e45850801bcdcdb/P2W_Milestone03.png?w=512&h=512&f=center&fit=fill",
+              "width": 512,
+              "height": 512
+            }
+          },
+          "label": "3B"
+        },
+        {
+          "unlocked": false,
+          "progress": 80,
+          "image": {
+            "small": {
+              "title": "P2W_Milestone04.png",
+              "path": "/xdjcscmv3zo3/52Lchlor51m9zIUz68uXaV/e1e7c395a65e5a8b7d0c65b7959e2b1d/P2W_Milestone04.png?w=102&h=102&f=center&fit=fill",
+              "width": 102,
+              "height": 102
+            },
+            "smallRetina": {
+              "title": "P2W_Milestone04.png",
+              "path": "/xdjcscmv3zo3/52Lchlor51m9zIUz68uXaV/e1e7c395a65e5a8b7d0c65b7959e2b1d/P2W_Milestone04.png?w=205&h=205&f=center&fit=fill",
+              "width": 205,
+              "height": 205
+            },
+            "medium": {
+              "title": "P2W_Milestone04.png",
+              "path": "/xdjcscmv3zo3/52Lchlor51m9zIUz68uXaV/e1e7c395a65e5a8b7d0c65b7959e2b1d/P2W_Milestone04.png?w=256&h=256&f=center&fit=fill",
+              "width": 256,
+              "height": 256
+            },
+            "mediumRetina": {
+              "title": "P2W_Milestone04.png",
+              "path": "/xdjcscmv3zo3/52Lchlor51m9zIUz68uXaV/e1e7c395a65e5a8b7d0c65b7959e2b1d/P2W_Milestone04.png?w=307&h=307&f=center&fit=fill",
+              "width": 307,
+              "height": 307
+            },
+            "large": {
+              "title": "P2W_Milestone04.png",
+              "path": "/xdjcscmv3zo3/52Lchlor51m9zIUz68uXaV/e1e7c395a65e5a8b7d0c65b7959e2b1d/P2W_Milestone04.png?w=410&h=410&f=center&fit=fill",
+              "width": 410,
+              "height": 410
+            },
+            "largeRetina": {
+              "title": "P2W_Milestone04.png",
+              "path": "/xdjcscmv3zo3/52Lchlor51m9zIUz68uXaV/e1e7c395a65e5a8b7d0c65b7959e2b1d/P2W_Milestone04.png?w=512&h=512&f=center&fit=fill",
+              "width": 512,
+              "height": 512
+            }
+          },
+          "label": "4B"
+        },
+        {
+          "unlocked": false,
+          "progress": 100,
+          "image": {
+            "small": {
+              "title": "P2W_Milestone05.png",
+              "path": "/xdjcscmv3zo3/4RDyJSKE2JXZzyILhHVSJM/b249e0bcc9f426dd4fbe8686301f69fb/P2W_Milestone05.png?w=102&h=102&f=center&fit=fill",
+              "width": 102,
+              "height": 102
+            },
+            "smallRetina": {
+              "title": "P2W_Milestone05.png",
+              "path": "/xdjcscmv3zo3/4RDyJSKE2JXZzyILhHVSJM/b249e0bcc9f426dd4fbe8686301f69fb/P2W_Milestone05.png?w=205&h=205&f=center&fit=fill",
+              "width": 205,
+              "height": 205
+            },
+            "medium": {
+              "title": "P2W_Milestone05.png",
+              "path": "/xdjcscmv3zo3/4RDyJSKE2JXZzyILhHVSJM/b249e0bcc9f426dd4fbe8686301f69fb/P2W_Milestone05.png?w=256&h=256&f=center&fit=fill",
+              "width": 256,
+              "height": 256
+            },
+            "mediumRetina": {
+              "title": "P2W_Milestone05.png",
+              "path": "/xdjcscmv3zo3/4RDyJSKE2JXZzyILhHVSJM/b249e0bcc9f426dd4fbe8686301f69fb/P2W_Milestone05.png?w=307&h=307&f=center&fit=fill",
+              "width": 307,
+              "height": 307
+            },
+            "large": {
+              "title": "P2W_Milestone05.png",
+              "path": "/xdjcscmv3zo3/4RDyJSKE2JXZzyILhHVSJM/b249e0bcc9f426dd4fbe8686301f69fb/P2W_Milestone05.png?w=410&h=410&f=center&fit=fill",
+              "width": 410,
+              "height": 410
+            },
+            "largeRetina": {
+              "title": "P2W_Milestone05.png",
+              "path": "/xdjcscmv3zo3/4RDyJSKE2JXZzyILhHVSJM/b249e0bcc9f426dd4fbe8686301f69fb/P2W_Milestone05.png?w=512&h=512&f=center&fit=fill",
+              "width": 512,
+              "height": 512
+            }
+          },
+          "label": "5B"
+        }
+      ],
+      "tracker": {
+        "progress": 4.35144036,
+        "direction": "vertical",
+        "color": "#f5ab32"
       }
-    ]
-  }
+    }
+  ]
 }

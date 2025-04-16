@@ -73,6 +73,15 @@ namespace Main.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
+        internal static System.IO.UnmanagedMemoryStream Snd_MysteryGo {
+            get {
+                return ResourceManager.GetStream("Snd_MysteryGo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
         internal static System.IO.UnmanagedMemoryStream Snd_WorldRecord {
             get {
                 return ResourceManager.GetStream("Snd_WorldRecord", resourceCulture);

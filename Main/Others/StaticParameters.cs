@@ -3,7 +3,10 @@
     public class EventTime
     {
         // Not sure if I'll use this at all but yeah
-        public const long EventEndEpochTime = 1740042000;
+        public const long EventEndEpochTime = 1745485200;
+
+        // Deltarune releases (UTC)
+        public const long DeltaruneReleaseTime = 1749081600;
     }
 
     public class BrawlFeedLinks

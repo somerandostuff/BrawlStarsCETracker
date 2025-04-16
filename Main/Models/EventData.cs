@@ -1,14 +1,18 @@
-﻿namespace Main.Models
+﻿using System.Text.Json;
+
+namespace Main.Models
 {
     public class EventData
     {
-        public string? PollID { get; set; }
-        public string? CampaignID { get; set; }
-        public string? PollTitle { get; set; }
-        public int AvailablePollChoices { get; set; }
-        public int EventMilestone { get; set; }
-        public virtual List<Brawler> Brawlers { get; set; } = [];
-        public ulong VotesSent { get; set; }
-        public ulong VotesGoal { get; set; }
+        // My personal favorites are "Pregress Bar" & "Quich Checkpoint Mode"
+        public decimal? Pregress { get; set; }
+
+        public List<Milestone> Milestones { get; set; } = [];
+    }
+
+    public class Milestone
+    {
+        public byte BarPercent { get; set; }
+        public string? MilestoneLabel { get; set; }
     }
 }
