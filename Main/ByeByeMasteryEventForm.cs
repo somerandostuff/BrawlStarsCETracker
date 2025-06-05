@@ -271,8 +271,15 @@ namespace Main
 
         private void L_PointsCount_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText("# COMMUNITY EVENT REPORT\nWe are at " + Utils.Beautify(MasteryPoints, PrefOption) + " mastery points right now.");
-            MessageBox.Show("Copied to clipboard!", "Nice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try
+            {
+                Clipboard.SetText("# COMMUNITY EVENT REPORT\nWe are at " + Utils.Beautify(MasteryPoints, PrefOption) + " mastery points right now.");
+                MessageBox.Show("Copied to clipboard!", "Nice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Copy fail! This might be because the tracker is updating its data in the process, or your device simply just refused to copy it.\n\nClick on the number again to copy again.", "Um...", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void BTN_Refresh_Click(object sender, EventArgs e)

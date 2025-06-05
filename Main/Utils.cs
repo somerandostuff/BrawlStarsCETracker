@@ -136,7 +136,7 @@ namespace Main
                     else return "naneinf";
                 }
 
-                return (Math.Floor(Number * 1000) / 1000).ToString("###.##") + " " + Notations[FormatterIndex];
+                return (Math.Floor(Number * 1000) / 1000).ToString("###.##") + (Choice is FormatPrefs.LongText ? " " : "") + Notations[FormatterIndex];
             }
             else return Number.ToString("#,##0");
         }

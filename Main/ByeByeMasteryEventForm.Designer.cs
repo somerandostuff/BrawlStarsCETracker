@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ByeByeMasteryEventForm));
             L_Title = new Label();
             L_Version = new Label();
             ProgBar_TimeLeft = new ProgressBar();
@@ -282,10 +283,11 @@
             Controls.Add(L_OrPercentage);
             Font = new Font("Lilita One", 12F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4);
             MaximizeBox = false;
             Name = "ByeByeMasteryEventForm";
-            Text = "Community Event May 2025";
+            Text = "RIP Masteries";
             Load += ByeByeMasteryEventForm_Load;
             ((System.ComponentModel.ISupportInitialize)Picbox_MasteryPoint).EndInit();
             ResumeLayout(false);
