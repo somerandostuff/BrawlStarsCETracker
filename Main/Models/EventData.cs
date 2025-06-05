@@ -1,18 +1,14 @@
-﻿using System.Text.Json;
-
-namespace Main.Models
+﻿namespace Main.Models
 {
     public class EventData
     {
-        // My personal favorites are "Pregress Bar" & "Quich Checkpoint Mode"
-        public decimal? Pregress { get; set; }
-
+        public double Progress { get; set; }
         public List<Milestone> Milestones { get; set; } = [];
     }
 
     public class Milestone
     {
-        public byte BarPercent { get; set; }
+        public double BarPercent { get; set; }
         public string? MilestoneLabel { get; set; }
     }
 }

@@ -116,7 +116,7 @@
             // 
             ProgBar_TimeLeft.Location = new Point(411, 49);
             ProgBar_TimeLeft.MarqueeAnimationSpeed = 50;
-            ProgBar_TimeLeft.Maximum = 864000;
+            ProgBar_TimeLeft.Maximum = 950400;
             ProgBar_TimeLeft.Name = "ProgBar_TimeLeft";
             ProgBar_TimeLeft.Size = new Size(262, 17);
             ProgBar_TimeLeft.Step = 1;
@@ -126,7 +126,7 @@
             // Timer_TimeLeft
             // 
             Timer_TimeLeft.Enabled = true;
-            Timer_TimeLeft.Interval = 1;
+            Timer_TimeLeft.Interval = 1000;
             Timer_TimeLeft.Tick += Timer_TimeLeft_Tick;
             // 
             // L_KillCountTitle
@@ -576,13 +576,13 @@
             L_KillsAdded.ForeColor = Color.FromArgb(255, 128, 0);
             L_KillsAdded.Location = new Point(12, 140);
             L_KillsAdded.Name = "L_KillsAdded";
-            L_KillsAdded.Size = new Size(30, 19);
+            L_KillsAdded.Size = new Size(42, 19);
             L_KillsAdded.TabIndex = 44;
-            L_KillsAdded.Text = "       ";
+            L_KillsAdded.Text = "           ";
             // 
             // Timer_AutoRefresh
             // 
-            Timer_AutoRefresh.Interval = 60000;
+            Timer_AutoRefresh.Interval = 1;
             Timer_AutoRefresh.Tick += Timer_AutoRefresh_Tick;
             // 
             // L_Version
@@ -592,7 +592,7 @@
             L_Version.Name = "L_Version";
             L_Version.Size = new Size(368, 16);
             L_Version.TabIndex = 45;
-            L_Version.Text = "Build 1.0.4beta";
+            L_Version.Text = "Build 1.0.4";
             L_Version.TextAlign = ContentAlignment.TopRight;
             // 
             // LinkL_About

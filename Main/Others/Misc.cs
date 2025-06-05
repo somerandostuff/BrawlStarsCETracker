@@ -24,4 +24,11 @@ namespace Main.Others
         Warning = 1,
         Stopped = 2
     }
+
+    public enum FormatPrefs
+    {
+        None = 0,
+        LongText = 1,
+        ShortText = 2
+    }
 }

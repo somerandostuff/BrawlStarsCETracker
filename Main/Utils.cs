@@ -1,11 +1,51 @@
 ﻿using Main.Models;
+using Main.Models.OldEventDatas;
 using Main.Others;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace Main
 {
     public class Utils
     {
+        public static List<string> InitFormatter()
+        {
+            List<string> FormatFromE6ToE32 = ["", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion", "octillion", "nonillion"];
+
+            List<string> FormatFromE33Prefix = ["", "un", "duo", "tre", "quattuor", "quin", "sex", "septen", "octo", "novem"];
+            List<string> FormatFromE33Suffix = ["decillion", "vigintillion", "trigintillion", "quadragintillion", "quinquagintillion", "sexagintillion", "septuagintillion", "octogintillion", "nonagintillion"];
+
+            List<string> Notations = FormatFromE6ToE32;
+            foreach (var Suffix in FormatFromE33Suffix)
+            {
+                foreach (var Prefix in FormatFromE33Prefix)
+                {
+                    Notations.Add(Prefix + Suffix);
+                }
+            }
+
+            return Notations;
+        }
+
+        public static List<string> InitFormatterShort()
+        {
+            List<string> FormatFromE6ToE32Short = ["", "k", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No"];
+
+            List<string> FormatFromE33PrefixShort = ["", "Un", "Do", "Tr", "Qa", "Qi", "Sx", "Sp", "Oc", "No"];
+            List<string> FormatFromE33SuffixShort = ["Dec", "Vgt", "Trgt", "Qagt", "QiQgt", "Sxagt", "SpTgt", "OcTgt", "NoNgt"];
+
+            List<string> Notations = FormatFromE6ToE32Short;
+            foreach (var Suffix in FormatFromE33SuffixShort)
+            {
+                foreach (var Prefix in FormatFromE33PrefixShort)
+                {
+                    Notations.Add(Prefix + Suffix);
+                }
+            }
+
+            return Notations;
+        }
+
         public static async Task<EventData?> FetchData()
         {
             EventData Data = new EventData();
@@ -18,25 +58,26 @@ namespace Main
                     {
                         var EventData = Content.RootElement
                                               .GetProperty("events")[Tries];
-                        Data.Pregress = EventData
-                                       .GetProperty("tracker")
-                                       .GetProperty("progress")
-                                       .GetDecimal();
 
-                        if (EventData.TryGetProperty("milestones", out EventData))
+                        if (EventData.TryGetProperty("milestones", out JsonElement EventDataChild))
                         {
-                            int TotalEventMilestones = EventData.GetArrayLength();
+                            Data.Progress = EventData
+                                           .GetProperty("tracker")
+                                           .GetProperty("progress")
+                                           .GetDouble();
+
+                            int TotalEventMilestones = EventDataChild.GetArrayLength();
+
                             // 6 might be the maximum amount of milestones that can be displayed on screen
-                            if (TotalEventMilestones < 6)
-                            {
-                                Data.Milestones.Add(new() { BarPercent = 0, MilestoneLabel = "0B" });
-                            }
+                            // Edit (18/4/2025): Nevermind. They added more milestones anyway. This thing is permanent now!
+
                             for (int Idx = 0; Idx < TotalEventMilestones; Idx++)
                             {
                                 Milestone Milestone = new Milestone();
 
-                                Milestone.MilestoneLabel = EventData[Idx].GetProperty("label").GetString();
-                                Milestone.BarPercent = EventData[Idx].GetProperty("progress").GetByte();
+                                Milestone.MilestoneLabel = EventDataChild[Idx].GetProperty("label").GetString();
+
+                                Milestone.BarPercent = EventDataChild[Idx].GetProperty("progress").GetDouble();
 
                                 Data.Milestones.Add(Milestone);
                             }
@@ -55,87 +96,100 @@ namespace Main
             return Seconds > 0 ? TimeSpan.FromSeconds(Seconds) : TimeSpan.Zero;
         }
 
-        public static TimeSpan GetTimeLeftUntilDeltaruneIsReleased()
+        public static string Beautify(double Number, FormatPrefs Choice)
         {
-            var Seconds = EventTime.DeltaruneReleaseTime - DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            return Seconds > 0 ? TimeSpan.FromSeconds(Seconds) : TimeSpan.Zero;
-        }
+            int FormatterIndex = 0;
 
-        /*
-            EventData_202502 Data = new EventData_202502();
-            List<Brawler> Brawlers = new List<Brawler>();
-
-            using (var Client = new HttpClient())
+            if (Choice != FormatPrefs.None)
             {
-                byte NewsIndex = 0;
-
-                var Content = JsonDocument.Parse(await Client.GetStringAsync(BrawlFeedLinks.NewsAPI));
-
-                if (Content != null)
+                List<string> Notations = [];
+                switch (Choice)
                 {
-                    for (byte Tries = 0; Tries < 5; Tries++)
+                    case FormatPrefs.LongText:
+                        Notations = InitFormatter();
+                        break;
+                    case FormatPrefs.ShortText:
+                        Notations = InitFormatterShort();
+                        break;
+                    default:
+                        break;
+                }
 
+                if (Number >= 1e303 || Number == double.PositiveInfinity) // 1e303 = 1 centillion (but who caresa about that)
+                {
+                    if (Choice is FormatPrefs.LongText) return "Infinity";
+                    else return "naneinf";
+                }
+
+                if (Number >= 1e6)
+                {
+                    while (Math.Floor(Number) >= 1000)
                     {
-                        var TryFindEventData = Content.RootElement
-                                              .GetProperty("entries")
-                                              .GetProperty("eventEntries")[Tries];
-
-                        Data.EventMilestone = TryFindEventData
-                                             .GetProperty("tracker")
-                                             .GetProperty("progress")
-                                             .GetInt32();
-
-                        if (TryFindEventData.TryGetProperty("ctas", out TryFindEventData))
-                        {
-                            NewsIndex = Tries;
-
-                            Data.PollID = TryFindEventData
-                                         .GetProperty("6kjQMmOUtIi7L2adA3YlUI")
-                                         .GetProperty("url")
-                                         .GetProperty("id").GetString();
-                            break;
-                        }
+                        Number /= 1000;
+                        FormatterIndex++;
                     }
                 }
-                else return null;
-                if (Data.PollID == null) return null;
 
-                var NewsPollData = Content.RootElement
-                                  .GetProperty("entries")
-                                  .GetProperty("eventEntries")[NewsIndex + 1];
-
-                Data.PollTitle = NewsPollData.GetProperty("pollTitle").GetString();
-                Data.CampaignID = NewsPollData.GetProperty("targeting").GetProperty("campaignId").GetString();
-                Data.VotesGoal = Convert.ToUInt64(Data.CampaignID?.Split("-").Last());
-
-                var PollOptionsProperty = NewsPollData.GetProperty("options");
-                Data.AvailablePollChoices = PollOptionsProperty.GetArrayLength();
-
-                foreach (var Option in PollOptionsProperty.EnumerateArray())
+                if (FormatterIndex >= Notations.Count)
                 {
-                    Brawler NewBrawler = new Brawler();
-                    NewBrawler.BrawlerName = Option.GetProperty("title").GetString();
-                    NewBrawler.BrawlerImagePath =
-                        Option.GetProperty("image")
-                              .GetProperty("small")
-                              .GetProperty("path")
-                              .GetString()?.Split("?")[0] + $"?w=170&h=170&f=center&fit=fill";
-
-                    NewBrawler.BrawlerImage = await Client.GetByteArrayAsync(BrawlFeedLinks.News + NewBrawler.BrawlerImagePath);
-
-                    Brawlers.Add(NewBrawler);
+                    if (Choice is FormatPrefs.LongText) return "Infinity";
+                    else return "naneinf";
                 }
 
-                var PollData = JsonDocument.Parse(await Client.GetStringAsync(BrawlFeedLinks.PollAPI + Data.PollID));
-                Data.VotesSent = PollData.RootElement
-                                         .GetProperty("data")
-                                         .GetProperty("options")[0]
-                                         .GetProperty("pollTotalVotes").GetUInt64();
-
-                Data.Brawlers = Brawlers;
-
-                return Data;
+                return (Math.Floor(Number * 1000) / 1000).ToString("###.##") + " " + Notations[FormatterIndex];
             }
-         */
+            else return Number.ToString("#,##0");
+        }
+
+        public static double SimpleTextToNumber(string? Text)
+        {
+            if (!string.IsNullOrWhiteSpace(Text))
+            {
+                var Match = Regex.Match(Text.Trim(), @"^([+-]?\d*\.?\d+)\s*([a-zA-Z]+)?$");
+                if (Match.Success)
+                {
+                    string Number = Match.Groups[1].Value;
+                    string Suffix = Match.Groups[2].Value;
+
+                    switch (Suffix)
+                    {
+                        case "k":
+                        case "K":
+                            return double.Parse(Number) * 1e03;
+                        case "M":
+                            return double.Parse(Number) * 1e06;
+                        case "B":
+                            return double.Parse(Number) * 1e09;
+                        case "T":
+                            return double.Parse(Number) * 1e12;
+                        case "Q":
+                        default:
+                            return double.Parse(Number) * 1e15;
+                    }
+                }
+                else return double.NaN;
+            }
+            else return 0;
+        }
+
+        public static string ConvertTimeSpanToDisplayText(TimeSpan Time)
+        {
+            if (Time.TotalSeconds < 60)
+            {
+                return "Less than a minute left";
+            }
+            else if (Time.TotalMinutes < 60)
+            {
+                return $"{(int)Time.TotalMinutes}m left";
+            }
+            else if (Time.TotalHours < 24)
+            {
+                return $"{(int)Time.TotalHours}h {(int)Time.TotalMinutes % 60}m left";
+            }
+            else
+            {
+                return $"{(long)Time.TotalDays}d {(int)Time.TotalHours % 24}h left";
+            }
+        }
     }
 }

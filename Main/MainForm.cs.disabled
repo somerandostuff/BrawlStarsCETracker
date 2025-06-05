@@ -15,6 +15,8 @@ namespace Main
     {
         ulong KillsCached = 0;
 
+        long LastUpdatedPoint = 0;
+
         public MainForm()
         {
             InitializeComponent();
@@ -68,9 +70,9 @@ namespace Main
 
                 L_KillCount.Text = Kills.ToString("#,##0");
 
-                if (KillsCached != 0 && Chk_AutoRefresh.Checked)
+                if (KillsCached != 0 && KillsCached != Kills && Chk_AutoRefresh.Checked)
                 {
-                    L_KillsAdded.Text = $"+{(Kills - KillsCached) / 30}";
+                    L_KillsAdded.Text = $"+{Kills - KillsCached:#,##0}";
                 }
 
                 if (Kills > 10_000_000_000)
@@ -80,35 +82,11 @@ namespace Main
                 }
 
                 KillsCached = Kills;
-
+                LastUpdatedPoint = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             }
             else
             {
                 MessageBox.Show("Nothing was found.", "Oh...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-        private void LoadDataForAutoRefresh()
-        {
-            if (DateTime.UtcNow.Minute == 29 || DateTime.UtcNow.Minute == 59)
-            {
-                LoadData();
-                L_Status.Text = "Next update in: 30min";
-            }
-            else
-            {
-                L_Status.Text = "Next update in: ";
-                if (DateTime.UtcNow.Minute >= 0 && DateTime.UtcNow.Minute <= 28)
-                {
-                    L_Status.Text += $"{29 - DateTime.UtcNow.Minute}min";
-                }
-                else if (DateTime.UtcNow.Minute >= 30 && DateTime.UtcNow.Minute <= 58)
-                {
-                    L_Status.Text += $"{59 - DateTime.UtcNow.Minute}min";
-                }
-                else
-                {
-                    L_Status.Text += "N/A";
-                }
             }
         }
 
@@ -139,7 +117,10 @@ namespace Main
 
         private void Timer_AutoRefresh_Tick(object sender, EventArgs e)
         {
-            LoadDataForAutoRefresh();
+            if (DateTimeOffset.UtcNow.ToUnixTimeSeconds() - LastUpdatedPoint >= 60)
+            {
+                LoadData();
+            }
         }
         private void BTN_Refresh_Click(object sender, EventArgs e)
         {
@@ -148,7 +129,7 @@ namespace Main
 
         private void LinkL_About_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            MessageBox.Show("v1.0.4 (beta) -- updated on 16/4/2025\nMight contain lots of bugs because undocumented API moments lol\n\nMade by somerandostuff & xale, thankyou for the contributions!", "About tracker", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("v1.0.4 -- updated on 23/4/2025\nLooks like normal release but it still might contain bugs!\n\nMade by somerandostuff & xale, thankyou for the contributions!", "About tracker", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void L_KillCount_Click(object sender, EventArgs e)
@@ -170,13 +151,14 @@ namespace Main
 
                 BTN_Refresh.Enabled = false;
                 Timer_AutoRefresh.Enabled = true;
-                LoadDataForAutoRefresh();
+                LoadData();
             }
             else
             {
                 BTN_Refresh.Enabled = true;
                 Timer_AutoRefresh.Enabled = false;
                 L_Status.Text = " ";
+                L_KillsAdded.Text = " ";
             }
         }
     }
