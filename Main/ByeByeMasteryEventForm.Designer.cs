@@ -51,6 +51,10 @@
             Chk_AutoRefresh = new CheckBox();
             Timer_Refresh = new System.Windows.Forms.Timer(components);
             L_LastUpdated = new Label();
+            L_PerSecond = new Label();
+            Timer_ConstantlyRefreshing = new System.Windows.Forms.Timer(components);
+            Chk_Altfont = new CheckBox();
+            L_NumberFormatting = new Label();
             ((System.ComponentModel.ISupportInitialize)Picbox_MasteryPoint).BeginInit();
             SuspendLayout();
             // 
@@ -66,11 +70,11 @@
             // 
             // L_Version
             // 
-            L_Version.Location = new Point(490, 58);
+            L_Version.Location = new Point(478, 58);
             L_Version.Name = "L_Version";
-            L_Version.Size = new Size(53, 19);
+            L_Version.Size = new Size(65, 19);
             L_Version.TabIndex = 1;
-            L_Version.Text = "v1.0.6";
+            L_Version.Text = "v1.0.6.1";
             L_Version.TextAlign = ContentAlignment.TopRight;
             L_Version.Click += L_Version_Click;
             L_Version.MouseEnter += L_Version_MouseEnter;
@@ -166,7 +170,7 @@
             Rdi_PrefNone.Location = new Point(558, 320);
             Rdi_PrefNone.Name = "Rdi_PrefNone";
             Rdi_PrefNone.Size = new Size(62, 23);
-            Rdi_PrefNone.TabIndex = 103;
+            Rdi_PrefNone.TabIndex = 104;
             Rdi_PrefNone.TabStop = true;
             Rdi_PrefNone.Text = "None";
             Rdi_PrefNone.UseVisualStyleBackColor = true;
@@ -178,7 +182,7 @@
             Rdi_PrefShortened.Location = new Point(626, 320);
             Rdi_PrefShortened.Name = "Rdi_PrefShortened";
             Rdi_PrefShortened.Size = new Size(97, 23);
-            Rdi_PrefShortened.TabIndex = 104;
+            Rdi_PrefShortened.TabIndex = 105;
             Rdi_PrefShortened.Text = "Shortened";
             Rdi_PrefShortened.UseVisualStyleBackColor = true;
             Rdi_PrefShortened.CheckedChanged += Rdi_PrefShortened_CheckedChanged;
@@ -189,7 +193,7 @@
             Rdi_PrefShortenedMore.Location = new Point(729, 320);
             Rdi_PrefShortenedMore.Name = "Rdi_PrefShortenedMore";
             Rdi_PrefShortenedMore.Size = new Size(107, 23);
-            Rdi_PrefShortenedMore.TabIndex = 105;
+            Rdi_PrefShortenedMore.TabIndex = 106;
             Rdi_PrefShortenedMore.Text = "Shortened+";
             Rdi_PrefShortenedMore.UseVisualStyleBackColor = true;
             Rdi_PrefShortenedMore.CheckedChanged += Rdi_PrefShortenedMore_CheckedChanged;
@@ -206,9 +210,9 @@
             // L_OrPercentage
             // 
             L_OrPercentage.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            L_OrPercentage.Location = new Point(499, 180);
+            L_OrPercentage.Location = new Point(562, 180);
             L_OrPercentage.Name = "L_OrPercentage";
-            L_OrPercentage.Size = new Size(337, 27);
+            L_OrPercentage.Size = new Size(274, 27);
             L_OrPercentage.TabIndex = 14;
             L_OrPercentage.Text = "Loading...";
             L_OrPercentage.TextAlign = ContentAlignment.TopRight;
@@ -250,20 +254,59 @@
             // 
             // L_LastUpdated
             // 
-            L_LastUpdated.AutoSize = true;
             L_LastUpdated.Location = new Point(12, 180);
             L_LastUpdated.Name = "L_LastUpdated";
-            L_LastUpdated.Size = new Size(132, 19);
+            L_LastUpdated.Size = new Size(274, 27);
             L_LastUpdated.TabIndex = 16;
-            L_LastUpdated.Text = "Last updated: IDK";
+            L_LastUpdated.Text = "Last updated: N/A";
+            // 
+            // L_PerSecond
+            // 
+            L_PerSecond.ForeColor = Color.FromArgb(255, 128, 0);
+            L_PerSecond.Location = new Point(292, 181);
+            L_PerSecond.Name = "L_PerSecond";
+            L_PerSecond.Size = new Size(264, 26);
+            L_PerSecond.TabIndex = 17;
+            L_PerSecond.Text = "      ";
+            L_PerSecond.TextAlign = ContentAlignment.TopCenter;
+            L_PerSecond.Click += L_PerSecond_Click;
+            L_PerSecond.MouseEnter += L_PerSecond_MouseEnter;
+            L_PerSecond.MouseLeave += L_PerSecond_MouseLeave;
+            // 
+            // Timer_ConstantlyRefreshing
+            // 
+            Timer_ConstantlyRefreshing.Interval = 16;
+            Timer_ConstantlyRefreshing.Tick += Timer_ConstantlyRefreshing_Tick;
+            // 
+            // Chk_Altfont
+            // 
+            Chk_Altfont.AutoSize = true;
+            Chk_Altfont.Font = new Font("Cascadia Code SemiBold", 12F, FontStyle.Bold);
+            Chk_Altfont.Location = new Point(217, 321);
+            Chk_Altfont.Name = "Chk_Altfont";
+            Chk_Altfont.Size = new Size(101, 25);
+            Chk_Altfont.TabIndex = 103;
+            Chk_Altfont.Text = "Alt font";
+            Chk_Altfont.UseVisualStyleBackColor = true;
+            Chk_Altfont.CheckedChanged += Chk_Altfont_CheckedChanged;
+            // 
+            // L_NumberFormatting
+            // 
+            L_NumberFormatting.AutoSize = true;
+            L_NumberFormatting.Location = new Point(558, 298);
+            L_NumberFormatting.Name = "L_NumberFormatting";
+            L_NumberFormatting.Size = new Size(144, 19);
+            L_NumberFormatting.TabIndex = 18;
+            L_NumberFormatting.Text = "Number formatting:";
             // 
             // ByeByeMasteryEventForm
             // 
             AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(848, 355);
+            Controls.Add(L_NumberFormatting);
+            Controls.Add(Chk_Altfont);
             Controls.Add(L_TimeLeftLabel);
-            Controls.Add(L_LastUpdated);
             Controls.Add(Chk_AutoRefresh);
             Controls.Add(BTN_Refresh);
             Controls.Add(L_PercentageToNextMilestone);
@@ -281,6 +324,8 @@
             Controls.Add(L_Title);
             Controls.Add(L_SplitContainer);
             Controls.Add(L_OrPercentage);
+            Controls.Add(L_LastUpdated);
+            Controls.Add(L_PerSecond);
             Font = new Font("Lilita One", 12F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -317,5 +362,9 @@
         private CheckBox Chk_AutoRefresh;
         private System.Windows.Forms.Timer Timer_Refresh;
         private Label L_LastUpdated;
+        private Label L_PerSecond;
+        private System.Windows.Forms.Timer Timer_ConstantlyRefreshing;
+        private CheckBox Chk_Altfont;
+        private Label L_NumberFormatting;
     }
 }

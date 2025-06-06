@@ -121,13 +121,10 @@ namespace Main
                     else return "naneinf";
                 }
 
-                if (Number >= 1e6)
+                while (Math.Floor(Number) >= 1000)
                 {
-                    while (Math.Floor(Number) >= 1000)
-                    {
-                        Number /= 1000;
-                        FormatterIndex++;
-                    }
+                    Number /= 1000;
+                    FormatterIndex++;
                 }
 
                 if (FormatterIndex >= Notations.Count)
@@ -136,7 +133,7 @@ namespace Main
                     else return "naneinf";
                 }
 
-                return (Math.Floor(Number * 1000) / 1000).ToString("###.##") + (Choice is FormatPrefs.LongText ? " " : "") + Notations[FormatterIndex];
+                return (Math.Floor(Number * 1000) / 1000).ToString("0.###") + (Choice is FormatPrefs.LongText ? " " : "") + Notations[FormatterIndex];
             }
             else return Number.ToString("#,##0");
         }
