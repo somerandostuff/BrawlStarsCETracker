@@ -121,11 +121,15 @@ namespace Main
                     else return "naneinf";
                 }
 
-                while (Math.Floor(Number) >= 1000)
+                if (Number >= 1e6)
                 {
-                    Number /= 1000;
-                    FormatterIndex++;
+                    while (Math.Floor(Number) >= 1000)
+                    {
+                        Number /= 1000;
+                        FormatterIndex++;
+                    }
                 }
+                else return Number.ToString("#,##0");
 
                 if (FormatterIndex >= Notations.Count)
                 {
