@@ -1,7 +1,4 @@
-﻿using System.Text.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace Main.Models.OldEventDatas
+﻿namespace Main.Models.OldEventDatas
 {
     public class EventData_202504
     {

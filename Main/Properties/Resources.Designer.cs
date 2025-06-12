@@ -63,9 +63,19 @@ namespace Main.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] DeterminationMonoWebNew {
+        internal static byte[] Fnt_DeterminationMonoWebNew {
             get {
-                object obj = ResourceManager.GetObject("DeterminationMonoWebNew", resourceCulture);
+                object obj = ResourceManager.GetObject("Fnt_DeterminationMonoWebNew", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Fnt_LilitaOne_Regular {
+            get {
+                object obj = ResourceManager.GetObject("Fnt_LilitaOne_Regular", resourceCulture);
                 return ((byte[])(obj));
             }
         }

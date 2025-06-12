@@ -30,7 +30,6 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ByeByeMasteryEventForm));
-            L_Title = new Label();
             L_Version = new Label();
             ProgBar_TimeLeft = new ProgressBar();
             L_TimeLeft = new Label();
@@ -55,34 +54,27 @@
             Timer_ConstantlyRefreshing = new System.Windows.Forms.Timer(components);
             Chk_Altfont = new CheckBox();
             L_NumberFormatting = new Label();
+            L_Title = new Label();
             ((System.ComponentModel.ISupportInitialize)Picbox_MasteryPoint).BeginInit();
             SuspendLayout();
             // 
-            // L_Title
-            // 
-            L_Title.AutoSize = true;
-            L_Title.Font = new Font("Lilita One", 32F);
-            L_Title.Location = new Point(12, 9);
-            L_Title.Name = "L_Title";
-            L_Title.Size = new Size(542, 49);
-            L_Title.TabIndex = 0;
-            L_Title.Text = "Community Event May 2025";
-            // 
             // L_Version
             // 
-            L_Version.Location = new Point(478, 58);
+            L_Version.Font = new Font("Tahoma", 12F);
+            L_Version.Location = new Point(312, 322);
             L_Version.Name = "L_Version";
-            L_Version.Size = new Size(65, 19);
+            L_Version.Size = new Size(239, 19);
             L_Version.TabIndex = 1;
-            L_Version.Text = "v1.0.6.1";
-            L_Version.TextAlign = ContentAlignment.TopRight;
+            L_Version.Text = "v1.0.6.2";
+            L_Version.TextAlign = ContentAlignment.TopCenter;
             L_Version.Click += L_Version_Click;
             L_Version.MouseEnter += L_Version_MouseEnter;
             L_Version.MouseLeave += L_Version_MouseLeave;
             // 
             // ProgBar_TimeLeft
             // 
-            ProgBar_TimeLeft.Location = new Point(560, 54);
+            ProgBar_TimeLeft.Location = new Point(561, 53);
+            ProgBar_TimeLeft.Margin = new Padding(3, 4, 3, 4);
             ProgBar_TimeLeft.Maximum = 1900800;
             ProgBar_TimeLeft.Name = "ProgBar_TimeLeft";
             ProgBar_TimeLeft.Size = new Size(276, 23);
@@ -92,12 +84,12 @@
             // L_TimeLeft
             // 
             L_TimeLeft.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            L_TimeLeft.Font = new Font("Lilita One", 20F);
+            L_TimeLeft.Font = new Font("Tahoma", 20F);
             L_TimeLeft.Location = new Point(620, 12);
             L_TimeLeft.Name = "L_TimeLeft";
             L_TimeLeft.Size = new Size(224, 42);
             L_TimeLeft.TabIndex = 4;
-            L_TimeLeft.Text = "00:00:00:00";
+            L_TimeLeft.Text = "0:00:00";
             L_TimeLeft.TextAlign = ContentAlignment.MiddleRight;
             // 
             // L_SplitContainer
@@ -105,7 +97,7 @@
             L_SplitContainer.AutoSize = true;
             L_SplitContainer.Location = new Point(-59, 70);
             L_SplitContainer.Name = "L_SplitContainer";
-            L_SplitContainer.Size = new Size(1269, 19);
+            L_SplitContainer.Size = new Size(1143, 19);
             L_SplitContainer.TabIndex = 5;
             L_SplitContainer.Text = "______________________________________________________________________________________________________________________________";
             // 
@@ -113,7 +105,8 @@
             // 
             Picbox_MasteryPoint.BackgroundImageLayout = ImageLayout.Zoom;
             Picbox_MasteryPoint.Image = Properties.Resources.Img_MasteryPoint;
-            Picbox_MasteryPoint.Location = new Point(772, 101);
+            Picbox_MasteryPoint.Location = new Point(771, 101);
+            Picbox_MasteryPoint.Margin = new Padding(3, 4, 3, 4);
             Picbox_MasteryPoint.Name = "Picbox_MasteryPoint";
             Picbox_MasteryPoint.Size = new Size(64, 76);
             Picbox_MasteryPoint.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -123,7 +116,7 @@
             // L_PointsCount
             // 
             L_PointsCount.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            L_PointsCount.Font = new Font("Lilita One", 48F);
+            L_PointsCount.Font = new Font("Tahoma", 48F);
             L_PointsCount.Location = new Point(0, 101);
             L_PointsCount.Name = "L_PointsCount";
             L_PointsCount.Size = new Size(780, 76);
@@ -135,9 +128,10 @@
             // Progbar_ToNextGoal
             // 
             Progbar_ToNextGoal.Location = new Point(12, 203);
+            Progbar_ToNextGoal.Margin = new Padding(3, 4, 3, 4);
             Progbar_ToNextGoal.Maximum = 1000000000;
             Progbar_ToNextGoal.Name = "Progbar_ToNextGoal";
-            Progbar_ToNextGoal.Size = new Size(824, 35);
+            Progbar_ToNextGoal.Size = new Size(824, 34);
             Progbar_ToNextGoal.Step = 1;
             Progbar_ToNextGoal.TabIndex = 8;
             // 
@@ -167,9 +161,10 @@
             // 
             Rdi_PrefNone.AutoSize = true;
             Rdi_PrefNone.Checked = true;
-            Rdi_PrefNone.Location = new Point(558, 320);
+            Rdi_PrefNone.Location = new Point(558, 319);
+            Rdi_PrefNone.Margin = new Padding(3, 4, 3, 4);
             Rdi_PrefNone.Name = "Rdi_PrefNone";
-            Rdi_PrefNone.Size = new Size(62, 23);
+            Rdi_PrefNone.Size = new Size(64, 23);
             Rdi_PrefNone.TabIndex = 104;
             Rdi_PrefNone.TabStop = true;
             Rdi_PrefNone.Text = "None";
@@ -179,9 +174,10 @@
             // Rdi_PrefShortened
             // 
             Rdi_PrefShortened.AutoSize = true;
-            Rdi_PrefShortened.Location = new Point(626, 320);
+            Rdi_PrefShortened.Location = new Point(626, 319);
+            Rdi_PrefShortened.Margin = new Padding(3, 4, 3, 4);
             Rdi_PrefShortened.Name = "Rdi_PrefShortened";
-            Rdi_PrefShortened.Size = new Size(97, 23);
+            Rdi_PrefShortened.Size = new Size(99, 23);
             Rdi_PrefShortened.TabIndex = 105;
             Rdi_PrefShortened.Text = "Shortened";
             Rdi_PrefShortened.UseVisualStyleBackColor = true;
@@ -190,9 +186,10 @@
             // Rdi_PrefShortenedMore
             // 
             Rdi_PrefShortenedMore.AutoSize = true;
-            Rdi_PrefShortenedMore.Location = new Point(729, 320);
+            Rdi_PrefShortenedMore.Location = new Point(729, 319);
+            Rdi_PrefShortenedMore.Margin = new Padding(3, 4, 3, 4);
             Rdi_PrefShortenedMore.Name = "Rdi_PrefShortenedMore";
-            Rdi_PrefShortenedMore.Size = new Size(107, 23);
+            Rdi_PrefShortenedMore.Size = new Size(111, 23);
             Rdi_PrefShortenedMore.TabIndex = 106;
             Rdi_PrefShortenedMore.Text = "Shortened+";
             Rdi_PrefShortenedMore.UseVisualStyleBackColor = true;
@@ -201,9 +198,10 @@
             // L_TimeLeftLabel
             // 
             L_TimeLeftLabel.AutoSize = true;
-            L_TimeLeftLabel.Location = new Point(560, 28);
+            L_TimeLeftLabel.Font = new Font("Tahoma", 12F);
+            L_TimeLeftLabel.Location = new Point(561, 28);
             L_TimeLeftLabel.Name = "L_TimeLeftLabel";
-            L_TimeLeftLabel.Size = new Size(73, 19);
+            L_TimeLeftLabel.Size = new Size(78, 19);
             L_TimeLeftLabel.TabIndex = 3;
             L_TimeLeftLabel.Text = "Time left:";
             // 
@@ -221,7 +219,7 @@
             // 
             L_PercentageToNextMilestone.Location = new Point(378, 241);
             L_PercentageToNextMilestone.Name = "L_PercentageToNextMilestone";
-            L_PercentageToNextMilestone.Size = new Size(92, 26);
+            L_PercentageToNextMilestone.Size = new Size(93, 26);
             L_PercentageToNextMilestone.TabIndex = 15;
             L_PercentageToNextMilestone.Text = "0%";
             L_PercentageToNextMilestone.TextAlign = ContentAlignment.TopCenter;
@@ -229,8 +227,9 @@
             // BTN_Refresh
             // 
             BTN_Refresh.Location = new Point(12, 314);
+            BTN_Refresh.Margin = new Padding(3, 4, 3, 4);
             BTN_Refresh.Name = "BTN_Refresh";
-            BTN_Refresh.Size = new Size(75, 29);
+            BTN_Refresh.Size = new Size(75, 28);
             BTN_Refresh.TabIndex = 101;
             BTN_Refresh.Text = "Refresh";
             BTN_Refresh.UseVisualStyleBackColor = true;
@@ -240,8 +239,9 @@
             // 
             Chk_AutoRefresh.AutoSize = true;
             Chk_AutoRefresh.Location = new Point(93, 321);
+            Chk_AutoRefresh.Margin = new Padding(3, 4, 3, 4);
             Chk_AutoRefresh.Name = "Chk_AutoRefresh";
-            Chk_AutoRefresh.Size = new Size(118, 23);
+            Chk_AutoRefresh.Size = new Size(117, 23);
             Chk_AutoRefresh.TabIndex = 102;
             Chk_AutoRefresh.Text = "Auto-refresh";
             Chk_AutoRefresh.UseVisualStyleBackColor = true;
@@ -263,7 +263,7 @@
             // L_PerSecond
             // 
             L_PerSecond.ForeColor = Color.FromArgb(255, 128, 0);
-            L_PerSecond.Location = new Point(292, 181);
+            L_PerSecond.Location = new Point(292, 180);
             L_PerSecond.Name = "L_PerSecond";
             L_PerSecond.Size = new Size(264, 26);
             L_PerSecond.TabIndex = 17;
@@ -275,16 +275,17 @@
             // 
             // Timer_ConstantlyRefreshing
             // 
-            Timer_ConstantlyRefreshing.Interval = 16;
+            Timer_ConstantlyRefreshing.Interval = 1;
             Timer_ConstantlyRefreshing.Tick += Timer_ConstantlyRefreshing_Tick;
             // 
             // Chk_Altfont
             // 
             Chk_Altfont.AutoSize = true;
-            Chk_Altfont.Font = new Font("Cascadia Code SemiBold", 12F, FontStyle.Bold);
-            Chk_Altfont.Location = new Point(217, 321);
+            Chk_Altfont.Font = new Font("Consolas", 12F);
+            Chk_Altfont.Location = new Point(217, 323);
+            Chk_Altfont.Margin = new Padding(3, 4, 3, 4);
             Chk_Altfont.Name = "Chk_Altfont";
-            Chk_Altfont.Size = new Size(101, 25);
+            Chk_Altfont.Size = new Size(100, 23);
             Chk_Altfont.TabIndex = 103;
             Chk_Altfont.Text = "Alt font";
             Chk_Altfont.UseVisualStyleBackColor = true;
@@ -295,15 +296,25 @@
             L_NumberFormatting.AutoSize = true;
             L_NumberFormatting.Location = new Point(558, 298);
             L_NumberFormatting.Name = "L_NumberFormatting";
-            L_NumberFormatting.Size = new Size(144, 19);
+            L_NumberFormatting.Size = new Size(151, 19);
             L_NumberFormatting.TabIndex = 18;
             L_NumberFormatting.Text = "Number formatting:";
+            // 
+            // L_Title
+            // 
+            L_Title.AutoSize = true;
+            L_Title.Font = new Font("Tahoma", 32F);
+            L_Title.Location = new Point(12, 18);
+            L_Title.Name = "L_Title";
+            L_Title.Size = new Size(550, 52);
+            L_Title.TabIndex = 0;
+            L_Title.Text = "Community Event May 2025";
             // 
             // ByeByeMasteryEventForm
             // 
             AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(848, 355);
+            ClientSize = new Size(849, 355);
             Controls.Add(L_NumberFormatting);
             Controls.Add(Chk_Altfont);
             Controls.Add(L_TimeLeftLabel);
@@ -326,10 +337,11 @@
             Controls.Add(L_OrPercentage);
             Controls.Add(L_LastUpdated);
             Controls.Add(L_PerSecond);
-            Font = new Font("Lilita One", 12F);
+            DoubleBuffered = true;
+            Font = new Font("Tahoma", 12F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(4);
+            Margin = new Padding(4, 4, 4, 4);
             MaximizeBox = false;
             Name = "ByeByeMasteryEventForm";
             Text = "RIP Masteries";
@@ -340,8 +352,6 @@
         }
 
         #endregion
-
-        private Label L_Title;
         private Label L_Version;
         private ProgressBar ProgBar_TimeLeft;
         private Label L_TimeLeft;
@@ -366,5 +376,6 @@
         private System.Windows.Forms.Timer Timer_ConstantlyRefreshing;
         private CheckBox Chk_Altfont;
         private Label L_NumberFormatting;
+        private Label L_Title;
     }
 }

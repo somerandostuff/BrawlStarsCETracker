@@ -1,5 +1,4 @@
 ﻿using Main.Models;
-using Main.Models.OldEventDatas;
 using Main.Others;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -49,7 +48,7 @@ namespace Main
         public static async Task<EventData?> FetchData()
         {
             EventData Data = new EventData();
-            using (var Client = new HttpClient())
+            using (var Client = new HttpClient() { Timeout = TimeSpan.FromSeconds(8) })
             {
                 var Content = JsonDocument.Parse(await Client.GetStringAsync(BrawlFeedLinks.NewsAPI));
                 if (Content != null)

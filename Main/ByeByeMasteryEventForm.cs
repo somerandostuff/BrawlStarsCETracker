@@ -1,21 +1,23 @@
-﻿using Main.Others;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using Main.Models;
+using Main.Others;
+using Main.Properties;
+using System.Drawing.Text;
+using System.Runtime.InteropServices;
 
 namespace Main
 {
     public partial class ByeByeMasteryEventForm : Form
     {
         FormatPrefs PrefOption = 0;
+
+        PrivateFontCollection FontColl = new PrivateFontCollection();
+
+        Font? LilitaOne;
+        Font? DeterminationMono;
+
         long LastUpdatedPointSeconds = 0;
+
+        const int MaxFPS = 55;
 
         double MasteryPoints = 0;
         double MasteryPointsOld = 0;
@@ -23,6 +25,8 @@ namespace Main
         double MasteryPointsDisplay = 0;
 
         double PerSecond = 0;
+
+        double FPS = 0;
 
         bool FirstLoad = false;
 
@@ -43,6 +47,8 @@ namespace Main
 
         double RangeAmount = 0;
 
+        EventData? Data = null;
+
         public ByeByeMasteryEventForm()
         {
             InitializeComponent();
@@ -52,77 +58,126 @@ namespace Main
         {
             L_OrPercentage.Text = "Loading...";
 
-            var Data = await Utils.FetchData();
-
-            if (Data != null)
+            try
             {
-                if (Data.Milestones.Count > 0)
+                Data = await Utils.FetchData();
+            }
+            catch (Exception Exc)
+            {
+                switch (Exc)
                 {
-                    UltimateGoal = Utils.SimpleTextToNumber(Data.Milestones.Last().MilestoneLabel);
-                    for (int Idx = 0; Idx < Data.Milestones.Count; Idx++)
+                    case HttpRequestException:
+                        {
+                            if (Exc.HResult is -2147467259)
+                            {
+                                MessageBox.Show("No internet connection! Check your internet connection and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            else
+                            {
+                                MessageBox.Show($"An unknown error occurred! This might have happened because of connectivity issues.\n\nException: {Exc.GetType().Name}, HResult: {Exc.HResult}\nMessage: {Exc.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            break;
+                        }
+                    case TaskCanceledException:
+                        {
+                            if (Exc.HResult is -2146233029)
+                            {
+                                MessageBox.Show("Cannot fetch news API -- the wait operation timed out.\nIt might have broken itself or is being down for the time being...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            else
+                            {
+                                MessageBox.Show($"An unknown error occurred! This might have happened because of connectivity issues.\n\nException: {Exc.GetType().Name}, HResult: {Exc.HResult}\nMessage: {Exc.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            break;
+                        }
+                    default:
+                        {
+                            MessageBox.Show($"ERROR HAS HAPPEN. I REPEAT, ERROR HAS HAPPEN.\nException: {Exc.GetType().Name}, HResult: {Exc.HResult}\nMessage: {Exc.Message}", "Uh oh!!!!?!?!?", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            {
+                                L_OrPercentage.Text = "Load failed!!!";
+                                var ErrorMsg = MessageBox.Show("Couldn't fetch data. Would you want to try again?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                                if (ErrorMsg == DialogResult.Yes)
+                                {
+                                    // This is funny
+                                    FetchData();
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
+            finally
+            {
+                if (Data != null)
+                {
+                    if (Data.Milestones.Count > 0)
                     {
-                        if (Idx == 0 && Data.Progress < Data.Milestones[Idx].BarPercent)
+                        UltimateGoal = Utils.SimpleTextToNumber(Data.Milestones.Last().MilestoneLabel);
+                        for (int Idx = 0; Idx < Data.Milestones.Count; Idx++)
                         {
-                            // Formula explained here
-                            StartPercent = 0;
-                            EndPercent = Data.Milestones[Idx].BarPercent;
+                            if (Idx == 0 && Data.Progress < Data.Milestones[Idx].BarPercent)
+                            {
+                                // Formula explained here
+                                StartPercent = 0;
+                                EndPercent = Data.Milestones[Idx].BarPercent;
 
-                            StartCount = 0;
-                            EndCount = Utils.SimpleTextToNumber(Data.Milestones[Idx].MilestoneLabel);
+                                StartCount = 0;
+                                EndCount = Utils.SimpleTextToNumber(Data.Milestones[Idx].MilestoneLabel);
 
-                            RangePercent = EndPercent - StartPercent;
-                            ProgressToRangePercent = Data.Progress - EndPercent;
+                                RangePercent = EndPercent - StartPercent;
+                                ProgressToRangePercent = Data.Progress - EndPercent;
 
-                            RangeAmount = EndCount - StartCount;
+                                RangeAmount = EndCount - StartCount;
 
-                            MasteryPoints = StartCount + RangeAmount * (ProgressToRangePercent / RangePercent);
+                                MasteryPoints = StartCount + RangeAmount * (ProgressToRangePercent / RangePercent);
 
-                            break;
+                                break;
+                            }
+                            else if (Idx == Data.Milestones.Count - 1 && Data.Progress > Data.Milestones[Idx].BarPercent)
+                            {
+                                // This one is peculiar because this indicates that you have reached the final milestone...
+                                double StartishCount = Utils.SimpleTextToNumber(Data.Milestones[Idx - 1].MilestoneLabel);
+
+                                StartPercent = Data.Milestones[Idx - 1].BarPercent;
+                                EndPercent = Data.Milestones[Idx].BarPercent;
+
+                                StartCount = Utils.SimpleTextToNumber(Data.Milestones[Idx].MilestoneLabel);
+                                EndCount = double.PositiveInfinity;
+
+                                RangePercent = EndPercent - StartPercent;
+                                ProgressToRangePercent = Data.Progress - EndPercent;
+
+                                RangeAmount = StartCount - StartishCount;
+
+                                MasteryPoints = StartCount + RangeAmount * (ProgressToRangePercent / RangePercent);
+
+                                break;
+                            }
+                            else if (Idx > 0 && Data.Progress > Data.Milestones[Idx].BarPercent && Data.Progress <= Data.Milestones[Idx + 1].BarPercent)
+                            {
+                                StartPercent = Data.Milestones[Idx].BarPercent;
+                                EndPercent = Data.Milestones[Idx + 1].BarPercent;
+
+                                StartCount = Utils.SimpleTextToNumber(Data.Milestones[Idx].MilestoneLabel);
+                                EndCount = Utils.SimpleTextToNumber(Data.Milestones[Idx + 1].MilestoneLabel);
+
+                                RangePercent = EndPercent - StartPercent;
+                                ProgressToRangePercent = Data.Progress - StartPercent;
+
+                                RangeAmount = EndCount - StartCount;
+
+                                MasteryPoints = StartCount + RangeAmount * (ProgressToRangePercent / RangePercent);
+
+                                break;
+                            }
                         }
-                        else if (Idx == Data.Milestones.Count - 1 && Data.Progress > Data.Milestones[Idx].BarPercent)
-                        {
-                            // This one is peculiar because this indicates that you have reached the final milestone...
-                            double StartishCount = Utils.SimpleTextToNumber(Data.Milestones[Idx - 1].MilestoneLabel);
+                        UpdateLastRefresh();
+                        PopulateUI();
 
-                            StartPercent = Data.Milestones[Idx - 1].BarPercent;
-                            EndPercent = Data.Milestones[Idx].BarPercent;
-
-                            StartCount = Utils.SimpleTextToNumber(Data.Milestones[Idx].MilestoneLabel);
-                            EndCount = double.PositiveInfinity;
-
-                            RangePercent = EndPercent - StartPercent;
-                            ProgressToRangePercent = Data.Progress - EndPercent;
-
-                            RangeAmount = StartCount - StartishCount;
-
-                            MasteryPoints = StartCount + RangeAmount * (ProgressToRangePercent / RangePercent);
-
-                            break;
-                        }
-                        else if (Idx > 0 && Data.Progress > Data.Milestones[Idx].BarPercent && Data.Progress <= Data.Milestones[Idx + 1].BarPercent)
-                        {
-                            StartPercent = Data.Milestones[Idx].BarPercent;
-                            EndPercent = Data.Milestones[Idx + 1].BarPercent;
-
-                            StartCount = Utils.SimpleTextToNumber(Data.Milestones[Idx].MilestoneLabel);
-                            EndCount = Utils.SimpleTextToNumber(Data.Milestones[Idx + 1].MilestoneLabel);
-
-                            RangePercent = EndPercent - StartPercent;
-                            ProgressToRangePercent = Data.Progress - StartPercent;
-
-                            RangeAmount = EndCount - StartCount;
-
-                            MasteryPoints = StartCount + RangeAmount * (ProgressToRangePercent / RangePercent);
-
-                            break;
-                        }
+                        // Because this function always execute on the first load, this variable here exists
+                        // so any auto-refresh functions won't break out of nowhere
+                        FirstLoad = true;
                     }
-                    UpdateLastRefresh();
-                    PopulateUI();
-
-                    // Because this function always execute on the first load, this variable here exists
-                    // so any auto-refresh functions won't break out of nowhere
-                    FirstLoad = true;
                 }
             }
         }
@@ -157,6 +212,14 @@ namespace Main
                 ShowApproxLabel();
 
                 MasteryPointsDisplay = MasteryPoints;
+
+                if (Timer_ConstantlyRefreshing.Interval < 1000 / MaxFPS)
+                {
+                    // equal 18,18--- ms (max delay per frame)
+                    FPS = MaxFPS;
+                }
+                // as fps
+                else FPS = 1000 / Timer_ConstantlyRefreshing.Interval;
 
                 Timer_ConstantlyRefreshing.Enabled = true;
             }
@@ -214,19 +277,23 @@ namespace Main
                     {
                         L_TimeLeft.Text = string.Format
                             ("{0:D1} " + (TimeCount.Days == 1 || TimeCount.Days == -1 ? "day" : "days") + " " +
-                             "{1:D1} " + (TimeCount.Hours == 1 || TimeCount.Hours == -1 ? "hour" : "hours"), TimeCount.Days, TimeCount.Hours);
+                            (TimeCount.Hours == 0 ? string.Empty : "{1:D1} ") +
+                            (TimeCount.Hours == 1 || TimeCount.Hours == -1 ? "hour" : "hours"), TimeCount.Days, TimeCount.Hours);
                     }
                     else if (TimeCount >= TimeSpan.FromHours(1))
                     {
                         L_TimeLeft.Text = string.Format
                             ("{0:D1} " + (TimeCount.Hours == 1 || TimeCount.Hours == -1 ? "hour" : "hours") + " " +
-                             "{1:D1} " + (TimeCount.Minutes == 1 || TimeCount.Minutes == -1 ? "min" : "mins"), TimeCount.Hours, TimeCount.Minutes);
+                            (TimeCount.Minutes == 0 ? string.Empty : "{1:D1} ") +
+                            (TimeCount.Minutes == 1 || TimeCount.Minutes == -1 ? "min" : "mins"), TimeCount.Hours, TimeCount.Minutes);
                     }
                     else
                     {
                         L_TimeLeft.Text = string.Format
-                           ("{0:D1} " + (TimeCount.Minutes == 1 || TimeCount.Minutes == -1 ? "min" : "mins") + " " +
-                            "{1:D1} " + (TimeCount.Minutes == 1 || TimeCount.Minutes == -1 ? "sec" : "secs"), TimeCount.Minutes, TimeCount.Seconds);
+                          ((TimeCount.Minutes == 0 ? string.Empty : "{0:D1} ") +
+                           (TimeCount.Minutes == 1 || TimeCount.Minutes == -1 ? "min" : "mins") + " " +
+                           (TimeCount.Seconds == 0 ? string.Empty : "{1:D1} ") +
+                           (TimeCount.Minutes == 1 || TimeCount.Minutes == -1 ? "sec" : "secs"), TimeCount.Minutes, TimeCount.Seconds);
                     }
                     break;
                 case FormatPrefs.ShortText:
@@ -265,29 +332,69 @@ namespace Main
         private void ShowAboutLabel()
         {
             L_Version.Text = "About tracker...";
-            L_Version.Location = new Point(429, 58);
-            L_Version.Size = new Size(114, 19);
         }
 
         private void HideAboutLabel()
         {
-            L_Version.Text = "v1.0.6.1";
-            L_Version.Location = new Point(478, 58);
-            L_Version.Size = new Size(65, 19);
+            L_Version.Text = "v1.0.6.2";
         }
 
-        private bool CheckIfFontExists(string FontName)
+        private void LoadFont()
         {
-            using (var FontTest = new Font(FontName, 12))
-            {
-                if (FontTest.Name == FontName)
-                    return true;
-                else return false;
-            }
+            LoadInternalFont(Resources.Fnt_LilitaOne_Regular);
+            LilitaOne = new Font(FontColl.Families[0], 12);
+
+            LoadInternalFont(Resources.Fnt_DeterminationMonoWebNew);
+            DeterminationMono = new Font(FontColl.Families[0], 12);
+
+            var LilitaFontSize12 = new Font(LilitaOne.FontFamily, 12);
+            var LilitaFontSize20 = new Font(LilitaOne.FontFamily, 20);
+            var LilitaFontSize32 = new Font(LilitaOne.FontFamily, 32);
+            var LilitaFontSize48 = new Font(LilitaOne.FontFamily, 48);
+
+            L_PointsCount.Font = LilitaFontSize48;
+            L_Title.Font = LilitaFontSize32;
+            L_TimeLeft.Font = LilitaFontSize20;
+
+            L_SplitContainer.Font = LilitaFontSize12;
+
+            L_TimeLeftLabel.Font = LilitaFontSize12;
+            L_LastUpdated.Font = LilitaFontSize12;
+            L_StartCount.Font = LilitaFontSize12;
+            L_EndCount.Font = LilitaFontSize12;
+            L_PercentageToNextMilestone.Font = LilitaFontSize12;
+            L_PerSecond.Font = LilitaFontSize12;
+
+            L_OrPercentage.Font = LilitaFontSize12;
+            BTN_Refresh.Font = LilitaFontSize12;
+            Chk_AutoRefresh.Font = LilitaFontSize12;
+
+            Chk_Altfont.Font = DeterminationMono;
+
+            L_Version.Font = LilitaFontSize12;
+
+            L_NumberFormatting.Font = LilitaFontSize12;
+            Rdi_PrefNone.Font = LilitaFontSize12;
+            Rdi_PrefShortened.Font = LilitaFontSize12;
+            Rdi_PrefShortenedMore.Font = LilitaFontSize12;
+        }
+
+        private void LoadInternalFont(byte[] FontData)
+        {
+            IntPtr FontPtr = Marshal.AllocCoTaskMem(FontData.Length);
+            Marshal.Copy(FontData, 0, FontPtr, FontData.Length);
+            uint Dummy = 0;
+
+            FontColl.AddMemoryFont(FontPtr, FontData.Length);
+
+            LoadFontIntoMemory.AddFontMemResourceEx(FontPtr, (uint)FontData.Length, 0, ref Dummy);
+
+            Marshal.FreeCoTaskMem(FontPtr);
         }
 
         private void ByeByeMasteryEventForm_Load(object sender, EventArgs e)
         {
+            LoadFont();
             FetchData();
         }
 
@@ -304,7 +411,7 @@ namespace Main
         private void L_Version_Click(object sender, EventArgs e)
         {
             HideAboutLabel();
-            MessageBox.Show("v1.0.6.1 hotfix -- updated on 6/6/2025\n\nMade by somerandostuff & xale, thankyou for the contributions!", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("v1.0.6.2 cleanup -- updated on 12/6/2025\n\nMade by somerandostuff & xale, thankyou for the contributions!", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void Timer_TimeLeftCountdown_Tick(object sender, EventArgs e)
@@ -350,17 +457,24 @@ namespace Main
                 if (PerSecond > 0)
                 {
                     var Confirmation =
-                        MessageBox.Show($"Use display count?\nIf you select 'No', then the original count will be used.\n\n(Original count: {Utils.Beautify(MasteryPoints, PrefOption)} points!)", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        MessageBox.Show($"Use display count?\nIf you select 'No', then the original count will be used.\n\n(Original count: {Utils.Beautify(MasteryPoints, PrefOption)} points!)", "Question", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
-                    if (Confirmation == DialogResult.Yes)
+                    switch (Confirmation)
                     {
-                        Clipboard.SetText("# COMMUNITY EVENT REPORT\nWe are at " + Utils.Beautify(MasteryPointsDisplay, PrefOption) + " mastery points right now.");
-                        MessageBox.Show("Copied display count to clipboard!", "Nice", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        Clipboard.SetText("# COMMUNITY EVENT REPORT\nWe are at " + Utils.Beautify(MasteryPoints, PrefOption) + " mastery points right now.");
-                        MessageBox.Show("Copied original count to clipboard!", "Nice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        case DialogResult.Yes:
+                            {
+                                Clipboard.SetText("# COMMUNITY EVENT REPORT\nWe are at " + Utils.Beautify(MasteryPointsDisplay, PrefOption) + " mastery points right now.");
+                                MessageBox.Show("Copied display count to clipboard!", "Nice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                break;
+                            }
+                        case DialogResult.No:
+                            {
+                                Clipboard.SetText("# COMMUNITY EVENT REPORT\nWe are at " + Utils.Beautify(MasteryPoints, PrefOption) + " mastery points right now.");
+                                MessageBox.Show("Copied original count to clipboard!", "Nice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            break;
+                        default:
+                            break;
                     }
                 }
                 else
@@ -405,16 +519,14 @@ namespace Main
                 }
                 else
                 {
-                     Chk_AutoRefresh.Checked = true;
+                    Chk_AutoRefresh.Checked = true;
                 }
             }
         }
 
         private void Timer_Refresh_Tick(object sender, EventArgs e)
         {
-            // If Date Time hits minute X or Y and updater
-            // do not update for more than 1 minute then trigger this
-            if ((DateTimeOffset.Now.Minute == 25 || DateTimeOffset.Now.Minute == 55) &&
+            if (DateTimeOffset.Now.Minute % 4 == 3 && DateTimeOffset.Now.Second == 0 &&
                 DateTimeOffset.Now.ToUnixTimeSeconds() - LastUpdatedPointSeconds >= 60)
             {
                 FetchData();
@@ -423,7 +535,7 @@ namespace Main
 
         private void Timer_ConstantlyRefreshing_Tick(object sender, EventArgs e)
         {
-            MasteryPointsDisplay += PerSecond / 62.5;
+            MasteryPointsDisplay += PerSecond / FPS;
 
             L_PointsCount.Text = Utils.Beautify(MasteryPointsDisplay, PrefOption);
             L_PercentageToNextMilestone.Text = ((MasteryPointsDisplay - StartCount) / (EndCount - StartCount) * 100).ToString("0.##") + "%";
@@ -453,23 +565,27 @@ namespace Main
         {
             if (Chk_Altfont.Checked)
             {
-                if (CheckIfFontExists("Cascadia Code"))
+                if (DeterminationMono != null)
                 {
-                    L_PointsCount.Font = new Font("Cascadia Code", 40, FontStyle.Bold);
-                }
-                else if (CheckIfFontExists("Courier New"))
-                {
-                    L_PointsCount.Font = new Font("Courier New", 40, FontStyle.Bold);
+                    L_PointsCount.Font = new Font(DeterminationMono.FontFamily, 48);
                 }
                 else
                 {
-                    MessageBox.Show("Can't use this function: you don't have Courier New or Cascadia Code installed on your machine!", ":(", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Monospace font error occurred! This function will now be unchecked.\nYou may restart the application if needed because this usually fixes the problem.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Chk_Altfont.Checked = false;
                 }
             }
             else
             {
-                L_PointsCount.Font = new Font("Lilita One", 48);
+                if (LilitaOne != null)
+                {
+                    L_PointsCount.Font = new Font(LilitaOne.FontFamily, 48);
+                }
+                else
+                {
+                    MessageBox.Show("Font error occurred, impossible!!!\nBut the application is gonna use a fallback font anyway.", "How?", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    L_PointsCount.Font = new Font("Arial", 48, FontStyle.Bold);
+                }
             }
         }
 
@@ -477,7 +593,7 @@ namespace Main
         {
             if (!string.IsNullOrWhiteSpace(L_PerSecond.Text))
             {
-                MessageBox.Show("Estimate counter calculates the amount of points per second by getting the first fetched amount of points and then getting the second fetched amount of points to find the difference between the two amount of points, then divide the diff amount to get the approximated amount of points per second. The estimations will also get improved every half hour by doing the same thing but it will calculate the average of all points per second entries thus far.\n\n(Ain't reading allat)", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Estimate counter calculates the amount of points per second by getting the first fetched amount of points and then getting the second fetched amount of points to find the difference between the two amount of points, then divide the diff amount to get the approximated amount of points per second. The estimations will also get improved every half hour by doing the same thing but it will calculate the average of all points per second entries thus far.\n\nNote that the continously incremented count display is purely cosmetic and does not represent actual count accurately.\n\n\n(Ain't reading allat)", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }

@@ -13,7 +13,7 @@
     {
         // W/O Parameters...
         public const string NewsAPI = "https://brawlstars.inbox.supercell.com/data/en/news/content.json";
-        public const string News    = "https://brawlstars.inbox.supercell.com";
+        public const string News = "https://brawlstars.inbox.supercell.com";
         public const string PollAPI = "https://brawlstars-api.inbox.supercell.com/poll-api/poll/?pollId=";
     }
 }
