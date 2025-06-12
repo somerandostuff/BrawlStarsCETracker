@@ -60,10 +60,11 @@
             // 
             // L_Version
             // 
+            L_Version.Anchor = AnchorStyles.Top;
             L_Version.Font = new Font("Tahoma", 12F);
-            L_Version.Location = new Point(312, 322);
+            L_Version.Location = new Point(338, 321);
             L_Version.Name = "L_Version";
-            L_Version.Size = new Size(239, 19);
+            L_Version.Size = new Size(167, 19);
             L_Version.TabIndex = 1;
             L_Version.Text = "v1.0.6.2";
             L_Version.TextAlign = ContentAlignment.TopCenter;
@@ -145,7 +146,8 @@
             // 
             // L_EndCount
             // 
-            L_EndCount.Location = new Point(476, 241);
+            L_EndCount.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            L_EndCount.Location = new Point(477, 241);
             L_EndCount.Name = "L_EndCount";
             L_EndCount.Size = new Size(360, 26);
             L_EndCount.TabIndex = 10;
@@ -219,7 +221,7 @@
             // 
             L_PercentageToNextMilestone.Location = new Point(378, 241);
             L_PercentageToNextMilestone.Name = "L_PercentageToNextMilestone";
-            L_PercentageToNextMilestone.Size = new Size(93, 26);
+            L_PercentageToNextMilestone.Size = new Size(91, 26);
             L_PercentageToNextMilestone.TabIndex = 15;
             L_PercentageToNextMilestone.Text = "0%";
             L_PercentageToNextMilestone.TextAlign = ContentAlignment.TopCenter;
@@ -341,7 +343,7 @@
             Font = new Font("Tahoma", 12F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             MaximizeBox = false;
             Name = "ByeByeMasteryEventForm";
             Text = "RIP Masteries";
