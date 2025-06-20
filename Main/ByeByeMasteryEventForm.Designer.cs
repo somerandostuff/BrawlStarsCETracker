@@ -55,6 +55,7 @@
             Chk_Altfont = new CheckBox();
             L_NumberFormatting = new Label();
             L_Title = new Label();
+            Timer_ConstantlyRefreshing_ForRPC = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)Picbox_MasteryPoint).BeginInit();
             SuspendLayout();
             // 
@@ -66,7 +67,7 @@
             L_Version.Name = "L_Version";
             L_Version.Size = new Size(167, 19);
             L_Version.TabIndex = 1;
-            L_Version.Text = "v1.0.6.2";
+            L_Version.Text = "v1.0.6.3";
             L_Version.TextAlign = ContentAlignment.TopCenter;
             L_Version.Click += L_Version_Click;
             L_Version.MouseEnter += L_Version_MouseEnter;
@@ -312,6 +313,11 @@
             L_Title.TabIndex = 0;
             L_Title.Text = "Community Event May 2025";
             // 
+            // Timer_ConstantlyRefreshing_ForRPC
+            // 
+            Timer_ConstantlyRefreshing_ForRPC.Interval = 500;
+            Timer_ConstantlyRefreshing_ForRPC.Tick += Timer_ConstantlyRefreshing_ForRPC_Tick;
+            // 
             // ByeByeMasteryEventForm
             // 
             AutoScaleDimensions = new SizeF(9F, 19F);
@@ -379,5 +385,6 @@
         private CheckBox Chk_Altfont;
         private Label L_NumberFormatting;
         private Label L_Title;
+        private System.Windows.Forms.Timer Timer_ConstantlyRefreshing_ForRPC;
     }
 }

@@ -16,4 +16,9 @@
         public const string News = "https://brawlstars.inbox.supercell.com";
         public const string PollAPI = "https://brawlstars-api.inbox.supercell.com/poll-api/poll/?pollId=";
     }
+
+    public class ClientID
+    {
+        public const string Discord = "1385626712842305618";
+    }
 }

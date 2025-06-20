@@ -1,53 +1,61 @@
-﻿using Main.Models;
+﻿using DiscordRPC;
+using Main.Models;
 using Main.Others;
 using Main.Properties;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
+using System.Security.Policy;
 
 namespace Main
 {
     public partial class ByeByeMasteryEventForm : Form
     {
-        FormatPrefs PrefOption = 0;
+        #region Variables
+        public FormatPrefs PrefOption = 0;
 
-        PrivateFontCollection FontColl = new PrivateFontCollection();
+        public PrivateFontCollection FontColl = new PrivateFontCollection();
 
-        Font? LilitaOne;
-        Font? DeterminationMono;
+        public Font? LilitaOne;
+        public Font? DeterminationMono;
 
-        long LastUpdatedPointSeconds = 0;
+        public long LastUpdatedPointSeconds = 0;
 
-        const int MaxFPS = 55;
+        public long BootupTime = DateTimeOffset.Now.ToUnixTimeSeconds();
 
-        double MasteryPoints = 0;
-        double MasteryPointsOld = 0;
+        public const int MaxFPS = 55;
 
-        double MasteryPointsDisplay = 0;
+        public double MasteryPoints = 0;
+        public double MasteryPointsOld = 0;
 
-        double PerSecond = 0;
+        public double MasteryPointsDisplay = 0;
 
-        double FPS = 0;
+        public double PerSecond = 0;
 
-        bool FirstLoad = false;
+        public double FPS = 0;
+
+        public bool FirstLoad = false;
 
         // IntelliSense keeps telling me to use "Ts" as the variable name
         // This is for logging amount of points/minute estimates (up to 5)
-        readonly Queue<double> Ts = [];
+        public readonly Queue<double> Ts = [];
 
-        double RangePercent = 0;
-        double ProgressToRangePercent = 0;
+        public double RangePercent = 0;
+        public double ProgressToRangePercent = 0;
 
-        double StartCount = 0;
-        double EndCount = 0;
+        public double StartCount = 0;
+        public double EndCount = 0;
 
-        double StartPercent = 0;
-        double EndPercent = 0;
+        public double StartPercent = 0;
+        public double EndPercent = 0;
 
-        double UltimateGoal = 0;
+        public double UltimateGoal = 0;
 
-        double RangeAmount = 0;
+        public double RangeAmount = 0;
 
-        EventData? Data = null;
+        public EventData? Data = null;
+
+        private static readonly DiscordRpcClient DiscordClient = new DiscordRpcClient(ClientID.Discord);
+        #endregion
 
         public ByeByeMasteryEventForm()
         {
@@ -222,29 +230,21 @@ namespace Main
                 else FPS = 1000 / Timer_ConstantlyRefreshing.Interval;
 
                 Timer_ConstantlyRefreshing.Enabled = true;
+                if (DiscordClient.IsInitialized)
+                {
+                    Timer_ConstantlyRefreshing_ForRPC.Enabled = true;
+                }
             }
         }
 
         private void PopulateUI()
         {
-            if (MasteryPoints < MasteryPointsDisplay)
-            {
-                L_PointsCount.Text = Utils.Beautify(MasteryPointsDisplay, PrefOption);
-                L_PercentageToNextMilestone.Text = ((MasteryPointsDisplay - StartCount) / (EndCount - StartCount) * 100).ToString("0.##") + "%";
-                Progbar_ToNextGoal.Value =
-                    (int)((MasteryPointsDisplay - StartCount) / (EndCount - StartCount) * 100 * 1e7) > Progbar_ToNextGoal.Maximum ? Progbar_ToNextGoal.Maximum : (int)((MasteryPointsDisplay - StartCount) / (EndCount - StartCount) * 100 * 1e7);
+            L_PointsCount.Text = Utils.Beautify(MasteryPoints, PrefOption);
+            L_PercentageToNextMilestone.Text = (ProgressToRangePercent / RangePercent * 100).ToString("0.##") + "%";
+            Progbar_ToNextGoal.Value =
+                (int)(ProgressToRangePercent / RangePercent * 100 * 1e7) > Progbar_ToNextGoal.Maximum ? Progbar_ToNextGoal.Maximum : (int)(ProgressToRangePercent / RangePercent * 100 * 1e7);
 
-                L_OrPercentage.Text = "... or " + (MasteryPointsDisplay / UltimateGoal * 100).ToString("0.##") + "%";
-            }
-            else
-            {
-                L_PointsCount.Text = Utils.Beautify(MasteryPoints, PrefOption);
-                L_PercentageToNextMilestone.Text = (ProgressToRangePercent / RangePercent * 100).ToString("0.##") + "%";
-                Progbar_ToNextGoal.Value =
-                    (int)(ProgressToRangePercent / RangePercent * 100 * 1e7) > Progbar_ToNextGoal.Maximum ? Progbar_ToNextGoal.Maximum : (int)(ProgressToRangePercent / RangePercent * 100 * 1e7);
-
-                L_OrPercentage.Text = "... or " + (MasteryPoints / UltimateGoal * 100).ToString("0.##") + "%";
-            }
+            L_OrPercentage.Text = "... or " + (MasteryPoints / UltimateGoal * 100).ToString("0.##") + "%";
 
             if (PerSecond > 0)
             {
@@ -253,9 +253,21 @@ namespace Main
 
             L_StartCount.Text = Utils.Beautify(StartCount, PrefOption);
             L_EndCount.Text = Utils.Beautify(EndCount, PrefOption);
+
+            if (DiscordClient.IsInitialized)
+            {
+                if (PerSecond > 0)
+                {
+                    SetPresenceMessage(Utils.Beautify(MasteryPoints, PrefOption) + " mastery PTs", "at around " + Utils.Beautify(PerSecond, PrefOption) + " PTs/s");
+                }
+                else
+                {
+                    SetPresenceMessage(Utils.Beautify(MasteryPoints, PrefOption), "mastery points");
+                }
+            }
         }
 
-        private void FormatTime(TimeSpan TimeCount)
+        private string FormatTime(TimeSpan TimeCount)
         {
             switch (PrefOption)
             {
@@ -263,59 +275,56 @@ namespace Main
                 default:
                     if (TimeCount >= TimeSpan.FromDays(1))
                     {
-                        L_TimeLeft.Text = string.Format
+                        return string.Format
                             ("{0:D1}:{1:D2}:{2:D2}:{3:D2}", TimeCount.Days, TimeCount.Hours, TimeCount.Minutes, TimeCount.Seconds);
                     }
                     else
                     {
-                        L_TimeLeft.Text = string.Format
+                        return string.Format
                             ("{0:D1}:{1:D2}:{2:D2}", TimeCount.Hours, TimeCount.Minutes, TimeCount.Seconds);
                     }
-                    break;
                 case FormatPrefs.LongText:
                     if (TimeCount >= TimeSpan.FromDays(1))
                     {
-                        L_TimeLeft.Text = string.Format
-                            ("{0:D1} " + (TimeCount.Days == 1 || TimeCount.Days == -1 ? "day" : "days") + " " +
-                            (TimeCount.Hours == 0 ? string.Empty : "{1:D1} ") +
-                            (TimeCount.Hours == 1 || TimeCount.Hours == -1 ? "hour" : "hours"), TimeCount.Days, TimeCount.Hours);
+                        return string.Format
+                            ("{0:D1} " + (TimeCount.Days == 1 || TimeCount.Days == -1 ? "day " : "days ") +
+                            (TimeCount.Hours == 0 ? string.Empty : ("{1:D1} " +
+                            (TimeCount.Hours == 1 || TimeCount.Hours == -1 ? "hour" : "hours"))), TimeCount.Days, TimeCount.Hours);
                     }
                     else if (TimeCount >= TimeSpan.FromHours(1))
                     {
-                        L_TimeLeft.Text = string.Format
-                            ("{0:D1} " + (TimeCount.Hours == 1 || TimeCount.Hours == -1 ? "hour" : "hours") + " " +
-                            (TimeCount.Minutes == 0 ? string.Empty : "{1:D1} ") +
-                            (TimeCount.Minutes == 1 || TimeCount.Minutes == -1 ? "min" : "mins"), TimeCount.Hours, TimeCount.Minutes);
+                        return string.Format
+                            ("{0:D1} " + (TimeCount.Hours == 1 || TimeCount.Hours == -1 ? "hour " : "hours ") +
+                            (TimeCount.Minutes == 0 ? string.Empty : ("{1:D1} " +
+                            (TimeCount.Minutes == 1 || TimeCount.Minutes == -1 ? "min" : "mins"))), TimeCount.Hours, TimeCount.Minutes);
                     }
                     else
                     {
-                        L_TimeLeft.Text = string.Format
-                          ((TimeCount.Minutes == 0 ? string.Empty : "{0:D1} ") +
-                           (TimeCount.Minutes == 1 || TimeCount.Minutes == -1 ? "min" : "mins") + " " +
-                           (TimeCount.Seconds == 0 ? string.Empty : "{1:D1} ") +
-                           (TimeCount.Minutes == 1 || TimeCount.Minutes == -1 ? "sec" : "secs"), TimeCount.Minutes, TimeCount.Seconds);
+                        return string.Format
+                          ((TimeCount.Minutes == 0 ? string.Empty : ("{0:D1} " +
+                           (TimeCount.Minutes == 1 || TimeCount.Minutes == -1 ? "min " : "mins "))) +
+                           (TimeCount.Seconds == 0 ? string.Empty : ("{1:D1} " +
+                           (TimeCount.Seconds == 1 || TimeCount.Seconds == -1 ? "sec" : "secs"))), TimeCount.Minutes, TimeCount.Seconds);
                     }
-                    break;
                 case FormatPrefs.ShortText:
                     if (TimeCount >= TimeSpan.FromDays(1))
                     {
-                        L_TimeLeft.Text = string.Format
+                        return string.Format
                             ("{0:D1}d" + " " +
                              "{1:D1}h", TimeCount.Days, TimeCount.Hours);
                     }
                     else if (TimeCount >= TimeSpan.FromHours(1))
                     {
-                        L_TimeLeft.Text = string.Format
+                        return string.Format
                             ("{0:D1}h" + " " +
                              "{1:D1}m", TimeCount.Hours, TimeCount.Minutes);
                     }
                     else
                     {
-                        L_TimeLeft.Text = string.Format
+                        return string.Format
                            ("{0:D1}m" + " " +
                             "{1:D1}s", TimeCount.Minutes, TimeCount.Seconds);
                     }
-                    break;
             }
         }
 
@@ -336,7 +345,7 @@ namespace Main
 
         private void HideAboutLabel()
         {
-            L_Version.Text = "v1.0.6.2";
+            L_Version.Text = "v1.0.6.3";
         }
 
         private void LoadFont()
@@ -379,6 +388,36 @@ namespace Main
             Rdi_PrefShortenedMore.Font = LilitaFontSize12;
         }
 
+        private void InitializeRPC()
+        {
+            try
+            {
+                DiscordClient.Initialize();
+            }
+            catch (Exception Exc)
+            {
+                var ErrorMessage =
+                    MessageBox.Show($"Couldn't initialize Discord RPC! Do you want to proceed without it?\nError code: {Exc.GetType().Name}\nMessage: {Exc.Message}", "No RPC?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (ErrorMessage == DialogResult.Yes)
+                {
+                    InitializeRPC();
+                }
+                else DiscordClient.Dispose();
+            }
+        }
+
+        private void SetPresenceMessage(string Details, string State)
+        {
+            DiscordClient.SetPresence(new RichPresence()
+            {
+                Type = ActivityType.Watching,
+                Details = Details,
+                State = State,
+                Buttons = [new() { Label = "chip", Url = "https://www.youtube.com/watch?v=WIRK_pGdIdA" }]
+            });
+        }
+
         private void LoadInternalFont(byte[] FontData)
         {
             IntPtr FontPtr = Marshal.AllocCoTaskMem(FontData.Length);
@@ -396,6 +435,7 @@ namespace Main
         {
             LoadFont();
             FetchData();
+            InitializeRPC();
         }
 
         private void L_Version_MouseEnter(object sender, EventArgs e)
@@ -411,7 +451,7 @@ namespace Main
         private void L_Version_Click(object sender, EventArgs e)
         {
             HideAboutLabel();
-            MessageBox.Show("v1.0.6.2 cleanup -- updated on 12/6/2025\n\nMade by somerandostuff & xale, thankyou for the contributions!", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("v1.0.6.3 -- updated on 20/6/2025\n\nMade by somerandostuff & xale, thankyou for the contributions!\n\nUptime: " + FormatTime(TimeSpan.FromSeconds(DateTimeOffset.Now.ToUnixTimeSeconds() - BootupTime)), "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void Timer_TimeLeftCountdown_Tick(object sender, EventArgs e)
@@ -419,7 +459,7 @@ namespace Main
             var TimeCount = Utils.GetTimeLeft();
             ProgBar_TimeLeft.Value = ProgBar_TimeLeft.Maximum - (int)TimeCount.TotalSeconds;
 
-            FormatTime(TimeCount);
+            L_TimeLeft.Text = FormatTime(TimeCount);
         }
 
         private void Rdi_PrefNone_CheckedChanged(object sender, EventArgs e)
@@ -516,6 +556,7 @@ namespace Main
 
                     Ts.Clear();
                     Timer_ConstantlyRefreshing.Enabled = false;
+                    Timer_ConstantlyRefreshing_ForRPC.Enabled = false;
                 }
                 else
                 {
@@ -594,6 +635,21 @@ namespace Main
             if (!string.IsNullOrWhiteSpace(L_PerSecond.Text))
             {
                 MessageBox.Show("Estimate counter calculates the amount of points per second by getting the first fetched amount of points and then getting the second fetched amount of points to find the difference between the two amount of points, then divide the diff amount to get the approximated amount of points per second. The estimations will also get improved every half hour by doing the same thing but it will calculate the average of all points per second entries thus far.\n\nNote that the continously incremented count display is purely cosmetic and does not represent actual count accurately.\n\n\n(Ain't reading allat)", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void Timer_ConstantlyRefreshing_ForRPC_Tick(object sender, EventArgs e)
+        {
+            if (DiscordClient.IsInitialized)
+            {
+                if (PerSecond > 0)
+                {
+                    SetPresenceMessage(Utils.Beautify(MasteryPoints, PrefOption) + " mastery PTs", "at around " + Utils.Beautify(PerSecond, PrefOption) + " PTs/s");
+                }
+                else
+                {
+                    SetPresenceMessage(Utils.Beautify(MasteryPoints, PrefOption), "mastery points");
+                }
             }
         }
     }
