@@ -644,7 +644,7 @@ namespace Main
             {
                 if (PerSecond > 0)
                 {
-                    SetPresenceMessage(Utils.Beautify(MasteryPoints, PrefOption) + " mastery PTs", "at around " + Utils.Beautify(PerSecond, PrefOption) + " PTs/s");
+                    SetPresenceMessage(Utils.Beautify(MasteryPointsDisplay, PrefOption) + " mastery PTs", "at around " + Utils.Beautify(PerSecond, PrefOption) + " PTs/s");
                 }
                 else
                 {
