@@ -315,7 +315,7 @@
             // 
             // Timer_ConstantlyRefreshing_ForRPC
             // 
-            Timer_ConstantlyRefreshing_ForRPC.Interval = 500;
+            Timer_ConstantlyRefreshing_ForRPC.Interval = 5000;
             Timer_ConstantlyRefreshing_ForRPC.Tick += Timer_ConstantlyRefreshing_ForRPC_Tick;
             // 
             // ByeByeMasteryEventForm

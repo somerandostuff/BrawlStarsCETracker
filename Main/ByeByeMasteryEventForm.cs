@@ -258,7 +258,7 @@ namespace Main
             {
                 if (PerSecond > 0)
                 {
-                    SetPresenceMessage(Utils.Beautify(MasteryPoints, PrefOption) + " mastery PTs", "at around " + Utils.Beautify(PerSecond, PrefOption) + " PTs/s");
+                    SetPresenceMessage(Utils.Beautify(MasteryPointsDisplay, PrefOption) + " mastery PTs", "at around " + Utils.Beautify(PerSecond, PrefOption) + " PTs/s");
                 }
                 else
                 {
@@ -405,17 +405,24 @@ namespace Main
                 }
                 else DiscordClient.Dispose();
             }
+            finally
+            {
+                if (DiscordClient.IsInitialized)
+                {
+                    DiscordClient.SetPresence(new(){
+                        Type = ActivityType.Watching,
+                        Details = "Loading data...",
+                        State = "Waiting...",
+                        Buttons = [ new() { Label = "chip", Url = "https://www.youtube.com/watch?v=WIRK_pGdIdA" } ]
+                    });
+                }
+            }
         }
 
         private void SetPresenceMessage(string Details, string State)
         {
-            DiscordClient.SetPresence(new RichPresence()
-            {
-                Type = ActivityType.Watching,
-                Details = Details,
-                State = State,
-                Buttons = [new() { Label = "chip", Url = "https://www.youtube.com/watch?v=WIRK_pGdIdA" }]
-            });
+            DiscordClient.UpdateDetails(Details);
+            DiscordClient.UpdateState(State);
         }
 
         private void LoadInternalFont(byte[] FontData)
