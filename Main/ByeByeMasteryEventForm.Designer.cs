@@ -77,7 +77,7 @@
             // 
             ProgBar_TimeLeft.Location = new Point(561, 53);
             ProgBar_TimeLeft.Margin = new Padding(3, 4, 3, 4);
-            ProgBar_TimeLeft.Maximum = 1900800;
+            ProgBar_TimeLeft.Maximum = 1778400;
             ProgBar_TimeLeft.Name = "ProgBar_TimeLeft";
             ProgBar_TimeLeft.Size = new Size(276, 23);
             ProgBar_TimeLeft.Step = 1;

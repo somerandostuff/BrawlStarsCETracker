@@ -3,7 +3,7 @@
     public class EventTime
     {
         // Estimated
-        public const long EventEndEpochTime = 1750834800;
+        public const long EventEndEpochTime = 1750712400;
 
         // Deltarune releases (UTC)
         public const long DeltaruneReleaseTime = 1749049200;

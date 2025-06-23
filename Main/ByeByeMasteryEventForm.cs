@@ -22,7 +22,7 @@ namespace Main
 
         public long BootupTime = DateTimeOffset.Now.ToUnixTimeSeconds();
 
-        public const int MaxFPS = 55;
+        public const int MaxFPS = 60;
 
         public double MasteryPoints = 0;
         public double MasteryPointsOld = 0;
@@ -210,7 +210,7 @@ namespace Main
             if (FirstLoad)
             {
                 Ts.Enqueue(MasteryPoints - MasteryPointsOld);
-                if (Ts.Count > 5)
+                if (Ts.Count > 10)
                 {
                     Ts.Dequeue();
                 }
