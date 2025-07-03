@@ -1,6 +1,6 @@
 # Brawl Stars Community Event tracker
 
-***STATUS**: active until 24/6(?)/2025*
+***STATUS**: active until 8/7/2025*
 
 a simple community event tracker for brawl stars
 
