@@ -191,14 +191,17 @@ namespace Main
         }
         private void UpdateLastRefresh()
         {
-            if ((MortisiKillsOld != MortisiKills || MortisiDeathsOld != MortisiDeaths) && FetchedCorrectly)
+            if (MortisiKillsOld != MortisiKills || MortisiDeathsOld != MortisiDeaths)
             {
                 LastUpdatedPointSeconds = DateTimeOffset.Now.ToUnixTimeSeconds();
 
                 MortisiKillsOld = MortisiKills;
                 MortisiDeathsOld = MortisiDeaths;
+            }
+            if (FetchedCorrectly)
+            {
                 L_LastUpdated.Text = "Last updated: " +
-                    DateTimeOffset.FromUnixTimeSeconds(LastUpdatedPointSeconds).ToLocalTime().ToString("d/M/yyyy H:mm:ss [Pi]zz").Replace("[Pi]", "GMT");
+    DateTimeOffset.FromUnixTimeSeconds(LastUpdatedPointSeconds).ToLocalTime().ToString("d/M/yyyy H:mm:ss [Pi]zz").Replace("[Pi]", "GMT");
             }
         }
 
