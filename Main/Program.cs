@@ -13,7 +13,7 @@ namespace Main
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
-            Application.Run(new ByeByeMasteryEventForm());
+            Application.Run(new MortisTheMortalForm());
         }
     }
 }
