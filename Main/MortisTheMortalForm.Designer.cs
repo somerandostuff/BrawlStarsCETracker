@@ -174,7 +174,7 @@
             L_MortosKillCount.Name = "L_MortosKillCount";
             L_MortosKillCount.Size = new Size(407, 77);
             L_MortosKillCount.TabIndex = 1;
-            L_MortosKillCount.Text = "123,456,789";
+            L_MortosKillCount.Text = "--";
             L_MortosKillCount.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // Pnl_MortosDies
@@ -232,7 +232,7 @@
             L_MortosDieCount.Name = "L_MortosDieCount";
             L_MortosDieCount.Size = new Size(407, 77);
             L_MortosDieCount.TabIndex = 4;
-            L_MortosDieCount.Text = "123,456,789";
+            L_MortosDieCount.Text = "--";
             L_MortosDieCount.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // L_NumberFormatting
