@@ -16,7 +16,7 @@ namespace Main
 
         public long LastUpdatedPointSeconds = 0;
 
-        public bool FirstLoad = false;
+        public bool FetchedCorrectly = false;
 
         public long BootupTime = DateTimeOffset.Now.ToUnixTimeSeconds();
 
@@ -52,10 +52,13 @@ namespace Main
             {
                 L_LastUpdated.Text = "Loading...";
                 Data = await Utils.FetchDataMortisiEvent();
+
+                FetchedCorrectly = true;
             }
             catch (Exception Exc)
             {
                 L_LastUpdated.Text = "Load failed!!!";
+                FetchedCorrectly = false;
                 switch (Exc)
                 {
                     case HttpRequestException:
@@ -185,20 +188,15 @@ namespace Main
             UpdateLastRefresh();
             PopulateUI();
             SetPresenceMessage("Mortis kills: " + Utils.Beautify(MortisiKills, PrefOption), "Mortis deaths: " + Utils.Beautify(MortisiDeaths, PrefOption));
-
-            FirstLoad = true;
         }
         private void UpdateLastRefresh()
         {
-            if (FirstLoad)
+            if ((MortisiKillsOld != MortisiKills || MortisiDeathsOld != MortisiDeaths) && FetchedCorrectly)
             {
-                if (MortisiKillsOld != MortisiKills || MortisiDeathsOld != MortisiDeaths)
-                {
-                    LastUpdatedPointSeconds = DateTimeOffset.Now.ToUnixTimeSeconds();
+                LastUpdatedPointSeconds = DateTimeOffset.Now.ToUnixTimeSeconds();
 
-                    MortisiKillsOld = MortisiKills;
-                    MortisiDeathsOld = MortisiDeaths;
-                }
+                MortisiKillsOld = MortisiKills;
+                MortisiDeathsOld = MortisiDeaths;
                 L_LastUpdated.Text = "Last updated: " +
                     DateTimeOffset.FromUnixTimeSeconds(LastUpdatedPointSeconds).ToLocalTime().ToString("d/M/yyyy H:mm:ss [Pi]zz").Replace("[Pi]", "GMT");
             }
