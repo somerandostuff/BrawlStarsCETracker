@@ -93,7 +93,7 @@ namespace Main
         // This shit is built so Damn Stupid but I had to for the speed (Toby Fox-like iykyk)
         public static async Task<List<EventData>> FetchDataMortisiEvent()
         {
-            var Data = new List<EventData>();
+            var DataList = new List<EventData>();
             using (var Client = new HttpClient() { Timeout = TimeSpan.FromSeconds(8) })
             {
                 var Content = JsonDocument.Parse(await Client.GetStringAsync(BrawlFeedLinks.NewsAPI));
@@ -108,25 +108,56 @@ namespace Main
 
                         if (EventData.TryGetProperty("milestones", out JsonElement EventDataChild))
                         {
-                            var KillProg = EventData
+                            var Data1 = new EventData();
+                            var Data2 = new EventData();
+
+                            Data1.Progress = EventData
                                .GetProperty("tracker")
                                .GetProperty("progress")
                                .GetDouble();
 
-                            Data.Add(new(){ Progress = KillProg });
+                            int TotalEventMilestones = EventDataChild.GetArrayLength();
 
-                            EventDataChild = EventDataRoot[Tries + 1];
+                            for (int Idx = 0; Idx < TotalEventMilestones; Idx++)
+                            {
+                                Milestone Milestone = new Milestone();
 
-                            var DieProg = EventDataChild
+                                Milestone.MilestoneLabel = EventDataChild[Idx].GetProperty("label").GetString();
+
+                                Milestone.BarPercent = EventDataChild[Idx].GetProperty("progress").GetDouble();
+
+                                Data1.Milestones.Add(Milestone);
+                            }
+
+                            DataList.Add(Data1);
+
+                            EventData = EventDataRoot[Tries + 1];
+
+                            Data2.Progress = EventData
                                .GetProperty("tracker")
                                .GetProperty("progress")
                                .GetDouble();
 
-                            Data.Add(new() { Progress = DieProg });
+                            EventDataChild = EventData.GetProperty("milestones");
+
+                            TotalEventMilestones = EventDataChild.GetArrayLength();
+
+                            for (int Idx = 0; Idx < TotalEventMilestones; Idx++)
+                            {
+                                Milestone Milestone = new Milestone();
+
+                                Milestone.MilestoneLabel = EventDataChild[Idx].GetProperty("label").GetString();
+
+                                Milestone.BarPercent = EventDataChild[Idx].GetProperty("progress").GetDouble();
+
+                                Data2.Milestones.Add(Milestone);
+                            }
+
+                            DataList.Add(Data2);
                             break;
                         }
                     }
-                    return Data;
+                    return DataList;
                 }
                 else return [];
             }

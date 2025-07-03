@@ -3,6 +3,7 @@ using Main.Models;
 using Main.Others;
 using Main.Properties;
 using System.Drawing.Text;
+using System.Net;
 using System.Runtime.InteropServices;
 
 namespace Main
@@ -15,6 +16,8 @@ namespace Main
 
         public long LastUpdatedPointSeconds = 0;
 
+        public bool FirstLoad = false;
+
         public long BootupTime = DateTimeOffset.Now.ToUnixTimeSeconds();
 
         public Font? LilitaOne;
@@ -22,11 +25,11 @@ namespace Main
 
         public List<EventData>? Data;
 
-        public double MortisiKills = 77777777;
-        public double MortisiDeaths = 66666666;
+        public double MortisiKills = 0;
+        public double MortisiDeaths = 0;
 
-        public double MortisiKillsOld = 77777776;
-        public double MortisiDeathsOld = 66666665;
+        public double MortisiKillsOld = 0;
+        public double MortisiDeathsOld = 0;
 
         private static readonly DiscordRpcClient DiscordClient = new DiscordRpcClient(ClientID.Discord);
 
@@ -98,27 +101,107 @@ namespace Main
             {
                 if (Data != null)
                 {
-                    MortisiKills = Data[1].Progress / 100 * EventGoal.MortisiEvent;
-                    MortisiDeaths = Data[0].Progress / 100 * EventGoal.MortisiEvent;
+                    for (int Idx = 0; Idx < Data.Count; Idx++)
+                    {
+                        for (int Jdx = 0; Jdx < Data[Idx].Milestones.Count; Jdx++)
+                        {
+                            if (Jdx == 0 && Data[Idx].Progress < Data[Idx].Milestones[Jdx].BarPercent)
+                            {
+                                // Formula explained here
+                                var StartPercent = 0;
+                                var EndPercent = Data[Idx].Milestones[Jdx].BarPercent;
+
+                                var StartCount = 0;
+                                var EndCount = Utils.SimpleTextToNumber(Data[Idx].Milestones[Jdx].MilestoneLabel);
+
+                                var RangePercent = EndPercent - StartPercent;
+                                var ProgressToRangePercent = Data[Idx].Progress - StartPercent;
+
+                                var RangeAmount = EndCount - StartCount;
+
+                                if (Idx == 1)
+                                {
+                                    MortisiKills = StartCount + RangeAmount * (ProgressToRangePercent / RangePercent);
+                                }
+                                else
+                                {
+                                    MortisiDeaths = StartCount + RangeAmount * (ProgressToRangePercent / RangePercent);
+                                }
+                                break;
+                            }
+                            else if (Jdx == Data[Idx].Milestones.Count - 1 && Data[Idx].Progress > Data[Idx].Milestones[Jdx].BarPercent)
+                            {
+                                // This one is peculiar because this indicates that you have reached the final milestone...
+                                double StartishCount = Utils.SimpleTextToNumber(Data[Idx].Milestones[Jdx - 1].MilestoneLabel);
+
+                                var StartPercent = Data[Idx].Milestones[Jdx - 1].BarPercent;
+                                var EndPercent = Data[Idx].Milestones[Jdx].BarPercent;
+
+                                var StartCount = Utils.SimpleTextToNumber(Data[Idx].Milestones[Jdx].MilestoneLabel);
+
+                                var RangePercent = EndPercent - StartPercent;
+                                var ProgressToRangePercent = Data[Idx].Progress - EndPercent;
+
+                                var RangeAmount = StartCount - StartishCount;
+
+                                if (Idx == 1)
+                                {
+                                    MortisiKills = StartCount + RangeAmount * (ProgressToRangePercent / RangePercent);
+                                }
+                                else
+                                {
+                                    MortisiDeaths = StartCount + RangeAmount * (ProgressToRangePercent / RangePercent);
+                                }
+                                break;
+                            }
+                            else if (Jdx > 0 && Data[Idx].Progress > Data[Idx].Milestones[Jdx].BarPercent && Data[Idx].Progress <= Data[Idx].Milestones[Jdx + 1].BarPercent)
+                            {
+                                var StartPercent = Data[Idx].Milestones[Jdx].BarPercent;
+                                var EndPercent = Data[Idx].Milestones[Jdx + 1].BarPercent;
+
+                                var StartCount = Utils.SimpleTextToNumber(Data[Idx].Milestones[Jdx].MilestoneLabel);
+                                var EndCount = Utils.SimpleTextToNumber(Data[Idx].Milestones[Jdx + 1].MilestoneLabel);
+
+                                var RangePercent = EndPercent - StartPercent;
+                                var ProgressToRangePercent = Data[Idx].Progress - StartPercent;
+
+                                var RangeAmount = EndCount - StartCount;
+
+                                if (Idx == 1)
+                                {
+                                    MortisiKills = StartCount + RangeAmount * (ProgressToRangePercent / RangePercent);
+                                }
+                                else
+                                {
+                                    MortisiDeaths = StartCount + RangeAmount * (ProgressToRangePercent / RangePercent);
+                                }
+                                break;
+                            }
+                        }
+                    }
                 }
             }
 
             UpdateLastRefresh();
             PopulateUI();
             SetPresenceMessage("Mortis kills: " + Utils.Beautify(MortisiKills, PrefOption), "Mortis deaths: " + Utils.Beautify(MortisiDeaths, PrefOption));
+
+            FirstLoad = true;
         }
         private void UpdateLastRefresh()
         {
-            if (MortisiKillsOld != MortisiKills || MortisiDeathsOld != MortisiDeaths)
+            if (FirstLoad)
             {
-                LastUpdatedPointSeconds = DateTimeOffset.Now.ToUnixTimeSeconds();
+                if (MortisiKillsOld != MortisiKills || MortisiDeathsOld != MortisiDeaths)
+                {
+                    LastUpdatedPointSeconds = DateTimeOffset.Now.ToUnixTimeSeconds();
 
-                MortisiKillsOld = MortisiKills;
-                MortisiDeathsOld = MortisiDeaths;
+                    MortisiKillsOld = MortisiKills;
+                    MortisiDeathsOld = MortisiDeaths;
+                }
+                L_LastUpdated.Text = "Last updated: " +
+                    DateTimeOffset.FromUnixTimeSeconds(LastUpdatedPointSeconds).ToLocalTime().ToString("d/M/yyyy H:mm:ss [Pi]zz").Replace("[Pi]", "GMT");
             }
-
-            L_LastUpdated.Text = "Last updated: " +
-                DateTimeOffset.FromUnixTimeSeconds(LastUpdatedPointSeconds).ToLocalTime().ToString("d/M/yyyy H:mm:ss [Pi]zz").Replace("[Pi]", "GMT");
         }
 
         private void PopulateUI()
