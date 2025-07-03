@@ -90,6 +90,7 @@ namespace Main
             }
         }
 
+        // This shit is built so Damn Stupid but I had to for the speed (Toby Fox-like iykyk)
         public static async Task<List<EventData>> FetchDataMortisiEvent()
         {
             var Data = new List<EventData>();
