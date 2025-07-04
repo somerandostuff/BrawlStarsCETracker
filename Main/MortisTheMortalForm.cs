@@ -52,8 +52,6 @@ namespace Main
             {
                 L_LastUpdated.Text = "Loading...";
                 Data = await Utils.FetchDataMortisiEvent();
-
-                FetchedCorrectly = true;
             }
             catch (Exception Exc)
             {
@@ -104,6 +102,7 @@ namespace Main
             {
                 if (Data != null)
                 {
+                    FetchedCorrectly = true;
                     for (int Idx = 0; Idx < Data.Count; Idx++)
                     {
                         for (int Jdx = 0; Jdx < Data[Idx].Milestones.Count; Jdx++)
@@ -157,13 +156,13 @@ namespace Main
                                 }
                                 break;
                             }
-                            else if (Jdx > 0 && Data[Idx].Progress > Data[Idx].Milestones[Jdx].BarPercent && Data[Idx].Progress <= Data[Idx].Milestones[Jdx + 1].BarPercent)
+                            else if (Jdx > 0 && Data[Idx].Progress > Data[Idx].Milestones[Jdx - 1].BarPercent && Data[Idx].Progress <= Data[Idx].Milestones[Jdx].BarPercent)
                             {
-                                var StartPercent = Data[Idx].Milestones[Jdx].BarPercent;
-                                var EndPercent = Data[Idx].Milestones[Jdx + 1].BarPercent;
+                                var StartPercent = Data[Idx].Milestones[Jdx - 1].BarPercent;
+                                var EndPercent = Data[Idx].Milestones[Jdx].BarPercent;
 
-                                var StartCount = Utils.SimpleTextToNumber(Data[Idx].Milestones[Jdx].MilestoneLabel);
-                                var EndCount = Utils.SimpleTextToNumber(Data[Idx].Milestones[Jdx + 1].MilestoneLabel);
+                                var StartCount = Utils.SimpleTextToNumber(Data[Idx].Milestones[Jdx - 1].MilestoneLabel);
+                                var EndCount = Utils.SimpleTextToNumber(Data[Idx].Milestones[Jdx].MilestoneLabel);
 
                                 var RangePercent = EndPercent - StartPercent;
                                 var ProgressToRangePercent = Data[Idx].Progress - StartPercent;
@@ -334,12 +333,12 @@ namespace Main
 
         private void HideAboutLabel()
         {
-            L_Version.Text = "v1.0.7";
+            L_Version.Text = "v1.0.7.1";
         }
 
         private void DisplayAboutTracker()
         {
-            MessageBox.Show("v1.0.7 -- updated on 3/7/2025\n\nMade by somerandostuff & xale, thankyou for the contributions!\nPS: I Madeth this Packagethed Binary goodness, in just a Measly Four hours. If only I can lock in like this in the future...\n\nUptime: " + Utils.FormatTime(PrefOption, TimeSpan.FromSeconds(DateTimeOffset.Now.ToUnixTimeSeconds() - BootupTime)), "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("v1.0.7.1 -- updated on 4/7/2025\n\nMade by somerandostuff & xale, thankyou for the contributions!\nPS: I Madeth this Packagethed Binary goodness, in just a Measly Four hours. I then took another one hour to bugfix this... it hurts.\n\nUptime: " + Utils.FormatTime(PrefOption, TimeSpan.FromSeconds(DateTimeOffset.Now.ToUnixTimeSeconds() - BootupTime)), "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void Chk_Altfont_CheckedChanged(object sender, EventArgs e)

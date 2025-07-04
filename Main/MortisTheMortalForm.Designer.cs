@@ -337,7 +337,7 @@
             L_Version.Name = "L_Version";
             L_Version.Size = new Size(167, 19);
             L_Version.TabIndex = 107;
-            L_Version.Text = "v1.0.7";
+            L_Version.Text = "v1.0.7.1";
             L_Version.TextAlign = ContentAlignment.TopCenter;
             L_Version.Click += L_Version_Click;
             L_Version.MouseEnter += L_Version_MouseEnter;
