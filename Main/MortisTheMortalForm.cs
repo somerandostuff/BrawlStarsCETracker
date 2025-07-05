@@ -228,7 +228,7 @@ namespace Main
                 L_Diff.ForeColor = Color.White;
             }
 
-            L_Diff.Text = $"Diff: {Utils.Beautify(Math.Abs(Diff), PrefOption)} score";
+            L_Diff.Text = $"Diff: {Utils.Beautify(Math.Abs(Diff), PrefOption)}";
 
             ProgBar_MortosKills.Value = (int)(
                 MortisiKills >= EventGoal.MortisiEvent ?
