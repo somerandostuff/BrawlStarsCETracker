@@ -31,6 +31,8 @@ namespace Main
         public double MortisiKillsOld = 0;
         public double MortisiDeathsOld = 0;
 
+        public double Diff = 0;
+
         private static readonly DiscordRpcClient DiscordClient = new DiscordRpcClient(ClientID.Discord);
 
         public MortisTheMortalForm()
@@ -181,6 +183,7 @@ namespace Main
                             }
                         }
                     }
+                    Diff = MortisiKills - MortisiDeaths;
                 }
             }
 
@@ -211,6 +214,21 @@ namespace Main
 
             L_TotalKillsPercent.Text = Utils.BeautifyPercentage(MortisiKills / EventGoal.MortisiEvent);
             L_TotalDiesPercent.Text = Utils.BeautifyPercentage(MortisiDeaths / EventGoal.MortisiEvent);
+
+            if (Diff > 0)
+            {
+                L_Diff.ForeColor = Color.Green;
+            }
+            else if (Diff < 0)
+            {
+                L_Diff.ForeColor = Color.Red;
+            }
+            else
+            {
+                L_Diff.ForeColor = Color.White;
+            }
+
+            L_Diff.Text = $"Diff: {Utils.Beautify(Math.Abs(Diff), PrefOption)} score";
 
             ProgBar_MortosKills.Value = (int)(
                 MortisiKills >= EventGoal.MortisiEvent ?
@@ -265,6 +283,7 @@ namespace Main
             L_TotalDiesPercent.Font = LilitaFontSize12;
 
             L_LastUpdated.Font = LilitaFontSize12;
+            L_Diff.Font = LilitaFontSize12;
 
             BTN_CopyAll.Font = LilitaFontSize12;
         }
@@ -333,16 +352,17 @@ namespace Main
 
         private void HideAboutLabel()
         {
-            L_Version.Text = "v1.0.7.1";
+            L_Version.Text = "v1.0.7.2";
         }
 
         private void DisplayAboutTracker()
         {
-            MessageBox.Show("v1.0.7.1 -- updated on 4/7/2025\n\nMade by somerandostuff & xale, thankyou for the contributions!\nPS: I Madeth this Packagethed Binary goodness, in just a Measly Four hours. I then took another one hour to bugfix this... it hurts.\n\nUptime: " + Utils.FormatTime(PrefOption, TimeSpan.FromSeconds(DateTimeOffset.Now.ToUnixTimeSeconds() - BootupTime)), "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("v1.0.7.2 -- updated on 5/7/2025\n\nMade by somerandostuff & xale, thankyou for the contributions!\n\nPS: AM TAKING TOO LONG\n\nUptime: " + Utils.FormatTime(PrefOption, TimeSpan.FromSeconds(DateTimeOffset.Now.ToUnixTimeSeconds() - BootupTime)), "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void Chk_Altfont_CheckedChanged(object sender, EventArgs e)
         {
+            // God I wish there was a better way to do this
             if (Chk_Altfont.Checked)
             {
                 if (DeterminationMono != null)
@@ -468,6 +488,11 @@ namespace Main
             {
                 FetchData();
             }
+        }
+
+        private void BTN_Refresh_Click(object sender, EventArgs e)
+        {
+            FetchData();
         }
     }
 }

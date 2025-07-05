@@ -58,6 +58,7 @@
             BTN_CopyAll = new Button();
             L_LastUpdated = new Label();
             Timer_Refresh = new System.Windows.Forms.Timer(components);
+            L_Diff = new Label();
             Pnl_MortosKills.SuspendLayout();
             Pnl_MortosDies.SuspendLayout();
             SuspendLayout();
@@ -137,7 +138,7 @@
             L_TotalKillsPercent.ForeColor = Color.White;
             L_TotalKillsPercent.Location = new Point(12, 118);
             L_TotalKillsPercent.Name = "L_TotalKillsPercent";
-            L_TotalKillsPercent.Size = new Size(407, 19);
+            L_TotalKillsPercent.Size = new Size(242, 19);
             L_TotalKillsPercent.TabIndex = 3;
             L_TotalKillsPercent.Text = "0%";
             L_TotalKillsPercent.TextAlign = ContentAlignment.TopCenter;
@@ -194,9 +195,9 @@
             L_TotalDiesPercent.Anchor = AnchorStyles.Top;
             L_TotalDiesPercent.BackColor = Color.Black;
             L_TotalDiesPercent.ForeColor = Color.White;
-            L_TotalDiesPercent.Location = new Point(8, 118);
+            L_TotalDiesPercent.Location = new Point(169, 118);
             L_TotalDiesPercent.Name = "L_TotalDiesPercent";
-            L_TotalDiesPercent.Size = new Size(407, 19);
+            L_TotalDiesPercent.Size = new Size(246, 19);
             L_TotalDiesPercent.TabIndex = 4;
             L_TotalDiesPercent.Text = "0%";
             L_TotalDiesPercent.TextAlign = ContentAlignment.TopCenter;
@@ -282,6 +283,7 @@
             BTN_Refresh.TabIndex = 109;
             BTN_Refresh.Text = "Refresh";
             BTN_Refresh.UseVisualStyleBackColor = false;
+            BTN_Refresh.Click += BTN_Refresh_Click;
             // 
             // Rdi_PrefShortenedMore
             // 
@@ -337,7 +339,7 @@
             L_Version.Name = "L_Version";
             L_Version.Size = new Size(167, 19);
             L_Version.TabIndex = 107;
-            L_Version.Text = "v1.0.7.1";
+            L_Version.Text = "v1.0.7.2";
             L_Version.TextAlign = ContentAlignment.TopCenter;
             L_Version.Click += L_Version_Click;
             L_Version.MouseEnter += L_Version_MouseEnter;
@@ -368,12 +370,23 @@
             Timer_Refresh.Interval = 1000;
             Timer_Refresh.Tick += Timer_Refresh_Tick;
             // 
+            // L_Diff
+            // 
+            L_Diff.Anchor = AnchorStyles.Top;
+            L_Diff.Location = new Point(260, 202);
+            L_Diff.Name = "L_Diff";
+            L_Diff.Size = new Size(328, 21);
+            L_Diff.TabIndex = 116;
+            L_Diff.Text = "Diff: 0";
+            L_Diff.TextAlign = ContentAlignment.TopCenter;
+            // 
             // MortisTheMortalForm
             // 
             AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
             ClientSize = new Size(850, 351);
+            Controls.Add(L_Diff);
             Controls.Add(L_LastUpdated);
             Controls.Add(BTN_CopyAll);
             Controls.Add(L_NumberFormatting);
@@ -436,5 +449,6 @@
         private Button BTN_CopyAll;
         private Label L_LastUpdated;
         private System.Windows.Forms.Timer Timer_Refresh;
+        private Label L_Diff;
     }
 }
