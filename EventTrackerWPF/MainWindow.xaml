@@ -1,0 +1,79 @@
+﻿<Window x:Class="EventTrackerWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EventTrackerWPF"
+        xmlns:ExtraThings="clr-namespace:EventTrackerWPF.Librarbies"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="720" Width="1080" ResizeMode="NoResize">
+    <Grid>
+        <Grid Name="PregressBar" Margin="16,426,-14, 152">
+            <Grid Name="ProgBarBehind">
+                <Image x:Name="Img_InactiveBarLeft" HorizontalAlignment="Left" Height="100" Margin="0,0,0,0" VerticalAlignment="Top" Width="19" Source="/Ahhssets/Loading Bar Inactive Leftslice.png"/>
+                <Image x:Name="Img_InactiveBarRight" HorizontalAlignment="Left" Height="100" Margin="1014,0,0,0" VerticalAlignment="Top" Width="19" Source="/Ahhssets/Loading Bar Inactive Rightslice.png"/>
+                <Image x:Name="Img_InactiveBarMid" HorizontalAlignment="Left" Height="100" Margin="16,0,0,0" VerticalAlignment="Top" Width="1001" Source="/Ahhssets/Loading Bar Inactive Frameslice.png" Stretch="Fill"/>
+            </Grid>
+
+            <Grid Name="ProgBarFront">
+                <Image x:Name="Img_ActiveBarLeft" HorizontalAlignment="Left" Height="100" Margin="0,0,0,0" VerticalAlignment="Top" Width="19" Source="/Ahhssets/Loading Bar Active Leftslice.png"/>
+                <Image x:Name="Img_ActiveBarMid" HorizontalAlignment="Left" Height="100" Margin="17,0,0,0" VerticalAlignment="Top" Width="0" Source="/Ahhssets/Loading Bar Active Frameslice.png" Stretch="Fill"/>
+                <Image x:Name="Img_ActiveBarRight" HorizontalAlignment="Left" Height="100" Margin="17,0,0,0" VerticalAlignment="Top" Width="19" Source="/Ahhssets/Loading Bar Active Rightslice.png"/>
+            </Grid>
+        </Grid>
+
+        <Grid Visibility="Hidden">
+            <Grid Name="BrawlTextbox" Margin="226,559,324,63">
+                <TextBox x:Name="Tb_TextboxBarMid" HorizontalAlignment="Left" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="281" Height="50" Margin="5,-2,0,0" Foreground="Black" FontFamily="Lilita One" TextAlignment="Center" FontSize="36" VerticalContentAlignment="Center" MaxLength="10">
+                    <TextBox.BorderBrush>
+                        <ImageBrush/>
+                    </TextBox.BorderBrush>
+                    <TextBox.Background>
+                        <ImageBrush ImageSource="/Ahhssets/Textbox Area Frameslice.png"/>
+                    </TextBox.Background>
+                </TextBox>
+                <Image HorizontalAlignment="Left" Height="46" VerticalAlignment="Top" Width="8" Source="/Ahhssets/Textbox Area Leftslice.png"/>
+                <Image HorizontalAlignment="Left" Height="46" VerticalAlignment="Top" Width="8" Source="/Ahhssets/Textbox Area Rightslice.png" Margin="283,0,0,0"/>
+            </Grid>
+            <Grid Name="Grid_BTN1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="618,558,0,0" MouseLeftButtonUp="BTN_MouseLeftButtonUp" MouseLeftButtonDown="BTN_MouseLeftButtonDown">
+                <Image HorizontalAlignment="Center" Height="48" VerticalAlignment="Center" Width="151" Source="/Ahhssets/Blue Button.png" Margin="-88,0,0,0"/>
+                <ExtraThings:DrawTextOutlined Text="Change bar size" FontSize="18" FontFamily="Lilita One" Fill="White" Stroke="Black" StrokeThiccness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="48" Margin="-12,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ShadowColor="Black" ShadowOffset="0, 1"/>
+            </Grid>
+        </Grid>
+        <Grid Name="CountDisplay" Margin="0,296,0,255" HorizontalAlignment="Center" Width="1080">
+            <ExtraThings:DrawTextOutlined x:Name="L_Count" HorizontalAlignment="Center" Text="0" Height="155" VerticalAlignment="Center" Width="1000" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="96" FontFamily="m6x11plus" ShadowColor="Black" StrokeThiccness="6" ShadowOffset="0, 3.5"/>
+        </Grid>
+        <Grid Margin="234,94,110,483">
+            <ExtraThings:DrawTextShakyOutlined Text="YOUR TAKING TOO TOO" FontSize="54" FontFamily="Determination Mono Web" Fill="White" Stroke="Black" StrokeThiccness="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="129" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ShadowColor="Black" ShadowOffset="0, 4" ShakeIntensity="2" Width="488"/>
+        </Grid>
+        <ExtraThings:GridButton x:Name="Grid_BTN_UpdateCount" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,554,0,0" MouseLeftButtonDown="Grid_BTN_UpdateCount_MouseLeftButtonDown" MouseLeftButtonUp="Grid_BTN_UpdateCount_MouseLeftButtonUp" Width="188">
+            <Image HorizontalAlignment="Center" Height="72" VerticalAlignment="Center" Width="188" Source="/Ahhssets/Blue Button.png"/>
+            <ExtraThings:DrawTextOutlined Text="Add 2000" FontSize="28" FontFamily="Lilita One" Fill="White" Stroke="Black" StrokeThiccness="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ShadowColor="Black" ShadowOffset="0, 1.5"/>
+        </ExtraThings:GridButton>
+        <ExtraThings:GridButton HorizontalAlignment="Left" VerticalAlignment="Top" Margin="201,608,0,0" MouseLeftButtonDown="Grid_BTN_UpdateCount_MouseLeftButtonDown" MouseLeftButtonUp="Grid_BTN_UpdateCount_MouseLeftButtonUp" Width="66">
+            <CheckBox x:Name="ImageButtonCheckBox"
+              HorizontalAlignment="Left"
+              Margin="0,0,0,0"
+              VerticalAlignment="Top" Height="65" Width="66">
+                <CheckBox.Template>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Grid>
+                            <Image x:Name="ButtonImage"
+                           Source="/Ahhssets/Inactive Checkbox.png"
+                           Stretch="Uniform"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="ButtonImage" Property="Source" Value="/Ahhssets/Active Checkbox.png"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </CheckBox.Template>
+            </CheckBox>
+        </ExtraThings:GridButton>
+
+        <Grid.Background>
+            <ImageBrush ImageSource="Ahhssets/brawloween_2022_lobby.png" Stretch="None"/>
+        </Grid.Background>
+    </Grid>
+</Window>

@@ -163,6 +163,33 @@ namespace Main
             }
         }
 
+        public static async Task<EventData?> FetchDataSimple()
+        {
+            EventData Data = new EventData();
+            using (var Client = new HttpClient() { Timeout = TimeSpan.FromSeconds(8) })
+            {
+                var Content = JsonDocument.Parse(await Client.GetStringAsync(BrawlFeedLinks.NewsAPI));
+                if (Content != null)
+                {
+                    for (int Tries = 0; Tries < 5; Tries++)
+                    {
+                        var EventData = Content.RootElement
+                                              .GetProperty("events")[Tries];
+
+                        if (EventData.TryGetProperty("milestones", out JsonElement EventDataChild))
+                        {
+                            Data.Progress = EventData
+                                           .GetProperty("tracker")
+                                           .GetProperty("progress")
+                                           .GetDouble();
+                        }
+                    }
+                    return Data;
+                }
+                else return null;
+            }
+        }
+
         public static TimeSpan GetTimeLeft()
         {
             var Seconds = EventTime.EventEndEpochTime - DateTimeOffset.UtcNow.ToUnixTimeSeconds();

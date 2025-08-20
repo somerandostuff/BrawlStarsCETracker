@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35201.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Main", "Main\Main.csproj", "{0FEF7D90-C560-4E6A-A99E-F0642F89CE22}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventTrackerWPF", "EventTrackerWPF\EventTrackerWPF.csproj", "{53DEA2F5-B899-4849-8879-8457F4C9AC23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{0FEF7D90-C560-4E6A-A99E-F0642F89CE22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FEF7D90-C560-4E6A-A99E-F0642F89CE22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FEF7D90-C560-4E6A-A99E-F0642F89CE22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53DEA2F5-B899-4849-8879-8457F4C9AC23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53DEA2F5-B899-4849-8879-8457F4C9AC23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53DEA2F5-B899-4849-8879-8457F4C9AC23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53DEA2F5-B899-4849-8879-8457F4C9AC23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

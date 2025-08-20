@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Ahhssets\Active Checkbox.png" />
+    <None Remove="Ahhssets\Blue Button.png" />
+    <None Remove="Ahhssets\Inactive Checkbox.png" />
+    <None Remove="Ahhssets\Textbox Area Frameslice.png" />
+    <None Remove="Ahhssets\Textbox Area Leftslice.png" />
+    <None Remove="Ahhssets\Textbox Area Rightslice.png" />
+    <None Remove="brawloween_2022_lobby.png" />
+    <None Remove="Loading Bar Active Frameslice.png" />
+    <None Remove="Loading Bar Active Leftslice.png" />
+    <None Remove="Loading Bar Active Rightslice.png" />
+    <None Remove="Loading Bar Inactive Frameslice.png" />
+    <None Remove="Loading Bar Inactive Rightslice.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Ahhssets\Active Checkbox.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Ahhssets\Blue Button.png" />
+    <Resource Include="Ahhssets\brawloween_2022_lobby.png" />
+    <Resource Include="Ahhssets\Inactive Checkbox.png" />
+    <Resource Include="Ahhssets\Textbox Area Frameslice.png" />
+    <Resource Include="Ahhssets\Textbox Area Rightslice.png" />
+    <Resource Include="brawloween_2022_lobby.png" />
+    <Resource Include="Ahhssets\Loading Bar %28Inactive%29.png" />
+    <Resource Include="Ahhssets\Loading Bar Active Frameslice.png" />
+    <Resource Include="Ahhssets\Loading Bar Active Leftslice.png" />
+    <Resource Include="Ahhssets\Loading Bar Active Rightslice.png" />
+    <Resource Include="Ahhssets\Loading Bar Inactive Frameslice.png" />
+    <Resource Include="Ahhssets\Loading Bar Inactive Leftslice.png" />
+    <Resource Include="Ahhssets\Loading Bar Inactive Rightslice.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Ahhssets\Textbox Area Leftslice.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Librarbies\Man\" />
+  </ItemGroup>
+
+</Project>
