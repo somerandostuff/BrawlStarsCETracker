@@ -12,9 +12,21 @@
     <None Remove="Ahhssets\Active Checkbox.png" />
     <None Remove="Ahhssets\Blue Button.png" />
     <None Remove="Ahhssets\Inactive Checkbox.png" />
+    <None Remove="Ahhssets\SFX\jack_o_lantern_laugh.wav" />
+    <None Remove="Ahhssets\SFX\YOUR_TAKING_TOO_LONG.wav" />
     <None Remove="Ahhssets\Textbox Area Frameslice.png" />
     <None Remove="Ahhssets\Textbox Area Leftslice.png" />
     <None Remove="Ahhssets\Textbox Area Rightslice.png" />
+    <None Remove="Ahhssets\Time Bar Active Frameslice.png" />
+    <None Remove="Ahhssets\Time Bar Active Leftslice.png" />
+    <None Remove="Ahhssets\Time Bar Active Rightslice.png" />
+    <None Remove="Ahhssets\Time Bar Active.png" />
+    <None Remove="Ahhssets\Time Bar Active.png.png" />
+    <None Remove="Ahhssets\Time Bar Inactive Frameslice.png" />
+    <None Remove="Ahhssets\Time Bar Inactive Leftslice.png" />
+    <None Remove="Ahhssets\Time Bar Inactive Rightslice.png" />
+    <None Remove="Ahhssets\Time Bar Inactive.png" />
+    <None Remove="Ahhssets\Time Bar Proc.png" />
     <None Remove="brawloween_2022_lobby.png" />
     <None Remove="Loading Bar Active Frameslice.png" />
     <None Remove="Loading Bar Active Leftslice.png" />
@@ -31,8 +43,19 @@
     <Resource Include="Ahhssets\Blue Button.png" />
     <Resource Include="Ahhssets\brawloween_2022_lobby.png" />
     <Resource Include="Ahhssets\Inactive Checkbox.png" />
+    <Resource Include="Ahhssets\SFX\jack_o_lantern_laugh.wav" />
+    <Resource Include="Ahhssets\SFX\YOUR_TAKING_TOO_LONG.wav" />
     <Resource Include="Ahhssets\Textbox Area Frameslice.png" />
     <Resource Include="Ahhssets\Textbox Area Rightslice.png" />
+    <Resource Include="Ahhssets\Time Bar Active Frameslice.png" />
+    <Resource Include="Ahhssets\Time Bar Active Leftslice.png" />
+    <Resource Include="Ahhssets\Time Bar Active Rightslice.png" />
+    <Resource Include="Ahhssets\Time Bar Active.png" />
+    <Resource Include="Ahhssets\Time Bar Inactive Frameslice.png" />
+    <Resource Include="Ahhssets\Time Bar Inactive Leftslice.png" />
+    <Resource Include="Ahhssets\Time Bar Inactive Rightslice.png" />
+    <Resource Include="Ahhssets\Time Bar Inactive.png" />
+    <Resource Include="Ahhssets\Time Bar Proc.png" />
     <Resource Include="brawloween_2022_lobby.png" />
     <Resource Include="Ahhssets\Loading Bar %28Inactive%29.png" />
     <Resource Include="Ahhssets\Loading Bar Active Frameslice.png" />
@@ -48,7 +71,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Librarbies\Man\" />
+    <PackageReference Include="NAudio" Version="2.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="References\" />
   </ItemGroup>
 
 </Project>

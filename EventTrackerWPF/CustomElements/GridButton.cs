@@ -4,24 +4,24 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
-namespace EventTrackerWPF.Librarbies
+namespace EventTrackerWPF.CustomElements
 {
     public class GridButton : Grid
     {
         public static readonly DependencyProperty ShrinkScaleProperty =
-            DependencyProperty.Register(nameof(ShrinkScale), typeof(double), typeof(DrawTextOutlined),
+            DependencyProperty.Register(nameof(ShrinkScale), typeof(double), typeof(GridButton),
                 new FrameworkPropertyMetadata(0.95, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public double ShrinkScale { get => (double)GetValue(ShrinkScaleProperty); set => SetValue(ShrinkScaleProperty, value); }
 
         public static readonly DependencyProperty BounceScaleProperty =
-            DependencyProperty.Register(nameof(BounceScale), typeof(double), typeof(DrawTextOutlined),
+            DependencyProperty.Register(nameof(BounceScale), typeof(double), typeof(GridButton),
                 new FrameworkPropertyMetadata(1.05, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public double BounceScale { get => (double)GetValue(BounceScaleProperty); set => SetValue(BounceScaleProperty, value); }
 
         public static readonly DependencyProperty AnimationDurationMsProperty =
-            DependencyProperty.Register(nameof(AnimationDurationMs), typeof(double), typeof(DrawTextOutlined),
+            DependencyProperty.Register(nameof(AnimationDurationMs), typeof(double), typeof(GridButton),
                 new FrameworkPropertyMetadata(100.0, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public double AnimationDurationMs { get => (double)GetValue(AnimationDurationMsProperty); set => SetValue(AnimationDurationMsProperty, value); }
@@ -33,6 +33,19 @@ namespace EventTrackerWPF.Librarbies
             MouseLeftButtonDown += OnMouseLeftButtonDown;
             MouseLeftButtonUp += OnMouseLeftButtonUp;
             MouseLeave += OnMouseLeave;
+
+            IsEnabledChanged += OnEnabledChanged;
+        }
+
+        private void OnEnabledChanged(object Sender, DependencyPropertyChangedEventArgs Event)
+        {
+            UpdateVisuals();
+        }
+
+        private void UpdateVisuals()
+        {
+            if (IsEnabled) Opacity = 1;
+            else Opacity = .5;
         }
 
         private void AnimateButtonPress(double Scale)

@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace EventTrackerWPF.Librarbies
 {
-    public class Utils
+    public class Common
     {
         public static async Task<double> FetchDataSimple()
         {

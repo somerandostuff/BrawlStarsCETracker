@@ -9,7 +9,7 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Threading;
 
-namespace EventTrackerWPF.Librarbies
+namespace EventTrackerWPF.CustomElements
 {
     public class DrawTextShakyOutlined : FrameworkElement
     {
@@ -170,7 +170,7 @@ namespace EventTrackerWPF.Librarbies
                     new Typeface(FontFamily, FontStyles.Normal, FontWeights.Normal, FontStretches.Normal),
                     FontSize, Fill, VisualTreeHelper.GetDpi(this).PixelsPerDip);
 
-                Vector Offset = (Idx < ShakeOffsets.Count) ? ShakeOffsets[Idx] : new Vector();
+                Vector Offset = Idx < ShakeOffsets.Count ? ShakeOffsets[Idx] : new Vector();
 
                 var CharGeometry = FormattedChar.BuildGeometry(new Point(X + Offset.X, Y + Offset.Y));
 

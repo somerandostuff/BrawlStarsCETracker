@@ -4,22 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EventTrackerWPF"
-        xmlns:ExtraThings="clr-namespace:EventTrackerWPF.Librarbies"
+        xmlns:ExtraThings="clr-namespace:EventTrackerWPF.CustomElements"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1080" ResizeMode="NoResize">
+        Title="MainWindow" Height="540" Width="1080" ResizeMode="NoResize" Closing="Window_Closing" Loaded="Window_Loaded">
     <Grid>
-        <Grid Name="PregressBar" Margin="16,426,-14, 152">
-            <Grid Name="ProgBarBehind">
-                <Image x:Name="Img_InactiveBarLeft" HorizontalAlignment="Left" Height="100" Margin="0,0,0,0" VerticalAlignment="Top" Width="19" Source="/Ahhssets/Loading Bar Inactive Leftslice.png"/>
-                <Image x:Name="Img_InactiveBarRight" HorizontalAlignment="Left" Height="100" Margin="1014,0,0,0" VerticalAlignment="Top" Width="19" Source="/Ahhssets/Loading Bar Inactive Rightslice.png"/>
-                <Image x:Name="Img_InactiveBarMid" HorizontalAlignment="Left" Height="100" Margin="16,0,0,0" VerticalAlignment="Top" Width="1001" Source="/Ahhssets/Loading Bar Inactive Frameslice.png" Stretch="Fill"/>
-            </Grid>
+        <Grid Margin="0,471,0,0">
+            <ExtraThings:DrawTextOutlined HorizontalContentAlignment="Center" FontSize="24" FontFamily="Lilita One" ShadowColor="Black" ShadowOffset="0, 2" StrokeThiccness="2" Text="v1.1"/>
+        </Grid>
+        <Grid Margin="10,29,353,374">
+            <ExtraThings:DrawTextOutlined Margin="0,7,0,85" FontSize="24" FontFamily="Lilita One" ShadowColor="Black" ShadowOffset="0, 2" StrokeThiccness="2" Text="Brawl Stars Community Event Tracker"/>
+            <ExtraThings:DrawTextOutlined Margin="0,29,0,0" FontSize="56" FontFamily="Lilita One" ShadowColor="Black" ShadowOffset="0, 3" StrokeThiccness="4" Text="[PUT EVENT NAME HERE]" Height="80" VerticalAlignment="Top"/>
+        </Grid>
 
-            <Grid Name="ProgBarFront">
-                <Image x:Name="Img_ActiveBarLeft" HorizontalAlignment="Left" Height="100" Margin="0,0,0,0" VerticalAlignment="Top" Width="19" Source="/Ahhssets/Loading Bar Active Leftslice.png"/>
-                <Image x:Name="Img_ActiveBarMid" HorizontalAlignment="Left" Height="100" Margin="17,0,0,0" VerticalAlignment="Top" Width="0" Source="/Ahhssets/Loading Bar Active Frameslice.png" Stretch="Fill"/>
-                <Image x:Name="Img_ActiveBarRight" HorizontalAlignment="Left" Height="100" Margin="17,0,0,0" VerticalAlignment="Top" Width="19" Source="/Ahhssets/Loading Bar Active Rightslice.png"/>
-            </Grid>
+        <Grid Margin="0,131,0,352">
+            <ExtraThings:DrawTextOutlined x:Name="Txt_SplashMarquee" FontSize="24" FontFamily="Lilita One" ShadowColor="Black" ShadowOffset="0, 2" StrokeThiccness="2" Text="News: According to all known laws of aviation, a bee shouldn't be able to fly. Its wings blahblahlbhalhblahlbhalbhalbhlhabh..."/>
         </Grid>
 
         <Grid Visibility="Hidden">
@@ -40,37 +38,50 @@
                 <ExtraThings:DrawTextOutlined Text="Change bar size" FontSize="18" FontFamily="Lilita One" Fill="White" Stroke="Black" StrokeThiccness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="48" Margin="-12,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ShadowColor="Black" ShadowOffset="0, 1"/>
             </Grid>
         </Grid>
-        <Grid Name="CountDisplay" Margin="0,296,0,255" HorizontalAlignment="Center" Width="1080">
-            <ExtraThings:DrawTextOutlined x:Name="L_Count" HorizontalAlignment="Center" Text="0" Height="155" VerticalAlignment="Center" Width="1000" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="96" FontFamily="m6x11plus" ShadowColor="Black" StrokeThiccness="6" ShadowOffset="0, 3.5"/>
+        <Grid x:Name="PregressBar" Margin="0,329,0,55">
+            <Grid x:Name="ProgBarBehind" Margin="15,0,15,0">
+                <Image x:Name="Img_InactiveBarLeft" HorizontalAlignment="Left" Height="50" Margin="7,0,0,0" VerticalAlignment="Top" Width="19" Source="/Ahhssets/Loading Bar Inactive Leftslice.png"/>
+                <Image x:Name="Img_InactiveBarMid" HorizontalAlignment="Left" Height="50" Margin="16,0,0,0" VerticalAlignment="Top" Width="1000" Source="/Ahhssets/Loading Bar Inactive Frameslice.png" Stretch="Fill"/>
+                <Image x:Name="Img_InactiveBarRight" HorizontalAlignment="Left" Height="50" Margin="1015,0,0,0" VerticalAlignment="Top" Width="19" Source="/Ahhssets/Loading Bar Inactive Rightslice.png"/>
+            </Grid>
+
+            <Grid x:Name="ProgBarFront" Visibility="Visible" Margin="15,0,15,0">
+                <Image x:Name="Img_ActiveBarLeft" HorizontalAlignment="Left" Height="50" Margin="7,0,0,0" VerticalAlignment="Top" Width="10" Source="/Ahhssets/Loading Bar Active Leftslice.png"/>
+                <Image x:Name="Img_ActiveBarMid" HorizontalAlignment="Left" Height="50" Margin="16,0,0,0" VerticalAlignment="Top" Width="0" Source="/Ahhssets/Loading Bar Active Frameslice.png" Stretch="Fill"/>
+                <Image x:Name="Img_ActiveBarRight" HorizontalAlignment="Left" Height="50" Margin="16,0,0,0" VerticalAlignment="Top" Width="10" Source="/Ahhssets/Loading Bar Active Rightslice.png"/>
+            </Grid>
         </Grid>
-        <Grid Margin="234,94,110,483">
-            <ExtraThings:DrawTextShakyOutlined Text="YOUR TAKING TOO TOO" FontSize="54" FontFamily="Determination Mono Web" Fill="White" Stroke="Black" StrokeThiccness="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="129" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ShadowColor="Black" ShadowOffset="0, 4" ShakeIntensity="2" Width="488"/>
+        <Grid x:Name="QuichTimeBar" Margin="632,59,-32,366">
+            <Grid x:Name="TimeBarBehind" Margin="0,0,34,0">
+                <Image x:Name="Img_InactiveTimeBarMid" HorizontalAlignment="Left" Height="65" Margin="10,0,0,0" VerticalAlignment="Top" Width="396" Source="/Ahhssets/Time Bar Inactive Frameslice.png" Stretch="Fill"/>
+                <Image x:Name="Img_InactiveTimeBarRight" HorizontalAlignment="Left" Height="65" Margin="406,0,0,0" VerticalAlignment="Top" Width="12" Source="/Ahhssets/Time Bar Inactive Rightslice.png" RenderTransformOrigin="0.5,0.5">
+                </Image>
+                <Image x:Name="Img_InactiveTimeBarLeft" HorizontalAlignment="Left" Height="65" Margin="0,0,0,0" VerticalAlignment="Top" Width="12" Source="/Ahhssets/Time Bar Inactive Leftslice.png"/>
+            </Grid>
+            <Grid x:Name="TimeBarFront" Visibility="Hidden">
+                <!-- 400 -->
+                <Image x:Name="Img_ActiveTimeBarMid" HorizontalAlignment="Left" Height="48" Margin="7,0,0,0" VerticalAlignment="Top" Width="123" Source="/Ahhssets/Time Bar Active Frameslice.png" Stretch="Fill"/>
+                <Image x:Name="Img_ActiveTimeBarRight" HorizontalAlignment="Left" Height="48" Margin="130,0,0,0" VerticalAlignment="Top" Width="9" Source="/Ahhssets/Time Bar Active Rightslice.png"/>
+                <Image x:Name="Img_ActiveTimeBarLeft" HorizontalAlignment="Left" Height="48" Margin="0,0,0,0" VerticalAlignment="Top" Width="9" Source="/Ahhssets/Time Bar Active Leftslice.png"/>
+            </Grid>
+            <Grid x:Name="ProgressiveStrike" Visibility="Hidden">
+                <!-- 395 -->
+                <Image x:Name="Img_ProgressiveStrike" HorizontalAlignment="Left" Height="44.925" Margin="128, 1.5,0,0" VerticalAlignment="Top" Width="11" Source="/Ahhssets/Time Bar Proc.png" Stretch="Fill"/>
+            </Grid>
         </Grid>
-        <ExtraThings:GridButton x:Name="Grid_BTN_UpdateCount" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,554,0,0" MouseLeftButtonDown="Grid_BTN_UpdateCount_MouseLeftButtonDown" MouseLeftButtonUp="Grid_BTN_UpdateCount_MouseLeftButtonUp" Width="188">
+        <ExtraThings:DrawTextOutlined Margin="632,62,0,380" FontFamily="Lilita One" FontSize="48" HorizontalContentAlignment="Center" HorizontalAlignment="Left" ShadowColor="Black" ShadowOffset="0, 3" StrokeThiccness="4" Text="0:00:00:00" Width="418"/>
+        <Grid x:Name="CountDisplay" Margin="0,204,0,166" HorizontalAlignment="Center" Width="1080">
+            <ExtraThings:DrawTextOutlined x:Name="L_Count" HorizontalAlignment="Left" Text="0" Height="101" VerticalAlignment="Center" Width="1000" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="96" FontFamily="m6x11plus" ShadowColor="Black" StrokeThiccness="6" ShadowOffset="0, 3.5" Grid.ColumnSpan="2" Margin="40,0,0,0"/>
+        </Grid>
+
+        <ExtraThings:GridButton Visibility="Visible" IsEnabled="True" x:Name="Grid_BTN_UpdateCount" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,394,0,0" MouseLeftButtonDown="Grid_BTN_UpdateCount_MouseLeftButtonDown" MouseLeftButtonUp="Grid_BTN_UpdateCount_MouseLeftButtonUp" Width="188">
             <Image HorizontalAlignment="Center" Height="72" VerticalAlignment="Center" Width="188" Source="/Ahhssets/Blue Button.png"/>
-            <ExtraThings:DrawTextOutlined Text="Add 2000" FontSize="28" FontFamily="Lilita One" Fill="White" Stroke="Black" StrokeThiccness="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ShadowColor="Black" ShadowOffset="0, 1.5"/>
+            <ExtraThings:DrawTextOutlined Text="Progress" FontSize="28" FontFamily="Lilita One" Fill="White" Stroke="Black" StrokeThiccness="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ShadowColor="Black" ShadowOffset="0, 1.5"/>
         </ExtraThings:GridButton>
-        <ExtraThings:GridButton HorizontalAlignment="Left" VerticalAlignment="Top" Margin="201,608,0,0" MouseLeftButtonDown="Grid_BTN_UpdateCount_MouseLeftButtonDown" MouseLeftButtonUp="Grid_BTN_UpdateCount_MouseLeftButtonUp" Width="66">
-            <CheckBox x:Name="ImageButtonCheckBox"
-              HorizontalAlignment="Left"
-              Margin="0,0,0,0"
-              VerticalAlignment="Top" Height="65" Width="66">
-                <CheckBox.Template>
-                    <ControlTemplate TargetType="CheckBox">
-                        <Grid>
-                            <Image x:Name="ButtonImage"
-                           Source="/Ahhssets/Inactive Checkbox.png"
-                           Stretch="Uniform"/>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="ButtonImage" Property="Source" Value="/Ahhssets/Active Checkbox.png"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </CheckBox.Template>
-            </CheckBox>
+        <ExtraThings:GridButton Visibility="Hidden" Margin="686,407,312,36">
+            <ExtraThings:CheckboxAsImage x:Name="Teststs" Margin="0,0,0,0" ImageSource="/Ahhssets/Active Checkbox.png" ImageSourceIfUnchecked="/Ahhssets/Inactive Checkbox.png" MouseLeftButtonUp="Teststs_MouseLeftButtonUp"/>
         </ExtraThings:GridButton>
+        <ExtraThings:DrawTextOutlined Visibility="Hidden"  Margin="757,408,93,71" FontFamily="Lilita One" FontSize="24" ShadowColor="Black" ShadowOffset="0, 2" StrokeThiccness="2" Text="Disable&#xA;button"/>
 
         <Grid.Background>
             <ImageBrush ImageSource="Ahhssets/brawloween_2022_lobby.png" Stretch="None"/>

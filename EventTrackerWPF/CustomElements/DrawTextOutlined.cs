@@ -3,7 +3,7 @@ using System.Windows.Media;
 using System.Globalization;
 using System.Windows.Documents;
 
-namespace EventTrackerWPF.Librarbies
+namespace EventTrackerWPF.CustomElements
 {
     public class DrawTextOutlined : FrameworkElement
     {
@@ -79,6 +79,11 @@ namespace EventTrackerWPF.Librarbies
 
         public VerticalAlignment VerticalContentAlignment { get => (VerticalAlignment)GetValue(VerticalContentAlignmentProperty); set => SetValue(VerticalContentAlignmentProperty, value); }
 
+        public DrawTextOutlined()
+        {
+            CacheMode = new BitmapCache();
+        }
+
         protected override void OnRender(DrawingContext DrawingContext)
         {
             double X = 0, Y = 0;
@@ -147,6 +152,27 @@ namespace EventTrackerWPF.Librarbies
             {
                 DrawingContext.DrawGeometry(Fill, null, Geometry);
             }
+        }
+
+        protected override Size MeasureOverride(Size AvailableSize)
+        {
+            if (string.IsNullOrEmpty(Text))
+                return new Size(0, 0);
+
+            var FormattedText = new FormattedText(
+                Text,
+                CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,
+                new Typeface(FontFamily, FontStyle, FontWeight, FontStretches.Normal),
+                FontSize, Fill,
+                VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
+            double TxtWidth = Math.Min(FormattedText.Width, AvailableSize.Width);
+            double TxtHeight = Math.Min(FormattedText.Height, AvailableSize.Height);
+
+            if (double.IsInfinity(AvailableSize.Width))   TxtWidth = FormattedText.Width;
+            if (double.IsInfinity(AvailableSize.Height))  TxtHeight = FormattedText.Height;
+
+            return new Size(TxtWidth, TxtHeight);
         }
     }
 }
