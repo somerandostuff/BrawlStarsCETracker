@@ -39,25 +39,159 @@
                 <ImageBrush ImageSource="/Ahhssets/Backgrounds/AvD_Angels/Bgr.png" Stretch="Fill"/>
             </Grid.Background>
             <Grid Name="Grid_Bg_ForeItems_AvD_Angels">
-                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Arch Gate Thing.png" HorizontalAlignment="Center" Width="1420" Margin="0,20,0,-31" Opacity="1"/>
-                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow.png" Height="726" Width="720" Margin="0,55,0,0"/>
-                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Sky Blur Up.png" VerticalAlignment="Bottom"/>
+                <Image x:Name="AngelsIconsImage"
+                        Source="/Ahhssets/Backgrounds/AvD_Angels/Angels Icon.png"
+                        CacheMode="BitmapCache"
+                        Stretch="Uniform"
+                        RenderTransformOrigin="0.5,0.5"
+                        Opacity=".2"
+                        Margin="-562,-128,-14,-476">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="8"/>
+                            <TranslateTransform x:Name="AngelsImageTranslate"/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+
+                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow.png" Height="343" Width="515" Margin="0,150,0,0" Opacity="1" Stretch="Fill" HorizontalAlignment="Center" CacheMode="BitmapCache"/>
+                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow.png" Height="455" Width="515" Margin="0,150,0,0" Opacity="1" Stretch="Fill" HorizontalAlignment="Center" CacheMode="BitmapCache"/>
+                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow.png" Height="343" Width="515" Margin="0,150,0,0" Opacity="1" Stretch="Fill" HorizontalAlignment="Center" CacheMode="BitmapCache"/>
+                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Arch Gate Thing.png" HorizontalAlignment="Center" Width="1420" Margin="0,20,0,-31" Opacity="1"  CacheMode="BitmapCache"/>
+                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow2.png" Stretch="Fill" Margin="0,-30,0,0" HorizontalAlignment="Center" Width="972" Height="780"  CacheMode="BitmapCache"/>
+                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow.png" Height="327" Width="370" Stretch="Fill" Margin="0,77,0,0"  CacheMode="BitmapCache"/>
+                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Sky Blur Up.png" VerticalAlignment="Bottom"  CacheMode="BitmapCache"/>
                 <Grid Name="Grid_Bg_ForeItems_AvD_Angels_Clouds">
                     <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 8.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1360" Height="108" Margin="0,0,0,187"/>
                     <Grid x:Name="LeftmostClouds">
                         <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 7.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1104" Height="69" Margin="256,0,0,160"/>
-                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 5.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1360" Height="118" Margin="0,0,0,122"/>
-                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 3.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1360" Height="108" Margin="0,0,0,68"/>
+                        <Grid>
+                            <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="-202,445,904,202" RenderTransformOrigin="0.5,0.5" Opacity="0.8" CacheMode="BitmapCache">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="7"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+                            <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="205,295,1063,102" Opacity=".64" CacheMode="BitmapCache">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="173"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+                            <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="312,385,991,102" Opacity=".56" CacheMode="BitmapCache">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="201"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+                        </Grid>
+                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 5.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1360" Height="118" Margin="0,0,0,122" CacheMode="BitmapCache"/>
+                        <Grid>
+                            <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="150,423,1124,-50" Opacity=".84">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="165"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+                            <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="262,522,776,117" RenderTransformOrigin="0.5,0.5" Opacity="0.8">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="7"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+                        </Grid>
+                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 3.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1360" Height="108" Margin="0,0,0,68" CacheMode="BitmapCache"/>
                     </Grid>
                     <Grid x:Name="RightmostClouds">
-                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 6.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="92" Margin="0,0,0,156"/>
-                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 4.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="85" Margin="0,0,0,122"/>
+                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 6.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="92" Margin="0,0,0,156" CacheMode="BitmapCache"/>
                         <Grid>
-
+                            <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="800,486,-136,175" RenderTransformOrigin="0.5,0.5" Opacity="0.8">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="-1"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+                            <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="1095,427,206,140" Opacity=".48">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="185"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+                            <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="939,467,354,107" Opacity=".74">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="152"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
                         </Grid>
-                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 2.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="128" Margin="0,0,0,21"/>
+                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 4.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="85" Margin="0,0,0,122" CacheMode="BitmapCache"/>
+                        <Grid>
+                            <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="952,512,-244,129" RenderTransformOrigin="0.5,0.5" Opacity="0.8" CacheMode="BitmapCache">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="-2"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+                            <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="1124,490,168,52" Opacity=".56" CacheMode="BitmapCache">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="191"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+                        </Grid>
+                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 2.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="128" Margin="0,0,0,21" CacheMode="BitmapCache"/>
                     </Grid>
-                    <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="823,567,45,-2" RenderTransformOrigin="0.5,0.5">
+                    <Grid x:Name="BottomHighClouds">
+                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Mini Cloud 1.png" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-70,244,0,0" Height="102" CacheMode="BitmapCache"/>
+                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Mini Cloud 2.png" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,174,-252,0" Height="121" CacheMode="BitmapCache"/>
+                    </Grid>
+                    <Grid x:Name="TopHighClouds">
+                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Mini Cloud 3.png" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-92,-50,0,0" Height="223" CacheMode="BitmapCache"/>
+                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Mini Cloud 4.png" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,-76,-52,0" Height="223" CacheMode="BitmapCache"/>
+                    </Grid>
+                    <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="823,567,45,-2" RenderTransformOrigin="0.5,0.5" CacheMode="BitmapCache">
                         <Image.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -67,18 +201,28 @@
                             </TransformGroup>
                         </Image.RenderTransform>
                     </Image>
-                    <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="1039,561,234,-99" Opacity=".8">
+                    <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="79,524,747,0" CacheMode="BitmapCache"/>
+                    <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="1060,517,214,-117" Opacity=".84" CacheMode="BitmapCache">
                         <Image.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
                                 <SkewTransform/>
-                                <RotateTransform Angle="150"/>
+                                <RotateTransform Angle="158"/>
                                 <TranslateTransform/>
                             </TransformGroup>
                         </Image.RenderTransform>
                     </Image>
-                    <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 1.png" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-
+                    <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="-90,496,958,69" RenderTransformOrigin="0.5,0.5" CacheMode="BitmapCache">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="12"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                    <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 1.png" VerticalAlignment="Bottom" HorizontalAlignment="Center" CacheMode="BitmapCache"/>
                 </Grid>
             </Grid>
         </Grid>
@@ -114,7 +258,7 @@
         <Storyboard x:Key="AvD_AngelsTheme_LeftmostClouds" RepeatBehavior="Forever" AutoReverse="True">
             <DoubleAnimation
                 Storyboard.TargetProperty="RenderTransform.ScaleX"
-                From="1" To="1.11" Duration="0:00:13.3333" AutoReverse="True" RepeatBehavior="Forever">
+                From="1" To="0.89" Duration="0:00:13.3333" AutoReverse="True" RepeatBehavior="Forever">
                 <DoubleAnimation.EasingFunction>
                     <CubicEase EasingMode="EaseInOut"/>
                 </DoubleAnimation.EasingFunction>
@@ -123,18 +267,41 @@
         <Storyboard x:Key="AvD_AngelsTheme_RightmostClouds" RepeatBehavior="Forever" AutoReverse="True">
             <DoubleAnimation
                 Storyboard.TargetProperty="RenderTransform.Children[0].ScaleX"
-                From="1" To="1.11" Duration="0:00:13.3333" AutoReverse="True" RepeatBehavior="Forever">
+                From="1" To="1.11" Duration="0:00:06.6667" AutoReverse="True" RepeatBehavior="Forever">
                 <DoubleAnimation.EasingFunction>
                     <CubicEase EasingMode="EaseInOut"/>
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
             <DoubleAnimation
                 Storyboard.TargetProperty="RenderTransform.Children[1].X"
-                From="0" To="-56.1" Duration="0:00:13.3333" AutoReverse="True" RepeatBehavior="Forever">
+                From="0" To="-56.1" Duration="0:00:06.6667" AutoReverse="True" RepeatBehavior="Forever">
                 <DoubleAnimation.EasingFunction>
                     <CubicEase EasingMode="EaseInOut"/>
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Key="AvD_AngelsTheme_BottomHighClouds" RepeatBehavior="Forever" AutoReverse="True">
+            <DoubleAnimation
+                Storyboard.TargetProperty="RenderTransform.X"
+                From="0" To="-56" Duration="0:00:11.6667" AutoReverse="True" RepeatBehavior="Forever">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Key="AvD_AngelsTheme_Icons" RepeatBehavior="Forever">
+            <DoubleAnimation
+                Storyboard.TargetName="AngelsImageTranslate"
+                Storyboard.TargetProperty="Y"
+                From="0"
+                To="-425"
+                Duration="0:00:15"/>
+            <DoubleAnimation
+                Storyboard.TargetName="AngelsImageTranslate"
+                Storyboard.TargetProperty="X"
+                From="0"
+                To="60"
+                Duration="0:00:15"/>
         </Storyboard>
     </Window.Resources>
 </Window>

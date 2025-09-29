@@ -276,7 +276,7 @@ namespace Main
                         break;
                 }
 
-                if (Number >= 1e303 || Number == double.PositiveInfinity) // 1e303 = 1 centillion (but who caresa about that)
+                if (Number >= double.PositiveInfinity)
                 {
                     if (Choice is FormatPrefs.LongText) return "Infinity";
                     else return "naneinf";

@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="Ahhssets\Active Checkbox.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Angels Icon.png" />
     <None Remove="Ahhssets\Backgrounds\AvD_Angels\Arch Gate Thing.png" />
     <None Remove="Ahhssets\Backgrounds\AvD_Angels\Bgr.png" />
     <None Remove="Ahhssets\Backgrounds\AvD_Angels\Blue Blur Down.png" />
@@ -24,6 +25,7 @@
     <None Remove="Ahhssets\Backgrounds\AvD_Angels\Cloud 8.png" />
     <None Remove="Ahhssets\Backgrounds\AvD_Angels\Glow Halfcircle.png" />
     <None Remove="Ahhssets\Backgrounds\AvD_Angels\Glow.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Glow2.png" />
     <None Remove="Ahhssets\Backgrounds\AvD_Angels\Mini Cloud 1.png" />
     <None Remove="Ahhssets\Backgrounds\AvD_Angels\Mini Cloud 2.png" />
     <None Remove="Ahhssets\Backgrounds\AvD_Angels\Mini Cloud 3.png" />
@@ -75,6 +77,7 @@
 
   <ItemGroup>
     <Resource Include="Ahhssets\Active Checkbox.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Angels Icon.png" />
     <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Arch Gate Thing.png" />
     <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Bgr.png" />
     <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Blue Blur Down.png" />
@@ -90,6 +93,7 @@
     <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Glow Beam.png" />
     <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Glow Halfcircle.png" />
     <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Glow.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Glow2.png" />
     <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Mini Cloud 1.png" />
     <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Mini Cloud 2.png" />
     <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Mini Cloud 3.png" />

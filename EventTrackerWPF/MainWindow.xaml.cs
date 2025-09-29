@@ -232,15 +232,22 @@ namespace EventTrackerWPF
         {
             var Storyboard = (Storyboard)FindResource("BrawloweenTheme");
             Storyboard.Begin();
+
+            RunningStoryboards.Add(Storyboard);
         }
 
         private void AvD_Angels_AnimsStart()
         {
             var StoryboardBaseRightClouds = (Storyboard)Resources["AvD_AngelsTheme_RightmostClouds"];
             var StoryboardBaseLeftClouds = (Storyboard)Resources["AvD_AngelsTheme_LeftmostClouds"];
+            var StoryboardBaseBottomHighClouds = (Storyboard)Resources["AvD_AngelsTheme_BottomHighClouds"];
+            var StoryboardIcons = (Storyboard)FindResource("AvD_AngelsTheme_Icons");
 
             RunningStoryboards.Clear();
             RunningImages.Clear();
+
+            StoryboardIcons.Begin();
+            RunningStoryboards.Add(StoryboardIcons);
 
             foreach (UIElement Target in RightmostClouds.Children)
             {
@@ -280,6 +287,27 @@ namespace EventTrackerWPF
                         TargetImg.RenderTransform = new ScaleTransform();
 
                     var Storyboard = StoryboardBaseLeftClouds.Clone();
+
+                    foreach (Timeline Tl in Storyboard.Children)
+                    {
+                        Storyboard.SetTarget(Tl, TargetImg);
+                    }
+
+                    Storyboard.Begin();
+
+                    RunningStoryboards.Add(Storyboard);
+                    RunningImages.Add(TargetImg);
+                }
+            }
+
+            foreach (UIElement Target in BottomHighClouds.Children)
+            {
+                if (Target is Image TargetImg)
+                {
+                    if (TargetImg.RenderTransform is not TranslateTransform)
+                        TargetImg.RenderTransform = new TranslateTransform();
+
+                    var Storyboard = StoryboardBaseBottomHighClouds.Clone();
 
                     foreach (Timeline Tl in Storyboard.Children)
                     {
