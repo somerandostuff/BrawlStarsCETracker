@@ -6,85 +6,135 @@
         xmlns:local="clr-namespace:EventTrackerWPF"
         xmlns:ExtraThings="clr-namespace:EventTrackerWPF.CustomElements"
         mc:Ignorable="d"
-        Title="MainWindow" Height="540" Width="1080" ResizeMode="NoResize" Closing="Window_Closing" Loaded="Window_Loaded">
+        Title="MainWindow" Height="720" Width="1360" ResizeMode="CanMinimize" Closing="Window_Closing" Loaded="Window_Loaded">
     <Grid>
-        <Grid Margin="0,471,0,0">
-            <ExtraThings:DrawTextOutlined HorizontalContentAlignment="Center" FontSize="24" FontFamily="Lilita One" ShadowColor="Black" ShadowOffset="0, 2" StrokeThiccness="2" Text="v1.1"/>
-        </Grid>
-        <Grid Margin="10,29,353,374">
-            <ExtraThings:DrawTextOutlined Margin="0,7,0,85" FontSize="24" FontFamily="Lilita One" ShadowColor="Black" ShadowOffset="0, 2" StrokeThiccness="2" Text="Brawl Stars Community Event Tracker"/>
-            <ExtraThings:DrawTextOutlined Margin="0,29,0,0" FontSize="56" FontFamily="Lilita One" ShadowColor="Black" ShadowOffset="0, 3" StrokeThiccness="4" Text="[PUT EVENT NAME HERE]" Height="80" VerticalAlignment="Top"/>
-        </Grid>
-
-        <Grid Margin="0,131,0,352">
-            <ExtraThings:DrawTextOutlined x:Name="Txt_SplashMarquee" FontSize="24" FontFamily="Lilita One" ShadowColor="Black" ShadowOffset="0, 2" StrokeThiccness="2" Text="News: According to all known laws of aviation, a bee shouldn't be able to fly. Its wings blahblahlbhalhblahlbhalbhalbhlhabh..."/>
-        </Grid>
-
-        <Grid Visibility="Hidden">
-            <Grid Name="BrawlTextbox" Margin="226,559,324,63">
-                <TextBox x:Name="Tb_TextboxBarMid" HorizontalAlignment="Left" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="281" Height="50" Margin="5,-2,0,0" Foreground="Black" FontFamily="Lilita One" TextAlignment="Center" FontSize="36" VerticalContentAlignment="Center" MaxLength="10">
-                    <TextBox.BorderBrush>
-                        <ImageBrush/>
-                    </TextBox.BorderBrush>
-                    <TextBox.Background>
-                        <ImageBrush ImageSource="/Ahhssets/Textbox Area Frameslice.png"/>
-                    </TextBox.Background>
-                </TextBox>
-                <Image HorizontalAlignment="Left" Height="46" VerticalAlignment="Top" Width="8" Source="/Ahhssets/Textbox Area Leftslice.png"/>
-                <Image HorizontalAlignment="Left" Height="46" VerticalAlignment="Top" Width="8" Source="/Ahhssets/Textbox Area Rightslice.png" Margin="283,0,0,0"/>
-            </Grid>
-            <Grid Name="Grid_BTN1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="618,558,0,0" MouseLeftButtonUp="BTN_MouseLeftButtonUp" MouseLeftButtonDown="BTN_MouseLeftButtonDown">
-                <Image HorizontalAlignment="Center" Height="48" VerticalAlignment="Center" Width="151" Source="/Ahhssets/Blue Button.png" Margin="-88,0,0,0"/>
-                <ExtraThings:DrawTextOutlined Text="Change bar size" FontSize="18" FontFamily="Lilita One" Fill="White" Stroke="Black" StrokeThiccness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="48" Margin="-12,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ShadowColor="Black" ShadowOffset="0, 1"/>
-            </Grid>
-        </Grid>
-        <Grid x:Name="PregressBar" Margin="0,329,0,55">
-            <Grid x:Name="ProgBarBehind" Margin="15,0,15,0">
-                <Image x:Name="Img_InactiveBarLeft" HorizontalAlignment="Left" Height="50" Margin="7,0,0,0" VerticalAlignment="Top" Width="19" Source="/Ahhssets/Loading Bar Inactive Leftslice.png"/>
-                <Image x:Name="Img_InactiveBarMid" HorizontalAlignment="Left" Height="50" Margin="16,0,0,0" VerticalAlignment="Top" Width="1000" Source="/Ahhssets/Loading Bar Inactive Frameslice.png" Stretch="Fill"/>
-                <Image x:Name="Img_InactiveBarRight" HorizontalAlignment="Left" Height="50" Margin="1015,0,0,0" VerticalAlignment="Top" Width="19" Source="/Ahhssets/Loading Bar Inactive Rightslice.png"/>
-            </Grid>
-
-            <Grid x:Name="ProgBarFront" Visibility="Visible" Margin="15,0,15,0">
-                <Image x:Name="Img_ActiveBarLeft" HorizontalAlignment="Left" Height="50" Margin="7,0,0,0" VerticalAlignment="Top" Width="10" Source="/Ahhssets/Loading Bar Active Leftslice.png"/>
-                <Image x:Name="Img_ActiveBarMid" HorizontalAlignment="Left" Height="50" Margin="16,0,0,0" VerticalAlignment="Top" Width="0" Source="/Ahhssets/Loading Bar Active Frameslice.png" Stretch="Fill"/>
-                <Image x:Name="Img_ActiveBarRight" HorizontalAlignment="Left" Height="50" Margin="16,0,0,0" VerticalAlignment="Top" Width="10" Source="/Ahhssets/Loading Bar Active Rightslice.png"/>
-            </Grid>
-        </Grid>
-        <Grid x:Name="QuichTimeBar" Margin="632,59,-32,366">
-            <Grid x:Name="TimeBarBehind" Margin="0,0,34,0">
-                <Image x:Name="Img_InactiveTimeBarMid" HorizontalAlignment="Left" Height="65" Margin="10,0,0,0" VerticalAlignment="Top" Width="396" Source="/Ahhssets/Time Bar Inactive Frameslice.png" Stretch="Fill"/>
-                <Image x:Name="Img_InactiveTimeBarRight" HorizontalAlignment="Left" Height="65" Margin="406,0,0,0" VerticalAlignment="Top" Width="12" Source="/Ahhssets/Time Bar Inactive Rightslice.png" RenderTransformOrigin="0.5,0.5">
+        <Grid x:Name="BrawloweenThemeGrid" Visibility="Collapsed">
+            <Grid.Background>
+                <ImageBrush ImageSource="/Ahhssets/Backgrounds/Brawloween2023/Bgr.png" Stretch="Fill"/>
+            </Grid.Background>
+            <Grid Name="Grid_Bg_ForeItems_Brawloween">
+                <Image x:Name="GhostIconsImage"
+           Source="/Ahhssets/Backgrounds/Brawloween2023/Ghost Icons.png"
+           CacheMode="BitmapCache"
+           Stretch="Uniform"
+           RenderTransformOrigin="0.5,0.5"
+           Opacity=".07"
+           Margin="-562,-128,-14,-476">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="8"/>
+                            <TranslateTransform x:Name="GhostImageTranslate"/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
                 </Image>
-                <Image x:Name="Img_InactiveTimeBarLeft" HorizontalAlignment="Left" Height="65" Margin="0,0,0,0" VerticalAlignment="Top" Width="12" Source="/Ahhssets/Time Bar Inactive Leftslice.png"/>
-            </Grid>
-            <Grid x:Name="TimeBarFront" Visibility="Hidden">
-                <!-- 400 -->
-                <Image x:Name="Img_ActiveTimeBarMid" HorizontalAlignment="Left" Height="48" Margin="7,0,0,0" VerticalAlignment="Top" Width="123" Source="/Ahhssets/Time Bar Active Frameslice.png" Stretch="Fill"/>
-                <Image x:Name="Img_ActiveTimeBarRight" HorizontalAlignment="Left" Height="48" Margin="130,0,0,0" VerticalAlignment="Top" Width="9" Source="/Ahhssets/Time Bar Active Rightslice.png"/>
-                <Image x:Name="Img_ActiveTimeBarLeft" HorizontalAlignment="Left" Height="48" Margin="0,0,0,0" VerticalAlignment="Top" Width="9" Source="/Ahhssets/Time Bar Active Leftslice.png"/>
-            </Grid>
-            <Grid x:Name="ProgressiveStrike" Visibility="Hidden">
-                <!-- 395 -->
-                <Image x:Name="Img_ProgressiveStrike" HorizontalAlignment="Left" Height="44.925" Margin="128, 1.5,0,0" VerticalAlignment="Top" Width="11" Source="/Ahhssets/Time Bar Proc.png" Stretch="Fill"/>
+                <Image Source="/Ahhssets/Backgrounds/Brawloween2023/Ground.png" Margin="0,472,0,0" Stretch="Fill"/>
+                <Image Source="/Ahhssets/Backgrounds/Brawloween2023/Blur.png" Margin="0,565,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Stretch="Fill" Height="207"/>
+                <Image Source="/Ahhssets/Backgrounds/Brawloween2023/Gravestones.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="Fill" Width="2430" Height="641" Margin="0,10,0,0"/>
             </Grid>
         </Grid>
-        <ExtraThings:DrawTextOutlined Margin="632,62,0,380" FontFamily="Lilita One" FontSize="48" HorizontalContentAlignment="Center" HorizontalAlignment="Left" ShadowColor="Black" ShadowOffset="0, 3" StrokeThiccness="4" Text="0:00:00:00" Width="418"/>
-        <Grid x:Name="CountDisplay" Margin="0,204,0,166" HorizontalAlignment="Center" Width="1080">
-            <ExtraThings:DrawTextOutlined x:Name="L_Count" HorizontalAlignment="Left" Text="0" Height="101" VerticalAlignment="Center" Width="1000" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="96" FontFamily="m6x11plus" ShadowColor="Black" StrokeThiccness="6" ShadowOffset="0, 3.5" Grid.ColumnSpan="2" Margin="40,0,0,0"/>
+        <Grid x:Name="AvD_AngelsThemeGrid">
+            <Grid.Background>
+                <ImageBrush ImageSource="/Ahhssets/Backgrounds/AvD_Angels/Bgr.png" Stretch="Fill"/>
+            </Grid.Background>
+            <Grid Name="Grid_Bg_ForeItems_AvD_Angels">
+                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Arch Gate Thing.png" HorizontalAlignment="Center" Width="1420" Margin="0,20,0,-31" Opacity="1"/>
+                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow.png" Height="726" Width="720" Margin="0,55,0,0"/>
+                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Sky Blur Up.png" VerticalAlignment="Bottom"/>
+                <Grid Name="Grid_Bg_ForeItems_AvD_Angels_Clouds">
+                    <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 8.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1360" Height="108" Margin="0,0,0,187"/>
+                    <Grid x:Name="LeftmostClouds">
+                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 7.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1104" Height="69" Margin="256,0,0,160"/>
+                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 5.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1360" Height="118" Margin="0,0,0,122"/>
+                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 3.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1360" Height="108" Margin="0,0,0,68"/>
+                    </Grid>
+                    <Grid x:Name="RightmostClouds">
+                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 6.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="92" Margin="0,0,0,156"/>
+                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 4.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="85" Margin="0,0,0,122"/>
+                        <Grid>
+
+                        </Grid>
+                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 2.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="128" Margin="0,0,0,21"/>
+                    </Grid>
+                    <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="823,567,45,-2" RenderTransformOrigin="0.5,0.5">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="-6"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                    <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="1039,561,234,-99" Opacity=".8">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="150"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                    <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 1.png" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+
+                </Grid>
+            </Grid>
         </Grid>
-
-        <ExtraThings:GridButton Visibility="Visible" IsEnabled="True" x:Name="Grid_BTN_UpdateCount" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,394,0,0" MouseLeftButtonDown="Grid_BTN_UpdateCount_MouseLeftButtonDown" MouseLeftButtonUp="Grid_BTN_UpdateCount_MouseLeftButtonUp" Width="188">
-            <Image HorizontalAlignment="Center" Height="72" VerticalAlignment="Center" Width="188" Source="/Ahhssets/Blue Button.png"/>
-            <ExtraThings:DrawTextOutlined Text="Progress" FontSize="28" FontFamily="Lilita One" Fill="White" Stroke="Black" StrokeThiccness="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ShadowColor="Black" ShadowOffset="0, 1.5"/>
+        <Grid x:Name="MainscreenUI">
+            <Image Source="/Ahhssets/Header.png" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1360" Height="25"/>
+            <ExtraThings:GridButton Margin="1202,0,10,585">
+                <Image Source="Ahhssets/Header Button Small.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Image Source="Ahhssets/Icons/Hamburger.png" VerticalAlignment="Center" HorizontalAlignment="Center" Height="43" Width="56"/>
+            </ExtraThings:GridButton>
+            <ExtraThings:GridButton x:Name="UptimeButton" Margin="20,30,1167,648" MouseLeftButtonUp="UptimeButton_MouseLeftButtonUp">
+                <ExtraThings:DrawTextShakyOutlined x:Name="ApplicationUptime" Text="Uptime: N/A" FontFamily="Lilita One" CacheMode="BitmapCache" FontSize="24" StrokeThiccness="2" ShakeIntensity="0.75" ShadowColor="Black" ShadowOffset="0, 2"/>
+            </ExtraThings:GridButton>
+        </Grid>
+        <ExtraThings:GridButton Margin="462,424,573,201" MouseLeftButtonUp="GridButton_MouseLeftButtonUp">
+            <ExtraThings:DrawTextOutlined FontFamily="Lilita One" FontSize="72" Text="Press me" StrokeThiccness="5" ShadowColor="Black" ShadowOffset="0, 3" ></ExtraThings:DrawTextOutlined>
         </ExtraThings:GridButton>
-        <ExtraThings:GridButton Visibility="Hidden" Margin="686,407,312,36">
-            <ExtraThings:CheckboxAsImage x:Name="Teststs" Margin="0,0,0,0" ImageSource="/Ahhssets/Active Checkbox.png" ImageSourceIfUnchecked="/Ahhssets/Inactive Checkbox.png" MouseLeftButtonUp="Teststs_MouseLeftButtonUp"/>
-        </ExtraThings:GridButton>
-        <ExtraThings:DrawTextOutlined Visibility="Hidden"  Margin="757,408,93,71" FontFamily="Lilita One" FontSize="24" ShadowColor="Black" ShadowOffset="0, 2" StrokeThiccness="2" Text="Disable&#xA;button"/>
-
-        <Grid.Background>
-            <ImageBrush ImageSource="Ahhssets/brawloween_2022_lobby.png" Stretch="None"/>
-        </Grid.Background>
     </Grid>
+    <Window.Resources>
+        <Storyboard x:Key="BrawloweenTheme" RepeatBehavior="Forever">
+            <DoubleAnimation
+                Storyboard.TargetName="GhostImageTranslate"
+                Storyboard.TargetProperty="Y"
+                From="0"
+                To="-429"
+                Duration="0:00:15"/>
+            <DoubleAnimation
+                Storyboard.TargetName="GhostImageTranslate"
+                Storyboard.TargetProperty="X"
+                From="0"
+                To="60"
+                Duration="0:00:15"/>
+        </Storyboard>
+        <Storyboard x:Key="AvD_AngelsTheme_LeftmostClouds" RepeatBehavior="Forever" AutoReverse="True">
+            <DoubleAnimation
+                Storyboard.TargetProperty="RenderTransform.ScaleX"
+                From="1" To="1.11" Duration="0:00:13.3333" AutoReverse="True" RepeatBehavior="Forever">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Key="AvD_AngelsTheme_RightmostClouds" RepeatBehavior="Forever" AutoReverse="True">
+            <DoubleAnimation
+                Storyboard.TargetProperty="RenderTransform.Children[0].ScaleX"
+                From="1" To="1.11" Duration="0:00:13.3333" AutoReverse="True" RepeatBehavior="Forever">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation
+                Storyboard.TargetProperty="RenderTransform.Children[1].X"
+                From="0" To="-56.1" Duration="0:00:13.3333" AutoReverse="True" RepeatBehavior="Forever">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </Window.Resources>
 </Window>

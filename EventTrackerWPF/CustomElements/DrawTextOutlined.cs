@@ -81,7 +81,7 @@ namespace EventTrackerWPF.CustomElements
 
         public DrawTextOutlined()
         {
-            CacheMode = new BitmapCache();
+            CacheMode = null;
         }
 
         protected override void OnRender(DrawingContext DrawingContext)
@@ -96,6 +96,8 @@ namespace EventTrackerWPF.CustomElements
                 new Typeface(FontFamily, FontStyles.Normal, FontWeights.Normal, FontStretches.Normal),
                 FontSize, Fill,
                 VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
+            FormattedText.MaxTextWidth = ActualWidth;
 
             switch (HorizontalContentAlignment)
             {
@@ -165,6 +167,8 @@ namespace EventTrackerWPF.CustomElements
                 new Typeface(FontFamily, FontStyle, FontWeight, FontStretches.Normal),
                 FontSize, Fill,
                 VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
+            FormattedText.MaxTextWidth = AvailableSize.Width;
 
             double TxtWidth = Math.Min(FormattedText.Width, AvailableSize.Width);
             double TxtHeight = Math.Min(FormattedText.Height, AvailableSize.Height);

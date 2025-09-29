@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace EventTrackerWPF.Librarbies
 {
@@ -49,6 +50,12 @@ namespace EventTrackerWPF.Librarbies
                 }
             }
         }
+
+        public static void CreateAlert(AlertMessage Message)
+        {
+            var AlertWindow = new AlertWindow(Message);
+            AlertWindow.ShowDialog();
+        }
     }
     public class BrawlFeedLinks
     {
@@ -56,5 +63,15 @@ namespace EventTrackerWPF.Librarbies
         public const string NewsAPI = "https://brawlstars.inbox.supercell.com/data/en/news/content.json";
         public const string News = "https://brawlstars.inbox.supercell.com";
         public const string PollAPI = "https://brawlstars-api.inbox.supercell.com/poll-api/poll/?pollId=";
+    }
+
+    public class AlertMessage
+    {
+        public string? Title { get; set; }
+        public string? Description { get; set; }
+        public string? RedButton { get; set; }
+        public string? BlueButton { get; set; }
+        public MouseButtonEventHandler? RedButtonFunc { get; set; }
+        public MouseButtonEventHandler? BlueButtonFunc { get; set; }
     }
 }

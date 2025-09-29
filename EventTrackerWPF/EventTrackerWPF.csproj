@@ -10,23 +10,61 @@
 
   <ItemGroup>
     <None Remove="Ahhssets\Active Checkbox.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Arch Gate Thing.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Bgr.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Blue Blur Down.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Blue Blur Up.png.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Cloud 1.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Cloud 2.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Cloud 3.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Cloud 4.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Cloud 5.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Cloud 6.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Cloud 7.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Cloud 8.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Glow Halfcircle.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Glow.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Mini Cloud 1.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Mini Cloud 2.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Mini Cloud 3.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Mini Cloud 4.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Sky Blur Down.png" />
+    <None Remove="Ahhssets\Backgrounds\AvD_Angels\Sky Blur Up.png" />
+    <None Remove="Ahhssets\Backgrounds\Brawloween2023\Bgr.png" />
+    <None Remove="Ahhssets\Backgrounds\Brawloween2023\Blur.png" />
+    <None Remove="Ahhssets\Backgrounds\Brawloween2023\Ghost Icons.png" />
+    <None Remove="Ahhssets\Backgrounds\Brawloween2023\Gravestones.png" />
+    <None Remove="Ahhssets\Backgrounds\Brawloween2023\Ground.png" />
+    <None Remove="Ahhssets\Blue Button Wide.png" />
     <None Remove="Ahhssets\Blue Button.png" />
+    <None Remove="Ahhssets\Button Exit.png" />
+    <None Remove="Ahhssets\Button No.png" />
+    <None Remove="Ahhssets\Button Yes.png" />
+    <None Remove="Ahhssets\Header Button Small.png" />
+    <None Remove="Ahhssets\Header Button.png" />
+    <None Remove="Ahhssets\Header.png" />
+    <None Remove="Ahhssets\Icons\Hamburger.png" />
     <None Remove="Ahhssets\Inactive Checkbox.png" />
+    <None Remove="Ahhssets\Left Notch Header.png" />
+    <None Remove="Ahhssets\Popup Window Left Bottom.png" />
+    <None Remove="Ahhssets\Popup Window Left Center.png" />
+    <None Remove="Ahhssets\Popup Window Left Top.png" />
+    <None Remove="Ahhssets\Popup Window Middle Bottom.png" />
+    <None Remove="Ahhssets\Popup Window Middle Center.png" />
+    <None Remove="Ahhssets\Popup Window Middle Top.png" />
+    <None Remove="Ahhssets\Popup Window Right Bottom.png" />
+    <None Remove="Ahhssets\Popup Window Right Center.png" />
+    <None Remove="Ahhssets\Popup Window Right Top.png" />
+    <None Remove="Ahhssets\Right Notch Header.png" />
     <None Remove="Ahhssets\SFX\jack_o_lantern_laugh.wav" />
     <None Remove="Ahhssets\SFX\YOUR_TAKING_TOO_LONG.wav" />
+    <None Remove="Ahhssets\Strip Popup Window Base.png" />
     <None Remove="Ahhssets\Textbox Area Frameslice.png" />
     <None Remove="Ahhssets\Textbox Area Leftslice.png" />
     <None Remove="Ahhssets\Textbox Area Rightslice.png" />
-    <None Remove="Ahhssets\Time Bar Active Frameslice.png" />
-    <None Remove="Ahhssets\Time Bar Active Leftslice.png" />
-    <None Remove="Ahhssets\Time Bar Active Rightslice.png" />
-    <None Remove="Ahhssets\Time Bar Active.png" />
     <None Remove="Ahhssets\Time Bar Active.png.png" />
-    <None Remove="Ahhssets\Time Bar Inactive Frameslice.png" />
-    <None Remove="Ahhssets\Time Bar Inactive Leftslice.png" />
-    <None Remove="Ahhssets\Time Bar Inactive Rightslice.png" />
-    <None Remove="Ahhssets\Time Bar Inactive.png" />
     <None Remove="Ahhssets\Time Bar Proc.png" />
+    <None Remove="background_angel1.png" />
     <None Remove="brawloween_2022_lobby.png" />
     <None Remove="Loading Bar Active Frameslice.png" />
     <None Remove="Loading Bar Active Leftslice.png" />
@@ -37,33 +75,64 @@
 
   <ItemGroup>
     <Resource Include="Ahhssets\Active Checkbox.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Arch Gate Thing.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Bgr.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Blue Blur Down.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Blue Blur Up.png.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Cloud 1.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Cloud 2.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Cloud 3.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Cloud 4.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Cloud 5.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Cloud 6.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Cloud 7.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Cloud 8.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Glow Beam.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Glow Halfcircle.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Glow.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Mini Cloud 1.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Mini Cloud 2.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Mini Cloud 3.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Mini Cloud 4.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Sky Blur Down.png" />
+    <Resource Include="Ahhssets\Backgrounds\AvD_Angels\Sky Blur Up.png" />
+    <Resource Include="Ahhssets\Backgrounds\Brawloween2023\Bgr.png" />
+    <Resource Include="Ahhssets\Backgrounds\Brawloween2023\Blur.png" />
+    <Resource Include="Ahhssets\Backgrounds\Brawloween2023\Ghost Icons.png" />
+    <Resource Include="Ahhssets\Backgrounds\Brawloween2023\Gravestones.png" />
+    <Resource Include="Ahhssets\Backgrounds\Brawloween2023\Ground.png" />
+    <Resource Include="Ahhssets\Blue Button Wide.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Ahhssets\Blue Button.png" />
-    <Resource Include="Ahhssets\brawloween_2022_lobby.png" />
+    <Resource Include="Ahhssets\Button Exit.png" />
+    <Resource Include="Ahhssets\Button No.png" />
+    <Resource Include="Ahhssets\Button Yes.png" />
+    <Resource Include="Ahhssets\Header Button Small.png" />
+    <Resource Include="Ahhssets\Header Button.png" />
+    <Resource Include="Ahhssets\Header.png" />
+    <Resource Include="Ahhssets\Icons\Hamburger.png" />
     <Resource Include="Ahhssets\Inactive Checkbox.png" />
+    <Resource Include="Ahhssets\Left Notch Header.png" />
+    <Resource Include="Ahhssets\Popup Window Left Bottom.png" />
+    <Resource Include="Ahhssets\Popup Window Left Center.png" />
+    <Resource Include="Ahhssets\Popup Window Left Top.png" />
+    <Resource Include="Ahhssets\Popup Window Middle Bottom.png" />
+    <Resource Include="Ahhssets\Popup Window Middle Center.png" />
+    <Resource Include="Ahhssets\Popup Window Middle Top.png" />
+    <Resource Include="Ahhssets\Popup Window Right Bottom.png" />
+    <Resource Include="Ahhssets\Popup Window Right Center.png" />
+    <Resource Include="Ahhssets\Popup Window Right Top.png" />
+    <Resource Include="Ahhssets\Right Notch Header.png" />
     <Resource Include="Ahhssets\SFX\jack_o_lantern_laugh.wav" />
     <Resource Include="Ahhssets\SFX\YOUR_TAKING_TOO_LONG.wav" />
+    <Resource Include="Ahhssets\Strip Popup Window Base.png" />
     <Resource Include="Ahhssets\Textbox Area Frameslice.png" />
     <Resource Include="Ahhssets\Textbox Area Rightslice.png" />
-    <Resource Include="Ahhssets\Time Bar Active Frameslice.png" />
-    <Resource Include="Ahhssets\Time Bar Active Leftslice.png" />
-    <Resource Include="Ahhssets\Time Bar Active Rightslice.png" />
-    <Resource Include="Ahhssets\Time Bar Active.png" />
-    <Resource Include="Ahhssets\Time Bar Inactive Frameslice.png" />
-    <Resource Include="Ahhssets\Time Bar Inactive Leftslice.png" />
-    <Resource Include="Ahhssets\Time Bar Inactive Rightslice.png" />
-    <Resource Include="Ahhssets\Time Bar Inactive.png" />
     <Resource Include="Ahhssets\Time Bar Proc.png" />
+    <Resource Include="background_angel1.png" />
     <Resource Include="brawloween_2022_lobby.png" />
-    <Resource Include="Ahhssets\Loading Bar %28Inactive%29.png" />
-    <Resource Include="Ahhssets\Loading Bar Active Frameslice.png" />
-    <Resource Include="Ahhssets\Loading Bar Active Leftslice.png" />
-    <Resource Include="Ahhssets\Loading Bar Active Rightslice.png" />
-    <Resource Include="Ahhssets\Loading Bar Inactive Frameslice.png" />
-    <Resource Include="Ahhssets\Loading Bar Inactive Leftslice.png" />
-    <Resource Include="Ahhssets\Loading Bar Inactive Rightslice.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -75,6 +144,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Ahhssets\Backgrounds\Basic\" />
+    <Folder Include="Ahhssets\Backgrounds\AvD_Demons\" />
     <Folder Include="References\" />
   </ItemGroup>
 

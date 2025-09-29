@@ -9,7 +9,8 @@ namespace EventTrackerWPF.Librarbies
         public bool AlternareFont { get; set; } = false;
         public FormatPrefs FormatPrefs { get; set; } = FormatPrefs.None;
         public bool SuperSecretSetting { get; set; } = false;
-        public string? PathToTheBackgroundFile { get; set; }
+        public string? ThemeName { get; set; }
+        public bool EnableAnimations { get; set; } = false;
 
         public void Load()
         {

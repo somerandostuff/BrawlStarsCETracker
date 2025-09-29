@@ -8,6 +8,7 @@ using EventTrackerWPF.Librarbies;
 using System.Media;
 using EventTrackerWPF.CustomElements;
 using System.Windows.Media.Animation;
+using System.Net.Security;
 
 namespace EventTrackerWPF
 {
@@ -17,7 +18,11 @@ namespace EventTrackerWPF
     public partial class MainWindow : Window
     {
         private readonly System.Timers.Timer TickDisplayer = new System.Timers.Timer(16 + 2/3);
-        private SoundLibrarby SoundIndexer = new SoundLibrarby();
+        private readonly System.Timers.Timer TickerPerSecond = new System.Timers.Timer(125);
+        public static SoundLibrarby SoundIndexer = new SoundLibrarby();
+
+        List<Storyboard> RunningStoryboards = [];
+        List<Image> RunningImages = [];
 
         private Settings Settings = new Settings();
 
@@ -27,6 +32,8 @@ namespace EventTrackerWPF
         double TestTime = 0;
         double TestTimeDisp = 0;
 
+        long StartupUnixTime = DateTimeOffset.Now.ToUnixTimeSeconds();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -35,11 +42,19 @@ namespace EventTrackerWPF
             TickDisplayer.AutoReset = true;
             TickDisplayer.Start();
 
+            TickerPerSecond.Elapsed += TickerPerSecond_Tick;
+            TickerPerSecond.AutoReset = true;
+            TickerPerSecond.Start();
+
             SoundIndexer.LoadSounds(new Dictionary<string, string>
             {
                 { "YOUR_TAKING_TOO_LONG", "SFX/YOUR_TAKING_TOO_LONG.wav" },
                 { "jackenlaugh", "SFX/jack_o_lantern_laugh.wav" },
-                { "btn_click", "SFX/menu_decision.wav" }
+                { "btn_click_oneshot", "SFX/menu_decision.wav" },
+                { "btn_click", "SFX/menu_click_08.wav" },
+                { "btn_go_back", "SFX/menu_go_back_01.wav" },
+                { "btn_dismiss", "SFX/menu_dismiss_01.wav" },
+                { "lancer", "SFX/snd_splat.wav" }
             });
 
             Settings.Load();
@@ -47,83 +62,93 @@ namespace EventTrackerWPF
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            MarqueeEffect.StartMarquee(Txt_SplashMarquee, ElemWidth: Txt_SplashMarquee.ActualWidth, SpeedSeconds: 20);
+            // MarqueeEffect.StartMarquee(Txt_SplashMarquee, ElemWidth: Txt_SplashMarquee.ActualWidth, SpeedSeconds: 20);
+
+            AnimsSelector(BackgroundThemes.Angels);
+        }
+
+        private void AnimsSelector(BackgroundThemes ThemeID)
+        {
+            switch (ThemeID)
+            {
+                case BackgroundThemes.Default:
+                    break;
+                case BackgroundThemes.Brawloween2023:
+                    Brawloween2025AnimsStart();
+                    break;
+                case BackgroundThemes.Angels:
+                    AvD_Angels_AnimsStart();
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void ChangeUIBarSize(BarType BarType, double Length)
         {
-            var BarOffset = GetBarOffset(BarType);
-            switch (BarType)
-            {
-                case BarType.None:
-                default:
-                    break;
-                case BarType.Tracker:
-                    {
-                        if (Length <= 0)
-                        {
-                            Length = 0;
-                            DisableAllElemsInGrid(ProgBarFront);
-                        }
-                        else EnableAllElemsInGrid(ProgBarFront);
-
-                        if (Length > 1000) Length = 1000;
-
-                        Img_ActiveBarMid.Width = Length;
-                        Img_ActiveBarRight.Margin = new Thickness(BarOffset + Length, Img_ActiveBarRight.Margin.Top, Img_ActiveBarRight.Margin.Right, Img_ActiveBarRight.Margin.Bottom);
-                    }
-                    break;
-                case BarType.TimeLeft:
-                    {
-                        if (Length <= 0)
-                        {
-                            Length = 0;
-                            DisableAllElemsInGrid(TimeBarFront);
-                        }
-                        else EnableAllElemsInGrid(TimeBarFront);
-
-                        if (Length > 400) Length = 400;
-
-                        if (Length <= 398 && Length > 0)
-                        {
-                            Img_ProgressiveStrike.Visibility = Visibility.Visible;
-                        }
-                        else Img_ProgressiveStrike.Visibility = Visibility.Hidden;
-
-                        Img_ActiveTimeBarMid.Width = Length;
-                        Img_ActiveTimeBarRight.Margin = new Thickness(BarOffset + Length, Img_ActiveTimeBarRight.Margin.Top, Img_ActiveTimeBarRight.Margin.Right, Img_ActiveTimeBarRight.Margin.Bottom);
-                        Img_ProgressiveStrike.Margin = new Thickness(BarOffset - 2 + Length, Img_ProgressiveStrike.Margin.Top, Img_ProgressiveStrike.Margin.Right, Img_ProgressiveStrike.Margin.Bottom);
-                    }
-                    break;
-            }
+            // var BarOffset = GetBarOffset(BarType);
+            // switch (BarType)
+            // {
+            //     case BarType.None:
+            //     default:
+            //         break;
+            //     case BarType.Tracker:
+            //         {
+            //             if (Length <= 0)
+            //             {
+            //                 Length = 0;
+            //                 DisableAllElemsInGrid(ProgBarFront);
+            //             }
+            //             else EnableAllElemsInGrid(ProgBarFront);
+               
+            //             if (Length > 1000) Length = 1000;
+               
+            //             Img_ActiveBarMid.Width = Length;
+            //             Img_ActiveBarRight.Margin = new Thickness(BarOffset + Length, Img_ActiveBarRight.Margin.Top, Img_ActiveBarRight.Margin.Right, Img_ActiveBarRight.Margin.Bottom);
+            //         }
+            //         break;
+            //     case BarType.TimeLeft:
+            //         {
+            //             if (Length <= 0)
+            //             {
+            //                 Length = 0;
+            //                 DisableAllElemsInGrid(TimeBarFront);
+            //             }
+            //             else EnableAllElemsInGrid(TimeBarFront);
+               
+            //             if (Length > 400) Length = 400;
+               
+            //             if (Length <= 398 && Length > 0)
+            //             {
+            //                 Img_ProgressiveStrike.Visibility = Visibility.Visible;
+            //             }
+            //             else Img_ProgressiveStrike.Visibility = Visibility.Hidden;
+               
+            //             Img_ActiveTimeBarMid.Width = Length;
+            //             Img_ActiveTimeBarRight.Margin = new Thickness(BarOffset + Length, Img_ActiveTimeBarRight.Margin.Top, Img_ActiveTimeBarRight.Margin.Right, Img_ActiveTimeBarRight.Margin.Bottom);
+            //             Img_ProgressiveStrike.Margin = new Thickness(BarOffset - 2 + Length, Img_ProgressiveStrike.Margin.Top, Img_ProgressiveStrike.Margin.Right, Img_ProgressiveStrike.Margin.Bottom);
+            //         }
+            //         break;
+            // }
         }
 
         private double GetBarOffset(BarType BarType)
         {
-            double BarOffset = 0;
-            switch (BarType)
-            {
-                case BarType.None:
-                default:
-                    break;
-                case BarType.Tracker:
-                    BarOffset = Img_ActiveBarLeft.Margin.Left + Img_ActiveBarLeft.Width - 2;
-                    break;
-                case BarType.TimeLeft:
-                    BarOffset = Img_ActiveTimeBarLeft.Margin.Left + Img_ActiveTimeBarLeft.Width - 3;
-                    break;
-            }
-            return BarOffset;
-        }
-
-        private void BTN_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            ChangeUIBarSize(BarType.Tracker, Convert.ToDouble(Tb_TextboxBarMid.Text));
-        }
-
-        private void BTN_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            
+            // double BarOffset = 0;
+            // switch (BarType)
+            // {
+            //     case BarType.None:
+            //     default:
+            //         break;
+            //     case BarType.Tracker:
+            //         BarOffset = Img_ActiveBarLeft.Margin.Left + Img_ActiveBarLeft.Width - 2;
+            //         break;
+            //     case BarType.TimeLeft:
+            //         BarOffset = Img_ActiveTimeBarLeft.Margin.Left + Img_ActiveTimeBarLeft.Width - 3;
+            //         break;
+            // }
+            // return BarOffset;
+            return 0;
         }
 
         private void DisableAllElemsInGrid(Grid GridArea)
@@ -133,6 +158,7 @@ namespace EventTrackerWPF
                 Element.Visibility = Visibility.Hidden;
             }
         }
+
         private void EnableAllElemsInGrid(Grid GridArea)
         {
             foreach (UIElement Element in GridArea.Children)
@@ -141,26 +167,22 @@ namespace EventTrackerWPF
             }
         }
 
-        private void Grid_BTN_UpdateCount_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void Grid_BTN_UpdateCount_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            TestTime += 1;
-            SoundIndexer.PlaySoundID("btn_click");
-        }
-
         private void TickDisplayer_Tick(object? Sender, EventArgs Event)
         {
             CalculateDisplay();
 
+            // This will be for UI-only updates (like displaying numbers and such)
             Dispatcher.Invoke(() =>
             {
-                L_Count.Text = CountDisp.ToString("#,##0");
-                ChangeUIBarSize(BarType.Tracker, CountDisp / 100);
-                ChangeUIBarSize(BarType.TimeLeft, TestTimeDisp / 1);
+
+            });
+        }
+
+        private void TickerPerSecond_Tick(object? Sender, ElapsedEventArgs Event)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                ApplicationUptime.Text = "Uptime: " + TimeSpan.FromSeconds(DateTimeOffset.Now.ToUnixTimeSeconds() - StartupUnixTime);
             });
         }
 
@@ -175,11 +197,103 @@ namespace EventTrackerWPF
             Settings.Save();
         }
 
-        private void Teststs_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void GridButton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            Grid_BTN_UpdateCount.IsEnabled = (Grid_BTN_UpdateCount.IsEnabled ? false : true);
-            SoundIndexer.PlaySoundID("btn_click");
+            var Message = new AlertMessage()
+            {
+                Title = "This is a dialog box",
+                Description = "Lorem ipsum dolor sit amet etc etc etc...",
+                RedButton = "Pipis",
+                BlueButton = "Bepis",
+
+                RedButtonFunc = (LAnc, Er) => { SoundIndexer.PlaySoundID("lancer"); },
+                BlueButtonFunc = (Ni, ko) => { SoundIndexer.PlaySoundID("btn_click"); }
+            };
+
+            Common.CreateAlert(Message);
         }
+
+        private void UptimeButton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var Message = new AlertMessage()
+            {
+                Title = "Uptime timer",
+                Description = "This shows how long you have left the application running on your computer.\nIt's pretty self explainatory to be honest...",
+                BlueButton = "OK",
+
+                BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); }
+            };
+            Common.CreateAlert(Message);
+        }
+
+
+        #region Animations
+        private void Brawloween2025AnimsStart()
+        {
+            var Storyboard = (Storyboard)FindResource("BrawloweenTheme");
+            Storyboard.Begin();
+        }
+
+        private void AvD_Angels_AnimsStart()
+        {
+            var StoryboardBaseRightClouds = (Storyboard)Resources["AvD_AngelsTheme_RightmostClouds"];
+            var StoryboardBaseLeftClouds = (Storyboard)Resources["AvD_AngelsTheme_LeftmostClouds"];
+
+            RunningStoryboards.Clear();
+            RunningImages.Clear();
+
+            foreach (UIElement Target in RightmostClouds.Children)
+            {
+                if (Target is Image TargetImg)
+                {
+                    if (TargetImg.RenderTransform is not TransformGroup AnimGroup ||
+                        AnimGroup.Children.Count < 2 ||
+                        AnimGroup.Children[0] is not ScaleTransform ||
+                        AnimGroup.Children[1] is not TranslateTransform)
+                    {
+                        var NewAnimGroup = new TransformGroup();
+                        NewAnimGroup.Children.Add(new ScaleTransform());
+                        NewAnimGroup.Children.Add(new TranslateTransform());
+
+                        TargetImg.RenderTransform = NewAnimGroup;
+                        TargetImg.RenderTransformOrigin = new Point(0, 0);
+                    }
+
+                    var Storyboard = StoryboardBaseRightClouds.Clone();
+
+                    foreach (Timeline Tl in Storyboard.Children)
+                    {
+                        Storyboard.SetTarget(Tl, TargetImg);
+                    }
+                    Storyboard.Begin();
+
+                    RunningStoryboards.Add(Storyboard);
+                    RunningImages.Add(TargetImg);
+                }
+            }
+
+            foreach (UIElement Target in LeftmostClouds.Children)
+            {
+                if (Target is Image TargetImg)
+                {
+                    if (TargetImg.RenderTransform is not ScaleTransform)
+                        TargetImg.RenderTransform = new ScaleTransform();
+
+                    var Storyboard = StoryboardBaseLeftClouds.Clone();
+
+                    foreach (Timeline Tl in Storyboard.Children)
+                    {
+                        Storyboard.SetTarget(Tl, TargetImg);
+                    }
+
+                    Storyboard.Begin();
+
+                    RunningStoryboards.Add(Storyboard);
+                    RunningImages.Add(TargetImg);
+                }
+            }
+        }
+        #endregion
     }
 
     public enum BarType
@@ -187,5 +301,12 @@ namespace EventTrackerWPF
         None,
         Tracker,
         TimeLeft
+    }
+
+    public enum BackgroundThemes
+    {
+        Default,
+        Brawloween2023,
+        Angels
     }
 }
