@@ -24,6 +24,8 @@ namespace EventTrackerWPF
         List<Storyboard> RunningStoryboards = [];
         List<Image> RunningImages = [];
 
+        Stack<Grid> NavigatedMenus = [];
+
         private Settings Settings = new Settings();
 
         double Count = 0;
@@ -64,20 +66,31 @@ namespace EventTrackerWPF
         {
             // MarqueeEffect.StartMarquee(Txt_SplashMarquee, ElemWidth: Txt_SplashMarquee.ActualWidth, SpeedSeconds: 20);
 
-            AnimsSelector(BackgroundThemes.Angels);
+            ThemeSelect(BackgroundThemes.Brawloween2023);
         }
 
-        private void AnimsSelector(BackgroundThemes ThemeID)
+        private void ThemeSelect(BackgroundThemes ThemeID)
         {
+            StopAllThemeAnimations();
+            foreach (Grid ThemeArea in ThemesGallery.Children)
+            {
+                ThemeArea.Visibility = Visibility.Collapsed;
+            }
             switch (ThemeID)
             {
                 case BackgroundThemes.Default:
                     break;
                 case BackgroundThemes.Brawloween2023:
-                    Brawloween2025AnimsStart();
+                    {
+                        BrawloweenThemeGrid.Visibility = Visibility.Visible;
+                        Brawloween2025AnimsStart();
+                    }
                     break;
                 case BackgroundThemes.Angels:
-                    AvD_Angels_AnimsStart();
+                    {
+                        AvD_AngelsThemeGrid.Visibility = Visibility.Visible;
+                        AvD_Angels_AnimsStart();
+                    }
                     break;
                 default:
                     break;
@@ -199,6 +212,7 @@ namespace EventTrackerWPF
 
         private void GridButton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            SoundIndexer.PlaySoundID("btn_click");
             var Message = new AlertMessage()
             {
                 Title = "This is a dialog box",
@@ -209,12 +223,12 @@ namespace EventTrackerWPF
                 RedButtonFunc = (LAnc, Er) => { SoundIndexer.PlaySoundID("lancer"); },
                 BlueButtonFunc = (Ni, ko) => { SoundIndexer.PlaySoundID("btn_click"); }
             };
-
             Common.CreateAlert(Message);
         }
 
         private void UptimeButton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            SoundIndexer.PlaySoundID("btn_click");
             var Message = new AlertMessage()
             {
                 Title = "Uptime timer",
@@ -225,9 +239,104 @@ namespace EventTrackerWPF
             };
             Common.CreateAlert(Message);
         }
+        private void BTN_GoHome(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_dismiss");
+            GoHome();
+        }
 
+        private void BTN_Settings_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            NavigateTo(SettingsUI);
+        }
+        private void BTN_GoBack(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_go_back");
+            GoBack();
+        }
 
-        #region Animations
+        private void BTN_ChangeTheme_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            NavigateTo(ThemeSelectorUI);
+        }
+
+        private void BTN_ThemeSelectorUI_Brawloween2023_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            ThemeSelect(BackgroundThemes.Brawloween2023);
+            GoBack();
+        }
+
+        private void BTN_ThemeSelectorUI_Angels_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            var Message = new AlertMessage()
+            {
+                Title = "PERFORMANCE HEAVY!",
+                Description = "This theme requires a lot of performance power. Proceed anyway?",
+                RedButton = "Cancel",
+                BlueButton = "Proceed",
+
+                RedButtonFunc = (No, pe) => { SoundIndexer.PlaySoundID("btn_click"); },
+                BlueButtonFunc = (An, gel) => { ThemeSelect(BackgroundThemes.Angels); GoBack(); }
+            };
+            Common.CreateAlert(Message);
+        }
+        #region Basic Nav
+        private void NavigateTo(Grid UIName)
+        {
+            if (NavigatedMenus.Count == 0)
+            {
+                MainMenuUI.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                NavigatedMenus.Last().Visibility = Visibility.Collapsed;
+            }
+            UIName.Visibility = Visibility.Visible;
+            NavButtons.Visibility = Visibility.Visible;
+            NavigatedMenus.Push(UIName);
+        }
+
+        private void GoBack()
+        {
+            NavigatedMenus.Pop().Visibility = Visibility.Collapsed;
+            if (NavigatedMenus.Count == 0)
+            {
+                MainMenuUI.Visibility = Visibility.Visible;
+                NavButtons.Visibility = Visibility.Collapsed;
+            }
+            else NavigatedMenus.Last().Visibility = Visibility.Visible;
+        }
+
+        private void GoHome()
+        {
+            foreach (Grid UI in UserInterfaces.Children)
+            {
+                if (UI != MainMenuUI)
+                {
+                    UI.Visibility = Visibility.Collapsed;
+                }
+            }
+            NavigatedMenus.Clear();
+            NavButtons.Visibility = Visibility.Collapsed;
+            MainMenuUI.Visibility = Visibility.Visible;
+        }
+        #endregion
+
+        #region Theme Animations
+        private void StopAllThemeAnimations()
+        {
+            foreach (var Storyboard in RunningStoryboards)
+            {
+                Storyboard.Stop();
+            }
+            RunningStoryboards.Clear();
+            RunningImages.Clear();
+        }
+
         private void Brawloween2025AnimsStart()
         {
             var Storyboard = (Storyboard)FindResource("BrawloweenTheme");
@@ -322,6 +431,7 @@ namespace EventTrackerWPF
             }
         }
         #endregion
+
     }
 
     public enum BarType
