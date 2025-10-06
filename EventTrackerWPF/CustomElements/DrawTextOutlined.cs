@@ -98,23 +98,7 @@ namespace EventTrackerWPF.CustomElements
                 VisualTreeHelper.GetDpi(this).PixelsPerDip);
 
             FormattedText.MaxTextWidth = ActualWidth;
-
-            switch (HorizontalContentAlignment)
-            {
-                case TextAlignment.Left:
-                default:
-                    X = 0;
-                    break;
-                case TextAlignment.Right:
-                    X = ActualWidth - FormattedText.Width;
-                    break;
-                case TextAlignment.Center:
-                    X = (ActualWidth - FormattedText.Width) / 2;
-                    break;
-                case TextAlignment.Justify:
-                    Console.WriteLine("Text justification is not supported yet... (Using left alignment instead.)");
-                    break;
-            }
+            FormattedText.TextAlignment = HorizontalContentAlignment;
 
             switch (VerticalContentAlignment)
             {

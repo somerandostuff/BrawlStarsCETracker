@@ -5,22 +5,25 @@ namespace EventTrackerWPF.Librarbies
 {
     public class Settings
     {
+        public int MaxFPS { get; set; } = 60;
         public bool AutoRefresh { get; set; } = false;
         public bool AlternareFont { get; set; } = false;
         public FormatPrefs FormatPrefs { get; set; } = FormatPrefs.None;
         public bool SuperSecretSetting { get; set; } = false;
-        public string? ThemeName { get; set; }
-        public bool EnableAnimations { get; set; } = false;
+        public BackgroundThemes SelectedTheme { get; set; }
+        public bool EnableAnimations { get; set; } = true;
+
+        public const string SettingsFileName = "SETTINGS.txt";
 
         public void Load()
         {
-            if (!File.Exists("SETTINGS.txt".ToLower()))
+            if (!File.Exists(SettingsFileName.ToLower()))
             {
                 UseDefaultSettings();
                 return;
             }
 
-            foreach (var Line in File.ReadAllLines("SETTINGS.txt".ToLower()))
+            foreach (var Line in File.ReadAllLines(SettingsFileName.ToLower()))
             {
                 var ConfigParts = Line.Split('=', 2);
                 if (ConfigParts.Length != 2) continue;
@@ -41,10 +44,19 @@ namespace EventTrackerWPF.Librarbies
                 }
                 catch (Exception Exc)
                 {
-                    MessageBox.Show("Error while loading settings! The program will now use default settings instead.\n" +
+                    var Message = new AlertMessage()
+                    {
+                        Title = "Error",
+                        Description = "Error while loading settings! The program will now use defaults instead.\n" +
                         "Exception type: " + Exc.GetType() + "\n" +
                         "Message: " + Exc.Message + "\n" +
-                        "HResult: " + Exc.HResult + "\n", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        "HResult: " + Exc.HResult + "\n",
+
+                        BlueButton = "OK",
+                        BlueButtonFunc = (Err, or) => { MainWindow.SoundIndexer.PlaySoundID("btn_click"); }
+                    };
+
+                    Common.CreateAlert(Message);
                     UseDefaultSettings();
                     Save();
                 }
@@ -53,7 +65,7 @@ namespace EventTrackerWPF.Librarbies
 
         public void Save()
         {
-            using (var Writer = new StreamWriter("SETTINGS.txt", false))
+            using (var Writer = new StreamWriter(SettingsFileName, false))
             {
                 foreach (var Property in typeof(Settings).GetProperties())
                 {

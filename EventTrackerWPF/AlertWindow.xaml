@@ -10,29 +10,29 @@
     <Grid>
         <Grid x:Name="AlertWindowTopBar" Margin="0,0,0,350">
             <Grid x:Name="AlertWindowTopBarContent" MouseLeftButtonDown="AlertWindowTopBar_MouseLeftButtonDown" Margin="0,0,15,0">
-                <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Center" Width="768" Source="/Ahhssets/Popup Window Middle Top.png" Stretch="Fill" Margin="13,0,0,0"/>
-                <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="14" Source="/Ahhssets/Popup Window Left Top.png"/>
-                <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Center" Width="14" Source="/Ahhssets/Popup Window Right Top.png" Margin="781,0,0,0"/>
+                <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Center" Width="768" Source="/Assets/Popup Window Middle Top.png" Stretch="Fill" Margin="13,0,0,0"/>
+                <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="14" Source="/Assets/Popup Window Left Top.png"/>
+                <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Center" Width="14" Source="/Assets/Popup Window Right Top.png" Margin="781,0,0,0"/>
             </Grid>
 
             <CustomElements:GridButton x:Name="BTN_Close" Margin="702,12,5,12" MouseLeftButtonUp="BTN_Close_MouseLeftButtonUp">
-                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Ahhssets/Button Exit.png"/>
+                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Assets/Button Exit.png"/>
             </CustomElements:GridButton>
         </Grid>
 
         <Grid x:Name="AlertWindowBottomBar" Margin="0,412,0,0">
             <Grid Margin="0,0,15,0">
-                <Image HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="767.8" Source="/Ahhssets/Popup Window Middle Bottom.png" Stretch="Fill" Margin="13.2,0,0,0"/>
-                <Image HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="13.2" Source="/Ahhssets/Popup Window Left Bottom.png" Margin="0,0,0,0"/>
-                <Image HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="14" Source="/Ahhssets/Popup Window Right Bottom.png" Margin="781,0,0,0"/>
+                <Image HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="767.8" Source="/Assets/Popup Window Middle Bottom.png" Stretch="Fill" Margin="13.2,0,0,0"/>
+                <Image HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="13.2" Source="/Assets/Popup Window Left Bottom.png" Margin="0,0,0,0"/>
+                <Image HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="14" Source="/Assets/Popup Window Right Bottom.png" Margin="781,0,0,0"/>
             </Grid>
         </Grid>
 
         <Grid x:Name="AlertWindowMiddleContent" Margin="0,100,0,38">
             <Grid Margin="0,0,15,0">
-                <Image HorizontalAlignment="Left" Height="312" VerticalAlignment="Center" Width="13.2" Source="/Ahhssets/Popup Window Left Center.png" Stretch="Fill"/>
-                <Image HorizontalAlignment="Left" Height="312" VerticalAlignment="Center" Width="13.2" Source="/Ahhssets/Popup Window Right Center.png" Stretch="Fill" Margin="781,0,0,0"/>
-                <Image HorizontalAlignment="Left" Height="312" VerticalAlignment="Center" Width="768" Source="/Ahhssets/Popup Window Middle Center.png" Stretch="Fill" Margin="13,0,0,0"/>
+                <Image HorizontalAlignment="Left" Height="312" VerticalAlignment="Center" Width="13.2" Source="/Assets/Popup Window Left Center.png" Stretch="Fill"/>
+                <Image HorizontalAlignment="Left" Height="312" VerticalAlignment="Center" Width="13.2" Source="/Assets/Popup Window Right Center.png" Stretch="Fill" Margin="781,0,0,0"/>
+                <Image HorizontalAlignment="Left" Height="312" VerticalAlignment="Center" Width="768" Source="/Assets/Popup Window Middle Center.png" Stretch="Fill" Margin="13,0,0,0"/>
             </Grid>
         </Grid>
 
@@ -43,18 +43,18 @@
 
         <Grid x:Name="AlertWindowButtons" Margin="13,311,20,51" Visibility="Visible">
             <CustomElements:GridButton x:Name="BTN_Cancel" Margin="15,0,376,0" MouseLeftButtonUp="BTN_Cancel_MouseLeftButtonUp">
-                <Image HorizontalAlignment="Right" VerticalAlignment="Center" Source="Ahhssets/Button No.png" Margin="0,0,16,0"/>
+                <Image HorizontalAlignment="Right" VerticalAlignment="Center" Source="Assets/Button No.png" Margin="0,0,16,0"/>
                 <CustomElements:DrawTextOutlined x:Name="BTN_Cancel_Text" FontFamily="Lilita One" Text="Cancel" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="36" Stroke="Black" StrokeThiccness="3" ShadowColor="Black" ShadowOffset="0, 2.25" Margin="82,0,16,0"/>
             </CustomElements:GridButton>
             <CustomElements:GridButton x:Name="BTN_OK" Margin="376,0,10,0" MouseLeftButtonUp="BTN_OK_MouseLeftButtonUp">
-                <Image HorizontalAlignment="Left" VerticalAlignment="Center" Source="Ahhssets/Button Yes.png" Margin="16,0,0,0"/>
+                <Image HorizontalAlignment="Left" VerticalAlignment="Center" Source="Assets/Button Yes.png" Margin="16,0,0,0"/>
                 <CustomElements:DrawTextOutlined  x:Name="BTN_OK_Text" FontFamily="Lilita One" Text="OK" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="36" Stroke="Black" StrokeThiccness="3" ShadowColor="Black" ShadowOffset="0, 2.25" Margin="16,0,87,0" RenderTransformOrigin="0.308,0.521"/>
             </CustomElements:GridButton>
         </Grid>
 
         <Grid x:Name="AlertWindowButtonSingle" Margin="13,311,20,51" Visibility="Hidden">
             <CustomElements:GridButton x:Name="BTN_SingleOK" Margin="0,0,10,0" MouseLeftButtonUp="BTN_SingleOK_MouseLeftButtonUp">
-                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="Ahhssets/Button Yes.png"/>
+                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="Assets/Button Yes.png"/>
                 <CustomElements:DrawTextOutlined x:Name="BTN_SingleOK_Text" FontFamily="Lilita One" Text="OK" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="32" Stroke="Black" StrokeThiccness="3" ShadowColor="Black" ShadowOffset="0, 2" Margin="240,0,240,0" RenderTransformOrigin="0.308,0.521"/>
             </CustomElements:GridButton>
         </Grid>

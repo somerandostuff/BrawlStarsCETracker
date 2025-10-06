@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Timers;
+using SysTimer = System.Timers;
 using System.Windows.Media;
 using System.Globalization;
 using EventTrackerWPF.Librarbies;
@@ -9,6 +9,7 @@ using System.Media;
 using EventTrackerWPF.CustomElements;
 using System.Windows.Media.Animation;
 using System.Net.Security;
+using System.Timers;
 
 namespace EventTrackerWPF
 {
@@ -17,8 +18,8 @@ namespace EventTrackerWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly System.Timers.Timer TickDisplayer = new System.Timers.Timer(16 + 2/3);
-        private readonly System.Timers.Timer TickerPerSecond = new System.Timers.Timer(125);
+        private readonly SysTimer.Timer TickDisplayer = new SysTimer.Timer(1000 / 60);
+        private readonly SysTimer.Timer TickerPerSecond = new SysTimer.Timer(125);
         public static SoundLibrarby SoundIndexer = new SoundLibrarby();
 
         List<Storyboard> RunningStoryboards = [];
@@ -27,12 +28,16 @@ namespace EventTrackerWPF
         Stack<Grid> NavigatedMenus = [];
 
         private Settings Settings = new Settings();
+        private SaveSystem SaveSystem = new SaveSystem();
 
         double Count = 0;
         double CountDisp = 0;
 
         double TestTime = 0;
         double TestTimeDisp = 0;
+
+        long Gems = 0;
+        double GemsDisp = 0;
 
         long StartupUnixTime = DateTimeOffset.Now.ToUnixTimeSeconds();
 
@@ -60,13 +65,25 @@ namespace EventTrackerWPF
             });
 
             Settings.Load();
+            SaveSystem.Load();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // MarqueeEffect.StartMarquee(Txt_SplashMarquee, ElemWidth: Txt_SplashMarquee.ActualWidth, SpeedSeconds: 20);
 
-            ThemeSelect(BackgroundThemes.Brawloween2023);
+            Gems = SaveSystem.Gems;
+
+            if (Settings.SelectedTheme == 0)
+            {
+                ThemeSelect(BackgroundThemes.Default);
+            }
+            else
+            {
+                ThemeSelect(Settings.SelectedTheme);
+            }
+
+            Chk_EnableAnimations.IsChecked = Settings.EnableAnimations;
         }
 
         private void ThemeSelect(BackgroundThemes ThemeID)
@@ -79,23 +96,48 @@ namespace EventTrackerWPF
             switch (ThemeID)
             {
                 case BackgroundThemes.Default:
+                    {
+                        BasicThemeGrid.Visibility = Visibility.Visible;
+                    }
                     break;
                 case BackgroundThemes.Brawloween2023:
                     {
                         BrawloweenThemeGrid.Visibility = Visibility.Visible;
-                        Brawloween2025AnimsStart();
                     }
                     break;
                 case BackgroundThemes.Angels:
                     {
                         AvD_AngelsThemeGrid.Visibility = Visibility.Visible;
-                        AvD_Angels_AnimsStart();
                     }
                     break;
                 default:
                     break;
             }
+            if (Settings.EnableAnimations == true)
+            {
+                switch (ThemeID)
+                {
+                    case BackgroundThemes.Default:
+                        {
+                            BasicAnimsStart();
+                        }
+                        break;
+                    case BackgroundThemes.Brawloween2023:
+                        {
+                            Brawloween2025AnimsStart();
+                        }
+                        break;
+                    case BackgroundThemes.Angels:
+                        {
+                            AvD_Angels_AnimsStart();
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
+
 
         private void ChangeUIBarSize(BarType BarType, double Length)
         {
@@ -187,7 +229,7 @@ namespace EventTrackerWPF
             // This will be for UI-only updates (like displaying numbers and such)
             Dispatcher.Invoke(() =>
             {
-
+                MoneyCount.Text = GemsDisp.ToString("#,##0");
             });
         }
 
@@ -203,11 +245,17 @@ namespace EventTrackerWPF
         {
             CountDisp += (Count - CountDisp) * .3;
             TestTimeDisp += (TestTime - TestTimeDisp) * .3;
+            GemsDisp += (Gems - GemsDisp) * .125;
         }
+
+        #region Controls
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Settings.Save();
+
+            SaveSystem.Gems = Gems;
+            SaveSystem.Save();
         }
 
         private void GridButton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -256,6 +304,13 @@ namespace EventTrackerWPF
             GoBack();
         }
 
+        private void Chk_EnableAnimations_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            Settings.EnableAnimations = Chk_EnableAnimations.IsChecked;
+            ThemeSelect(Settings.SelectedTheme);
+        }
+
         private void BTN_ChangeTheme_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             SoundIndexer.PlaySoundID("btn_click");
@@ -266,24 +321,63 @@ namespace EventTrackerWPF
         {
             SoundIndexer.PlaySoundID("btn_click");
             ThemeSelect(BackgroundThemes.Brawloween2023);
+            Settings.SelectedTheme = BackgroundThemes.Brawloween2023;
+            GoBack();
+        }
+
+        private void BTN_ThemeSelectorUI_Basic_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            ThemeSelect(BackgroundThemes.Default);
+            Settings.SelectedTheme = BackgroundThemes.Default;
             GoBack();
         }
 
         private void BTN_ThemeSelectorUI_Angels_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             SoundIndexer.PlaySoundID("btn_click");
+            if (Settings.EnableAnimations)
+            {
+                var Message = new AlertMessage()
+                {
+                    Title = "PERFORMANCE HEAVY!",
+                    Description = "This theme is not recommended for low-end devices.\nProceed anyway?",
+                    RedButton = "Cancel",
+                    BlueButton = "Proceed",
+
+                    RedButtonFunc = (No, pe) => { SoundIndexer.PlaySoundID("btn_click"); },
+                    BlueButtonFunc = (An, gel) => { ThemeSelect(BackgroundThemes.Angels); Settings.SelectedTheme = BackgroundThemes.Angels; SoundIndexer.PlaySoundID("btn_click"); GoBack(); }
+                };
+                Common.CreateAlert(Message);
+            }
+            else
+            {
+                ThemeSelect(BackgroundThemes.Angels);
+                Settings.SelectedTheme = BackgroundThemes.Angels;
+                SoundIndexer.PlaySoundID("btn_click");
+                GoBack();
+            }
+        }
+
+        private void MoneyUI_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
             var Message = new AlertMessage()
             {
-                Title = "PERFORMANCE HEAVY!",
-                Description = "This theme requires a lot of performance power. Proceed anyway?",
-                RedButton = "Cancel",
-                BlueButton = "Proceed",
+                Title = "WOW...",
+                Description = "Unnecessary bloat...",
 
-                RedButtonFunc = (No, pe) => { SoundIndexer.PlaySoundID("btn_click"); },
-                BlueButtonFunc = (An, gel) => { ThemeSelect(BackgroundThemes.Angels); GoBack(); }
+                RedButton = "Set gem to 0",
+                RedButtonFunc = (Re, set) => { Gems = 0; SoundIndexer.PlaySoundID("btn_click"); },
+
+                BlueButton = "Free gems",
+                BlueButtonFunc = (Ba, lls) => { Gems += Random.Shared.Next(1, 184); SoundIndexer.PlaySoundID("btn_click"); SaveSystem.Save(); }
             };
+
+            SoundIndexer.PlaySoundID("btn_click");
             Common.CreateAlert(Message);
         }
+        #endregion
+
         #region Basic Nav
         private void NavigateTo(Grid UIName)
         {
@@ -336,7 +430,6 @@ namespace EventTrackerWPF
             RunningStoryboards.Clear();
             RunningImages.Clear();
         }
-
         private void Brawloween2025AnimsStart()
         {
             var Storyboard = (Storyboard)FindResource("BrawloweenTheme");
@@ -344,7 +437,13 @@ namespace EventTrackerWPF
 
             RunningStoryboards.Add(Storyboard);
         }
+        private void BasicAnimsStart()
+        {
+            var Storyboard = (Storyboard)FindResource("BasicTheme");
+            Storyboard.Begin();
 
+            RunningStoryboards.Add(Storyboard);
+        }
         private void AvD_Angels_AnimsStart()
         {
             var StoryboardBaseRightClouds = (Storyboard)Resources["AvD_AngelsTheme_RightmostClouds"];

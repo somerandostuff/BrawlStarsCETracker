@@ -8,14 +8,37 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1360" ResizeMode="CanMinimize" Closing="Window_Closing" Loaded="Window_Loaded">
     <Grid>
-        <Grid x:Name="ThemesGallery">
+        <Grid x:Name="ThemesGallery" IsHitTestVisible="False">
+            <Grid x:Name="BasicThemeGrid" Visibility="Visible">
+                <Grid.Background>
+                    <ImageBrush ImageSource="/Assets/Backgrounds/Basic/Bgr.png" Stretch="Fill"/>
+                </Grid.Background>
+                <Grid Name="Grid_Bg_ForeItems_Basic">
+                    <Image x:Name="BasicIconsImage"
+               Source="/Assets/Backgrounds/Basic/Icons.png"
+               CacheMode="BitmapCache"
+               Stretch="Uniform"
+               RenderTransformOrigin="0.5,0.5"
+               Opacity=".1"
+               Margin="-562,-128,-14,-476">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="8"/>
+                                <TranslateTransform x:Name="BasicImageTranslate"/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                </Grid>
+            </Grid>
             <Grid x:Name="BrawloweenThemeGrid" Visibility="Collapsed">
                 <Grid.Background>
-                    <ImageBrush ImageSource="/Ahhssets/Backgrounds/Brawloween2023/Bgr.png" Stretch="Fill"/>
+                    <ImageBrush ImageSource="/Assets/Backgrounds/Brawloween2023/Bgr.png" Stretch="Fill"/>
                 </Grid.Background>
                 <Grid Name="Grid_Bg_ForeItems_Brawloween">
                     <Image x:Name="GhostIconsImage"
-               Source="/Ahhssets/Backgrounds/Brawloween2023/Ghost Icons.png"
+               Source="/Assets/Backgrounds/Brawloween2023/Ghost Icons.png"
                CacheMode="BitmapCache"
                Stretch="Uniform"
                RenderTransformOrigin="0.5,0.5"
@@ -30,18 +53,18 @@
                             </TransformGroup>
                         </Image.RenderTransform>
                     </Image>
-                    <Image Source="/Ahhssets/Backgrounds/Brawloween2023/Ground.png" Margin="0,472,0,0" Stretch="Fill"/>
-                    <Image Source="/Ahhssets/Backgrounds/Brawloween2023/Blur.png" Margin="0,565,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Stretch="Fill" Height="207"/>
-                    <Image Source="/Ahhssets/Backgrounds/Brawloween2023/Gravestones.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="Fill" Width="2430" Height="641" Margin="0,10,0,0"/>
+                    <Image Source="/Assets/Backgrounds/Brawloween2023/Ground.png" Margin="0,472,0,0" Stretch="Fill"/>
+                    <Image Source="/Assets/Backgrounds/Brawloween2023/Blur.png" Margin="0,565,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Stretch="Fill" Height="207"/>
+                    <Image Source="/Assets/Backgrounds/Brawloween2023/Gravestones.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="Fill" Width="2430" Height="641" Margin="0,10,0,0"/>
                 </Grid>
             </Grid>
             <Grid x:Name="AvD_AngelsThemeGrid" Visibility="Collapsed">
                 <Grid.Background>
-                    <ImageBrush ImageSource="/Ahhssets/Backgrounds/AvD_Angels/Bgr.png" Stretch="Fill"/>
+                    <ImageBrush ImageSource="/Assets/Backgrounds/AvD_Angels/Bgr.png" Stretch="Fill"/>
                 </Grid.Background>
                 <Grid Name="Grid_Bg_ForeItems_AvD_Angels">
                     <Image x:Name="AngelsIconsImage"
-                            Source="/Ahhssets/Backgrounds/AvD_Angels/Angels Icon.png"
+                            Source="/Assets/Backgrounds/AvD_Angels/Angels Icon.png"
                             CacheMode="BitmapCache"
                             Stretch="Uniform"
                             RenderTransformOrigin="0.5,0.5"
@@ -58,19 +81,19 @@
                         </Image.RenderTransform>
                     </Image>
 
-                    <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow.png" Height="343" Width="515" Margin="0,150,0,0" Opacity="1" Stretch="Fill" HorizontalAlignment="Center" CacheMode="BitmapCache"/>
-                    <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow.png" Height="455" Width="515" Margin="0,150,0,0" Opacity="1" Stretch="Fill" HorizontalAlignment="Center" CacheMode="BitmapCache"/>
-                    <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow.png" Height="343" Width="515" Margin="0,150,0,0" Opacity="1" Stretch="Fill" HorizontalAlignment="Center" CacheMode="BitmapCache"/>
-                    <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Arch Gate Thing.png" HorizontalAlignment="Center" Width="1420" Margin="0,20,0,-31" Opacity="1" CacheMode="BitmapCache"/>
-                    <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow2.png" Stretch="Fill" Margin="0,-30,0,0" HorizontalAlignment="Center" Width="972" Height="780" CacheMode="BitmapCache"/>
-                    <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow.png" Height="327" Width="370" Stretch="Fill" Margin="0,77,0,0" CacheMode="BitmapCache"/>
-                    <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Sky Blur Up.png" VerticalAlignment="Bottom" CacheMode="BitmapCache"/>
+                    <Image Source="/Assets/Backgrounds/AvD_Angels/Glow.png" Height="343" Width="515" Margin="0,150,0,0" Opacity="1" Stretch="Fill" HorizontalAlignment="Center" CacheMode="BitmapCache"/>
+                    <Image Source="/Assets/Backgrounds/AvD_Angels/Glow.png" Height="455" Width="515" Margin="0,150,0,0" Opacity="1" Stretch="Fill" HorizontalAlignment="Center" CacheMode="BitmapCache"/>
+                    <Image Source="/Assets/Backgrounds/AvD_Angels/Glow.png" Height="343" Width="515" Margin="0,150,0,0" Opacity="1" Stretch="Fill" HorizontalAlignment="Center" CacheMode="BitmapCache"/>
+                    <Image Source="/Assets/Backgrounds/AvD_Angels/Arch Gate Thing.png" HorizontalAlignment="Center" Width="1420" Margin="0,20,0,-31" Opacity="1" CacheMode="BitmapCache"/>
+                    <Image Source="/Assets/Backgrounds/AvD_Angels/Glow2.png" Stretch="Fill" Margin="0,-30,0,0" HorizontalAlignment="Center" Width="972" Height="780" CacheMode="BitmapCache"/>
+                    <Image Source="/Assets/Backgrounds/AvD_Angels/Glow.png" Height="327" Width="370" Stretch="Fill" Margin="0,77,0,0" CacheMode="BitmapCache"/>
+                    <Image Source="/Assets/Backgrounds/AvD_Angels/Sky Blur Up.png" VerticalAlignment="Bottom" CacheMode="BitmapCache"/>
                     <Grid Name="Grid_Bg_ForeItems_AvD_Angels_Clouds">
-                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 8.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1360" Height="108" Margin="0,0,0,187"/>
+                        <Image Source="/Assets/Backgrounds/AvD_Angels/Cloud 8.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1360" Height="108" Margin="0,0,0,187"/>
                         <Grid x:Name="LeftmostClouds">
-                            <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 7.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1104" Height="69" Margin="256,0,0,160"/>
+                            <Image Source="/Assets/Backgrounds/AvD_Angels/Cloud 7.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1104" Height="69" Margin="256,0,0,160"/>
                             <Grid>
-                                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="-202,445,904,202" RenderTransformOrigin="0.5,0.5" Opacity="0.8" CacheMode="BitmapCache">
+                                <Image Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="-202,445,904,202" RenderTransformOrigin="0.5,0.5" Opacity="0.8" CacheMode="BitmapCache">
                                     <Image.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -80,7 +103,7 @@
                                         </TransformGroup>
                                     </Image.RenderTransform>
                                 </Image>
-                                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="205,295,1063,102" Opacity=".64" CacheMode="BitmapCache">
+                                <Image Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="205,295,1063,102" Opacity=".64" CacheMode="BitmapCache">
                                     <Image.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -90,7 +113,7 @@
                                         </TransformGroup>
                                     </Image.RenderTransform>
                                 </Image>
-                                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="312,385,991,102" Opacity=".56" CacheMode="BitmapCache">
+                                <Image Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="312,385,991,102" Opacity=".56" CacheMode="BitmapCache">
                                     <Image.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -101,9 +124,9 @@
                                     </Image.RenderTransform>
                                 </Image>
                             </Grid>
-                            <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 5.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1360" Height="118" Margin="0,0,0,122" CacheMode="BitmapCache"/>
+                            <Image Source="/Assets/Backgrounds/AvD_Angels/Cloud 5.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1360" Height="118" Margin="0,0,0,122" CacheMode="BitmapCache"/>
                             <Grid>
-                                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="150,423,1124,-50" Opacity=".84">
+                                <Image Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="150,423,1124,-50" Opacity=".84">
                                     <Image.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -113,7 +136,7 @@
                                         </TransformGroup>
                                     </Image.RenderTransform>
                                 </Image>
-                                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="262,522,776,117" RenderTransformOrigin="0.5,0.5" Opacity="0.8">
+                                <Image Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="262,522,776,117" RenderTransformOrigin="0.5,0.5" Opacity="0.8">
                                     <Image.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -124,12 +147,12 @@
                                     </Image.RenderTransform>
                                 </Image>
                             </Grid>
-                            <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 3.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1360" Height="108" Margin="0,0,0,68" CacheMode="BitmapCache"/>
+                            <Image Source="/Assets/Backgrounds/AvD_Angels/Cloud 3.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1360" Height="108" Margin="0,0,0,68" CacheMode="BitmapCache"/>
                         </Grid>
                         <Grid x:Name="RightmostClouds">
-                            <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 6.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="92" Margin="0,0,0,156" CacheMode="BitmapCache"/>
+                            <Image Source="/Assets/Backgrounds/AvD_Angels/Cloud 6.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="92" Margin="0,0,0,156" CacheMode="BitmapCache"/>
                             <Grid>
-                                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="800,486,-136,175" RenderTransformOrigin="0.5,0.5" Opacity="0.8">
+                                <Image Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="800,486,-136,175" RenderTransformOrigin="0.5,0.5" Opacity="0.8">
                                     <Image.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -139,7 +162,7 @@
                                         </TransformGroup>
                                     </Image.RenderTransform>
                                 </Image>
-                                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="1095,427,206,140" Opacity=".48">
+                                <Image Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="1095,427,206,140" Opacity=".48">
                                     <Image.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -149,7 +172,7 @@
                                         </TransformGroup>
                                     </Image.RenderTransform>
                                 </Image>
-                                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="939,467,354,107" Opacity=".74">
+                                <Image Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="939,467,354,107" Opacity=".74">
                                     <Image.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -160,9 +183,9 @@
                                     </Image.RenderTransform>
                                 </Image>
                             </Grid>
-                            <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 4.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="85" Margin="0,0,0,122" CacheMode="BitmapCache"/>
+                            <Image Source="/Assets/Backgrounds/AvD_Angels/Cloud 4.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="85" Margin="0,0,0,122" CacheMode="BitmapCache"/>
                             <Grid>
-                                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="952,512,-244,129" RenderTransformOrigin="0.5,0.5" Opacity="0.8" CacheMode="BitmapCache">
+                                <Image Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="952,512,-244,129" RenderTransformOrigin="0.5,0.5" Opacity="0.8" CacheMode="BitmapCache">
                                     <Image.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -172,7 +195,7 @@
                                         </TransformGroup>
                                     </Image.RenderTransform>
                                 </Image>
-                                <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="1124,490,168,52" Opacity=".56" CacheMode="BitmapCache">
+                                <Image Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="1124,490,168,52" Opacity=".56" CacheMode="BitmapCache">
                                     <Image.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -183,17 +206,17 @@
                                     </Image.RenderTransform>
                                 </Image>
                             </Grid>
-                            <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 2.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="128" Margin="0,0,0,21" CacheMode="BitmapCache"/>
+                            <Image Source="/Assets/Backgrounds/AvD_Angels/Cloud 2.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="128" Margin="0,0,0,21" CacheMode="BitmapCache"/>
                         </Grid>
                         <Grid x:Name="BottomHighClouds">
-                            <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Mini Cloud 1.png" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-70,244,0,0" Height="102" CacheMode="BitmapCache"/>
-                            <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Mini Cloud 2.png" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,174,-252,0" Height="121" CacheMode="BitmapCache"/>
+                            <Image Source="/Assets/Backgrounds/AvD_Angels/Mini Cloud 1.png" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-70,244,0,0" Height="102" CacheMode="BitmapCache"/>
+                            <Image Source="/Assets/Backgrounds/AvD_Angels/Mini Cloud 2.png" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,174,-252,0" Height="121" CacheMode="BitmapCache"/>
                         </Grid>
                         <Grid x:Name="TopHighClouds">
-                            <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Mini Cloud 3.png" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-92,-50,0,0" Height="223" CacheMode="BitmapCache"/>
-                            <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Mini Cloud 4.png" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,-76,-52,0" Height="223" CacheMode="BitmapCache"/>
+                            <Image Source="/Assets/Backgrounds/AvD_Angels/Mini Cloud 3.png" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-92,-50,0,0" Height="223" CacheMode="BitmapCache"/>
+                            <Image Source="/Assets/Backgrounds/AvD_Angels/Mini Cloud 4.png" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,-76,-52,0" Height="223" CacheMode="BitmapCache"/>
                         </Grid>
-                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="823,567,45,-2" RenderTransformOrigin="0.5,0.5" CacheMode="BitmapCache">
+                        <Image Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="823,567,45,-2" RenderTransformOrigin="0.5,0.5" CacheMode="BitmapCache">
                             <Image.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform/>
@@ -203,8 +226,8 @@
                                 </TransformGroup>
                             </Image.RenderTransform>
                         </Image>
-                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="79,524,747,0" CacheMode="BitmapCache"/>
-                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="1060,517,214,-117" Opacity=".84" CacheMode="BitmapCache">
+                        <Image Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="79,524,747,0" CacheMode="BitmapCache"/>
+                        <Image Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="1060,517,214,-117" Opacity=".84" CacheMode="BitmapCache">
                             <Image.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform/>
@@ -214,7 +237,7 @@
                                 </TransformGroup>
                             </Image.RenderTransform>
                         </Image>
-                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="-90,496,958,69" RenderTransformOrigin="0.5,0.5" CacheMode="BitmapCache">
+                        <Image Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="-90,496,958,69" RenderTransformOrigin="0.5,0.5" CacheMode="BitmapCache">
                             <Image.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform/>
@@ -224,21 +247,28 @@
                                 </TransformGroup>
                             </Image.RenderTransform>
                         </Image>
-                        <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Cloud 1.png" VerticalAlignment="Bottom" HorizontalAlignment="Center" CacheMode="BitmapCache"/>
+                        <Image Source="/Assets/Backgrounds/AvD_Angels/Cloud 1.png" VerticalAlignment="Bottom" HorizontalAlignment="Center" CacheMode="BitmapCache"/>
                     </Grid>
                 </Grid>
             </Grid>
         </Grid>
         <Grid x:Name="Mainscreen">
-            <Image Source="/Ahhssets/Header.png" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1360" Height="25"/>
+            <Image Source="/Assets/Header.png" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1360" Height="34"/>
         </Grid>
         <Grid x:Name="UserInterfaces">
             <ExtraThings:GridButton Margin="1025,615,10,10" MouseLeftButtonUp="GridButton_MouseLeftButtonUp" Visibility="Collapsed">
                 <ExtraThings:DrawTextOutlined FontFamily="Lilita One" FontSize="72" Text="Press me" StrokeThiccness="5" ShadowColor="Black" ShadowOffset="0, 3" ></ExtraThings:DrawTextOutlined>
             </ExtraThings:GridButton>
             <Grid x:Name="MainMenuUI" Visibility="Visible">
+                <Grid x:Name="MoneyUI" VerticalAlignment="Top" HorizontalAlignment="Right" Height="55" Width="170" Margin="0,10,143,0" MouseLeftButtonUp="MoneyUI_MouseLeftButtonUp">
+                    <Image Source="/Assets/Left Notch Header.png" HorizontalAlignment="Left"/>
+                    <Image Source="/Assets/Right Notch Header.png" HorizontalAlignment="Right"/>
+                    <Image Source="/Assets/Header.png" HorizontalAlignment="Center" Width="155" Stretch="Fill"/>
+                    <Image Source="Assets/Icons/Gem.png" HorizontalAlignment="Left" Margin="-21,0,0,-2" Width="53"/>
+                    <ExtraThings:DrawTextOutlined x:Name="MoneyCount" FontFamily="Lilita One" FontSize="38" Text="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="32,0,4,0"/>
+                </Grid>
                 <ExtraThings:GridButton x:Name="BTN_Settings" Width="122" Height="70" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,10,0" MouseLeftButtonUp="BTN_Settings_MouseLeftButtonUp">
-                    <Image Source="/Ahhssets/Icons/Hamburger Button.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Image Source="/Assets/Icons/Hamburger Button.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </ExtraThings:GridButton>
             </Grid>
             <Grid x:Name="SettingsUI" Visibility="Hidden">
@@ -246,55 +276,55 @@
                 <Grid Width="240" Height="160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="90,100,0,0">
                     <ExtraThings:DrawTextOutlined Text="ENABLE BACKGROUND ANIMATIONS" FontFamily="Lilita One" FontSize="22" StrokeThiccness="0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Height="70"/>
                     <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
-                        <ExtraThings:CheckboxAsImage x:Name="Chk_EnableAnimations" ImageSource="/Ahhssets/Toggles ON.png" ImageSourceIfUnchecked="/Ahhssets/Toggles OFF.png" VerticalAlignment="Bottom">
-                            <ExtraThings:DrawTextOutlined Text="ON" FontFamily="Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="10,-4,120,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90" Opacity=".75"/>
-                            <ExtraThings:DrawTextOutlined Text="OFF" FontFamily="Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="120,-4,10,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90" Opacity=".75"/>
+                        <ExtraThings:CheckboxAsImage x:Name="Chk_EnableAnimations" ImageSource="/Assets/Toggles ON.png" ImageSourceIfUnchecked="/Assets/Toggles OFF.png" VerticalAlignment="Bottom" MouseLeftButtonUp="Chk_EnableAnimations_MouseLeftButtonUp">
+                            <ExtraThings:DrawTextOutlined Text="ON" FontFamily="Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="10,-4,120,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90" Opacity=".9"/>
+                            <ExtraThings:DrawTextOutlined Text="OFF" FontFamily="Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="120,-4,10,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90" Opacity=".9"/>
                         </ExtraThings:CheckboxAsImage>
                     </ExtraThings:GridButton>
                 </Grid>
                 <Grid Width="240" Height="160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="375,100,0,0">
-                    <ExtraThings:DrawTextOutlined Text="ENABLE BACKGROUND ANIMATIONS" FontFamily="Lilita One" FontSize="22" StrokeThiccness="0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Height="70"/>
+                    <ExtraThings:DrawTextOutlined Text="USE MONOSPACE FONT FOR EVENT COUNTER" FontFamily="Lilita One" FontSize="22" StrokeThiccness="0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Height="70"/>
                     <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
-                        <ExtraThings:CheckboxAsImage x:Name="Chk_EnableAnimations1" ImageSource="/Ahhssets/Toggles ON.png" ImageSourceIfUnchecked="/Ahhssets/Toggles OFF.png" VerticalAlignment="Bottom">
-                            <ExtraThings:DrawTextOutlined Text="ON" FontFamily="Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="10,-4,120,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90" Opacity=".6"/>
-                            <ExtraThings:DrawTextOutlined Text="OFF" FontFamily="Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="120,-4,10,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90" Opacity=".6"/>
+                        <ExtraThings:CheckboxAsImage x:Name="Chk_EnableAnimations1" ImageSource="/Assets/Toggles ON.png" ImageSourceIfUnchecked="/Assets/Toggles OFF.png" VerticalAlignment="Bottom">
+                            <ExtraThings:DrawTextOutlined Text="ON" FontFamily="Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="10,-4,120,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90" Opacity=".9"/>
+                            <ExtraThings:DrawTextOutlined Text="OFF" FontFamily="Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="120,-4,10,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90" Opacity=".9"/>
                         </ExtraThings:CheckboxAsImage>
                     </ExtraThings:GridButton>
                 </Grid>
                 <Grid Width="240" Height="160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="660,100,0,0">
                     <ExtraThings:GridButton x:Name="BTN_ChangeTheme" Height="90" VerticalAlignment="Bottom" MouseLeftButtonUp="BTN_ChangeTheme_MouseLeftButtonUp">
-                        <Image Source="/Ahhssets/Blue Button.png"/>
+                        <Image Source="/Assets/Blue Button.png"/>
                         <ExtraThings:DrawTextOutlined Text="Change theme" FontFamily="Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
                     </ExtraThings:GridButton>
                 </Grid>
             </Grid>
             <Grid x:Name="ThemeSelectorUI" Visibility="Hidden">
                 <ExtraThings:DrawTextOutlined Text="SELECT THEME" FontFamily="Lilita One" FontSize="48" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="60"/>
-                <ExtraThings:GridButton x:Name="BTN_ThemeSelectorUI_Basic" Width="412" Height="163" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="25,101,0,0">
-                    <Image Source="/Ahhssets/Backgrounds/Brawloween2023/Thumbnail.png"/>
-                    <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" Text="Basic (NOT IMPLEMENTED YET)" FontFamily="Lilita One" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.5" HorizontalAlignment="Center" Width="377"/>
+                <ExtraThings:GridButton x:Name="BTN_ThemeSelectorUI_Basic" Width="412" Height="163" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="25,101,0,0" MouseLeftButtonUp="BTN_ThemeSelectorUI_Basic_MouseLeftButtonUp">
+                    <Image Source="/Assets/Backgrounds/Basic/Thumbnail.png"/>
+                    <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" Text="Default" FontFamily="Lilita One" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.5" HorizontalAlignment="Center" Width="377"/>
                 </ExtraThings:GridButton>
                 <ExtraThings:GridButton x:Name="BTN_ThemeSelectorUI_Brawloween2023" Width="412" Height="163" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,101,0,0" MouseLeftButtonUp="BTN_ThemeSelectorUI_Brawloween2023_MouseLeftButtonUp">
-                    <Image Source="/Ahhssets/Backgrounds/Brawloween2023/Thumbnail.png"/>
+                    <Image Source="/Assets/Backgrounds/Brawloween2023/Thumbnail.png"/>
                     <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" Text="Brawloween 2023" FontFamily="Lilita One" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.5" HorizontalAlignment="Center" Width="377"/>
                 </ExtraThings:GridButton>
                 <ExtraThings:GridButton x:Name="BTN_ThemeSelectorUI_Angels" Width="412" Height="163" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,101,25,0" MouseLeftButtonUp="BTN_ThemeSelectorUI_Angels_MouseLeftButtonUp">
-                    <Image Source="/Ahhssets/Backgrounds/AvD_Angels/Thumbnail.png"/>
+                    <Image Source="/Assets/Backgrounds/AvD_Angels/Thumbnail.png"/>
                     <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" Text="Angels vs. Demons (Angels)" FontFamily="Lilita One" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.5" HorizontalAlignment="Center" Width="377"/>
                 </ExtraThings:GridButton>
             </Grid>
         </Grid>
         <Grid x:Name="NavButtons" Visibility="Collapsed">
             <ExtraThings:GridButton Width="254" Height="104" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,-24,-123,0" MouseLeftButtonUp="BTN_GoHome">
-                <Image Source="/Ahhssets/Icons/Header Button Home.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Image Source="/Assets/Icons/Header Button Home.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </ExtraThings:GridButton>
             <ExtraThings:GridButton Width="292" Height="104" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-161,-24,0,0" MouseLeftButtonUp="BTN_GoBack">
-                <Image Source="/Ahhssets/Icons/Header Button Back.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Image Source="/Assets/Icons/Header Button Back.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </ExtraThings:GridButton>
         </Grid>
-        <Grid x:Name="DebugUI_AlwaysOnTop">
-            <ExtraThings:GridButton x:Name="UptimeButton" Margin="20,30,1167,648" MouseLeftButtonUp="UptimeButton_MouseLeftButtonUp">
-                <ExtraThings:DrawTextShakyOutlined x:Name="ApplicationUptime" Text="Uptime: N/A" FontFamily="Lilita One" CacheMode="BitmapCache" FontSize="24" StrokeThiccness="2" ShakeIntensity="0.75" ShadowColor="Black" ShadowOffset="0, 2"/>
+        <Grid x:Name="DebugUI_AlwaysOnTop" IsHitTestVisible="False" Visibility="Visible">
+            <ExtraThings:GridButton x:Name="UptimeButton" Margin="242,2,944,676" MouseLeftButtonUp="UptimeButton_MouseLeftButtonUp">
+                <ExtraThings:DrawTextShakyOutlined x:Name="ApplicationUptime" Text="Uptime: N/A" FontFamily="Lilita One" CacheMode="BitmapCache" FontSize="24" StrokeThiccness="0" ShakeIntensity="0.75" ShadowColor="Black" ShadowOffset="0, 0" Margin="0,0,1,0"/>
             </ExtraThings:GridButton>
         </Grid>
     </Grid>
@@ -312,6 +342,20 @@
                 From="0"
                 To="60"
                 Duration="0:00:15"/>
+        </Storyboard>
+        <Storyboard x:Key="BasicTheme" RepeatBehavior="Forever">
+            <DoubleAnimation
+                Storyboard.TargetName="BasicImageTranslate"
+                Storyboard.TargetProperty="Y"
+                From="0"
+                To="-242"
+                Duration="0:00:09"/>
+            <DoubleAnimation
+                Storyboard.TargetName="BasicImageTranslate"
+                Storyboard.TargetProperty="X"
+                From="0"
+                To="34"
+                Duration="0:00:09"/>
         </Storyboard>
         <Storyboard x:Key="AvD_AngelsTheme_LeftmostClouds" RepeatBehavior="Forever" AutoReverse="True">
             <DoubleAnimation
