@@ -57,6 +57,7 @@ namespace EventTrackerWPF.Librarbies
             var AlertWindow = new AlertWindow(Message);
             AlertWindow.ShowDialog();
         }
+        
     }
     public class BrawlFeedLinks
     {

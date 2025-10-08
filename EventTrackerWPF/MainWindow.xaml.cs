@@ -41,6 +41,8 @@ namespace EventTrackerWPF
 
         long StartupUnixTime = DateTimeOffset.Now.ToUnixTimeSeconds();
 
+        Dictionary<string, string> LocData = new Dictionary<string, string>();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -84,6 +86,8 @@ namespace EventTrackerWPF
             }
 
             Chk_EnableAnimations.IsChecked = Settings.EnableAnimations;
+
+            LocData = LocalizationLib.LoadLocalization("Localization/EN.csv");
         }
 
         private void ThemeSelect(BackgroundThemes ThemeID)
@@ -340,10 +344,10 @@ namespace EventTrackerWPF
             {
                 var Message = new AlertMessage()
                 {
-                    Title = "PERFORMANCE HEAVY!",
-                    Description = "This theme is not recommended for low-end devices.\nProceed anyway?",
-                    RedButton = "Cancel",
-                    BlueButton = "Proceed",
+                    Title = LocData["TID_PERFORMANCE_HEAVY_WARNING_TITLE"],
+                    Description = LocData["TID_PERFORMANCE_HEAVY_WARNING_DESC"],
+                    RedButton = LocData["TID_PERFORMANCE_HEAVY_WARNING_CANCEL"],
+                    BlueButton = LocData["TID_PERFORMANCE_HEAVY_WARNING_PROCEED"],
 
                     RedButtonFunc = (No, pe) => { SoundIndexer.PlaySoundID("btn_click"); },
                     BlueButtonFunc = (An, gel) => { ThemeSelect(BackgroundThemes.Angels); Settings.SelectedTheme = BackgroundThemes.Angels; SoundIndexer.PlaySoundID("btn_click"); GoBack(); }

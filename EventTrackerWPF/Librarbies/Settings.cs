@@ -6,6 +6,7 @@ namespace EventTrackerWPF.Librarbies
     public class Settings
     {
         public int MaxFPS { get; set; } = 60;
+        public string? Lang { get; set; } = "EN";
         public bool AutoRefresh { get; set; } = false;
         public bool AlternareFont { get; set; } = false;
         public FormatPrefs FormatPrefs { get; set; } = FormatPrefs.None;
@@ -81,6 +82,8 @@ namespace EventTrackerWPF.Librarbies
             AlternareFont = false;
             FormatPrefs = FormatPrefs.None;
             SuperSecretSetting = false;
+            EnableAnimations = true;
+            Lang = "EN";
         }
     }
     public enum FormatPrefs
