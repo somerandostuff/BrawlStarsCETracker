@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -9,6 +10,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace EventTrackerWPF.Librarbies
 {
@@ -57,7 +59,9 @@ namespace EventTrackerWPF.Librarbies
             var AlertWindow = new AlertWindow(Message);
             AlertWindow.ShowDialog();
         }
-        
+
+        public const string VersionNumber = "1.1.0";
+        public const string LastUpdatedDate = "dd/mm/yyyy";
     }
     public class BrawlFeedLinks
     {

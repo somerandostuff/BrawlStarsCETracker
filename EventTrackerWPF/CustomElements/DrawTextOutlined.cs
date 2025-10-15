@@ -162,5 +162,17 @@ namespace EventTrackerWPF.CustomElements
 
             return new Size(TxtWidth, TxtHeight);
         }
+
+        public Size MeasureTextSize()
+        {
+            var FormattedText = new FormattedText(
+                Text,
+                CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,
+                new Typeface(FontFamily, FontStyle, FontWeight, FontStretches.Normal),
+                FontSize, Fill,
+                VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
+            return new Size(FormattedText.Width, FormattedText.Height);
+        }
     }
 }

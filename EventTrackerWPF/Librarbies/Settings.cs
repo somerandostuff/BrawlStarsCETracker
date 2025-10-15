@@ -85,6 +85,12 @@ namespace EventTrackerWPF.Librarbies
             EnableAnimations = true;
             Lang = "EN";
         }
+
+        public void UseDefaultLanguageAndSave()
+        {
+            Lang = "EN";
+            Save();
+        }
     }
     public enum FormatPrefs
     {

@@ -9,7 +9,79 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Active Checkbox.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Angels Icon.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Arch Gate Thing.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Bgr.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Blue Blur Down.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Blue Blur Up.png.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Cloud 1.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Cloud 2.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Cloud 3.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Cloud 4.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Cloud 5.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Cloud 6.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Cloud 7.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Cloud 8.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Glow Beam.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Glow Halfcircle.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Glow.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Glow2.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Mini Cloud 1.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Mini Cloud 2.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Mini Cloud 3.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Mini Cloud 4.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Sky Blur Down.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Sky Blur Up.png" />
+    <None Remove="Assets\Backgrounds\AvD_Angels\Thumbnail.png" />
+    <None Remove="Assets\Backgrounds\Basic\Bgr.png" />
+    <None Remove="Assets\Backgrounds\Basic\Icons.png" />
+    <None Remove="Assets\Backgrounds\Basic\Thumbnail.png" />
+    <None Remove="Assets\Backgrounds\Brawloween2023\Bgr.png" />
+    <None Remove="Assets\Backgrounds\Brawloween2023\Blur.png" />
+    <None Remove="Assets\Backgrounds\Brawloween2023\Ghost Icons.png" />
+    <None Remove="Assets\Backgrounds\Brawloween2023\Gravestones.png" />
+    <None Remove="Assets\Backgrounds\Brawloween2023\Ground.png" />
+    <None Remove="Assets\Backgrounds\Brawloween2023\Thumbnail.png" />
+    <None Remove="Assets\Bars\Loading Bar Stencil Left.png" />
+    <None Remove="Assets\Bars\Loading Bar Stencil Middle.png" />
+    <None Remove="Assets\Bars\Loading Bar Stencil Right.png" />
+    <None Remove="Assets\Blue Button Wide.png" />
+    <None Remove="Assets\Blue Button.png" />
+    <None Remove="Assets\Button Exit.png" />
+    <None Remove="Assets\Button No.png" />
+    <None Remove="Assets\Button Yes.png" />
+    <None Remove="Assets\Event Tab Stencil.png" />
+    <None Remove="Assets\Header Button Small.png" />
+    <None Remove="Assets\Header Button.png" />
+    <None Remove="Assets\Header.png" />
+    <None Remove="Assets\Icons\Coin.png" />
+    <None Remove="Assets\Icons\Gem.png" />
+    <None Remove="Assets\Icons\Hamburger Button.png" />
+    <None Remove="Assets\Icons\Header Button Back.png" />
+    <None Remove="Assets\Icons\Header Button Home.png" />
+    <None Remove="Assets\Icons\Home.png" />
+    <None Remove="Assets\Icons\Mastery Point.png" />
+    <None Remove="Assets\Inactive Checkbox.png" />
+    <None Remove="Assets\Left Notch Header.png" />
+    <None Remove="Assets\Popup Window Left Bottom.png" />
+    <None Remove="Assets\Popup Window Left Center.png" />
+    <None Remove="Assets\Popup Window Left Top.png" />
+    <None Remove="Assets\Popup Window Middle Bottom.png" />
+    <None Remove="Assets\Popup Window Middle Center.png" />
+    <None Remove="Assets\Popup Window Middle Top.png" />
+    <None Remove="Assets\Popup Window Right Bottom.png" />
+    <None Remove="Assets\Popup Window Right Center.png" />
+    <None Remove="Assets\Popup Window Right Top.png" />
+    <None Remove="Assets\Right Notch Header.png" />
+    <None Remove="Assets\Strip Popup Window Base.png" />
+    <None Remove="Assets\Textbox Area Frameslice.png" />
+    <None Remove="Assets\Textbox Area Leftslice.png" />
+    <None Remove="Assets\Textbox Area Rightslice.png" />
     <None Remove="Assets\Time Bar Active.png.png" />
+    <None Remove="Assets\Time Bar Proc.png" />
+    <None Remove="Assets\Toggles OFF.png" />
+    <None Remove="Assets\Toggles ON.png" />
     <None Remove="background_angel1.png" />
     <None Remove="brawloween_2022_lobby.png" />
     <None Remove="Loading Bar Active Frameslice.png" />
@@ -20,8 +92,217 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Active Checkbox.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Angels Icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Arch Gate Thing.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Bgr.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Blue Blur Down.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Blue Blur Up.png.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Cloud 1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Cloud 2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Cloud 3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Cloud 4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Cloud 5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Cloud 6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Cloud 7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Cloud 8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Glow Beam.png" />
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Glow Halfcircle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Glow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Glow2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Mini Cloud 1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Mini Cloud 2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Mini Cloud 3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Mini Cloud 4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Sky Blur Down.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Sky Blur Up.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\AvD_Angels\Thumbnail.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\Basic\Bgr.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\Basic\Icons.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\Basic\Thumbnail.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\Brawloween2023\Bgr.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\Brawloween2023\Blur.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\Brawloween2023\Ghost Icons.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\Brawloween2023\Gravestones.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\Brawloween2023\Ground.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Backgrounds\Brawloween2023\Thumbnail.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Bars\Loading Bar Stencil Left.png" />
+    <Resource Include="Assets\Bars\Loading Bar Stencil Middle.png" />
+    <Resource Include="Assets\Bars\Loading Bar Stencil Right.png" />
+    <Resource Include="Assets\Blue Button Wide.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Blue Button.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Button Exit.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Button No.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Button Yes.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Event Tab Stencil.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Header Button Small.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Header Button.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Header.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\Coin.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\Gem.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\Hamburger Button.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\Header Button Back.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\Header Button Home.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\Home.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\Mastery Point.png" />
+    <Resource Include="Assets\Inactive Checkbox.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Left Notch Header.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Popup Window Left Bottom.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Popup Window Left Center.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Popup Window Left Top.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Popup Window Middle Bottom.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Popup Window Middle Center.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Popup Window Middle Top.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Popup Window Right Bottom.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Popup Window Right Center.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Popup Window Right Top.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Right Notch Header.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Strip Popup Window Base.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Textbox Area Frameslice.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Textbox Area Leftslice.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Textbox Area Rightslice.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Toggles OFF.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Toggles ON.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="background_angel1.png" />
     <Resource Include="brawloween_2022_lobby.png" />
+    <Resource Include="Assets\DeterminationMonoWeb.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\LilitaOne-Regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
@@ -34,238 +315,37 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Assets\Active Checkbox.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Angels Icon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Arch Gate Thing.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Bgr.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Blue Blur Down.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Blue Blur Up.png.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Cloud 1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Cloud 2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Cloud 3.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Cloud 4.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Cloud 5.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Cloud 6.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Cloud 7.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Cloud 8.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Glow Halfcircle.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Glow.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Glow2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Mini Cloud 1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Mini Cloud 2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Mini Cloud 3.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Mini Cloud 4.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Sky Blur Down.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Sky Blur Up.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\AvD_Angels\Thumbnail.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\Basic\Bgr.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\Basic\Icons.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\Basic\Thumbnail.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\Brawloween2023\Bgr.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\Brawloween2023\Blur.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\Brawloween2023\Ghost Icons.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\Brawloween2023\Gravestones.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\Brawloween2023\Ground.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Backgrounds\Brawloween2023\Thumbnail.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Blue Button Wide.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Blue Button.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Button Exit.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Button No.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Button Yes.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Event Tab Stencil.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Header Button Small.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Header Button.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Header.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Icons\Coin.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Icons\Gem.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Icons\Hamburger Button.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Icons\Header Button Back.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Icons\Header Button Home.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Icons\Home.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Inactive Checkbox.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Left Notch Header.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Popup Window Left Bottom.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Popup Window Left Center.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Popup Window Left Top.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Popup Window Middle Bottom.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Popup Window Middle Center.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Popup Window Middle Top.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Popup Window Right Bottom.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Popup Window Right Center.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Popup Window Right Top.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Right Notch Header.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="Assets\SFX\jack_o_lantern_laugh.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Assets\SFX\YOUR_TAKING_TOO_LONG.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\Strip Popup Window Base.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Template\Loading Bar %28Inactive%29.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Template\Loading Bar Active Frameslice.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Template\Loading Bar Active Leftslice.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Template\Loading Bar Active Rightslice.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Template\Loading Bar Inactive Frameslice.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Template\Loading Bar Inactive Leftslice.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Template\Loading Bar Inactive Rightslice.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Template\Yellow BTN.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Textbox Area Frameslice.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Textbox Area Leftslice.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Textbox Area Rightslice.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Time Bar Proc.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Toggles OFF.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Toggles ON.png">
+    <None Update="Localization\VI.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Localization\EN.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SFX\jack_o_lantern_laugh.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SFX\menu_click_08.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SFX\menu_decision.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SFX\menu_dismiss_01.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SFX\menu_go_back_01.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SFX\snd_splat.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SFX\YOUR_TAKING_TOO_LONG.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

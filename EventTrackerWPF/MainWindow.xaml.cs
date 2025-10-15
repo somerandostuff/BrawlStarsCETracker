@@ -1,15 +1,17 @@
-﻿using System.Windows;
+﻿using EventTrackerWPF.CustomElements;
+using EventTrackerWPF.Librarbies;
+using System.Diagnostics;
+using System.Globalization;
+using System.Media;
+using System.Net.Security;
+using System.Text.Json;
+using System.Timers;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using SysTimer = System.Timers;
 using System.Windows.Media;
-using System.Globalization;
-using EventTrackerWPF.Librarbies;
-using System.Media;
-using EventTrackerWPF.CustomElements;
 using System.Windows.Media.Animation;
-using System.Net.Security;
-using System.Timers;
+using SysTimer = System.Timers;
 
 namespace EventTrackerWPF
 {
@@ -27,8 +29,8 @@ namespace EventTrackerWPF
 
         Stack<Grid> NavigatedMenus = [];
 
-        private Settings Settings = new Settings();
-        private SaveSystem SaveSystem = new SaveSystem();
+        public static Settings Settings = new Settings();
+        public static SaveSystem SaveSystem = new SaveSystem();
 
         double Count = 0;
         double CountDisp = 0;
@@ -41,10 +43,11 @@ namespace EventTrackerWPF
 
         long StartupUnixTime = DateTimeOffset.Now.ToUnixTimeSeconds();
 
-        Dictionary<string, string> LocData = new Dictionary<string, string>();
-
         public MainWindow()
         {
+            LocalizationLib.Locales = LocalizationLib.LoadLocales();
+            LocalizationLib.Load(LocalizationLib.Locales.Single(Q => Q.LocaleID == Settings.Lang).FilePath!);
+
             InitializeComponent();
 
             TickDisplayer.Elapsed += TickDisplayer_Tick;
@@ -86,8 +89,6 @@ namespace EventTrackerWPF
             }
 
             Chk_EnableAnimations.IsChecked = Settings.EnableAnimations;
-
-            LocData = LocalizationLib.LoadLocalization("Localization/EN.csv");
         }
 
         private void ThemeSelect(BackgroundThemes ThemeID)
@@ -234,6 +235,8 @@ namespace EventTrackerWPF
             Dispatcher.Invoke(() =>
             {
                 MoneyCount.Text = GemsDisp.ToString("#,##0");
+                DynCounter_Num.Text = CountDisp.ToString("#,##0");
+                UpdateDynCounterPos();
             });
         }
 
@@ -250,6 +253,21 @@ namespace EventTrackerWPF
             CountDisp += (Count - CountDisp) * .3;
             TestTimeDisp += (TestTime - TestTimeDisp) * .3;
             GemsDisp += (Gems - GemsDisp) * .125;
+        }
+
+        private void UpdateDynCounterPos()
+        {
+            var TextSize = DynCounter_Num.MeasureTextSize();
+
+            double MinImageX = DynCounter_Img.Width;
+            double MaxImageX = (DynCounter.Width + DynCounter_Img.Width) / 2;
+
+            double MaxNumberX = DynCounter.Width - MinImageX;
+
+            double Offset = TextSize.Width / 2;
+
+            DynCounter_ImgGrid.Width = Math.Max(MinImageX, MaxImageX - Offset);
+            DynCounter_NumGrid.Width = Math.Min(DynCounter.Width - DynCounter_ImgGrid.Width, MaxNumberX);
         }
 
         #region Controls
@@ -344,10 +362,10 @@ namespace EventTrackerWPF
             {
                 var Message = new AlertMessage()
                 {
-                    Title = LocData["TID_PERFORMANCE_HEAVY_WARNING_TITLE"],
-                    Description = LocData["TID_PERFORMANCE_HEAVY_WARNING_DESC"],
-                    RedButton = LocData["TID_PERFORMANCE_HEAVY_WARNING_CANCEL"],
-                    BlueButton = LocData["TID_PERFORMANCE_HEAVY_WARNING_PROCEED"],
+                    Title = LocalizationLib.Strings["TID_PERFORMANCE_HEAVY_WARNING_TITLE"],
+                    Description = LocalizationLib.Strings["TID_PERFORMANCE_HEAVY_WARNING_DESC"],
+                    RedButton = LocalizationLib.Strings["TID_PERFORMANCE_HEAVY_WARNING_CANCEL"],
+                    BlueButton = LocalizationLib.Strings["TID_PERFORMANCE_HEAVY_WARNING_PROCEED"],
 
                     RedButtonFunc = (No, pe) => { SoundIndexer.PlaySoundID("btn_click"); },
                     BlueButtonFunc = (An, gel) => { ThemeSelect(BackgroundThemes.Angels); Settings.SelectedTheme = BackgroundThemes.Angels; SoundIndexer.PlaySoundID("btn_click"); GoBack(); }
@@ -374,12 +392,18 @@ namespace EventTrackerWPF
                 RedButtonFunc = (Re, set) => { Gems = 0; SoundIndexer.PlaySoundID("btn_click"); },
 
                 BlueButton = "Free gems",
-                BlueButtonFunc = (Ba, lls) => { Gems += Random.Shared.Next(1, 184); SoundIndexer.PlaySoundID("btn_click"); SaveSystem.Save(); }
+                BlueButtonFunc = (Ba, lls) => { Gems += Random.Shared.Next(1, 184); Count += Random.Shared.NextInt64(0, 1000000000000); SoundIndexer.PlaySoundID("btn_click"); SaveSystem.Save(); }
             };
 
             SoundIndexer.PlaySoundID("btn_click");
             Common.CreateAlert(Message);
         }
+        private void BTN_About_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            NavigateTo(AboutUI);
+        }
+
         #endregion
 
         #region Basic Nav
@@ -535,6 +559,17 @@ namespace EventTrackerWPF
         }
         #endregion
 
+        private void BTN_GoToFanPolicyLink_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            string URL = LocalizationLib.Strings["TID_DISCLAIMER_FAN_CONTENT_POLICY_LINK"];
+            Process.Start(new ProcessStartInfo(URL) { UseShellExecute = true });
+        }
+
+        private void BTN_TestButton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Count += Random.Shared.Next(0, 120000);
+            // SoundIndexer.PlaySoundID("btn_click_oneshot");
+        }
     }
 
     public enum BarType

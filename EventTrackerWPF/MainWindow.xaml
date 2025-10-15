@@ -5,11 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EventTrackerWPF"
         xmlns:ExtraThings="clr-namespace:EventTrackerWPF.CustomElements"
+        xmlns:Lib="clr-namespace:EventTrackerWPF.Librarbies"
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1360" ResizeMode="CanMinimize" Closing="Window_Closing" Loaded="Window_Loaded">
     <Grid>
+        <Grid>
+            <Grid.Background>
+                <!-- For easier viewing without interfering with the cooler background -->
+                <SolidColorBrush>Gray</SolidColorBrush>
+            </Grid.Background>
+        </Grid>
         <Grid x:Name="ThemesGallery" IsHitTestVisible="False">
-            <Grid x:Name="BasicThemeGrid" Visibility="Visible">
+            <Grid x:Name="BasicThemeGrid" Visibility="Collapsed">
                 <Grid.Background>
                     <ImageBrush ImageSource="/Assets/Backgrounds/Basic/Bgr.png" Stretch="Fill"/>
                 </Grid.Background>
@@ -58,7 +65,7 @@
                     <Image Source="/Assets/Backgrounds/Brawloween2023/Gravestones.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="Fill" Width="2430" Height="641" Margin="0,10,0,0"/>
                 </Grid>
             </Grid>
-            <Grid x:Name="AvD_AngelsThemeGrid" Visibility="Collapsed">
+            <Grid x:Name="AvD_AngelsThemeGrid" Visibility="Visible">
                 <Grid.Background>
                     <ImageBrush ImageSource="/Assets/Backgrounds/AvD_Angels/Bgr.png" Stretch="Fill"/>
                 </Grid.Background>
@@ -257,61 +264,103 @@
         </Grid>
         <Grid x:Name="UserInterfaces">
             <ExtraThings:GridButton Margin="1025,615,10,10" MouseLeftButtonUp="GridButton_MouseLeftButtonUp" Visibility="Collapsed">
-                <ExtraThings:DrawTextOutlined FontFamily="Lilita One" FontSize="72" Text="Press me" StrokeThiccness="5" ShadowColor="Black" ShadowOffset="0, 3" ></ExtraThings:DrawTextOutlined>
+                <ExtraThings:DrawTextOutlined FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="72" Text="Press me" StrokeThiccness="5" ShadowColor="Black" ShadowOffset="0, 3" ></ExtraThings:DrawTextOutlined>
             </ExtraThings:GridButton>
             <Grid x:Name="MainMenuUI" Visibility="Visible">
+                <Grid x:Name="SimpleView">
+
+                </Grid>
+                <Grid x:Name="DetailedView">
+
+                </Grid>
+                <Grid x:Name="TooMuchStuffView">
+                    <ExtraThings:GridButton x:Name="BTN_TestButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="300" Margin="0,480,0,0" MouseLeftButtonUp="BTN_TestButton_MouseLeftButtonUp">
+                        <Image Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="Add random count" FontSize="40" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" StrokeThiccness="3.75" ShadowColor="Black" ShadowOffset="0, 2"/>
+                    </ExtraThings:GridButton>
+                </Grid>
+                <Grid x:Name="DynCounter" VerticalAlignment="Center" HorizontalAlignment="Center" Width="1350" Height="146">
+                    <Grid x:Name="DynCounter_ImgGrid" Width="675" HorizontalAlignment="Left">
+                        <Image x:Name="DynCounter_Img" Source="/Assets/Icons/Mastery Point.png" Height="146" Width="124" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                    </Grid>
+                    <Grid x:Name="DynCounter_NumGrid" Width="675" HorizontalAlignment="Right">
+                        <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" x:Name="DynCounter_Num" Text="0" FontSize="128" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" StrokeThiccness="8" ShadowColor="Black" ShadowOffset="0, 4.5" Margin="4, 0, 0, 0"/>
+                    </Grid>
+                </Grid>
+                <Grid Visibility="Hidden" x:Name="ProgressBar" HorizontalAlignment="Center" VerticalAlignment="Top" Height="72" Margin="0,564,0,0" Width="1000">
+                    <Image Source="/Assets/Bars/Loading Bar Stencil Left.png" HorizontalAlignment="Left"/>
+                    <Image Source="/Assets/Bars/Loading Bar Stencil Right.png" HorizontalAlignment="Right"/>
+                    <Image Source="/Assets/Bars/Loading Bar Stencil Middle.png" HorizontalAlignment="Center" Stretch="Fill" Width="975.1"/>
+                </Grid>
                 <Grid x:Name="MoneyUI" VerticalAlignment="Top" HorizontalAlignment="Right" Height="55" Width="170" Margin="0,10,143,0" MouseLeftButtonUp="MoneyUI_MouseLeftButtonUp">
                     <Image Source="/Assets/Left Notch Header.png" HorizontalAlignment="Left"/>
                     <Image Source="/Assets/Right Notch Header.png" HorizontalAlignment="Right"/>
                     <Image Source="/Assets/Header.png" HorizontalAlignment="Center" Width="155" Stretch="Fill"/>
                     <Image Source="Assets/Icons/Gem.png" HorizontalAlignment="Left" Margin="-21,0,0,-2" Width="53"/>
-                    <ExtraThings:DrawTextOutlined x:Name="MoneyCount" FontFamily="Lilita One" FontSize="38" Text="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="32,0,4,0"/>
+                    <ExtraThings:DrawTextOutlined x:Name="MoneyCount" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="38" Text="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="32,0,4,0"/>
                 </Grid>
                 <ExtraThings:GridButton x:Name="BTN_Settings" Width="122" Height="70" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,10,0" MouseLeftButtonUp="BTN_Settings_MouseLeftButtonUp">
                     <Image Source="/Assets/Icons/Hamburger Button.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </ExtraThings:GridButton>
             </Grid>
             <Grid x:Name="SettingsUI" Visibility="Hidden">
-                <ExtraThings:DrawTextOutlined Text="SETTINGS" FontFamily="Lilita One" FontSize="48" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="60"/>
-                <Grid Width="240" Height="160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="90,100,0,0">
-                    <ExtraThings:DrawTextOutlined Text="ENABLE BACKGROUND ANIMATIONS" FontFamily="Lilita One" FontSize="22" StrokeThiccness="0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Height="70"/>
+                <ExtraThings:DrawTextOutlined Text="SETTINGS" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="48" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="60"/>
+                <Grid Width="240" Height="160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="130,100,0,0">
+                    <ExtraThings:DrawTextOutlined Text="ENABLE BACKGROUND ANIMATIONS" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="22" StrokeThiccness="0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Height="70"/>
                     <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
                         <ExtraThings:CheckboxAsImage x:Name="Chk_EnableAnimations" ImageSource="/Assets/Toggles ON.png" ImageSourceIfUnchecked="/Assets/Toggles OFF.png" VerticalAlignment="Bottom" MouseLeftButtonUp="Chk_EnableAnimations_MouseLeftButtonUp">
-                            <ExtraThings:DrawTextOutlined Text="ON" FontFamily="Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="10,-4,120,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90" Opacity=".9"/>
-                            <ExtraThings:DrawTextOutlined Text="OFF" FontFamily="Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="120,-4,10,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90" Opacity=".9"/>
+                            <ExtraThings:DrawTextOutlined Text="ON" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="10,-4,120,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90" Opacity=".9"/>
+                            <ExtraThings:DrawTextOutlined Text="OFF" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="120,-4,10,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90" Opacity=".9"/>
                         </ExtraThings:CheckboxAsImage>
                     </ExtraThings:GridButton>
                 </Grid>
-                <Grid Width="240" Height="160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="375,100,0,0">
-                    <ExtraThings:DrawTextOutlined Text="USE MONOSPACE FONT FOR EVENT COUNTER" FontFamily="Lilita One" FontSize="22" StrokeThiccness="0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Height="70"/>
+                <Grid Width="240" Height="160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="415,100,0,0">
+                    <ExtraThings:DrawTextOutlined Text="USE MONOSPACE FONT FOR EVENT COUNTER" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="22" StrokeThiccness="0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Height="70"/>
                     <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
                         <ExtraThings:CheckboxAsImage x:Name="Chk_EnableAnimations1" ImageSource="/Assets/Toggles ON.png" ImageSourceIfUnchecked="/Assets/Toggles OFF.png" VerticalAlignment="Bottom">
-                            <ExtraThings:DrawTextOutlined Text="ON" FontFamily="Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="10,-4,120,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90" Opacity=".9"/>
-                            <ExtraThings:DrawTextOutlined Text="OFF" FontFamily="Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="120,-4,10,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90" Opacity=".9"/>
+                            <ExtraThings:DrawTextOutlined Text="ON" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="10,-4,120,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90" Opacity=".9"/>
+                            <ExtraThings:DrawTextOutlined Text="OFF" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="120,-4,10,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90" Opacity=".9"/>
                         </ExtraThings:CheckboxAsImage>
                     </ExtraThings:GridButton>
                 </Grid>
-                <Grid Width="240" Height="160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="660,100,0,0">
+                <Grid Width="240" Height="160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="700,100,0,0">
                     <ExtraThings:GridButton x:Name="BTN_ChangeTheme" Height="90" VerticalAlignment="Bottom" MouseLeftButtonUp="BTN_ChangeTheme_MouseLeftButtonUp">
                         <Image Source="/Assets/Blue Button.png"/>
-                        <ExtraThings:DrawTextOutlined Text="Change theme" FontFamily="Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                        <ExtraThings:DrawTextOutlined Text="Change theme" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+                </Grid>
+                <Grid Width="240" Height="160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="985,100,0,0">
+                    <ExtraThings:GridButton x:Name="BTN_About" Height="90" VerticalAlignment="Bottom" MouseLeftButtonUp="BTN_About_MouseLeftButtonUp">
+                        <Image Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="About" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
                     </ExtraThings:GridButton>
                 </Grid>
             </Grid>
             <Grid x:Name="ThemeSelectorUI" Visibility="Hidden">
-                <ExtraThings:DrawTextOutlined Text="SELECT THEME" FontFamily="Lilita One" FontSize="48" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="60"/>
+                <ExtraThings:DrawTextOutlined Text="SELECT THEME" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="48" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="60"/>
                 <ExtraThings:GridButton x:Name="BTN_ThemeSelectorUI_Basic" Width="412" Height="163" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="25,101,0,0" MouseLeftButtonUp="BTN_ThemeSelectorUI_Basic_MouseLeftButtonUp">
                     <Image Source="/Assets/Backgrounds/Basic/Thumbnail.png"/>
-                    <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" Text="Default" FontFamily="Lilita One" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.5" HorizontalAlignment="Center" Width="377"/>
+                    <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" Text="Default" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.5" HorizontalAlignment="Center" Width="377"/>
                 </ExtraThings:GridButton>
                 <ExtraThings:GridButton x:Name="BTN_ThemeSelectorUI_Brawloween2023" Width="412" Height="163" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,101,0,0" MouseLeftButtonUp="BTN_ThemeSelectorUI_Brawloween2023_MouseLeftButtonUp">
                     <Image Source="/Assets/Backgrounds/Brawloween2023/Thumbnail.png"/>
-                    <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" Text="Brawloween 2023" FontFamily="Lilita One" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.5" HorizontalAlignment="Center" Width="377"/>
+                    <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" Text="Brawloween 2023" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.5" HorizontalAlignment="Center" Width="377"/>
                 </ExtraThings:GridButton>
                 <ExtraThings:GridButton x:Name="BTN_ThemeSelectorUI_Angels" Width="412" Height="163" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,101,25,0" MouseLeftButtonUp="BTN_ThemeSelectorUI_Angels_MouseLeftButtonUp">
                     <Image Source="/Assets/Backgrounds/AvD_Angels/Thumbnail.png"/>
-                    <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" Text="Angels vs. Demons (Angels)" FontFamily="Lilita One" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.5" HorizontalAlignment="Center" Width="377"/>
+                    <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" Text="Angels vs. Demons (Angels)" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.5" HorizontalAlignment="Center" Width="377"/>
                 </ExtraThings:GridButton>
+            </Grid>
+            <Grid x:Name="AboutUI" Visibility="Hidden">
+                <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_ABOUT_TITLE], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="48" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="60"/>
+                <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_DISCLAIMER_FAN_CONTENT_POLICY], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="28" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="105" Margin="0,507,462,0"/>
+                <Grid Width="240" Height="160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="903,452,0,0">
+                    <ExtraThings:GridButton x:Name="BTN_GoToFanPolicyLink" Height="90" VerticalAlignment="Bottom" MouseLeftButtonUp="BTN_GoToFanPolicyLink_MouseLeftButtonUp">
+                        <Image Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_DISCLAIMER_FAN_CONTENT_POLICY_BUTTON], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 2" FontSize="24" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+                </Grid>
+                <ExtraThings:DrawTextOutlined Text="Build: 1.1.0" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="42" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="78" Margin="0,617,0,0"/>
             </Grid>
         </Grid>
         <Grid x:Name="NavButtons" Visibility="Collapsed">
@@ -324,7 +373,7 @@
         </Grid>
         <Grid x:Name="DebugUI_AlwaysOnTop" IsHitTestVisible="False" Visibility="Visible">
             <ExtraThings:GridButton x:Name="UptimeButton" Margin="242,2,944,676" MouseLeftButtonUp="UptimeButton_MouseLeftButtonUp">
-                <ExtraThings:DrawTextShakyOutlined x:Name="ApplicationUptime" Text="Uptime: N/A" FontFamily="Lilita One" CacheMode="BitmapCache" FontSize="24" StrokeThiccness="0" ShakeIntensity="0.75" ShadowColor="Black" ShadowOffset="0, 0" Margin="0,0,1,0"/>
+                <ExtraThings:DrawTextShakyOutlined x:Name="ApplicationUptime" Text="Uptime: N/A" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" CacheMode="BitmapCache" FontSize="24" StrokeThiccness="0" ShakeIntensity="0.75" ShadowColor="Black" ShadowOffset="0, 0" Margin="0,0,1,0"/>
             </ExtraThings:GridButton>
         </Grid>
     </Grid>
