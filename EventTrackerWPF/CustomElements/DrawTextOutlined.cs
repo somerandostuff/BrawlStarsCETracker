@@ -9,7 +9,7 @@ namespace EventTrackerWPF.CustomElements
     {
         public static readonly DependencyProperty TextProperty = 
             DependencyProperty.Register(nameof(Text), typeof(string), typeof(DrawTextOutlined),
-                new FrameworkPropertyMetadata("Hello world!!!", FrameworkPropertyMetadataOptions.AffectsRender));
+                new FrameworkPropertyMetadata("Sample text", FrameworkPropertyMetadataOptions.AffectsRender));
 
         public string Text { get => (string)GetValue(TextProperty); set => SetValue(TextProperty, value); }
 

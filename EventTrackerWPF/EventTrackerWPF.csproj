@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>BS Star Wings.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -37,6 +38,7 @@
     <None Remove="Assets\Backgrounds\Basic\Bgr.png" />
     <None Remove="Assets\Backgrounds\Basic\Icons.png" />
     <None Remove="Assets\Backgrounds\Basic\Thumbnail.png" />
+    <None Remove="Assets\Backgrounds\BlackNWhite\Bgr.png" />
     <None Remove="Assets\Backgrounds\Brawloween2023\Bgr.png" />
     <None Remove="Assets\Backgrounds\Brawloween2023\Blur.png" />
     <None Remove="Assets\Backgrounds\Brawloween2023\Ghost Icons.png" />
@@ -46,14 +48,31 @@
     <None Remove="Assets\Bars\Loading Bar Stencil Left.png" />
     <None Remove="Assets\Bars\Loading Bar Stencil Middle.png" />
     <None Remove="Assets\Bars\Loading Bar Stencil Right.png" />
+    <None Remove="Assets\Bars\Marquee Background.png" />
+    <None Remove="Assets\Bars\Progress Bar Back Left.png" />
+    <None Remove="Assets\Bars\Progress Bar Back Middle.png" />
+    <None Remove="Assets\Bars\Progress Bar Back Right.png" />
+    <None Remove="Assets\Bars\Progress Bar Back.png" />
+    <None Remove="Assets\Bars\Progress Bar Fore Left.png" />
+    <None Remove="Assets\Bars\Progress Bar Fore Middle.png" />
+    <None Remove="Assets\Bars\Progress Bar Fore Right.png" />
+    <None Remove="Assets\Bars\Progress Bar Fore.png" />
+    <None Remove="Assets\Bars\Progress Bar Proc.png" />
     <None Remove="Assets\Blue Button Wide.png" />
     <None Remove="Assets\Blue Button.png" />
+    <None Remove="Assets\BS Logo New.png" />
+    <None Remove="Assets\BS Logo Old.png" />
     <None Remove="Assets\Button Exit.png" />
     <None Remove="Assets\Button No.png" />
     <None Remove="Assets\Button Yes.png" />
+    <None Remove="Assets\Clock.png" />
+    <None Remove="Assets\Dummy.png" />
+    <None Remove="Assets\Event Button.png" />
     <None Remove="Assets\Event Tab Stencil.png" />
+    <None Remove="Assets\Green Button.png" />
     <None Remove="Assets\Header Button Small.png" />
     <None Remove="Assets\Header Button.png" />
+    <None Remove="Assets\Header Layer.png" />
     <None Remove="Assets\Header.png" />
     <None Remove="Assets\Icons\Coin.png" />
     <None Remove="Assets\Icons\Gem.png" />
@@ -63,6 +82,7 @@
     <None Remove="Assets\Icons\Home.png" />
     <None Remove="Assets\Icons\Mastery Point.png" />
     <None Remove="Assets\Inactive Checkbox.png" />
+    <None Remove="Assets\Info.png" />
     <None Remove="Assets\Left Notch Header.png" />
     <None Remove="Assets\Popup Window Left Bottom.png" />
     <None Remove="Assets\Popup Window Left Center.png" />
@@ -73,22 +93,35 @@
     <None Remove="Assets\Popup Window Right Bottom.png" />
     <None Remove="Assets\Popup Window Right Center.png" />
     <None Remove="Assets\Popup Window Right Top.png" />
+    <None Remove="Assets\Red Button.png" />
     <None Remove="Assets\Right Notch Header.png" />
+    <None Remove="Assets\spr_blocktree_parts\spr_blocktree_parts_0.png" />
+    <None Remove="Assets\spr_blocktree_parts\spr_blocktree_parts_1.png" />
+    <None Remove="Assets\spr_blocktree_parts\spr_blocktree_parts_2.png" />
+    <None Remove="Assets\spr_blocktree_parts\spr_blocktree_parts_3.png" />
+    <None Remove="Assets\spr_roaringknight_slash_white_horizontal.png" />
     <None Remove="Assets\Strip Popup Window Base.png" />
     <None Remove="Assets\Textbox Area Frameslice.png" />
     <None Remove="Assets\Textbox Area Leftslice.png" />
     <None Remove="Assets\Textbox Area Rightslice.png" />
+    <None Remove="Assets\tile_ruins.png" />
     <None Remove="Assets\Time Bar Active.png.png" />
     <None Remove="Assets\Time Bar Proc.png" />
     <None Remove="Assets\Toggles OFF.png" />
     <None Remove="Assets\Toggles ON.png" />
+    <None Remove="Assets\you_dark_down.png" />
     <None Remove="background_angel1.png" />
+    <None Remove="brawl-icon.ico" />
     <None Remove="brawloween_2022_lobby.png" />
     <None Remove="Loading Bar Active Frameslice.png" />
     <None Remove="Loading Bar Active Leftslice.png" />
     <None Remove="Loading Bar Active Rightslice.png" />
     <None Remove="Loading Bar Inactive Frameslice.png" />
     <None Remove="Loading Bar Inactive Rightslice.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="BS Star Wings.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -174,6 +207,7 @@
     <Resource Include="Assets\Backgrounds\Basic\Thumbnail.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\Backgrounds\BlackNWhite\Bgr.png" />
     <Resource Include="Assets\Backgrounds\Brawloween2023\Bgr.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -195,12 +229,24 @@
     <Resource Include="Assets\Bars\Loading Bar Stencil Left.png" />
     <Resource Include="Assets\Bars\Loading Bar Stencil Middle.png" />
     <Resource Include="Assets\Bars\Loading Bar Stencil Right.png" />
+    <Resource Include="Assets\Bars\Marquee Background.png" />
+    <Resource Include="Assets\Bars\Progress Bar Back Left.png" />
+    <Resource Include="Assets\Bars\Progress Bar Back Middle.png" />
+    <Resource Include="Assets\Bars\Progress Bar Back Right.png" />
+    <Resource Include="Assets\Bars\Progress Bar Back.png" />
+    <Resource Include="Assets\Bars\Progress Bar Fore Left.png" />
+    <Resource Include="Assets\Bars\Progress Bar Fore Middle.png" />
+    <Resource Include="Assets\Bars\Progress Bar Fore Right.png" />
+    <Resource Include="Assets\Bars\Progress Bar Fore.png" />
+    <Resource Include="Assets\Bars\Progress Bar Proc.png" />
     <Resource Include="Assets\Blue Button Wide.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\Blue Button.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\BS Logo New.png" />
+    <Resource Include="Assets\BS Logo Old.png" />
     <Resource Include="Assets\Button Exit.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -210,15 +256,20 @@
     <Resource Include="Assets\Button Yes.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\Clock.png" />
+    <Resource Include="Assets\Dummy.png" />
+    <Resource Include="Assets\Event Button.png" />
     <Resource Include="Assets\Event Tab Stencil.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\Green Button.png" />
     <Resource Include="Assets\Header Button Small.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\Header Button.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\Header Layer.png" />
     <Resource Include="Assets\Header.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -244,6 +295,7 @@
     <Resource Include="Assets\Inactive Checkbox.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\Info.png" />
     <Resource Include="Assets\Left Notch Header.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -274,9 +326,15 @@
     <Resource Include="Assets\Popup Window Right Top.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\Red Button.png" />
     <Resource Include="Assets\Right Notch Header.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\spr_blocktree_parts\spr_blocktree_parts_0.png" />
+    <Resource Include="Assets\spr_blocktree_parts\spr_blocktree_parts_1.png" />
+    <Resource Include="Assets\spr_blocktree_parts\spr_blocktree_parts_2.png" />
+    <Resource Include="Assets\spr_blocktree_parts\spr_blocktree_parts_3.png" />
+    <Resource Include="Assets\spr_roaringknight_slash_white_horizontal.png" />
     <Resource Include="Assets\Strip Popup Window Base.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -289,13 +347,16 @@
     <Resource Include="Assets\Textbox Area Rightslice.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\tile_ruins.png" />
     <Resource Include="Assets\Toggles OFF.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\Toggles ON.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\you_dark_down.png" />
     <Resource Include="background_angel1.png" />
+    <Resource Include="Assets\BS Star Wings.ico" />
     <Resource Include="brawloween_2022_lobby.png" />
     <Resource Include="Assets\DeterminationMonoWeb.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -303,9 +364,11 @@
     <Resource Include="Assets\LilitaOne-Regular.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="BS Star Wings.ico" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="DiscordRichPresence" Version="1.6.1.70" />
     <PackageReference Include="NAudio" Version="2.2.1" />
   </ItemGroup>
 
@@ -330,6 +393,9 @@
     <None Update="SFX\jack_o_lantern_laugh.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="SFX\man.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="SFX\menu_click_08.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -342,7 +408,16 @@
     <None Update="SFX\menu_go_back_01.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="SFX\snd_egg.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="SFX\snd_splat.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SFX\snd_swoon.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SFX\snd_swoon_fall.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="SFX\YOUR_TAKING_TOO_LONG.wav">

@@ -1,10 +1,12 @@
-﻿using EventTrackerWPF.CustomElements;
+﻿using DiscordRPC;
+using EventTrackerWPF.CustomElements;
 using EventTrackerWPF.Librarbies;
 using System.Diagnostics;
 using System.Globalization;
 using System.Media;
 using System.Net.Security;
 using System.Text.Json;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using SysTimer = System.Timers;
+using WinForms = System.Windows.Forms;
 
 namespace EventTrackerWPF
 {
@@ -22,15 +25,18 @@ namespace EventTrackerWPF
     {
         private readonly SysTimer.Timer TickDisplayer = new SysTimer.Timer(1000 / 60);
         private readonly SysTimer.Timer TickerPerSecond = new SysTimer.Timer(125);
+        private readonly SysTimer.Timer SplashTextTicker = new SysTimer.Timer(TimeSpan.FromMinutes(5));
+
+        private static readonly DiscordRpcClient DiscordClient = new DiscordRpcClient(Common.DiscordClientID);
+
         public static SoundLibrarby SoundIndexer = new SoundLibrarby();
+
+        private readonly CutsceneManager CutsceneManager = new CutsceneManager();
 
         List<Storyboard> RunningStoryboards = [];
         List<Image> RunningImages = [];
 
         Stack<Grid> NavigatedMenus = [];
-
-        public static Settings Settings = new Settings();
-        public static SaveSystem SaveSystem = new SaveSystem();
 
         double Count = 0;
         double CountDisp = 0;
@@ -38,25 +44,16 @@ namespace EventTrackerWPF
         double TestTime = 0;
         double TestTimeDisp = 0;
 
-        long Gems = 0;
         double GemsDisp = 0;
 
         long StartupUnixTime = DateTimeOffset.Now.ToUnixTimeSeconds();
 
+        List<string> SplashTextKeys = [];
+
         public MainWindow()
         {
             LocalizationLib.Locales = LocalizationLib.LoadLocales();
-            LocalizationLib.Load(LocalizationLib.Locales.Single(Q => Q.LocaleID == Settings.Lang).FilePath!);
-
-            InitializeComponent();
-
-            TickDisplayer.Elapsed += TickDisplayer_Tick;
-            TickDisplayer.AutoReset = true;
-            TickDisplayer.Start();
-
-            TickerPerSecond.Elapsed += TickerPerSecond_Tick;
-            TickerPerSecond.AutoReset = true;
-            TickerPerSecond.Start();
+            LocalizationLib.Load(LocalizationLib.Locales.First(Q => Q.LocaleID == Settings.Lang).FilePath!);
 
             SoundIndexer.LoadSounds(new Dictionary<string, string>
             {
@@ -66,18 +63,45 @@ namespace EventTrackerWPF
                 { "btn_click", "SFX/menu_click_08.wav" },
                 { "btn_go_back", "SFX/menu_go_back_01.wav" },
                 { "btn_dismiss", "SFX/menu_dismiss_01.wav" },
-                { "lancer", "SFX/snd_splat.wav" }
+                { "lancer", "SFX/snd_splat.wav" },
+                { "SWOON", "SFX/snd_swoon.wav" },
+                { "SWOON_IMPACT", "SFX/snd_swoon_fall.wav" },
+                { "mus_man", "SFX/man.wav" },
+                { "egg", "SFX/snd_egg.wav" }
             });
 
             Settings.Load();
             SaveSystem.Load();
+
+            // Mockup data -- DELETE before release!
+            SaveSystem.Egg = false;
+            SaveSystem.Eggs = 0;
+
+            InitializeComponent();
+
+            // Common.UseCustomFont(MainGrid, Settings.MainFontFamily, Settings.AltFontFamily);
+
+            ChangeView(Settings.ViewMode);
+            ToggleIconStyle();
+
+            TickDisplayer.Elapsed += TickDisplayer_Tick;
+            TickDisplayer.AutoReset = true;
+            TickDisplayer.Start();
+
+            TickerPerSecond.Elapsed += TickerPerSecond_Tick;
+            TickerPerSecond.AutoReset = true;
+            TickerPerSecond.Start();
+
+            SplashTextTicker.Elapsed += SplashTextTicker_Tick;
+            SplashTextTicker.AutoReset = true;
+
+            LoadTitleSplashTexts();
         }
+
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            // MarqueeEffect.StartMarquee(Txt_SplashMarquee, ElemWidth: Txt_SplashMarquee.ActualWidth, SpeedSeconds: 20);
-
-            Gems = SaveSystem.Gems;
+            // MarqueeEffect.StartMarquee(NewsMarquee_Txt, ElemWidth: NewsMarquee_Txt.ActualWidth, SpeedSeconds: 10);
 
             if (Settings.SelectedTheme == 0)
             {
@@ -89,6 +113,10 @@ namespace EventTrackerWPF
             }
 
             Chk_EnableAnimations.IsChecked = Settings.EnableAnimations;
+            Txt_LangName.Text = LocalizationLib.Locales.First(Q => Q.LocaleID == Settings.Lang).LangName ?? string.Empty;
+
+            BindValues();
+            // InitializeRPC();
         }
 
         private void ThemeSelect(BackgroundThemes ThemeID)
@@ -113,6 +141,11 @@ namespace EventTrackerWPF
                 case BackgroundThemes.Angels:
                     {
                         AvD_AngelsThemeGrid.Visibility = Visibility.Visible;
+                    }
+                    break;
+                case BackgroundThemes.BlackNWhite:
+                    {
+                        BlackNWhiteThemeGrid.Visibility = Visibility.Visible;
                     }
                     break;
                 default:
@@ -143,87 +176,28 @@ namespace EventTrackerWPF
             }
         }
 
-
-        private void ChangeUIBarSize(BarType BarType, double Length)
+        private void SplashTextTicker_Tick(object? sender, ElapsedEventArgs e)
         {
-            // var BarOffset = GetBarOffset(BarType);
-            // switch (BarType)
-            // {
-            //     case BarType.None:
-            //     default:
-            //         break;
-            //     case BarType.Tracker:
-            //         {
-            //             if (Length <= 0)
-            //             {
-            //                 Length = 0;
-            //                 DisableAllElemsInGrid(ProgBarFront);
-            //             }
-            //             else EnableAllElemsInGrid(ProgBarFront);
-               
-            //             if (Length > 1000) Length = 1000;
-               
-            //             Img_ActiveBarMid.Width = Length;
-            //             Img_ActiveBarRight.Margin = new Thickness(BarOffset + Length, Img_ActiveBarRight.Margin.Top, Img_ActiveBarRight.Margin.Right, Img_ActiveBarRight.Margin.Bottom);
-            //         }
-            //         break;
-            //     case BarType.TimeLeft:
-            //         {
-            //             if (Length <= 0)
-            //             {
-            //                 Length = 0;
-            //                 DisableAllElemsInGrid(TimeBarFront);
-            //             }
-            //             else EnableAllElemsInGrid(TimeBarFront);
-               
-            //             if (Length > 400) Length = 400;
-               
-            //             if (Length <= 398 && Length > 0)
-            //             {
-            //                 Img_ProgressiveStrike.Visibility = Visibility.Visible;
-            //             }
-            //             else Img_ProgressiveStrike.Visibility = Visibility.Hidden;
-               
-            //             Img_ActiveTimeBarMid.Width = Length;
-            //             Img_ActiveTimeBarRight.Margin = new Thickness(BarOffset + Length, Img_ActiveTimeBarRight.Margin.Top, Img_ActiveTimeBarRight.Margin.Right, Img_ActiveTimeBarRight.Margin.Bottom);
-            //             Img_ProgressiveStrike.Margin = new Thickness(BarOffset - 2 + Length, Img_ProgressiveStrike.Margin.Top, Img_ProgressiveStrike.Margin.Right, Img_ProgressiveStrike.Margin.Bottom);
-            //         }
-            //         break;
-            // }
+            Dispatcher.Invoke(ChangeSplashText);
         }
 
-        private double GetBarOffset(BarType BarType)
+        private void ChangeSplashText()
         {
-            // double BarOffset = 0;
-            // switch (BarType)
-            // {
-            //     case BarType.None:
-            //     default:
-            //         break;
-            //     case BarType.Tracker:
-            //         BarOffset = Img_ActiveBarLeft.Margin.Left + Img_ActiveBarLeft.Width - 2;
-            //         break;
-            //     case BarType.TimeLeft:
-            //         BarOffset = Img_ActiveTimeBarLeft.Margin.Left + Img_ActiveTimeBarLeft.Width - 3;
-            //         break;
-            // }
-            // return BarOffset;
-            return 0;
+            Title = LocalizationLib.Strings["TID_APPTITLE"]
+                .Replace("<SPLASH>", LocalizationLib.Strings[SplashTextKeys[Random.Shared.Next(0, SplashTextKeys.Count)]])
+                .Replace("<NUM>", Random.Shared.Next(0, 1001).ToString())
+                .Replace("<DATE>", DateTime.Now.ToString
+                    (LocalizationLib.Strings["TID_DATETIME_NOW_TOSTRING_FORMAT_DATEONLY"], new CultureInfo(LocalizationLib.Strings["TID_CULTUREINFO"])));
         }
 
-        private void DisableAllElemsInGrid(Grid GridArea)
+        public async void FetchData()
         {
-            foreach (UIElement Element in GridArea.Children)
+            Txt_Status.Text = LocalizationLib.Strings["TID_STATUS_FETCHING"];
+
+            var FetchResponse = await Common.CheckForEvent();
+            if (FetchResponse == FetchResponse.NotAvailable)
             {
-                Element.Visibility = Visibility.Hidden;
-            }
-        }
-
-        private void EnableAllElemsInGrid(Grid GridArea)
-        {
-            foreach (UIElement Element in GridArea.Children)
-            {
-                Element.Visibility = Visibility.Visible;
+                Swoon();
             }
         }
 
@@ -234,9 +208,19 @@ namespace EventTrackerWPF
             // This will be for UI-only updates (like displaying numbers and such)
             Dispatcher.Invoke(() =>
             {
+                DynCounter_Num_CanMono.Text = CountDisp.ToString("#,##0");
                 MoneyCount.Text = GemsDisp.ToString("#,##0");
-                DynCounter_Num.Text = CountDisp.ToString("#,##0");
+                Txt_ProgressPercent.Text = (CountDisp / 1e11).ToString("#,##0.##") + "%";
+                ProcProgressBar(CountDisp / 1e11);
                 UpdateDynCounterPos();
+
+                if ((RoomMan.Visibility == Visibility.Collapsed || RoomMan.Visibility == Visibility.Hidden) && SplashTextTicker.Enabled == false)
+                {
+                    SoundIndexer.StopLoopingSoundID("mus_man");
+
+                    SplashTextTicker.Start();
+                    ChangeSplashText();
+                }
             });
         }
 
@@ -244,20 +228,20 @@ namespace EventTrackerWPF
         {
             Dispatcher.Invoke(() =>
             {
-                ApplicationUptime.Text = "Uptime: " + TimeSpan.FromSeconds(DateTimeOffset.Now.ToUnixTimeSeconds() - StartupUnixTime);
+                Txt_SystemClock.Text = DateTime.Now.ToString(LocalizationLib.Strings["TID_DATETIME_NOW_TOSTRING_FORMAT_DATEANDTIME"], new CultureInfo(LocalizationLib.Strings["TID_CULTUREINFO"]));
             });
         }
 
         private void CalculateDisplay()
         {
-            CountDisp += (Count - CountDisp) * .3;
+            CountDisp += (Count - CountDisp) * .15;
             TestTimeDisp += (TestTime - TestTimeDisp) * .3;
-            GemsDisp += (Gems - GemsDisp) * .125;
+            GemsDisp += (SaveSystem.Gems - GemsDisp) * .125;
         }
 
         private void UpdateDynCounterPos()
         {
-            var TextSize = DynCounter_Num.MeasureTextSize();
+            var TextSize = DynCounter_Num_CanMono.MeasureTextSize();
 
             double MinImageX = DynCounter_Img.Width;
             double MaxImageX = (DynCounter.Width + DynCounter_Img.Width) / 2;
@@ -270,30 +254,180 @@ namespace EventTrackerWPF
             DynCounter_NumGrid.Width = Math.Min(DynCounter.Width - DynCounter_ImgGrid.Width, MaxNumberX);
         }
 
+        private void ChangeView(ViewModes Mode)
+        {
+            ResetViewButtons();
+            Settings.ViewMode = Mode;
+
+            switch (Mode)
+            {
+                case ViewModes.Simple:
+                    {
+                        ImgBTN_ViewMode_Simple.Source = Common.GreenButton_ViewMode;
+
+                        SimpleView.Visibility = Visibility.Visible;
+                        DetailedView.Visibility = Visibility.Collapsed;
+                        TooMuchStuffView.Visibility = Visibility.Collapsed;
+                    }
+                    break;
+                case ViewModes.Detailed:
+                    {
+                        ImgBTN_ViewMode_Detailed.Source = Common.GreenButton_ViewMode;
+
+                        SimpleView.Visibility = Visibility.Visible;
+                        DetailedView.Visibility = Visibility.Visible;
+                        TooMuchStuffView.Visibility = Visibility.Collapsed;
+                    }
+                    break;
+                case ViewModes.TooMuchStuff:
+                    {
+                        ImgBTN_ViewMode_TooMuchStuff.Source = Common.GreenButton_ViewMode;
+
+                        SimpleView.Visibility = Visibility.Visible;
+                        DetailedView.Visibility = Visibility.Visible;
+                        TooMuchStuffView.Visibility = Visibility.Visible;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void LoadTitleSplashTexts()
+        {
+            SplashTextTicker.Stop();
+            SplashTextKeys = LocalizationLib.Strings.Keys.Where(Q => Q.StartsWith("TID_SPLASHTEXT_")).ToList();
+            SplashTextTicker.Start();
+
+            Dispatcher.Invoke(ChangeSplashText);
+        }
+
+
+        private void ResetViewButtons()
+        {
+            ImgBTN_ViewMode_Simple.Source = Common.RedButton_ViewMode;
+            ImgBTN_ViewMode_Detailed.Source = Common.RedButton_ViewMode;
+            ImgBTN_ViewMode_TooMuchStuff.Source = Common.RedButton_ViewMode;
+        }
+
+        private void BindValues()
+        {
+            Txt_AboutBuild.Text = Txt_AboutBuild.Text.Replace("<VERSION>", Common.VersionNumber);
+            Txt_EventEndsIn.Text = Txt_EventEndsIn.Text.Replace("<TIME>", Common.FormatTime(FormatPrefs.LongText, TimeSpan.FromSeconds(0)));
+        }
+
+        private void ToggleIconStyle()
+        {
+            if (Settings.UseOldIcon)
+            {
+                LogosCorner_NewStyle.Visibility = Visibility.Collapsed;
+                LogosCorner_OldStyle.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                LogosCorner_OldStyle.Visibility = Visibility.Collapsed;
+                LogosCorner_NewStyle.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void InitializeRPC()
+        {
+            try
+            {
+                DiscordClient.Initialize();
+            }
+            catch (Exception Exc)
+            {
+                var ErrorMessage = new AlertMessage()
+                {
+                    Title = LocalizationLib.Strings["TID_DISCORD_RPC_LOAD_FAIL_WARNING_TITLE"],
+                    Description = LocalizationLib.Strings["TID_DISCORD_RPC_LOAD_FAIL_WARNING_DESC"] + $"\n\n{Exc.GetType().Name}\n{Exc.Message}",
+
+                    BlueButton = LocalizationLib.Strings["TID_DISCORD_RPC_LOAD_FAIL_WARNING_YES"],
+                    BlueButtonFunc = (Be, pis) => { InitializeRPC(); },
+
+                    RedButton = LocalizationLib.Strings["TID_DISCORD_RPC_LOAD_FAIL_WARNING_NO"],
+                    RedButtonFunc = (No, pe) => { DiscordClient.Dispose(); }
+                };
+            }
+            finally
+            {
+                if (DiscordClient.IsInitialized)
+                {
+                    DiscordClient.SetPresence(new()
+                    {
+                        Type = ActivityType.Watching,
+                        Details = "Loading data...",
+                        State = "Waiting...",
+                        Buttons = [new() { Label = "chip", Url = "https://www.youtube.com/watch?v=WIRK_pGdIdA" }]
+                    });
+                }
+                else DiscordClient.Dispose();
+            }
+        }
+
+        private void SetPresenceMessage(string Details, string State)
+        {
+            if (DiscordClient.IsInitialized)
+            {
+                DiscordClient.UpdateDetails(Details);
+                DiscordClient.UpdateState(State);
+            }
+        }
+
+        private void ProcProgressBar(double Percentage)
+        {
+            double OffsetRightL = 8;
+
+            double OffsetProcL = 3;
+
+            double OffsetProcT = 3.5;
+            double OffsetProcB = 4;
+
+            double OffsetT = 2;
+            double OffsetB = 3;
+
+            double MaxWidth = 1258;
+
+            var WidthResult = MaxWidth * Percentage / 100;
+            var WidthResultView = Math.Floor(WidthResult * 100) / 100;
+
+            if (WidthResultView <= 0)
+            {
+                WidthResult = 0;
+                ProgressBar_FLeft.Visibility = Visibility.Hidden;
+                ProgressBar_FMid.Visibility = Visibility.Hidden;
+                ProgressBar_FRight.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                ProgressBar_FLeft.Visibility = Visibility.Visible;
+                ProgressBar_FMid.Visibility = Visibility.Visible;
+                ProgressBar_FRight.Visibility = Visibility.Visible;
+            }
+            if (WidthResult >= MaxWidth) WidthResult = MaxWidth;
+
+            if (WidthResultView <= 0 || WidthResultView >= MaxWidth) 
+                ProgressBar_FProc.Visibility = Visibility.Collapsed;
+            else ProgressBar_FProc.Visibility = Visibility.Visible;
+
+            ProgressBar_FRight.Margin = new Thickness(OffsetRightL + WidthResult, OffsetT, 0, OffsetB);
+            ProgressBar_FMid.Width = WidthResult;
+            ProgressBar_FProc.Margin = new Thickness(OffsetProcL + WidthResult, OffsetProcT, 0, OffsetProcB);
+        }
+
         #region Controls
+
+        private void BTN_Refresh_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            FetchData();
+        }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Settings.Save();
-
-            SaveSystem.Gems = Gems;
             SaveSystem.Save();
-        }
-
-        private void GridButton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            SoundIndexer.PlaySoundID("btn_click");
-            var Message = new AlertMessage()
-            {
-                Title = "This is a dialog box",
-                Description = "Lorem ipsum dolor sit amet etc etc etc...",
-                RedButton = "Pipis",
-                BlueButton = "Bepis",
-
-                RedButtonFunc = (LAnc, Er) => { SoundIndexer.PlaySoundID("lancer"); },
-                BlueButtonFunc = (Ni, ko) => { SoundIndexer.PlaySoundID("btn_click"); }
-            };
-            Common.CreateAlert(Message);
         }
 
         private void UptimeButton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -389,10 +523,10 @@ namespace EventTrackerWPF
                 Description = "Unnecessary bloat...",
 
                 RedButton = "Set gem to 0",
-                RedButtonFunc = (Re, set) => { Gems = 0; SoundIndexer.PlaySoundID("btn_click"); },
+                RedButtonFunc = (Re, set) => { SaveSystem.Gems = 0; Count = 0; SoundIndexer.PlaySoundID("btn_click"); },
 
                 BlueButton = "Free gems",
-                BlueButtonFunc = (Ba, lls) => { Gems += Random.Shared.Next(1, 184); Count += Random.Shared.NextInt64(0, 1000000000000); SoundIndexer.PlaySoundID("btn_click"); SaveSystem.Save(); }
+                BlueButtonFunc = (Ba, lls) => { SaveSystem.Gems += Random.Shared.Next(1, 184); Count += Random.Shared.NextInt64(0, 1000000000000); SoundIndexer.PlaySoundID("btn_click"); SaveSystem.Save(); }
             };
 
             SoundIndexer.PlaySoundID("btn_click");
@@ -402,6 +536,89 @@ namespace EventTrackerWPF
         {
             SoundIndexer.PlaySoundID("btn_click");
             NavigateTo(AboutUI);
+        }
+
+        private void BTN_GoToFanPolicyLink_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            string URL = LocalizationLib.Strings["TID_DISCLAIMER_FAN_CONTENT_POLICY_LINK"];
+            Process.Start(new ProcessStartInfo(URL) { UseShellExecute = true });
+        }
+
+        private void BTN_ViewModeInfo_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var Message = new AlertMessage()
+            {
+                Title = LocalizationLib.Strings["TID_VIEWMODE_INFO_TITLE"],
+                Description = LocalizationLib.Strings["TID_VIEWMODE_INFO_DESC"],
+
+                BlueButton = LocalizationLib.Strings["TID_OK"],
+                BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); }
+            };
+            SoundIndexer.PlaySoundID("btn_click");
+            Common.CreateAlert(Message);
+        }
+
+        private void BTN_ViewMode_Simple_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            ChangeView(ViewModes.Simple);
+        }
+
+        private void BTN_ViewMode_Detailed_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            ChangeView(ViewModes.Detailed);
+        }
+
+        private void BTN_ViewMode_TooMuchStuff_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            ChangeView(ViewModes.TooMuchStuff);
+        }
+        private void BTN_LogoToggler_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            Settings.UseOldIcon = !Settings.UseOldIcon ? true : false;
+            ToggleIconStyle();
+        }
+
+        private void BTN_EventInfoTab_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            NavigateTo(EventResultsHistoryUI);
+        }
+        private void Chk_AutoRefresh_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            Settings.AutoRefresh = Chk_AutoRefresh.IsChecked;
+        }
+        private void BTN_GoToGitHubRepo_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            string URL = LocalizationLib.Strings["TID_ABOUT_GITHUB_REPO_LINK"];
+            Process.Start(new ProcessStartInfo(URL) { UseShellExecute = true });
+        }        
+        private void BTN_FontchangerrrrrMAIN_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var FontDialog = new WinForms.FontDialog();
+
+            WinForms.DialogResult Result = FontDialog.ShowDialog();
+
+            if (Result == WinForms.DialogResult.OK)
+            {
+                MessageBox.Show("Selected font: " + FontDialog);
+
+                Common.UseCustomFont(MainGrid, FontDialog.Font, null);
+            }
+        }
+
+        private void Chk_UseAltFont_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            Settings.AlternareFont = Chk_UseAltFont.IsChecked;
+
+            DynCounter_Num_CanMono.FontFamily = !Settings.AlternareFont ? Common.LilitaOneRes : Common.DeterminationMonoRes;
         }
 
         #endregion
@@ -424,7 +641,9 @@ namespace EventTrackerWPF
 
         private void GoBack()
         {
-            NavigatedMenus.Pop().Visibility = Visibility.Collapsed;
+            var ClosingMenu = NavigatedMenus.Pop();
+
+            ClosingMenu.Visibility = Visibility.Collapsed;
             if (NavigatedMenus.Count == 0)
             {
                 MainMenuUI.Visibility = Visibility.Visible;
@@ -448,7 +667,7 @@ namespace EventTrackerWPF
         }
         #endregion
 
-        #region Theme Animations
+        #region Animations & Theme Animations
         private void StopAllThemeAnimations()
         {
             foreach (var Storyboard in RunningStoryboards)
@@ -557,18 +776,156 @@ namespace EventTrackerWPF
                 }
             }
         }
+        private void RoomManTreeAnimsStart()
+        {
+
+        }
         #endregion
 
-        private void BTN_GoToFanPolicyLink_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        #region Cutscene(s)
+
+        private void Swoon()
         {
-            string URL = LocalizationLib.Strings["TID_DISCLAIMER_FAN_CONTENT_POLICY_LINK"];
-            Process.Start(new ProcessStartInfo(URL) { UseShellExecute = true });
+            CutsceneManager.AddEvent(new()
+            {
+                Delay = TimeSpan.Zero,
+                Action = () =>
+                {
+                    SoundIndexer.PlaySoundID("SWOON");
+                }
+            });
+            CutsceneManager.AddEvent(new(){
+               Delay = TimeSpan.FromSeconds(0.2),
+               Action = () =>
+               {
+                   SwoonCutscene.Visibility = Visibility.Visible;
+                   ThemeSelect(BackgroundThemes.BlackNWhite);
+                   SplashTextTicker.Stop();
+                   Title = string.Empty;
+                   Settings.AutoRefresh = false;
+               }
+            });
+            CutsceneManager.AddEvent(new()
+            {
+                Delay = TimeSpan.FromSeconds(2),
+                Action = () =>
+                {
+                    SoundIndexer.PlaySoundID("SWOON_IMPACT");
+                }
+            });
+            CutsceneManager.AddEvent(new()
+            {
+                Delay = TimeSpan.FromSeconds(0.2),
+                Action = () =>
+                {
+                    SwoonImage.Visibility = Visibility.Collapsed;
+                    UserInterfaces.Visibility = Visibility.Collapsed;
+                }
+            });
+
+            CutsceneManager.Start();
         }
 
-        private void BTN_TestButton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        #endregion
+
+        private void BTN_SuperSecretSettings_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            Count += Random.Shared.Next(0, 120000);
-            // SoundIndexer.PlaySoundID("btn_click_oneshot");
+            if (Random.Shared.Next(0, 2) == 1)
+            {
+                NavigateTo(RoomMan);
+                SoundIndexer.PlayLoopingSoundID("mus_man");
+
+                Title = string.Empty;
+                SplashTextTicker.Stop();
+            }
+            else
+            {
+                SoundIndexer.PlaySoundID("btn_click");
+                NavigateTo(SuperSecretSettingsUI);
+            }
+        }
+
+        private void RoomMan_Tree_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (!SaveSystem.Egg)
+            {
+                var Message = new AlertMessage()
+                {
+                    Title = string.Empty,
+                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_0"],
+
+                    BlueButton = LocalizationLib.Strings["TID_OK"]
+                };
+
+                Common.CreateAlert(Message);
+            }
+            else
+            {
+                var Message = new AlertMessage()
+                {
+                    Title = string.Empty,
+                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_0_DONE"],
+
+                    BlueButton = LocalizationLib.Strings["TID_OK"]
+                };
+
+                Common.CreateAlert(Message);
+            }
+        }
+
+        private void RoomMan_BTN_Man_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (!SaveSystem.Egg)
+            {
+                var Message3Yes = new AlertMessage()
+                {
+                    Title = string.Empty,
+                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_3_YES"],
+
+                    BlueButton = LocalizationLib.Strings["TID_OK"]
+                };
+
+                var Message3No = new AlertMessage()
+                {
+                    Title = string.Empty,
+                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_3_NO"],
+
+                    BlueButton = LocalizationLib.Strings["TID_OK"]
+                };
+
+                var Message2 = new AlertMessage()
+                {
+                    Title = string.Empty,
+                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_2"],
+
+                    BlueButton = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_2_YES"],
+                    BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("egg"); Common.CreateAlert(Message3Yes); SaveSystem.Eggs++; SaveSystem.Egg = true; },
+                    RedButton = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_2_NO"],
+                    RedButtonFunc = (Be, pis) => { Common.CreateAlert(Message3No); SaveSystem.Egg = true; }
+                };
+
+                var Message1 = new AlertMessage()
+                {
+                    Title = string.Empty,
+                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_1"],
+
+                    BlueButton = LocalizationLib.Strings["TID_OK"],
+                    BlueButtonFunc = (Be, pis) => { Common.CreateAlert(Message2); }
+                };
+
+                Common.CreateAlert(Message1);
+            }
+            else
+            {
+                var Message4 = new AlertMessage()
+                {
+                    Title = string.Empty,
+                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_4"],
+
+                    BlueButton = LocalizationLib.Strings["TID_OK"]
+                };
+                Common.CreateAlert(Message4);
+            }
         }
     }
 
@@ -583,6 +940,7 @@ namespace EventTrackerWPF
     {
         Default,
         Brawloween2023,
-        Angels
+        Angels,
+        BlackNWhite = 666
     }
 }

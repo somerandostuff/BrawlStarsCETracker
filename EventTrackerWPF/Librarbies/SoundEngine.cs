@@ -14,6 +14,8 @@ namespace EventTrackerWPF.Librarbies
 
         public static readonly SoundEngine Instance = new SoundEngine(SampleRate: 44100, ChannelCount: 2);
 
+        private readonly Dictionary<string, ISampleProvider> ActiveLoopingSounds = [];
+
         public SoundEngine(int SampleRate = 44100, byte ChannelCount = STEREO_CHANNEL_COUNT)
         {
             SoundOutput = new WaveOutEvent();
@@ -29,6 +31,30 @@ namespace EventTrackerWPF.Librarbies
         {
             var Input = new AudioFileReader(FileName);
             AddMixerInput(new AutoDisposeFileReader(Input));
+        }
+
+        public void PlaySoundLoop(string Key, string FileName)
+        {
+            var CachedSound = new CachedSound(FileName);
+            var LoopingProvider = new LoopingCachedSoundSampleProvider(CachedSound);
+
+            ActiveLoopingSounds[Key] = LoopingProvider;
+            AddMixerInput(LoopingProvider);
+        }
+
+        public void StopSoundLoop(string Key)
+        {
+            if (ActiveLoopingSounds.TryGetValue(Key, out var ProviderTarget))
+            {
+                Mixer.RemoveMixerInput(ProviderTarget);
+                ActiveLoopingSounds.Remove(Key);
+            }
+        }
+
+        public void StopAllSoundLoops()
+        {
+            Mixer.RemoveAllMixerInputs();
+            ActiveLoopingSounds.Clear();
         }
 
         private ISampleProvider ConvertToRightChannelCount(ISampleProvider Input)
@@ -139,5 +165,39 @@ namespace EventTrackerWPF.Librarbies
             return (int)SamplesToCopy;
         }
 
+    }
+
+    public class LoopingCachedSoundSampleProvider : ISampleProvider
+    {
+        private readonly CachedSound CachedSound;
+        private long Position;
+
+        public WaveFormat WaveFormat { get { return CachedSound.WaveFormat; } }
+
+        public LoopingCachedSoundSampleProvider(CachedSound CachedSound)
+        {
+            this.CachedSound = CachedSound;
+            Position = 0;
+        }
+
+        public int Read(float[] Buffer, int Offset, int Count)
+        {
+            int TotalSamplesWritten = 0;
+            while (TotalSamplesWritten < Count)
+            {
+                var AvailableSamples = CachedSound.AudioData.Length - Position;
+                var SamplesToCopy = Math.Min(AvailableSamples, Count - TotalSamplesWritten);
+
+                Array.Copy(CachedSound.AudioData, Position, Buffer, Offset + TotalSamplesWritten, SamplesToCopy);
+
+                Position += SamplesToCopy;
+                TotalSamplesWritten += (int)SamplesToCopy;
+
+                if (Position >= CachedSound.AudioData.Length)
+                    Position = 0;
+            }
+
+            return TotalSamplesWritten;
+        }
     }
 }

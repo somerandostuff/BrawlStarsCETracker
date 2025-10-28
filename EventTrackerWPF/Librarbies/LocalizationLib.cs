@@ -42,7 +42,7 @@ namespace EventTrackerWPF.Librarbies
                         "HResult: " + Exc.HResult + "\n",
 
                     BlueButton = "OK",
-                    BlueButtonFunc = (Err, or) => { MainWindow.Settings.UseDefaultLanguageAndSave(); MainWindow.SoundIndexer.PlaySoundID("btn_click"); }
+                    BlueButtonFunc = (Err, or) => { Settings.UseDefaultLanguageAndSave(); MainWindow.SoundIndexer.PlaySoundID("btn_click"); }
                 };
 
                 Common.CreateAlert(Message);
@@ -68,12 +68,12 @@ namespace EventTrackerWPF.Librarbies
                 {
                     var Parts = Line.Split(',', 2);
 
-                    if (Parts[0].StartsWith("\"") && Parts[0].EndsWith("\""))
+                    if (Parts[0].StartsWith('\"') && Parts[0].EndsWith('\"'))
                     {
                         Parts[0] = Parts[0].Substring(1, Parts[0].Length - 2);
                     }
 
-                    if (Parts[1].StartsWith("\"") && Parts[1].EndsWith("\""))
+                    if (Parts[1].StartsWith('\"') && Parts[1].EndsWith('\"'))
                     {
                         Parts[1] = Parts[1].Substring(1, Parts[1].Length - 2);
                     }
@@ -86,7 +86,11 @@ namespace EventTrackerWPF.Librarbies
                         Parts[0] = Parts[0].Replace("\\n", Environment.NewLine);
                         Parts[1] = Parts[1].Replace("\\n", Environment.NewLine);
 
-                        LocDict[Parts[0]] = Parts[1];
+                        if (string.IsNullOrEmpty(Parts[1]))
+                        {
+                            LocDict[Parts[0]] = Parts[0];
+                        }
+                        else LocDict[Parts[0]] = Parts[1];
                     }
                     else LocDict[Parts[0]] = Parts[0]; // Fallback lol
                 }
@@ -103,7 +107,7 @@ namespace EventTrackerWPF.Librarbies
                     "HResult: " + Exc.HResult + "\n",
 
                     BlueButton = "OK",
-                    BlueButtonFunc = (Err, or) => { MainWindow.Settings.UseDefaultLanguageAndSave(); MainWindow.SoundIndexer.PlaySoundID("btn_click"); }
+                    BlueButtonFunc = (Err, or) => { Settings.UseDefaultLanguageAndSave(); MainWindow.SoundIndexer.PlaySoundID("btn_click"); }
                 };
 
                 Common.CreateAlert(Message);

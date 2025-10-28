@@ -1,22 +1,28 @@
-﻿using System.IO;
+﻿using System.Drawing;
+using System.IO;
 using System.Windows;
 
 namespace EventTrackerWPF.Librarbies
 {
-    public class Settings
+    public static class Settings
     {
-        public int MaxFPS { get; set; } = 60;
-        public string? Lang { get; set; } = "EN";
-        public bool AutoRefresh { get; set; } = false;
-        public bool AlternareFont { get; set; } = false;
-        public FormatPrefs FormatPrefs { get; set; } = FormatPrefs.None;
-        public bool SuperSecretSetting { get; set; } = false;
-        public BackgroundThemes SelectedTheme { get; set; }
-        public bool EnableAnimations { get; set; } = true;
+        public static int MaxFPS { get; set; } = 60;
+        public static string? Lang { get; set; } = "EN";
+        public static bool AutoRefresh { get; set; } = false;
+        public static bool AlternareFont { get; set; } = false;
+        public static FormatPrefs FormatPref { get; set; } = FormatPrefs.None;
+        public static ViewModes ViewMode { get; set; } = ViewModes.Simple;
+        public static bool ShowMilestoneProgress { get; set; } = false;
+        public static bool SuperSecretSetting { get; set; } = false;
+        public static BackgroundThemes SelectedTheme { get; set; }
+        public static bool UseOldIcon { get; set; } = false;
+        public static bool EnableAnimations { get; set; } = true;
+        //public static Font? MainFontFamily { get; set; }
+        //public static Font? AltFontFamily { get; set; }
 
         public const string SettingsFileName = "SETTINGS.txt";
 
-        public void Load()
+        public static void Load()
         {
             if (!File.Exists(SettingsFileName.ToLower()))
             {
@@ -39,9 +45,13 @@ namespace EventTrackerWPF.Librarbies
                     {
                         Value = Enum.Parse(Property.PropertyType, ConfigParts[1]);
                     }
+                    else if (Property.PropertyType == typeof(Font))
+                    {
+                        MessageBox.Show("IT IS A FONT");
+                    }
                     else Value = Convert.ChangeType(ConfigParts[1], Property.PropertyType);
 
-                    Property.SetValue(this, Value);
+                    Property.SetValue(Property.PropertyType, Value);
                 }
                 catch (Exception Exc)
                 {
@@ -64,29 +74,29 @@ namespace EventTrackerWPF.Librarbies
             }
         }
 
-        public void Save()
+        public static void Save()
         {
             using (var Writer = new StreamWriter(SettingsFileName, false))
             {
                 foreach (var Property in typeof(Settings).GetProperties())
                 {
-                    var Value = Property.GetValue(this);
+                    var Value = Property.GetValue(Property.Name);
                     Writer.WriteLine($"{Property.Name}={Value}");
                 }
             }
         }
 
-        public void UseDefaultSettings()
+        public static void UseDefaultSettings()
         {
             AutoRefresh = false;
             AlternareFont = false;
-            FormatPrefs = FormatPrefs.None;
+            FormatPref = FormatPrefs.None;
             SuperSecretSetting = false;
             EnableAnimations = true;
             Lang = "EN";
         }
 
-        public void UseDefaultLanguageAndSave()
+        public static void UseDefaultLanguageAndSave()
         {
             Lang = "EN";
             Save();
@@ -94,8 +104,15 @@ namespace EventTrackerWPF.Librarbies
     }
     public enum FormatPrefs
     {
-        None = 0,
-        LongText = 1,
-        ShortText = 2
+        None,
+        LongText,
+        ShortText
+    }
+
+    public enum ViewModes
+    { 
+        Simple,
+        Detailed,
+        TooMuchStuff
     }
 }

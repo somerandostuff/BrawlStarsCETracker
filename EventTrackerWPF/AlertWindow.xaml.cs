@@ -25,6 +25,8 @@ namespace EventTrackerWPF
         {
             InitializeComponent();
 
+            // Common.UseCustomFont(MainGrid, Settings.MainFontFamily, Settings.AltFontFamily);
+
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             InstantiateDialog(Message);

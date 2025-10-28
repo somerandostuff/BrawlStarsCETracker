@@ -22,7 +22,7 @@ namespace EventTrackerWPF.Librarbies
             var MarqueeAnimation = new DoubleAnimation
             {
                 From = ElemWidth,
-                To = -TextWidth * 1.5,
+                To = -TextWidth * 2,
                 Duration = new Duration(TimeSpan.FromSeconds(SpeedSeconds)),
                 RepeatBehavior = RepeatBehavior.Forever
             };

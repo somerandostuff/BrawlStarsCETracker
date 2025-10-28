@@ -17,5 +17,15 @@
         {
             SFXEngine.PlaySound(SoundPaths[SoundID]);
         }
+
+        public void PlayLoopingSoundID(string SoundID)
+        {
+            SFXEngine.PlaySoundLoop(SoundID, SoundPaths[SoundID]);
+        }
+
+        public void StopLoopingSoundID(string SoundID)
+        {
+            SFXEngine.StopSoundLoop(SoundID);
+        }
     }
 }
