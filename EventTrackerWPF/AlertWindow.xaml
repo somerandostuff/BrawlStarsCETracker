@@ -10,52 +10,52 @@
     <Grid x:Name="MainGrid">
         <Grid x:Name="AlertWindowTopBar" VerticalAlignment="Top" Height="100">
             <Grid x:Name="AlertWindowTopBarContent" MouseLeftButtonDown="AlertWindowTopBar_MouseLeftButtonDown" Margin="0,0,15,0">
-                <Image HorizontalAlignment="Center" VerticalAlignment="Top" Source="/Assets/Popup Window Middle Top.png" Stretch="Fill" Margin="12,0,3,0"/>
-                <Image HorizontalAlignment="Left" VerticalAlignment="Top" Width="14" Source="/Assets/Popup Window Left Top.png"/>
-                <Image HorizontalAlignment="Right" VerticalAlignment="Center" Width="14" Source="/Assets/Popup Window Right Top.png" Margin="0,0,-9.2,0"/>
+                <Image CacheMode="BitmapCache" HorizontalAlignment="Center" VerticalAlignment="Top" Source="/Assets/Popup Window Middle Top.png" Stretch="Fill" Margin="12,0,3,0"/>
+                <Image CacheMode="BitmapCache" HorizontalAlignment="Left" VerticalAlignment="Top" Width="14" Source="/Assets/Popup Window Left Top.png"/>
+                <Image CacheMode="BitmapCache" HorizontalAlignment="Right" VerticalAlignment="Center" Width="14" Source="/Assets/Popup Window Right Top.png" Margin="0,0,-9.2,0"/>
             </Grid>
 
             <CustomElements:GridButton x:Name="BTN_Close" HorizontalAlignment="Right" VerticalAlignment="Top" Width="93" Margin="0,16,5,12" MouseLeftButtonUp="BTN_Close_MouseLeftButtonUp">
-                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Assets/Button Exit.png"/>
+                <Image CacheMode="BitmapCache" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Assets/Button Exit.png"/>
             </CustomElements:GridButton>
         </Grid>
 
         <Grid x:Name="AlertWindowMiddleContent" Margin="0,100,0,35">
             <Grid Margin="0,0,15,0">
-                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Assets/Popup Window Middle Center.png" Stretch="Fill" Margin="13,0,3,0"/>
-                <Image HorizontalAlignment="Left" VerticalAlignment="Center" Width="13.2" Source="/Assets/Popup Window Left Center.png" Stretch="Fill"/>
-                <Image HorizontalAlignment="Right" VerticalAlignment="Center" Width="13.2" Source="/Assets/Popup Window Right Center.png" Stretch="Fill" Margin="0,0,-9.2,0"/>
+                <Image CacheMode="BitmapCache" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Assets/Popup Window Middle Center.png" Stretch="Fill" Margin="13,0,3,0"/>
+                <Image CacheMode="BitmapCache" HorizontalAlignment="Left" VerticalAlignment="Center" Width="13.2" Source="/Assets/Popup Window Left Center.png" Stretch="Fill"/>
+                <Image CacheMode="BitmapCache" HorizontalAlignment="Right" VerticalAlignment="Center" Width="13.2" Source="/Assets/Popup Window Right Center.png" Stretch="Fill" Margin="0,0,-9.2,0"/>
             </Grid>
         </Grid>
 
         <Grid x:Name="AlertWindowBottomBar" Margin="0,0,0,0">
             <Grid Margin="0,0,15,0">
-                <Image HorizontalAlignment="Center" Height="35.72" VerticalAlignment="Bottom" Source="/Assets/Popup Window Middle Bottom.png" Stretch="Fill" Margin="13,0,3,0"/>
-                <Image HorizontalAlignment="Left" Height="36" VerticalAlignment="Bottom" Width="13.2" Source="/Assets/Popup Window Left Bottom.png" Margin="0,0,0,0"/>
-                <Image HorizontalAlignment="Right" Height="36" VerticalAlignment="Bottom" Width="13.2" Source="/Assets/Popup Window Right Bottom.png" Margin="0,0,-9.3,0"/>
+                <Image CacheMode="BitmapCache" HorizontalAlignment="Center" Height="35.72" VerticalAlignment="Bottom" Source="/Assets/Popup Window Middle Bottom.png" Stretch="Fill" Margin="13,0,3,0"/>
+                <Image CacheMode="BitmapCache" HorizontalAlignment="Left" Height="36" VerticalAlignment="Bottom" Width="13.2" Source="/Assets/Popup Window Left Bottom.png" Margin="0,0,0,0"/>
+                <Image CacheMode="BitmapCache" HorizontalAlignment="Right" Height="36" VerticalAlignment="Bottom" Width="13.2" Source="/Assets/Popup Window Right Bottom.png" Margin="0,0,-9.3,0"/>
             </Grid>
         </Grid>
 
         <Grid x:Name="AlertWindowCaptions" IsHitTestVisible="False">
-            <CustomElements:DrawTextOutlined x:Name="Txt_Caption" FontFamily="Lilita One" Text="Abc" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Height="80" FontSize="48" Stroke="Black" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 2.5" Margin="25,10,25,361"/>
-            <CustomElements:DrawTextOutlined x:Name="Txt_Content" FontFamily="Lilita One" Text="again?" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontSize="28" StrokeThiccness="0" Margin="15,100,20,140"/>
+            <CustomElements:DrawTextOutlined CacheMode="BitmapCache" x:Name="Txt_Caption" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" Text="Abc" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Height="80" FontSize="48" Stroke="Black" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 2.5" Margin="25,10,25,361"/>
+            <CustomElements:DrawTextOutlined CacheMode="BitmapCache" x:Name="Txt_Content" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" Text="again?" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontSize="28" StrokeThiccness="0" Margin="15,100,20,140"/>
         </Grid>
 
         <Grid x:Name="AlertWindowButtons" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,51" Height="88" Width="752">
             <CustomElements:GridButton x:Name="BTN_Cancel" Width="376" Margin="15,0,0,0" MouseLeftButtonUp="BTN_Cancel_MouseLeftButtonUp" HorizontalAlignment="Left">
-                <Image HorizontalAlignment="Right" VerticalAlignment="Center" Source="Assets/Button No.png" Margin="0,0,16,0"/>
-                <CustomElements:DrawTextOutlined x:Name="BTN_Cancel_Text" FontFamily="Lilita One" Text="Cancel" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="36" Stroke="Black" StrokeThiccness="3" ShadowColor="Black" ShadowOffset="0, 2.25" Margin="82,0,16,0"/>
+                <Image CacheMode="BitmapCache" HorizontalAlignment="Right" VerticalAlignment="Center" Source="Assets/Button No.png" Margin="0,0,16,0"/>
+                <CustomElements:DrawTextOutlined CacheMode="BitmapCache" x:Name="BTN_Cancel_Text" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" Text="Cancel" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="36" Stroke="Black" StrokeThiccness="3" ShadowColor="Black" ShadowOffset="0, 2.25" Margin="82,0,16,0"/>
             </CustomElements:GridButton>
             <CustomElements:GridButton x:Name="BTN_OK" Width="376" Margin="0,0,10,0" MouseLeftButtonUp="BTN_OK_MouseLeftButtonUp" HorizontalAlignment="Right">
-                <Image HorizontalAlignment="Left" VerticalAlignment="Center" Source="Assets/Button Yes.png" Margin="16,0,0,0"/>
-                <CustomElements:DrawTextOutlined x:Name="BTN_OK_Text" FontFamily="Lilita One" Text="OK" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="36" Stroke="Black" StrokeThiccness="3" ShadowColor="Black" ShadowOffset="0, 2.25" Margin="16,0,87,0" RenderTransformOrigin="0.308,0.521"/>
+                <Image CacheMode="BitmapCache" HorizontalAlignment="Left" VerticalAlignment="Center" Source="Assets/Button Yes.png" Margin="16,0,0,0"/>
+                <CustomElements:DrawTextOutlined CacheMode="BitmapCache" x:Name="BTN_OK_Text" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" Text="OK" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="36" Stroke="Black" StrokeThiccness="3" ShadowColor="Black" ShadowOffset="0, 2.25" Margin="16,0,87,0" RenderTransformOrigin="0.308,0.521"/>
             </CustomElements:GridButton>
         </Grid>
 
         <Grid x:Name="AlertWindowButtonSingle" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,51" Height="88" Width="752" Visibility="Hidden">
             <CustomElements:GridButton x:Name="BTN_SingleOK" Margin="0,0,10,0" MouseLeftButtonUp="BTN_SingleOK_MouseLeftButtonUp">
-                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="Assets/Button Yes.png"/>
-                <CustomElements:DrawTextOutlined x:Name="BTN_SingleOK_Text" FontFamily="Lilita One" Text="OK" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="32" Stroke="Black" StrokeThiccness="3" ShadowColor="Black" ShadowOffset="0, 2" Margin="240,0,240,0" RenderTransformOrigin="0.308,0.521"/>
+                <Image CacheMode="BitmapCache" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Assets/Button Yes.png"/>
+                <CustomElements:DrawTextOutlined CacheMode="BitmapCache" x:Name="BTN_SingleOK_Text" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" Text="OK" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="32" Stroke="Black" StrokeThiccness="3" ShadowColor="Black" ShadowOffset="0, 2" Margin="240,0,240,0" RenderTransformOrigin="0.308,0.521"/>
             </CustomElements:GridButton>
         </Grid>
     </Grid>

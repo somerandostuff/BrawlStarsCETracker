@@ -14,6 +14,7 @@ using System.Windows;
 using System.Windows.Input;
 using WinMedia = System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace EventTrackerWPF.Librarbies
 {
@@ -21,7 +22,7 @@ namespace EventTrackerWPF.Librarbies
     {
         public static async Task<FetchResponse> CheckForEvent()
         {
-            using (var Client = new HttpClient() { Timeout = TimeSpan.FromSeconds(10)} )
+            using (var Client = new HttpClient() { Timeout = TimeSpan.FromSeconds(10) })
             {
                 var Response = await Client.GetAsync(BrawlFeedLinks.NewsAPI);
 
@@ -32,7 +33,10 @@ namespace EventTrackerWPF.Librarbies
                     {
                         var Content = JsonDocument.Parse(JSONContent);
 
-                        for (int Attempt = 0; Attempt < 5; Attempt++)
+                        var EventListLength = Content.RootElement
+                                        .GetProperty("events").GetArrayLength();
+
+                        for (int Attempt = 0; Attempt < EventListLength; Attempt++)
                         {
                             var EventData = Content.RootElement
                                                    .GetProperty("events")[Attempt];
@@ -130,11 +134,212 @@ namespace EventTrackerWPF.Librarbies
             }
         }
 
+        public static List<string> InitFormatter()
+        {
+            List<string> FormatFromE6ToE32 =
+                [
+                    string.Empty,
+                    LocalizationLib.Strings["thousand"],
+                    LocalizationLib.Strings["million"],
+                    LocalizationLib.Strings["billion"],
+                    LocalizationLib.Strings["trillion"],
+                    LocalizationLib.Strings["quadrillion"],
+                    LocalizationLib.Strings["quintillion"],
+                    LocalizationLib.Strings["sestillion"],
+                    LocalizationLib.Strings["septillion"],
+                    LocalizationLib.Strings["octillion"],
+                    LocalizationLib.Strings["nonillion"]
+                ];
+
+            List<string> FormatFromE33Prefix =
+                [
+                    string.Empty,
+                    LocalizationLib.Strings["un"],
+                    LocalizationLib.Strings["duo"],
+                    LocalizationLib.Strings["tre"],
+                    LocalizationLib.Strings["quattuor"],
+                    LocalizationLib.Strings["quin"],
+                    LocalizationLib.Strings["ses"],
+                    LocalizationLib.Strings["septen"],
+                    LocalizationLib.Strings["octo"],
+                    LocalizationLib.Strings["novem"]
+                ];
+
+            List<string> FormatFromE33Suffix =
+                [
+                    LocalizationLib.Strings["decillion"],
+                    LocalizationLib.Strings["vigintillion"],
+                    LocalizationLib.Strings["trigintillion"],
+                    LocalizationLib.Strings["quadragintillion"],
+                    LocalizationLib.Strings["quinquagintillion"],
+                    LocalizationLib.Strings["sesagintillion"],
+                    LocalizationLib.Strings["septuagintillion"],
+                    LocalizationLib.Strings["octogintillion"],
+                    LocalizationLib.Strings["nonagintillion"]
+                ];
+
+            List<string> Notations = FormatFromE6ToE32;
+            foreach (var Suffix in FormatFromE33Suffix)
+            {
+                foreach (var Prefix in FormatFromE33Prefix)
+                {
+                    Notations.Add(Prefix + Suffix);
+                }
+            }
+
+            return Notations;
+        }
+
+        public static List<string> InitFormatterShort()
+        {
+            List<string> FormatFromE6ToE32 =
+                [
+                    string.Empty,
+                    LocalizationLib.Strings["k"],
+                    LocalizationLib.Strings["M"],
+                    LocalizationLib.Strings["B"],
+                    LocalizationLib.Strings["T"],
+                    LocalizationLib.Strings["Qa"],
+                    LocalizationLib.Strings["Qi"],
+                    LocalizationLib.Strings["Sx"],
+                    LocalizationLib.Strings["Sp"],
+                    LocalizationLib.Strings["Oc"],
+                    LocalizationLib.Strings["No"]
+                ];
+
+            List<string> FormatFromE33Prefix =
+                [
+                    string.Empty,
+                    LocalizationLib.Strings["Un"],
+                    LocalizationLib.Strings["Do"],
+                    LocalizationLib.Strings["Tr"],
+                    LocalizationLib.Strings["Qa"],
+                    LocalizationLib.Strings["Qi"],
+                    LocalizationLib.Strings["Sx"],
+                    LocalizationLib.Strings["Sp"],
+                    LocalizationLib.Strings["Oc"],
+                    LocalizationLib.Strings["No"]
+                ];
+
+            List<string> FormatFromE33Suffix =
+                [
+                    LocalizationLib.Strings["Dec"],
+                    LocalizationLib.Strings["Vgt"],
+                    LocalizationLib.Strings["Trgt"],
+                    LocalizationLib.Strings["Qagt"],
+                    LocalizationLib.Strings["QiQgt"],
+                    LocalizationLib.Strings["Sxagt"],
+                    LocalizationLib.Strings["SpTgt"],
+                    LocalizationLib.Strings["OcTgt"],
+                    LocalizationLib.Strings["NoNgt"]
+                ];
+
+            List<string> Notations = FormatFromE6ToE32;
+            foreach (var Suffix in FormatFromE33Suffix)
+            {
+                foreach (var Prefix in FormatFromE33Prefix)
+                {
+                    Notations.Add(Prefix + Suffix);
+                }
+            }
+            return Notations;
+        }
+
+        public static string BeautifyPercentage(double Number)
+        {
+            if (Number < 1e13 && Number > -1e13)
+            {
+                return Number.ToString("#,##0.##");
+            }
+            else
+            {
+                return Number.ToString("0.######E0").Replace("∞", LocalizationLib.Strings["TID_INFINITY_SHORT"]);
+            }
+        }
+
+        public static string Beautify(double Number, FormatPrefs Choice)
+        {
+            int FormatterIndex = 0;
+
+            Number = Math.Round(Number);
+
+            if (Choice != FormatPrefs.None)
+            {
+                List<string> Notations = [];
+                switch (Choice)
+                {
+                    case FormatPrefs.LongText:
+                        Notations = InitFormatter();
+                        break;
+                    case FormatPrefs.ShortText:
+                        Notations = InitFormatterShort();
+                        break;
+                    default:
+                        break;
+                }
+
+
+                if (Number >= double.PositiveInfinity)
+                {
+                    switch (Choice)
+                    {
+                        case FormatPrefs.LongText:
+                            return LocalizationLib.Strings["TID_INFINITY"];
+                        case FormatPrefs.ShortText:
+                            return LocalizationLib.Strings["TID_INFINITY_SHORT"];
+                        default:
+                            return "+inf";
+                    }
+                }
+
+                if (Number <= double.NegativeInfinity)
+                {
+                    switch (Choice)
+                    {
+                        case FormatPrefs.LongText:
+                            return LocalizationLib.Strings["TID_INFINITY_N"];
+                        case FormatPrefs.ShortText:
+                            return LocalizationLib.Strings["TID_INFINITY_N_SHORT"];
+                        default:
+                            return "-inf";
+                    }
+                }
+
+                if (Math.Round(Number) >= 1e6 || Math.Round(Number) <= -1e6)
+                {
+                    var ShortNum = Number;
+                    while (Math.Round(Math.Abs(ShortNum), 3) >= 1000)
+                    {
+                        ShortNum /= 1000;
+                        FormatterIndex++;
+                    }
+
+                    if (FormatterIndex > Notations.Count - 1)
+                    {
+                        return Number.ToString("0.######E0").Replace("∞", LocalizationLib.Strings["TID_INFINITY_SHORT"]);
+                    }
+                    else return ShortNum.ToString("0.###") + (Choice is FormatPrefs.LongText ? " " : "") + Notations[FormatterIndex];
+                }
+                else return Number.ToString("#,##0");
+            }
+            else
+            {
+                if (Number < 1e13 && Number > -1e13 )
+                {
+                    return Number.ToString("#,##0");
+                }
+                else
+                {
+                    return Number.ToString("0.######E0").Replace("∞", LocalizationLib.Strings["TID_INFINITY_SHORT"]);
+                }
+            }
+        }
+
         private static void UseDefaultFont()
         {
 
         }
-        
+
         private static FontStyle GetFontStyle(SysDrawing.Font Target)
         {
             switch (Target.Style)
@@ -224,15 +429,15 @@ namespace EventTrackerWPF.Librarbies
                     }
 
                     EndResult =
-                        EndResult.Replace("<DAY>",   LocalizationLib.Strings["TID_DAYS_LONG_SINGULAR"])
-                                 .Replace("<DAYS>",  LocalizationLib.Strings["TID_DAYS_LONG"])
-                                 .Replace("<HOUR>",  LocalizationLib.Strings["TID_HOURS_LONG_SINGULAR"])
+                        EndResult.Replace("<DAY>", LocalizationLib.Strings["TID_DAYS_LONG_SINGULAR"])
+                                 .Replace("<DAYS>", LocalizationLib.Strings["TID_DAYS_LONG"])
+                                 .Replace("<HOUR>", LocalizationLib.Strings["TID_HOURS_LONG_SINGULAR"])
                                  .Replace("<HOURS>", LocalizationLib.Strings["TID_HOURS_LONG"])
-                                 .Replace("<MIN>",   LocalizationLib.Strings["TID_MINUTES_LONG_SINGULAR"])
-                                 .Replace("<MINS>",  LocalizationLib.Strings["TID_MINUTES_LONG"])
-                                 .Replace("<SEC>",   LocalizationLib.Strings["TID_SECONDS_LONG_SINGULAR"])
-                                 .Replace("<SECS>",  LocalizationLib.Strings["TID_SECONDS_LONG"]);
-                break;
+                                 .Replace("<MIN>", LocalizationLib.Strings["TID_MINUTES_LONG_SINGULAR"])
+                                 .Replace("<MINS>", LocalizationLib.Strings["TID_MINUTES_LONG"])
+                                 .Replace("<SEC>", LocalizationLib.Strings["TID_SECONDS_LONG_SINGULAR"])
+                                 .Replace("<SECS>", LocalizationLib.Strings["TID_SECONDS_LONG"]);
+                    break;
                 case FormatPrefs.ShortText:
                     if (TimeCount >= TimeSpan.FromDays(1))
                     {
@@ -274,7 +479,7 @@ namespace EventTrackerWPF.Librarbies
 
     public class EventData
     {
-        public int HTTPStatusCode { get; set; } 
+        public int HTTPStatusCode { get; set; }
     }
 
     public enum FetchResponse

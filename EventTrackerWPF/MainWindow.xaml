@@ -7,7 +7,7 @@
         xmlns:ExtraThings="clr-namespace:EventTrackerWPF.CustomElements"
         xmlns:Lib="clr-namespace:EventTrackerWPF.Librarbies"
         mc:Ignorable="d"
-        Title="hello" Height="720" Width="1360" ResizeMode="CanMinimize" Closing="Window_Closing" Loaded="Window_Loaded" Icon="/Assets/BS Star Wings.ico">
+        Title="hello" Height="720" Width="1360" ResizeMode="CanMinimize" Closing="Window_Closing" Loaded="Window_Loaded" Icon="/Assets/BS Star Wings.ico" KeyDown="Window_KeyDown">
     <Grid x:Name="MainGrid">
         <Grid>
             <Grid.Background>
@@ -21,12 +21,11 @@
                     <ImageBrush ImageSource="/Assets/Backgrounds/Basic/Bgr.png" Stretch="Fill"/>
                 </Grid.Background>
                 <Grid Name="Grid_Bg_ForeItems_Basic">
-                    <Image x:Name="BasicIconsImage"
+                    <Image CacheMode="BitmapCache" x:Name="BasicIconsImage"
                Source="/Assets/Backgrounds/Basic/Icons.png"
                Stretch="Uniform"
                RenderTransformOrigin="0.5,0.5"
                Opacity=".1"
-               CacheMode="BitmapCache"
                Margin="-562,-128,-14,-476">
                         <Image.RenderTransform>
                             <TransformGroup>
@@ -44,12 +43,11 @@
                     <ImageBrush ImageSource="/Assets/Backgrounds/Brawloween2023/Bgr.png" Stretch="Fill"/>
                 </Grid.Background>
                 <Grid Name="Grid_Bg_ForeItems_Brawloween">
-                    <Image x:Name="GhostIconsImage"
+                    <Image CacheMode="BitmapCache" x:Name="GhostIconsImage"
                Source="/Assets/Backgrounds/Brawloween2023/Ghost Icons.png"
                Stretch="Uniform"
                RenderTransformOrigin="0.5,0.5"
                Opacity=".07"
-               CacheMode="BitmapCache"
                Margin="-562,-128,-14,-476">
                         <Image.RenderTransform>
                             <TransformGroup>
@@ -60,9 +58,9 @@
                             </TransformGroup>
                         </Image.RenderTransform>
                     </Image>
-                    <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/Brawloween2023/Ground.png" Margin="0,472,0,0" Stretch="Fill"/>
-                    <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/Brawloween2023/Blur.png" Margin="0,565,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Stretch="Fill" Height="207"/>
-                    <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/Brawloween2023/Gravestones.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="Fill" Width="2430" Height="641" Margin="0,10,0,0"/>
+                    <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/Brawloween2023/Ground.png" Margin="0,472,0,0" Stretch="Fill"/>
+                    <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/Brawloween2023/Blur.png" Margin="0,565,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Stretch="Fill" Height="207"/>
+                    <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/Brawloween2023/Gravestones.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="Fill" Width="2430" Height="641" Margin="0,10,0,0"/>
                 </Grid>
             </Grid>
             <Grid x:Name="AvD_AngelsThemeGrid" Visibility="Collapsed">
@@ -70,11 +68,11 @@
                     <ImageBrush ImageSource="/Assets/Backgrounds/AvD_Angels/Bgr.png" Stretch="Fill"/>
                 </Grid.Background>
                 <Grid Name="Grid_Bg_ForeItems_AvD_Angels">
-                    <Image x:Name="AngelsIconsImage"
+                    <Image CacheMode="BitmapCache" x:Name="AngelsIconsImage"
                             Source="/Assets/Backgrounds/AvD_Angels/Angels Icon.png"
                             Stretch="Uniform"
                             RenderTransformOrigin="0.5,0.5"
-                            CacheMode="BitmapCache"
+                            
                             Opacity=".2"
                             Margin="-562,-128,-14,-476">
                         <Image.RenderTransform>
@@ -87,19 +85,19 @@
                         </Image.RenderTransform>
                     </Image>
 
-                    <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Glow.png" Height="343" Width="515" Margin="0,150,0,0" Opacity="1" Stretch="Fill" HorizontalAlignment="Center"/>
-                    <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Glow.png" Height="455" Width="515" Margin="0,150,0,0" Opacity="1" Stretch="Fill" HorizontalAlignment="Center"/>
-                    <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Glow.png" Height="343" Width="515" Margin="0,150,0,0" Opacity="1" Stretch="Fill" HorizontalAlignment="Center"/>
-                    <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Arch Gate Thing.png" HorizontalAlignment="Center" Width="1420" Margin="0,20,0,-31" Opacity="1"/>
-                    <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Glow2.png" Stretch="Fill" Margin="0,-30,0,0" HorizontalAlignment="Center" Width="972" Height="780"/>
-                    <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Glow.png" Height="327" Width="370" Stretch="Fill" Margin="0,77,0,0"/>
-                    <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Sky Blur Up.png" VerticalAlignment="Bottom"/>
+                    <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Glow.png" Height="343" Width="515" Margin="0,150,0,0" Opacity="1" Stretch="Fill" HorizontalAlignment="Center"/>
+                    <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Glow.png" Height="455" Width="515" Margin="0,150,0,0" Opacity="1" Stretch="Fill" HorizontalAlignment="Center"/>
+                    <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Glow.png" Height="343" Width="515" Margin="0,150,0,0" Opacity="1" Stretch="Fill" HorizontalAlignment="Center"/>
+                    <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Arch Gate Thing.png" HorizontalAlignment="Center" Width="1420" Margin="0,20,0,-31" Opacity="1"/>
+                    <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Glow2.png" Stretch="Fill" Margin="0,-30,0,0" HorizontalAlignment="Center" Width="972" Height="780"/>
+                    <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Glow.png" Height="327" Width="370" Stretch="Fill" Margin="0,77,0,0"/>
+                    <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Sky Blur Up.png" VerticalAlignment="Bottom"/>
                     <Grid Name="Grid_Bg_ForeItems_AvD_Angels_Clouds">
-                        <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Cloud 8.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1360" Height="108" Margin="0,0,0,187"/>
+                        <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Cloud 8.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1360" Height="108" Margin="0,0,0,187"/>
                         <Grid x:Name="LeftmostClouds">
-                            <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Cloud 7.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1104" Height="69" Margin="256,0,0,160"/>
+                            <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Cloud 7.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1104" Height="69" Margin="256,0,0,160"/>
                             <Grid>
-                                <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="-202,445,904,202" RenderTransformOrigin="0.5,0.5" Opacity="0.8">
+                                <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="-202,445,904,202" RenderTransformOrigin="0.5,0.5" Opacity="0.8">
                                     <Image.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -109,7 +107,7 @@
                                         </TransformGroup>
                                     </Image.RenderTransform>
                                 </Image>
-                                <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="205,295,1063,102" Opacity=".64">
+                                <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="205,295,1063,102" Opacity=".64">
                                     <Image.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -119,7 +117,7 @@
                                         </TransformGroup>
                                     </Image.RenderTransform>
                                 </Image>
-                                <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="312,385,991,102" Opacity=".56">
+                                <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="312,385,991,102" Opacity=".56">
                                     <Image.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -130,9 +128,9 @@
                                     </Image.RenderTransform>
                                 </Image>
                             </Grid>
-                            <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Cloud 5.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1360" Height="118" Margin="0,0,0,122"/>
+                            <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Cloud 5.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1360" Height="118" Margin="0,0,0,122"/>
                             <Grid>
-                                <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="150,423,1124,-50" Opacity=".84">
+                                <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="150,423,1124,-50" Opacity=".84">
                                     <Image.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -142,7 +140,7 @@
                                         </TransformGroup>
                                     </Image.RenderTransform>
                                 </Image>
-                                <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="262,522,776,117" RenderTransformOrigin="0.5,0.5" Opacity="0.8">
+                                <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="262,522,776,117" RenderTransformOrigin="0.5,0.5" Opacity="0.8">
                                     <Image.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -153,12 +151,12 @@
                                     </Image.RenderTransform>
                                 </Image>
                             </Grid>
-                            <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Cloud 3.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1360" Height="108" Margin="0,0,0,68"/>
+                            <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Cloud 3.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1360" Height="108" Margin="0,0,0,68"/>
                         </Grid>
                         <Grid x:Name="RightmostClouds">
-                            <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Cloud 6.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="92" Margin="0,0,0,156"/>
+                            <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Cloud 6.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="92" Margin="0,0,0,156"/>
                             <Grid>
-                                <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="800,486,-136,175" RenderTransformOrigin="0.5,0.5" Opacity="0.8">
+                                <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="800,486,-136,175" RenderTransformOrigin="0.5,0.5" Opacity="0.8">
                                     <Image.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -168,7 +166,7 @@
                                         </TransformGroup>
                                     </Image.RenderTransform>
                                 </Image>
-                                <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="1095,427,206,140" Opacity=".48">
+                                <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="1095,427,206,140" Opacity=".48">
                                     <Image.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -178,7 +176,7 @@
                                         </TransformGroup>
                                     </Image.RenderTransform>
                                 </Image>
-                                <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="939,467,354,107" Opacity=".74">
+                                <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="939,467,354,107" Opacity=".74">
                                     <Image.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -189,9 +187,9 @@
                                     </Image.RenderTransform>
                                 </Image>
                             </Grid>
-                            <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Cloud 4.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="85" Margin="0,0,0,122"/>
+                            <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Cloud 4.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="85" Margin="0,0,0,122"/>
                             <Grid>
-                                <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="952,512,-244,129" RenderTransformOrigin="0.5,0.5" Opacity="0.8">
+                                <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="952,512,-244,129" RenderTransformOrigin="0.5,0.5" Opacity="0.8">
                                     <Image.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -201,7 +199,7 @@
                                         </TransformGroup>
                                     </Image.RenderTransform>
                                 </Image>
-                                <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="1124,490,168,52" Opacity=".56">
+                                <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="1124,490,168,52" Opacity=".56">
                                     <Image.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -212,17 +210,17 @@
                                     </Image.RenderTransform>
                                 </Image>
                             </Grid>
-                            <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Cloud 2.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="128" Margin="0,0,0,21"/>
+                            <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Cloud 2.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="1360" Height="128" Margin="0,0,0,21"/>
                         </Grid>
                         <Grid x:Name="BottomHighClouds">
-                            <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Mini Cloud 1.png" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-70,244,0,0" Height="102"/>
-                            <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Mini Cloud 2.png" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,174,-252,0" Height="121"/>
+                            <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Mini Cloud 1.png" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-70,244,0,0" Height="102"/>
+                            <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Mini Cloud 2.png" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,174,-252,0" Height="121"/>
                         </Grid>
                         <Grid x:Name="TopHighClouds">
-                            <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Mini Cloud 3.png" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-92,-50,0,0" Height="223"/>
-                            <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Mini Cloud 4.png" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,-76,-52,0" Height="223"/>
+                            <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Mini Cloud 3.png" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-92,-50,0,0" Height="223"/>
+                            <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Mini Cloud 4.png" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,-76,-52,0" Height="223"/>
                         </Grid>
-                        <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="823,567,45,-2" RenderTransformOrigin="0.5,0.5">
+                        <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="823,567,45,-2" RenderTransformOrigin="0.5,0.5">
                             <Image.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform/>
@@ -232,8 +230,8 @@
                                 </TransformGroup>
                             </Image.RenderTransform>
                         </Image>
-                        <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="79,524,747,0"/>
-                        <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="1060,517,214,-117" Opacity=".84">
+                        <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="79,524,747,0"/>
+                        <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Glow Beam.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="1060,517,214,-117" Opacity=".84">
                             <Image.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform/>
@@ -243,7 +241,7 @@
                                 </TransformGroup>
                             </Image.RenderTransform>
                         </Image>
-                        <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="-90,496,958,69" RenderTransformOrigin="0.5,0.5">
+                        <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Glow Halfcircle.png" Stretch="Fill" Margin="-90,496,958,69" RenderTransformOrigin="0.5,0.5">
                             <Image.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform/>
@@ -253,7 +251,7 @@
                                 </TransformGroup>
                             </Image.RenderTransform>
                         </Image>
-                        <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Cloud 1.png" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                        <Image CacheMode="BitmapCache"  Source="/Assets/Backgrounds/AvD_Angels/Cloud 1.png" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
                     </Grid>
                 </Grid>
             </Grid>
@@ -265,28 +263,28 @@
         </Grid>
         <Grid x:Name="AlwaysBehind">
             <Grid x:Name="ScreenHeader">
-                <Image CacheMode="BitmapCache" Source="/Assets/Header.png" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Center" Height="34"/>
+                <Image CacheMode="BitmapCache"  Source="/Assets/Header.png" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Center" Height="34"/>
             </Grid>
         </Grid>
         <Grid x:Name="UserInterfaces">
             <Grid x:Name="MainMenuUI" Visibility="Hidden">
                 <Grid Visibility="Hidden" x:Name="MoneyUI" VerticalAlignment="Top" HorizontalAlignment="Right" Height="55" Width="170" Margin="0,10,143,0" MouseLeftButtonUp="MoneyUI_MouseLeftButtonUp">
-                    <Image Source="/Assets/Left Notch Header.png" HorizontalAlignment="Left"/>
-                    <Image Source="/Assets/Right Notch Header.png" HorizontalAlignment="Right"/>
-                    <Image Source="/Assets/Header.png" HorizontalAlignment="Center" Width="157" Stretch="Fill"/>
-                    <Image Source="Assets/Icons/Gem.png" HorizontalAlignment="Left" Margin="-21,0,0,-2" Width="53"/>
+                    <Image CacheMode="BitmapCache" Source="/Assets/Left Notch Header.png" HorizontalAlignment="Left"/>
+                    <Image CacheMode="BitmapCache" Source="/Assets/Right Notch Header.png" HorizontalAlignment="Right"/>
+                    <Image CacheMode="BitmapCache" Source="/Assets/Header.png" HorizontalAlignment="Center" Width="157" Stretch="Fill"/>
+                    <Image CacheMode="BitmapCache"  Source="Assets/Icons/Gem.png" HorizontalAlignment="Left" Margin="-21,0,0,-2" Width="53"/>
                     <ExtraThings:DrawTextOutlined x:Name="MoneyCount" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="38" Text="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="32,0,4,0"/>
                 </Grid>
-                <Grid x:Name="LogosCorner" HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Height="170" Margin="10,45,0,0" CacheMode="BitmapCache">
+                <Grid x:Name="LogosCorner" HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Height="170" Margin="10,45,0,0" >
                     <ExtraThings:GridButton x:Name="BTN_LogoToggler" MouseLeftButtonUp="BTN_LogoToggler_MouseLeftButtonUp">
                         <!-- To make the entire button pressable instead of only the rendered elements be pressable -->
-                        <Image Source="Assets/Dummy.png" Stretch="Fill"/>
+                        <Image CacheMode="BitmapCache"  Source="Assets/Dummy.png" Stretch="Fill"/>
                         <Grid x:Name="LogosCorner_OldStyle" Visibility="Visible">
-                            <Image Source="/Assets/BS Logo Old.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="187"/>
+                            <Image CacheMode="BitmapCache" Source="/Assets/BS Logo Old.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="187"/>
                             <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_EVENT_TRACKER_SUBTEXT], Source={x:Static Lib:LocalizationLib.Strings}}" StrokeThiccness="3" ShadowColor="Black" ShadowOffset="0, 1.75" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" Margin="192,0,0,0" Height="150" Width="208"/>
                         </Grid>
                         <Grid x:Name="LogosCorner_NewStyle" Visibility="Collapsed">
-                            <Image Source="/Assets/BS Logo New.png" HorizontalAlignment="Center" VerticalAlignment="Top" Width="271" Height="150"/>
+                            <Image CacheMode="BitmapCache" Source="/Assets/BS Logo New.png" HorizontalAlignment="Center" VerticalAlignment="Top" Width="271" Height="150"/>
                             <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_EVENT_TRACKER_SUBTEXT], Source={x:Static Lib:LocalizationLib.Strings}}" StrokeThiccness="3" ShadowColor="Black" ShadowOffset="0, 1.75" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" Margin="0,130,0,0" Width="400" Height="40"/>
                         </Grid>
                     </ExtraThings:GridButton>
@@ -295,10 +293,10 @@
                     <Grid x:Name="DynCounter" VerticalAlignment="Center" HorizontalAlignment="Center" Width="1350" Height="220">
                         <Grid VerticalAlignment="Top" Height="148">
                             <Grid x:Name="DynCounter_ImgGrid" Width="675" HorizontalAlignment="Left">
-                                <Image CacheMode="BitmapCache" x:Name="DynCounter_Img" Source="/Assets/Icons/Mastery Point.png" Height="146" Width="124" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                                <Image CacheMode="BitmapCache"  x:Name="DynCounter_Img" Source="/Assets/Icons/Mastery Point.png" Height="146" Width="124" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,0,0"/>
                             </Grid>
                             <Grid x:Name="DynCounter_NumGrid" Width="675" HorizontalAlignment="Right">
-                                <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" x:Name="DynCounter_Num_CanMono" Text="0" FontSize="128" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" StrokeThiccness="8" ShadowColor="Black" ShadowOffset="0, 4.5" Margin="8, 0, 0, 0"/>
+                                <ExtraThings:DrawTextOutlined x:Name="DynCounter_Num_CanMono" Text="0" FontSize="128" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" StrokeThiccness="8" ShadowColor="Black" ShadowOffset="0, 4.5" Margin="8, 0, 0, 0"/>
                             </Grid>
                         </Grid>
                         <Grid VerticalAlignment="Top" Height="52" Margin="0, 148, 0, 0">
@@ -306,7 +304,7 @@
                         </Grid>
                     </Grid>
                     <Grid x:Name="SystemClock" HorizontalAlignment="Right" VerticalAlignment="Top" Width="300" Height="55" Margin="0,85,10,0">
-                        <ExtraThings:DrawTextOutlined x:Name="Txt_SystemClock" Text="Date goes here Abg&#10;Time goes here Abg" FontSize="22" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" StrokeThiccness="1.75" ShadowColor="Black" ShadowOffset="0, 1.35"/>
+                        <ExtraThings:DrawTextOutlined x:Name="Txt_SystemClock" Text="" FontSize="22" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" StrokeThiccness="1.75" ShadowColor="Black" ShadowOffset="0, 1.35"/>
                     </Grid>
                     <Grid x:Name="StatusCheck" VerticalAlignment="Top" HorizontalAlignment="Center" Height="52" Margin="0,85,0,0" Width="220">
                         <ExtraThings:DrawTextOutlined x:Name="Txt_Status" Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="32" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 1.85" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Width="1260"/>
@@ -316,25 +314,25 @@
                     <Grid x:Name="ProgressBar" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="80" Margin="0,0,0,180" Width="1280">
 
                         <Grid x:Name="ProgressBar_Back">
-                            <Image Source="/Assets/Bars/Progress Bar Back Left.png" HorizontalAlignment="Left" Margin="1, 2, 0, 3" CacheMode="BitmapCache"/>
-                            <Image Source="/Assets/Bars/Progress Bar Back Right.png" HorizontalAlignment="Right" Margin="1, 2, 2, 3" CacheMode="BitmapCache"/>
-                            <Image Source="/Assets/Bars/Progress Bar Back Middle.png" HorizontalAlignment="Center" Margin="1, 2, 0, 3" Width="1261" Stretch="Fill" CacheMode="BitmapCache"/>
+                            <Image CacheMode="BitmapCache" Source="/Assets/Bars/Progress Bar Back Left.png" HorizontalAlignment="Left" Margin="1, 2, 0, 3" />
+                            <Image CacheMode="BitmapCache" Source="/Assets/Bars/Progress Bar Back Right.png" HorizontalAlignment="Right" Margin="1, 2, 2, 3" />
+                            <Image CacheMode="BitmapCache" Source="/Assets/Bars/Progress Bar Back Middle.png" HorizontalAlignment="Center" Margin="1, 2, 0, 3" Width="1261" Stretch="Fill" />
                         </Grid>
 
                         <Grid x:Name="ProgressBar_Front" Visibility="Visible">
-                            <Image x:Name="ProgressBar_FLeft" Visibility="Hidden" Source="/Assets/Bars/Progress Bar Fore Left.png" HorizontalAlignment="Left" Margin="1, 2, 0, 3" Width="11" CacheMode="BitmapCache"/>
-                            <Image x:Name="ProgressBar_FRight" Visibility="Hidden" Source="/Assets/Bars/Progress Bar Fore Right.png" HorizontalAlignment="Left" Margin="8, 2, 0, 3" Width="11" CacheMode="BitmapCache"/>
-                            <Image x:Name="ProgressBar_FMid" Visibility="Hidden" Source="/Assets/Bars/Progress Bar Fore Middle.png" HorizontalAlignment="Left" Margin="8, 2, 0, 3" Width="0" Stretch="Fill" CacheMode="BitmapCache"/>
-                            <Image x:Name="ProgressBar_FProc" Visibility="Hidden" Source="/Assets/Bars/Progress Bar Proc.png" HorizontalAlignment="Left" Margin="3, 3.5, 0, 4" Width="16" Stretch="Fill"/>
+                            <Image CacheMode="BitmapCache" x:Name="ProgressBar_FLeft" Visibility="Hidden" Source="/Assets/Bars/Progress Bar Fore Left.png" HorizontalAlignment="Left" Margin="1, 2, 0, 3" Width="11" />
+                            <Image CacheMode="BitmapCache" x:Name="ProgressBar_FRight" Visibility="Hidden" Source="/Assets/Bars/Progress Bar Fore Right.png" HorizontalAlignment="Left" Margin="8, 2, 0, 3" Width="11" />
+                            <Image CacheMode="BitmapCache" x:Name="ProgressBar_FMid" Visibility="Hidden" Source="/Assets/Bars/Progress Bar Fore Middle.png" HorizontalAlignment="Left" Margin="9, 2, 0, 3" Width="0" Stretch="Fill" />
+                            <Image CacheMode="BitmapCache" x:Name="ProgressBar_FProc" Visibility="Hidden" Source="/Assets/Bars/Progress Bar Proc.png" HorizontalAlignment="Left" Margin="3, 3.5, 0, 4" Width="16" Stretch="Fill"/>
                         </Grid>
 
                         <Grid x:Name="ProgressBar_Stencil">
-                            <Image CacheMode="BitmapCache" Source="/Assets/Bars/Loading Bar Stencil Left.png" HorizontalAlignment="Left"/>
-                            <Image CacheMode="BitmapCache" Source="/Assets/Bars/Loading Bar Stencil Right.png" HorizontalAlignment="Right"/>
-                            <Image CacheMode="BitmapCache" Source="/Assets/Bars/Loading Bar Stencil Middle.png" HorizontalAlignment="Center" Stretch="Fill" Width="1253.5"/>
+                            <Image CacheMode="BitmapCache"  Source="/Assets/Bars/Loading Bar Stencil Left.png" HorizontalAlignment="Left"/>
+                            <Image CacheMode="BitmapCache"  Source="/Assets/Bars/Loading Bar Stencil Right.png" HorizontalAlignment="Right"/>
+                            <Image CacheMode="BitmapCache"  Source="/Assets/Bars/Loading Bar Stencil Middle.png" HorizontalAlignment="Center" Stretch="Fill" Width="1253.5"/>
                         </Grid>
 
-                        <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" x:Name="Txt_ProgressPercent" Text="0%" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="64" StrokeThiccness="4.5" ShadowColor="Black" ShadowOffset="0, 3.65" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="1260"/>
+                        <ExtraThings:DrawTextOutlined x:Name="Txt_ProgressPercent" Text="0%" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="64" StrokeThiccness="4.5" ShadowColor="Black" ShadowOffset="0, 3.65" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="1260"/>
                     </Grid>
                 </Grid>
                 <Grid x:Name="TooMuchStuffView">
@@ -351,58 +349,70 @@
                 <Grid x:Name="FunctionButtons" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="475" Height="135">
                     <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_CONTROLS_LABEL], Source={x:Static Lib:LocalizationLib.Strings}}" StrokeThiccness="3" ShadowColor="Black" ShadowOffset="0, 1.75" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One"/>
                     <ExtraThings:GridButton x:Name="BTN_Refresh" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="80" Width="208" Margin="10,0,0,10" MouseLeftButtonUp="BTN_Refresh_MouseLeftButtonUp">
-                        <Image x:Name="ImgBTN_Refresh" Source="/Assets/Blue Button.png"/>
+                        <Image CacheMode="BitmapCache" x:Name="ImgBTN_Refresh" Source="/Assets/Blue Button.png"/>
                         <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_REFRESH], Source={x:Static Lib:LocalizationLib.Strings}}" FontSize="36" StrokeThiccness="2.75" ShadowColor="Black" ShadowOffset="0, 2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One"/>
                     </ExtraThings:GridButton>
                     <ExtraThings:GridButton Height="80" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="223,0,0,10" Width="86">
                         <ExtraThings:CheckboxAsImage x:Name="Chk_AutoRefresh" ImageSource="/Assets/Active Checkbox.png" ImageSourceIfUnchecked="/Assets/Inactive Checkbox.png" MouseLeftButtonUp="Chk_AutoRefresh_MouseLeftButtonUp"/>
                     </ExtraThings:GridButton>
-                    <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_AUTO_REFRESH], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="24" StrokeThiccness="1.75" ShadowColor="Black" ShadowOffset="0, 1.35" VerticalAlignment="Top" Margin="314,45,10,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="80"/>
+                    <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_AUTO_REFRESH], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="32" StrokeThiccness="2.75" ShadowColor="Black" ShadowOffset="0, 2.25" VerticalAlignment="Top" Margin="314,45,10,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="80"/>
                 </Grid>
                 <Grid x:Name="ViewSelect" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="390" Height="135">
                     <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_VIEWMODE_LABEL], Source={x:Static Lib:LocalizationLib.Strings}}" StrokeThiccness="3" ShadowColor="Black" ShadowOffset="0, 1.75" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One"/>
                     <ExtraThings:GridButton x:Name="BTN_ViewModeInfo" HorizontalAlignment="Right" VerticalAlignment="Top" Height="40" Width="38" Margin="0,3,16,0" MouseLeftButtonUp="BTN_ViewModeInfo_MouseLeftButtonUp">
-                        <Image Source="/Assets/Info.png"/>
+                        <Image CacheMode="BitmapCache" Source="/Assets/Info.png"/>
                     </ExtraThings:GridButton>
-                    <ExtraThings:GridButton x:Name="BTN_ViewMode_Simple" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="80" Width="120" Margin="0,0,260,10" MouseLeftButtonUp="BTN_ViewMode_Simple_MouseLeftButtonUp">
-                        <Image x:Name="ImgBTN_ViewMode_Simple" Source="/Assets/Red Button.png"/>
-                        <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_VIEWMODE_SIMPLE], Source={x:Static Lib:LocalizationLib.Strings}}" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One"/>
-                    </ExtraThings:GridButton>
-                    <ExtraThings:GridButton x:Name="BTN_ViewMode_Detailed" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="80" Width="120" Margin="0,0,135,10" MouseLeftButtonUp="BTN_ViewMode_Detailed_MouseLeftButtonUp">
-                        <Image x:Name="ImgBTN_ViewMode_Detailed" Source="/Assets/Red Button.png"/>
-                        <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_VIEWMODE_DETAILED], Source={x:Static Lib:LocalizationLib.Strings}}" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One"/>
-                    </ExtraThings:GridButton>
-                    <ExtraThings:GridButton x:Name="BTN_ViewMode_TooMuchStuff" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="80" Width="120" Margin="0,0,10,10" MouseLeftButtonUp="BTN_ViewMode_TooMuchStuff_MouseLeftButtonUp">
-                        <Image x:Name="ImgBTN_ViewMode_TooMuchStuff" Source="/Assets/Red Button.png"/>
-                        <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_VIEWMODE_OVERCOMPLICATED], Source={x:Static Lib:LocalizationLib.Strings}}" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One"/>
-                    </ExtraThings:GridButton>
+                    <Grid x:Name="ViewSelect_Nav" Width="370" Height="73" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,48,0,0">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Nav Field Slice.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,7,20,12" />
+                        <ExtraThings:DrawTextOutlined x:Name="ViewSelect_Nav_PrefText" Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="32" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="92,7,92,0" Height="54"/>
+                        <ExtraThings:GridButton x:Name="BTN_ViewSelect_Nav_GoLeft" VerticalAlignment="Top" HorizontalAlignment="Left" MouseLeftButtonUp="BTN_ViewSelect_Nav_GoLeft_MouseLeftButtonUp">
+                            <Grid HorizontalAlignment="Left">
+                                <Image CacheMode="BitmapCache" Source="/Assets/Blue Button Short.png" />
+                                <Image CacheMode="BitmapCache" Source="/Assets/Nav Arrow.png" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="19, 14, 22, 19" />
+                            </Grid>
+                        </ExtraThings:GridButton>
+                        <ExtraThings:GridButton x:Name="ViewSelect_Nav_GoRight" VerticalAlignment="Top" HorizontalAlignment="Right" MouseLeftButtonUp="ViewSelect_Nav_GoRight_MouseLeftButtonUp">
+                            <Grid HorizontalAlignment="Right">
+                                <Image CacheMode="BitmapCache" Source="/Assets/Blue Button Short.png" />
+                                <Image CacheMode="BitmapCache" Source="/Assets/Nav Arrow.png" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="25, 14, 22, 19" RenderTransformOrigin="0.5,0.5" >
+                                    <Image.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleY="-1"/>
+                                            <SkewTransform/>
+                                            <RotateTransform Angle="-180"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Image.RenderTransform>
+                                </Image>
+                            </Grid>
+                        </ExtraThings:GridButton>
+                    </Grid>
                 </Grid>
                 <Grid x:Name="EventInfoTab" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="480" Height="120" Margin="0,0,395,10">
-                    <Image Source="/Assets/Left Notch Header.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="9" Height="33" Margin="8,0,0,0"/>
-                    <Image Source="/Assets/Right Notch Header.png" HorizontalAlignment="Right" VerticalAlignment="Top" Width="9" Height="33" Margin="0,0,-2,0"/>
-                    <Image Source="/Assets/Header.png" HorizontalAlignment="Center" VerticalAlignment="Top" Width="466" Stretch="Fill" Height="33" Margin="10,0,0,0"/>
+                    <Image CacheMode="BitmapCache" Source="/Assets/Left Notch Header.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="9" Height="33" Margin="8,0,0,0"/>
+                    <Image CacheMode="BitmapCache" Source="/Assets/Right Notch Header.png" HorizontalAlignment="Right" VerticalAlignment="Top" Width="9" Height="33" Margin="0,0,-2,0"/>
+                    <Image CacheMode="BitmapCache" Source="/Assets/Header.png" HorizontalAlignment="Center" VerticalAlignment="Top" Width="466" Stretch="Fill" Height="33" Margin="10,0,0,0"/>
                     <ExtraThings:DrawTextOutlined x:Name="Txt_EventEndsIn" Fill="#7583a4" Text="{Binding Path=[TID_EVENT_ENDS_IN], Source={x:Static Lib:LocalizationLib.Strings}}" FontSize="20" Stroke="Transparent" HorizontalAlignment="Right" VerticalAlignment="Top" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" Width="432" Height="29" Margin="0,0,30,0"/>
-
                     <ExtraThings:GridButton x:Name="BTN_EventInfoTab" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="480" Height="95" MouseLeftButtonUp="BTN_EventInfoTab_MouseLeftButtonUp">
-                        <Image Source="/Assets/Event Button.png" HorizontalAlignment="Left"/>
+                        <Image CacheMode="BitmapCache" Source="/Assets/Event Button.png" HorizontalAlignment="Left"/>
                         <Grid>
-                            <Image x:Name="EventInfoTab_Icon" Source="/Assets/Clock.png" VerticalAlignment="Center" HorizontalAlignment="Left" Width="450" Height="75" RenderOptions.ClearTypeHint="Enabled" Margin="15,-2,0,0"/>
+                            <Image CacheMode="BitmapCache" x:Name="EventInfoTab_Icon" Source="/Assets/Clock.png" VerticalAlignment="Center" HorizontalAlignment="Left" Width="450" Height="75" RenderOptions.ClearTypeHint="Enabled" Margin="15,-2,0,0"/>
                             <ExtraThings:DrawTextOutlined x:Name="Txt_EventName" Text="EVENT NAME" StrokeThiccness="3" ShadowColor="Black" ShadowOffset="0, 1.75" VerticalAlignment="Bottom" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" Margin="95,0,0,38" Width="375" Height="46"/>
                             <ExtraThings:DrawTextOutlined x:Name="Txt_EventDesc" Text="Event description" Fill="Lime" StrokeThiccness="1.75" ShadowColor="Black" ShadowOffset="0, 1.325" FontSize="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" Margin="95,0,0,18" Width="370" Height="28"/>
                         </Grid>
                     </ExtraThings:GridButton>
                     <ExtraThings:GridButton x:Name="BTN_EventInfo" HorizontalAlignment="Right" VerticalAlignment="Top" Height="40" Width="38" Margin="0,-7,-11,0">
-                        <Image Source="/Assets/Info.png"/>
+                        <Image CacheMode="BitmapCache" Source="/Assets/Info.png"/>
                     </ExtraThings:GridButton>
                 </Grid>
                 <Grid x:Name="NewsMarquee" VerticalAlignment="Top" HorizontalAlignment="Center" Width="1280" Height="60" Margin="10,85,0,0" Visibility="Hidden">
-                    <Image Source="/Assets/Bars/Marquee Background.png" Stretch="Fill" Opacity=".35"/>
+                    <Image CacheMode="BitmapCache" Source="/Assets/Bars/Marquee Background.png" Stretch="Fill" Opacity=".35"/>
                     <Grid ClipToBounds="True" Width="1250">
-                        <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" Width="1250" x:Name="NewsMarquee_Txt" Text="News: help!" HorizontalContentAlignment="Center" FontSize="40" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" VerticalContentAlignment="Center" HorizontalAlignment="Center" StrokeThiccness="3.25" ShadowColor="Black" ShadowOffset="0, 2"/>
+                        <ExtraThings:DrawTextOutlined Width="1250" x:Name="NewsMarquee_Txt" Text="News: help!" HorizontalContentAlignment="Center" FontSize="40" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" VerticalContentAlignment="Center" HorizontalAlignment="Center" StrokeThiccness="3.25" ShadowColor="Black" ShadowOffset="0, 2"/>
                     </Grid>
                 </Grid>
                 <ExtraThings:GridButton x:Name="BTN_Settings" Width="122" Height="70" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,10,0" MouseLeftButtonUp="BTN_Settings_MouseLeftButtonUp">
-                    <Image Source="/Assets/Icons/Hamburger Button.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Image CacheMode="BitmapCache" Source="/Assets/Icons/Hamburger Button.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </ExtraThings:GridButton>
             </Grid>
             <Grid x:Name="EventResultsHistoryUI" Visibility="Hidden">
@@ -418,7 +428,7 @@
                 <Grid Width="240" Height="160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="130,100,0,0">
                     <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_ENABLE_ANIMATIONS], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="22" StrokeThiccness="1.5" ShadowColor="Black" ShadowOffset="0, 1.5" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Height="70"/>
                     <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
-                        <ExtraThings:CheckboxAsImage x:Name="Chk_EnableAnimations" ImageSource="/Assets/Toggles ON.png" ImageSourceIfUnchecked="/Assets/Toggles OFF.png" VerticalAlignment="Bottom" MouseLeftButtonUp="Chk_EnableAnimations_MouseLeftButtonUp">
+                        <ExtraThings:CheckboxAsImage  x:Name="Chk_EnableAnimations" ImageSource="/Assets/Toggles ON.png" ImageSourceIfUnchecked="/Assets/Toggles OFF.png" VerticalAlignment="Bottom" MouseLeftButtonUp="Chk_EnableAnimations_MouseLeftButtonUp">
                             <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_ON], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="10,-4,120,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90" Opacity=".9"/>
                             <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_OFF], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="120,-4,10,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90" Opacity=".9"/>
                         </ExtraThings:CheckboxAsImage>
@@ -427,7 +437,7 @@
                 <Grid Width="240" Height="160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="415,100,0,0">
                     <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_ALT_FONT], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="22" StrokeThiccness="1.5" ShadowColor="Black" ShadowOffset="0, 1.5" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Height="70"/>
                     <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
-                        <ExtraThings:CheckboxAsImage x:Name="Chk_UseAltFont" ImageSource="/Assets/Toggles ON.png" ImageSourceIfUnchecked="/Assets/Toggles OFF.png" VerticalAlignment="Bottom" MouseLeftButtonUp="Chk_UseAltFont_MouseLeftButtonUp">
+                        <ExtraThings:CheckboxAsImage  x:Name="Chk_UseAltFont" ImageSource="/Assets/Toggles ON.png" ImageSourceIfUnchecked="/Assets/Toggles OFF.png" VerticalAlignment="Bottom" MouseLeftButtonUp="Chk_UseAltFont_MouseLeftButtonUp">
                             <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_ON], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="10,-4,120,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90" Opacity=".9"/>
                             <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_OFF], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="120,-4,10,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90" Opacity=".9"/>
                         </ExtraThings:CheckboxAsImage>
@@ -435,57 +445,57 @@
                 </Grid>
                 <Grid Width="240" Height="160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="700,100,0,0">
                     <ExtraThings:GridButton x:Name="BTN_ChangeTheme" Height="90" VerticalAlignment="Bottom" MouseLeftButtonUp="BTN_ChangeTheme_MouseLeftButtonUp">
-                        <Image Source="/Assets/Blue Button.png"/>
+                        <Image CacheMode="BitmapCache"  Source="/Assets/Blue Button.png"/>
                         <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_CHANGE_THEME], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
                     </ExtraThings:GridButton>
                 </Grid>
                 <Grid Width="240" Height="160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="985,100,0,0">
                     <ExtraThings:GridButton x:Name="BTN_About" Height="90" VerticalAlignment="Bottom" MouseLeftButtonUp="BTN_About_MouseLeftButtonUp">
-                        <Image Source="/Assets/Blue Button.png"/>
+                        <Image CacheMode="BitmapCache"  Source="/Assets/Blue Button.png"/>
                         <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_ABOUT], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
                     </ExtraThings:GridButton>
                 </Grid>
                 <Grid Width="240" Height="160" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="130,0,0,0">
                     <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_LANGUAGE], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="22" StrokeThiccness="1.5" ShadowColor="Black" ShadowOffset="0, 1.5" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Height="70"/>
-                    <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
-                        <Image Source="/Assets/Blue Button.png"/>
+                    <ExtraThings:GridButton x:Name="BTN_ChangeLanguage" Height="90" VerticalAlignment="Bottom" MouseLeftButtonUp="BTN_ChangeLanguage_MouseLeftButtonUp">
+                        <Image CacheMode="BitmapCache"  Source="/Assets/Blue Button.png"/>
                         <ExtraThings:DrawTextOutlined x:Name="Txt_LangName" Text="-" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
                     </ExtraThings:GridButton>
                 </Grid>
                 <Grid Width="240" Height="160" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="415,0,0,0">
                     <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_NUM_FORMAT_PREF_TITLE], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="22" StrokeThiccness="1.5" ShadowColor="Black" ShadowOffset="0, 1.5" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Height="70"/>
-                    <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
-                        <Image Source="/Assets/Blue Button.png"/>
-                        <ExtraThings:DrawTextOutlined x:Name="Txt_ChangeNumFormat" Text="123,456,789" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    <ExtraThings:GridButton x:Name="BTN_ChangeNumberFormat" Height="90" VerticalAlignment="Bottom" MouseLeftButtonUp="BTN_ChangeNumberFormat_MouseLeftButtonUp">
+                        <Image CacheMode="BitmapCache"  Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined x:Name="Txt_ChangeNumFormat" Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
                     </ExtraThings:GridButton>
                 </Grid>
                 <Grid Width="240" Height="160" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="700,0,0,0">
                     <ExtraThings:GridButton x:Name="BTN_GoToGitHubRepo" Height="90" VerticalAlignment="Bottom" MouseLeftButtonUp="BTN_GoToGitHubRepo_MouseLeftButtonUp">
-                        <Image Source="/Assets/Blue Button.png"/>
+                        <Image CacheMode="BitmapCache"  Source="/Assets/Blue Button.png"/>
                         <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_ABOUT_GITHUB_REPO_BUTTON], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
                     </ExtraThings:GridButton>
                 </Grid>
                 <Grid Width="240" Height="160" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="985,0,0,0">
                     <ExtraThings:GridButton x:Name="BTN_SuperSecretSettings" Height="90" VerticalAlignment="Bottom" MouseLeftButtonUp="BTN_SuperSecretSettings_MouseLeftButtonUp">
-                        <Image Source="/Assets/Blue Button.png"/>
+                        <Image CacheMode="BitmapCache"  Source="/Assets/Blue Button.png"/>
                         <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_SUPER_SECRET_SETTINGS], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
                     </ExtraThings:GridButton>
                 </Grid>
                 <Grid Visibility="Hidden"  Width="480" Height="160" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="130,0,0,100">
                     <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_MAIN_FONT_LABEL], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="22" StrokeThiccness="1.5" ShadowColor="Black" ShadowOffset="0, 1.5" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Height="70"/>
-                    <Image Source="/Assets/Header Layer.png" Margin="0,78,213,8" HorizontalAlignment="Right" Opacity="0.6" Width="245"/>
+                    <Image CacheMode="BitmapCache"  Source="/Assets/Header Layer.png" Margin="0,78,213,8" HorizontalAlignment="Right" Opacity="0.6" Width="245"/>
                     <ExtraThings:DrawTextOutlined x:Name="Txt_SampleText" Text="{Binding Path=[TID_SAMPLE_TEXT], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="30,66,225,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
                     <ExtraThings:GridButton x:Name="BTN_FontchangerrrrrMAIN" Height="90" VerticalAlignment="Bottom" HorizontalAlignment="Right" MouseLeftButtonUp="BTN_FontchangerrrrrMAIN_MouseLeftButtonUp">
-                        <Image Source="/Assets/Blue Button.png"/>
+                        <Image CacheMode="BitmapCache"  Source="/Assets/Blue Button.png"/>
                         <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_CHANGE_FONT], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
                     </ExtraThings:GridButton>
                 </Grid>
                 <Grid Visibility="Hidden" Width="480" Height="160" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="700,0,0,100">
                     <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_ALT_FONT_LABEL], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="22" StrokeThiccness="1.5" ShadowColor="Black" ShadowOffset="0, 1.5" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Height="70"/>
-                    <Image Source="/Assets/Header Layer.png" Margin="0,75,213,10" HorizontalAlignment="Right" Opacity="0.6" Width="245"/>
+                    <Image CacheMode="BitmapCache"  Source="/Assets/Header Layer.png" Margin="0,75,213,10" HorizontalAlignment="Right" Opacity="0.6" Width="245"/>
                     <ExtraThings:DrawTextOutlined x:Name="Txt_SampleText_CanMono" Text="{Binding Path=[TID_SAMPLE_TEXT], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/DeterminationMonoWeb.ttf#Determination Mono Web" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="30,66,225,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
-                    <ExtraThings:GridButton x:Name="BTN_FontchangerrrrrALT" Height="90" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                        <Image Source="/Assets/Blue Button.png"/>
+                    <ExtraThings:GridButton  x:Name="BTN_FontchangerrrrrALT" Height="90" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                        <Image CacheMode="BitmapCache"  Source="/Assets/Blue Button.png"/>
                         <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_CHANGE_FONT], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
                     </ExtraThings:GridButton>
                 </Grid>
@@ -493,67 +503,217 @@
             <Grid x:Name="ThemeSelectorUI" Visibility="Hidden">
                 <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_SELECT_THEME_TITLE], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="48" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="60"/>
                 <ExtraThings:GridButton x:Name="BTN_ThemeSelectorUI_Basic" Width="412" Height="163" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="25,101,0,0" MouseLeftButtonUp="BTN_ThemeSelectorUI_Basic_MouseLeftButtonUp">
-                    <Image Source="/Assets/Backgrounds/Basic/Thumbnail.png"/>
-                    <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" Text="{Binding Path=[TID_THEME_DEFAULT], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.5" HorizontalAlignment="Center" Width="377"/>
+                    <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/Basic/Thumbnail.png"/>
+                    <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_THEME_DEFAULT], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.5" HorizontalAlignment="Center" Width="377"/>
                 </ExtraThings:GridButton>
                 <ExtraThings:GridButton x:Name="BTN_ThemeSelectorUI_Brawloween2023" Width="412" Height="163" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,101,0,0" MouseLeftButtonUp="BTN_ThemeSelectorUI_Brawloween2023_MouseLeftButtonUp">
-                    <Image Source="/Assets/Backgrounds/Brawloween2023/Thumbnail.png"/>
-                    <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" Text="{Binding Path=[TID_THEME_BRAWLOWEEN2023], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.5" HorizontalAlignment="Center" Width="377"/>
+                    <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/Brawloween2023/Thumbnail.png"/>
+                    <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_THEME_BRAWLOWEEN2023], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.5" HorizontalAlignment="Center" Width="377"/>
                 </ExtraThings:GridButton>
                 <ExtraThings:GridButton x:Name="BTN_ThemeSelectorUI_Angels" Width="412" Height="163" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,101,25,0" MouseLeftButtonUp="BTN_ThemeSelectorUI_Angels_MouseLeftButtonUp">
-                    <Image Source="/Assets/Backgrounds/AvD_Angels/Thumbnail.png"/>
-                    <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" Text="{Binding Path=[TID_THEME_ANGELS_VS_DEMONS_ANGELS], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.5" HorizontalAlignment="Center" Width="377"/>
+                    <Image CacheMode="BitmapCache" Source="/Assets/Backgrounds/AvD_Angels/Thumbnail.png"/>
+                    <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_THEME_ANGELS_VS_DEMONS_ANGELS], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.5" HorizontalAlignment="Center" Width="377"/>
                 </ExtraThings:GridButton>
             </Grid>
             <Grid x:Name="AboutUI" Visibility="Hidden">
                 <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_ABOUT_TITLE], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="48" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="60"/>
-                <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" Text="{Binding [TID_ABOUT_THIS_APP], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="24" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Height="185" Margin="10,89,10,0"/>
-                <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" Text="{Binding [TID_ABOUT_SPECIAL_THANKS_LABEL], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="84" StrokeThiccness="5.5" ShadowColor="Black" ShadowOffset="0, 4.5" VerticalAlignment="Center" HorizontalAlignment="Left" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Height="149" Margin="10,0,0,0" Width="650"/>
-                <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" Text="{Binding [TID_ABOUT_SPECIAL_THANKS_DESC], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="28" StrokeThiccness="2.75" ShadowColor="Black" ShadowOffset="0, 2.25" VerticalAlignment="Center" HorizontalAlignment="Right" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="149" Margin="0,0,10,0" Width="640"/>
-                <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" Text="{Binding Path=[TID_DISCLAIMER_FAN_CONTENT_POLICY], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="28" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="105" Margin="0,0,462,94"/>
+                <ExtraThings:DrawTextOutlined Text="{Binding [TID_ABOUT_THIS_APP], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="24" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Height="185" Margin="10,89,10,0"/>
+                <ExtraThings:DrawTextOutlined Text="{Binding [TID_ABOUT_SPECIAL_THANKS_LABEL], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="84" StrokeThiccness="5.5" ShadowColor="Black" ShadowOffset="0, 4.5" VerticalAlignment="Center" HorizontalAlignment="Left" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Height="149" Margin="10,0,0,0" Width="650"/>
+                <ExtraThings:DrawTextOutlined Text="{Binding [TID_ABOUT_SPECIAL_THANKS_DESC], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="28" StrokeThiccness="2.75" ShadowColor="Black" ShadowOffset="0, 2.25" VerticalAlignment="Center" HorizontalAlignment="Right" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="149" Margin="0,0,10,0" Width="640"/>
+                <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_DISCLAIMER_FAN_CONTENT_POLICY], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="28" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="105" Margin="0,0,462,94"/>
                 <Grid Width="240" Height="90" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,217,102">
                     <ExtraThings:GridButton x:Name="BTN_GoToFanPolicyLink" Height="90" VerticalAlignment="Bottom" MouseLeftButtonUp="BTN_GoToFanPolicyLink_MouseLeftButtonUp">
-                        <Image Source="/Assets/Blue Button.png"/>
-                        <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" Text="{Binding Path=[TID_DISCLAIMER_FAN_CONTENT_POLICY_BUTTON], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 2" FontSize="24" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_DISCLAIMER_FAN_CONTENT_POLICY_BUTTON], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 2" FontSize="24" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
                     </ExtraThings:GridButton>
                 </Grid>
-                <ExtraThings:DrawTextOutlined CacheMode="BitmapCache" x:Name="Txt_AboutBuild" Text="{Binding Path=[TID_ABOUT_BUILD], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="42" StrokeThiccness="3.5" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="78" Margin="0,0,0,10"/>
+                <ExtraThings:DrawTextOutlined x:Name="Txt_AboutBuild" Text="{Binding Path=[TID_ABOUT_BUILD], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="42" StrokeThiccness="3.5" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="78" Margin="0,0,0,10"/>
             </Grid>
             <Grid x:Name="FormatPrefUI" Visibility="Hidden">
-
+                <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_NUM_FORMAT_PREF_TITLE], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="48" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="60"/>
+                <Grid x:Name="FormatPrefUI_Selection" Width="1130" Height="95" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,96,0,0">
+                    <Image CacheMode="BitmapCache" Source="/Assets/Nav Field Slice.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,7,20,12" />
+                    <ExtraThings:DrawTextOutlined x:Name="FormatPrefUI_PrefText" Text="If this shows up, I messed up." FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="48" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="135,18,135,0"/>
+                    <ExtraThings:GridButton x:Name="BTN_FormatPref_GoLeft" VerticalAlignment="Top" HorizontalAlignment="Left" MouseLeftButtonUp="BTN_FormatPref_GoLeft_MouseLeftButtonUp">
+                        <Grid HorizontalAlignment="Left">
+                            <Image CacheMode="BitmapCache" Source="/Assets/Blue Button Short.png" />
+                            <Image CacheMode="BitmapCache" Source="/Assets/Nav Arrow.png" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20, 16, 22, 24" />
+                        </Grid>
+                    </ExtraThings:GridButton>
+                    <ExtraThings:GridButton x:Name="BTN_FormatPref_GoRight" VerticalAlignment="Top" HorizontalAlignment="Right" MouseLeftButtonUp="BTN_FormatPref_GoRight_MouseLeftButtonUp">
+                        <Grid HorizontalAlignment="Right">
+                            <Image CacheMode="BitmapCache" Source="/Assets/Blue Button Short.png" />
+                            <Image CacheMode="BitmapCache" Source="/Assets/Nav Arrow.png" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20, 16, 22, 24" RenderTransformOrigin="0.5,0.5" >
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleY="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="-180"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+                        </Grid>
+                    </ExtraThings:GridButton>
+                </Grid>
+                <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_NUM_FORMAT_PREF_SUBTITLE_EXAMPLE_LABEL], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="40" StrokeThiccness="3.5" ShadowColor="Black" ShadowOffset="0, 2.75" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Margin="135,196,135,0" Height="108"/>
+                <ExtraThings:DrawTextOutlined x:Name="FormatPref_Example1"  Text="123.456 million" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="108" StrokeThiccness="8" ShadowColor="Black" ShadowOffset="0, 5" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="135,333,135,0"/>
+                <ExtraThings:DrawTextOutlined x:Name="FormatPref_Example2"  Text="123.456 million" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="108" StrokeThiccness="8" ShadowColor="Black" ShadowOffset="0, 5" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="135,456,135,0"/>
             </Grid>
-            <Grid x:Name="RoomMan" Visibility="Visible" Background="Black">
+            <Grid x:Name="LanguageSelectUI" Visibility="Visible">
+                <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_LANGUAGE_TITLE], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="48" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="60"/>
+                <Grid x:Name="LanguageList">
+                    <ExtraThings:GridButton x:Name="BTN_LangBtn_0" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="130,100,0,0">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+                    <ExtraThings:GridButton x:Name="BTN_LangBtn_1" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="415,100,0,0">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+                    <ExtraThings:GridButton x:Name="BTN_LangBtn_2" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="700,100,0,0">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+                    <ExtraThings:GridButton x:Name="BTN_LangBtn_3" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="985,100,0,0">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+
+                    <ExtraThings:GridButton x:Name="BTN_LangBtn_4" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="130,215,0,0">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+                    <ExtraThings:GridButton x:Name="BTN_LangBtn_5" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="415,215,0,0">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+                    <ExtraThings:GridButton x:Name="BTN_LangBtn_6" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="700,215,0,0">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+                    <ExtraThings:GridButton x:Name="BTN_LangBtn_7" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="985,215,0,0">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+
+                <Grid x:Name="BTN_LangBtn_8" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="130,330,0,0">
+                    <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+                </Grid>
+                    <Grid x:Name="BTN_LangBtn_9" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="415,330,0,0">
+                        <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+                </Grid>
+                <Grid x:Name="BTN_LangBtn_10" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="700,330,0,0">
+                    <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+                </Grid>
+                <Grid x:Name="BTN_LangBtn_11" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="985,330,0,0">
+                    <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+                </Grid>
+
+                <Grid x:Name="BTN_LangBtn_12" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="130,445,0,0">
+                    <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+                </Grid>
+                <Grid x:Name="BTN_LangBtn_13" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="415,445,0,0">
+                    <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_ALT_FONT], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="22" StrokeThiccness="1.5" ShadowColor="Black" ShadowOffset="0, 1.5" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Height="70"/>
+                    <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+                </Grid>
+                <Grid x:Name="BTN_LangBtn_14" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="700,445,0,0">
+                    <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+                </Grid>
+                <Grid x:Name="BTN_LangBtn_15" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="985,445,0,0">
+                    <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+                </Grid>
+
+                </Grid>
+                <Grid Width="900" Height="95" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,25">
+                    <Image CacheMode="BitmapCache" Source="/Assets/Nav Field Slice.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,7,20,12" />
+                    <ExtraThings:DrawTextOutlined x:Name="LanguageSelectUI_PageText" Text="{Binding Path=[TID_PAGE], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="48" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="135,18,135,0"/>
+                    <ExtraThings:GridButton x:Name="BTN_LangSelect_GoLeft" VerticalAlignment="Top" HorizontalAlignment="Left" MouseLeftButtonUp="BTN_LangSelect_GoLeft_MouseLeftButtonUp">
+                        <Grid HorizontalAlignment="Left">
+                            <Image CacheMode="BitmapCache" Source="/Assets/Blue Button Short.png" />
+                            <Image CacheMode="BitmapCache" Source="/Assets/Nav Arrow.png" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20, 16, 22, 24" />
+                        </Grid>
+                    </ExtraThings:GridButton>
+                    <ExtraThings:GridButton x:Name="BTN_LangSelect_GoRight" VerticalAlignment="Top" HorizontalAlignment="Right" MouseLeftButtonUp="BTN_LangSelect_GoRight_MouseLeftButtonUp">
+                        <Grid HorizontalAlignment="Right">
+                            <Image CacheMode="BitmapCache" Source="/Assets/Blue Button Short.png" />
+                            <Image CacheMode="BitmapCache" Source="/Assets/Nav Arrow.png" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20, 16, 22, 24" RenderTransformOrigin="0.5,0.5" >
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleY="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="-180"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+                        </Grid>
+                    </ExtraThings:GridButton>
+                </Grid>
+            </Grid>
+            <Grid x:Name="RoomMan" Visibility="Hidden" Background="Black">
                 <Grid x:Name="RoomMan_Path">
-                    <Image Source="/Assets/tile_ruins.png" Width="80" Height="160" Stretch="Fill" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="80,0,0,0"/>
-                    <Image Source="/Assets/tile_ruins.png" Width="80" Height="160" Stretch="Fill" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,80,0"/>
-                    <Image Source="/Assets/tile_ruins.png" Width="320" Height="80" Stretch="Fill" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,160"/>
-                    <Image Source="/Assets/tile_ruins.png" Width="480" Height="240" Stretch="Fill" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,240"/>
-                    <Image Source="/Assets/tile_ruins.png" Width="320" Height="80" Stretch="Fill" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,480"/>
+                    <Image CacheMode="BitmapCache" Source="/Assets/tile_ruins.png" Width="80" Height="160" Stretch="Fill" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="80,0,0,0"/>
+                    <Image CacheMode="BitmapCache" Source="/Assets/tile_ruins.png" Width="80" Height="160" Stretch="Fill" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,80,0"/>
+                    <Image CacheMode="BitmapCache" Source="/Assets/tile_ruins.png" Width="320" Height="80" Stretch="Fill" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,160"/>
+                    <Image CacheMode="BitmapCache" Source="/Assets/tile_ruins.png" Width="480" Height="240" Stretch="Fill" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,240"/>
+                    <Image CacheMode="BitmapCache" Source="/Assets/tile_ruins.png" Width="320" Height="80" Stretch="Fill" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,480"/>
                 </Grid>
                 <Grid x:Name="RoomMan_Tree" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="364" Width="420" Margin="100,0,0,240" MouseLeftButtonUp="RoomMan_Tree_MouseLeftButtonUp">
-                    <Image x:Name="RoomMan_Tree_BG"    Source="/Assets/spr_blocktree_parts/spr_blocktree_parts_0.png" Stretch="Uniform" Height="364" Width="420"/>
-                    <Image x:Name="RoomMan_Tree_Part1" Source="/Assets/spr_blocktree_parts/spr_blocktree_parts_1.png" Stretch="Uniform" Height="364" Width="420"/>
-                    <Image x:Name="RoomMan_Tree_Part2" Source="/Assets/spr_blocktree_parts/spr_blocktree_parts_2.png" Stretch="Uniform" Height="364" Width="420"/>
-                    <Image x:Name="RoomMan_Tree_Part3" Source="/Assets/spr_blocktree_parts/spr_blocktree_parts_3.png" Stretch="Uniform" Height="364" Width="420"/>
+                    <Image CacheMode="BitmapCache"  x:Name="RoomMan_Tree_Trunk" Source="/Assets/spr_blocktree_parts/spr_blocktree_parts_1.png" Stretch="Uniform" Height="364" Width="420"/>
+                    <Image CacheMode="BitmapCache"  x:Name="RoomMan_Tree_Part1" Source="/Assets/spr_blocktree_parts/spr_blocktree_parts_2.png" Stretch="Uniform" Height="364" Width="420">
+                        <Image.RenderTransform>
+                            <TranslateTransform x:Name="RoomMan_Leaf1"/>
+                        </Image.RenderTransform>
+                    </Image>
+                    <Image CacheMode="BitmapCache"  x:Name="RoomMan_Tree_Part2" Source="/Assets/spr_blocktree_parts/spr_blocktree_parts_3.png" Stretch="Uniform" Height="364" Width="420">
+                        <Image.RenderTransform>
+                            <TranslateTransform x:Name="RoomMan_Leaf2"/>
+                        </Image.RenderTransform>
+                    </Image>
                 </Grid>
                 <Grid x:Name="RoomMan_BTN_Man" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="67" Width="67" Margin="200,0,0,440" MouseLeftButtonUp="RoomMan_BTN_Man_MouseLeftButtonUp">
-                    <Image Source="/Assets/Dummy.png"/>
+                    <Image CacheMode="BitmapCache" Source="/Assets/Dummy.png"/>
                 </Grid>
             </Grid>
         </Grid>
         <Grid x:Name="NavButtons" Visibility="Collapsed">
             <ExtraThings:GridButton Width="254" Height="104" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,-24,-123,0" MouseLeftButtonUp="BTN_GoHome">
-                <Image Source="/Assets/Icons/Header Button Home.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Image CacheMode="BitmapCache" Source="/Assets/Icons/Header Button Home.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </ExtraThings:GridButton>
             <ExtraThings:GridButton Width="292" Height="104" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-161,-24,0,0" MouseLeftButtonUp="BTN_GoBack">
-                <Image Source="/Assets/Icons/Header Button Back.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Image CacheMode="BitmapCache" Source="/Assets/Icons/Header Button Back.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </ExtraThings:GridButton>
         </Grid>
         <Grid x:Name="AlwaysOnTop">
             <Grid x:Name="SwoonCutscene" Visibility="Collapsed">
                 <ExtraThings:DrawTextOutlined x:Name="Txt_EventIsGone" Text="{Binding Path=[TID_ERROR_FETCHDATA_NODATA_DANGER_DESC], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="48" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 <Grid x:Name="SwoonImage" Background="Black">
-                    <Image x:Name="Img_SwoonSlash" Source="/Assets/spr_roaringknight_slash_white_horizontal.png" Stretch="Uniform" RenderOptions.EdgeMode="Aliased" SnapsToDevicePixels="True"/>
+                    <Image CacheMode="BitmapCache" x:Name="Img_SwoonSlash" Source="/Assets/spr_roaringknight_slash_white_horizontal.png" Stretch="Uniform" RenderOptions.EdgeMode="Aliased" SnapsToDevicePixels="True"/>
                 </Grid>
             </Grid>
         </Grid>

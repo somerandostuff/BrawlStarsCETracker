@@ -58,6 +58,7 @@
     <None Remove="Assets\Bars\Progress Bar Fore Right.png" />
     <None Remove="Assets\Bars\Progress Bar Fore.png" />
     <None Remove="Assets\Bars\Progress Bar Proc.png" />
+    <None Remove="Assets\Blue Button Short.png" />
     <None Remove="Assets\Blue Button Wide.png" />
     <None Remove="Assets\Blue Button.png" />
     <None Remove="Assets\BS Logo New.png" />
@@ -84,6 +85,9 @@
     <None Remove="Assets\Inactive Checkbox.png" />
     <None Remove="Assets\Info.png" />
     <None Remove="Assets\Left Notch Header.png" />
+    <None Remove="Assets\Nav Arrow.png" />
+    <None Remove="Assets\Nav Field Probably.png" />
+    <None Remove="Assets\Nav Field Slice.png" />
     <None Remove="Assets\Popup Window Left Bottom.png" />
     <None Remove="Assets\Popup Window Left Center.png" />
     <None Remove="Assets\Popup Window Left Top.png" />
@@ -239,6 +243,7 @@
     <Resource Include="Assets\Bars\Progress Bar Fore Right.png" />
     <Resource Include="Assets\Bars\Progress Bar Fore.png" />
     <Resource Include="Assets\Bars\Progress Bar Proc.png" />
+    <Resource Include="Assets\Blue Button Short.png" />
     <Resource Include="Assets\Blue Button Wide.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -299,6 +304,9 @@
     <Resource Include="Assets\Left Notch Header.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\Nav Arrow.png" />
+    <Resource Include="Assets\Nav Field Probably.png" />
+    <Resource Include="Assets\Nav Field Slice.png" />
     <Resource Include="Assets\Popup Window Left Bottom.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

@@ -23,5 +23,31 @@ namespace EventTrackerWPF
         {
             InitializeComponent();
         }
+
+        private void AlertWindowTopBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
+
+        private void BTN_Cancel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Close();
+        }
+
+        private void BTN_OK_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Close();
+        }
+
+        private void BTN_Close_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            MainWindow.SoundIndexer.PlaySoundID("btn_dismiss");
+            Close();
+        }
+
+        private void BTN_SingleOK_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Close();
+        }
     }
 }

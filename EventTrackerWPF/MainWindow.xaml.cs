@@ -23,8 +23,8 @@ namespace EventTrackerWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly SysTimer.Timer TickDisplayer = new SysTimer.Timer(1000 / 60);
-        private readonly SysTimer.Timer TickerPerSecond = new SysTimer.Timer(125);
+        private readonly SysTimer.Timer TickDisplayer = new SysTimer.Timer(1000 / 30);
+        private readonly SysTimer.Timer ClockTicker = new SysTimer.Timer(125);
         private readonly SysTimer.Timer SplashTextTicker = new SysTimer.Timer(TimeSpan.FromMinutes(5));
 
         private static readonly DiscordRpcClient DiscordClient = new DiscordRpcClient(Common.DiscordClientID);
@@ -38,17 +38,30 @@ namespace EventTrackerWPF
 
         Stack<Grid> NavigatedMenus = [];
 
-        double Count = 0;
+        double Count = 1e13;
         double CountDisp = 0;
-
-        double TestTime = 0;
-        double TestTimeDisp = 0;
 
         double GemsDisp = 0;
 
-        long StartupUnixTime = DateTimeOffset.Now.ToUnixTimeSeconds();
+        double Siner = 0;
 
         List<string> SplashTextKeys = [];
+
+        Array AllFormatPreferences = Enum.GetValues(typeof(FormatPrefs));
+        Array AllViewModes = Enum.GetValues(typeof(ViewModes));
+
+        private const double ProgressMaxWidth = 1258;
+        private double LastWidthResultView = double.NaN;
+        private double LastProcTranslateX = double.NaN;
+        private double LastRightTranslateX = double.NaN;
+        private const double UpdateEpsilon = 0.5;
+        private readonly List<Grid> LanguageMenuButtonAreas = [];
+
+        // Probably will be repurposed later to use on everything instead of just languages
+        // Starts from 0 but will be displayed as 1 and so forth
+        private int LanguageMenuPages;
+        private int CurrentLanguageMenuPage;
+        private int MaxButtonsPerPage;
 
         public MainWindow()
         {
@@ -73,11 +86,11 @@ namespace EventTrackerWPF
             Settings.Load();
             SaveSystem.Load();
 
-            // Mockup data -- DELETE before release!
-            SaveSystem.Egg = false;
-            SaveSystem.Eggs = 0;
-
             InitializeComponent();
+
+            MaxButtonsPerPage = LanguageList.Children.Count;
+            LanguageMenuButtonAreas = [..LanguageList.Children.Cast<Grid>()];
+            LanguageMenuPages = (int)Math.Ceiling((double)LocalizationLib.Locales.Count / MaxButtonsPerPage);
 
             // Common.UseCustomFont(MainGrid, Settings.MainFontFamily, Settings.AltFontFamily);
 
@@ -88,9 +101,9 @@ namespace EventTrackerWPF
             TickDisplayer.AutoReset = true;
             TickDisplayer.Start();
 
-            TickerPerSecond.Elapsed += TickerPerSecond_Tick;
-            TickerPerSecond.AutoReset = true;
-            TickerPerSecond.Start();
+            ClockTicker.Elapsed += ClockTicker_Tick;
+            ClockTicker.AutoReset = true;
+            ClockTicker.Start();
 
             SplashTextTicker.Elapsed += SplashTextTicker_Tick;
             SplashTextTicker.AutoReset = true;
@@ -98,10 +111,12 @@ namespace EventTrackerWPF
             LoadTitleSplashTexts();
         }
 
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // MarqueeEffect.StartMarquee(NewsMarquee_Txt, ElemWidth: NewsMarquee_Txt.ActualWidth, SpeedSeconds: 10);
+
+            SetViewMode(Settings.ViewMode);
+            SetNumberPreference(Settings.FormatPref);
 
             if (Settings.SelectedTheme == 0)
             {
@@ -113,10 +128,27 @@ namespace EventTrackerWPF
             }
 
             Chk_EnableAnimations.IsChecked = Settings.EnableAnimations;
+            Chk_UseAltFont.IsChecked = Settings.AlternareFont;
+
+            DynCounter_Num_CanMono.FontFamily = !Settings.AlternareFont ? Common.LilitaOneRes : Common.DeterminationMonoRes;
+
             Txt_LangName.Text = LocalizationLib.Locales.First(Q => Q.LocaleID == Settings.Lang).LangName ?? string.Empty;
 
             BindValues();
             // InitializeRPC();
+        }
+
+        private void PopulateLanguageSelectorView()
+        {
+            var LangsToShow = LocalizationLib.Locales
+                .Skip((CurrentLanguageMenuPage * MaxButtonsPerPage))
+                .Take(MaxButtonsPerPage)
+                .ToList();
+
+            for (int Index = 0; Index < MaxButtonsPerPage; Index++)
+            {
+                
+            }
         }
 
         private void ThemeSelect(BackgroundThemes ThemeID)
@@ -208,23 +240,39 @@ namespace EventTrackerWPF
             // This will be for UI-only updates (like displaying numbers and such)
             Dispatcher.Invoke(() =>
             {
-                DynCounter_Num_CanMono.Text = CountDisp.ToString("#,##0");
-                MoneyCount.Text = GemsDisp.ToString("#,##0");
-                Txt_ProgressPercent.Text = (CountDisp / 1e11).ToString("#,##0.##") + "%";
+                DynCounter_Num_CanMono.Text = Common.Beautify(CountDisp, Settings.FormatPref);
+                MoneyCount.Text = Common.Beautify(GemsDisp, FormatPrefs.ShortText);
+                Txt_ProgressPercent.Text = Common.BeautifyPercentage(CountDisp / 1e11) + "%";
                 ProcProgressBar(CountDisp / 1e11);
                 UpdateDynCounterPos();
+            });
 
-                if ((RoomMan.Visibility == Visibility.Collapsed || RoomMan.Visibility == Visibility.Hidden) && SplashTextTicker.Enabled == false)
+            Dispatcher.Invoke(() =>
+            {
+                if (RoomMan.Visibility == Visibility.Visible)
                 {
-                    SoundIndexer.StopLoopingSoundID("mus_man");
+                    StopAllThemeAnimations();
 
-                    SplashTextTicker.Start();
-                    ChangeSplashText();
+                    // Leaf animations go here because in DELTARUNE source code Toby used sin/cos to move the leaves
+                    // and these luxuries aren't supported by WPF XAML...
+                    if (Settings.EnableAnimations)
+                    {
+                        Siner += 1;
+                    }
+                    else Siner = 0;
+
+                    RoomMan_Leaf1.X = Math.Sin(Siner / 24) * 8;
+                    RoomMan_Leaf1.Y = Math.Cos(Siner / 40) * 8;
+
+                    RoomMan_Leaf2.X = Math.Sin(Siner / 28) * 4;
+                    RoomMan_Leaf2.Y = Math.Cos(Siner / 48) * 4;
+
+                    if (Siner >= (840 * 60) || Siner <= 0) Siner = 0;
                 }
             });
         }
 
-        private void TickerPerSecond_Tick(object? Sender, ElapsedEventArgs Event)
+        private void ClockTicker_Tick(object? Sender, ElapsedEventArgs Event)
         {
             Dispatcher.Invoke(() =>
             {
@@ -234,9 +282,36 @@ namespace EventTrackerWPF
 
         private void CalculateDisplay()
         {
-            CountDisp += (Count - CountDisp) * .15;
-            TestTimeDisp += (TestTime - TestTimeDisp) * .3;
-            GemsDisp += (SaveSystem.Gems - GemsDisp) * .125;
+            if (double.IsInfinity(Count))
+            {
+                CountDisp = ConvertToInfinity(Count);
+            }
+            else
+            {
+                CountDisp += (Count - CountDisp) * .275;
+            }
+
+            if (double.IsInfinity(SaveSystem.Gems))
+            {
+                GemsDisp = ConvertToInfinity(SaveSystem.Gems);
+            }
+            else GemsDisp += (SaveSystem.Gems - GemsDisp) * .2325;
+        }
+
+        private static double ConvertToInfinity(double Number)
+        {
+            if (double.IsInfinity(Number))
+            {
+                if (Number <= double.NegativeInfinity)
+                {
+                    return double.NegativeInfinity;
+                }
+                if (Number >= double.PositiveInfinity)
+                {
+                    return double.PositiveInfinity;
+                }
+            }
+            return Number;
         }
 
         private void UpdateDynCounterPos()
@@ -256,15 +331,11 @@ namespace EventTrackerWPF
 
         private void ChangeView(ViewModes Mode)
         {
-            ResetViewButtons();
             Settings.ViewMode = Mode;
-
             switch (Mode)
             {
                 case ViewModes.Simple:
                     {
-                        ImgBTN_ViewMode_Simple.Source = Common.GreenButton_ViewMode;
-
                         SimpleView.Visibility = Visibility.Visible;
                         DetailedView.Visibility = Visibility.Collapsed;
                         TooMuchStuffView.Visibility = Visibility.Collapsed;
@@ -272,8 +343,6 @@ namespace EventTrackerWPF
                     break;
                 case ViewModes.Detailed:
                     {
-                        ImgBTN_ViewMode_Detailed.Source = Common.GreenButton_ViewMode;
-
                         SimpleView.Visibility = Visibility.Visible;
                         DetailedView.Visibility = Visibility.Visible;
                         TooMuchStuffView.Visibility = Visibility.Collapsed;
@@ -281,8 +350,6 @@ namespace EventTrackerWPF
                     break;
                 case ViewModes.TooMuchStuff:
                     {
-                        ImgBTN_ViewMode_TooMuchStuff.Source = Common.GreenButton_ViewMode;
-
                         SimpleView.Visibility = Visibility.Visible;
                         DetailedView.Visibility = Visibility.Visible;
                         TooMuchStuffView.Visibility = Visibility.Visible;
@@ -302,12 +369,90 @@ namespace EventTrackerWPF
             Dispatcher.Invoke(ChangeSplashText);
         }
 
-
-        private void ResetViewButtons()
+        private void ChangeNumberPreference(bool NavLeft)
         {
-            ImgBTN_ViewMode_Simple.Source = Common.RedButton_ViewMode;
-            ImgBTN_ViewMode_Detailed.Source = Common.RedButton_ViewMode;
-            ImgBTN_ViewMode_TooMuchStuff.Source = Common.RedButton_ViewMode;
+            var CurrentIndex = Array.IndexOf(AllFormatPreferences, Settings.FormatPref);
+            var NewIndex = 0;
+            if (NavLeft)
+            {
+                NewIndex = CurrentIndex - 1;
+                if (NewIndex < 0) NewIndex = AllFormatPreferences.Length - 1;
+            }
+            else
+            {
+                NewIndex = CurrentIndex + 1;
+                if (NewIndex >= AllFormatPreferences.Length) NewIndex = 0;
+            }
+            SetNumberPreference((FormatPrefs)AllFormatPreferences.GetValue(NewIndex)!);
+        }
+
+        private void ChangeLanguagePage(bool NavLeft)
+        {
+            
+        }
+
+        private void ChangeViewMode(bool NavLeft)
+        {
+            var CurrentIndex = Array.IndexOf(AllViewModes, Settings.ViewMode);
+            var NewIndex = 0;
+            if (NavLeft)
+            {
+                NewIndex = CurrentIndex - 1;
+                if (NewIndex < 0) NewIndex = AllViewModes.Length - 1;
+            }
+            else
+            {
+                NewIndex = CurrentIndex + 1;
+                if (NewIndex >= AllViewModes.Length) NewIndex = 0;
+            }
+            SetViewMode((ViewModes)AllViewModes.GetValue(NewIndex)!);
+        }
+
+        private void SetNumberPreference(FormatPrefs Pref)
+        {
+            Settings.FormatPref = Pref;
+            switch (Pref)
+            {
+                case FormatPrefs.None:
+                    FormatPrefUI_PrefText.Text = LocalizationLib.Strings["TID_NUM_FORMAT_PREF_NORMAL"];
+                    Txt_ChangeNumFormat.Text = LocalizationLib.Strings["TID_NUM_FORMAT_PREF_NORMAL_EXAMPLE"];
+                    FormatPref_Example1.Text = LocalizationLib.Strings["TID_NUM_FORMAT_PREF_NORMAL_EXAMPLE"];
+                    FormatPref_Example2.Text = LocalizationLib.Strings["TID_NUM_FORMAT_PREF_NORMAL_EXAMPLE2"];
+                    break;
+                case FormatPrefs.LongText:
+                    FormatPrefUI_PrefText.Text = LocalizationLib.Strings["TID_NUM_FORMAT_PREF_SHORTENED"];
+                    Txt_ChangeNumFormat.Text = LocalizationLib.Strings["TID_NUM_FORMAT_PREF_SHORTENED_EXAMPLE"];
+                    FormatPref_Example1.Text = LocalizationLib.Strings["TID_NUM_FORMAT_PREF_SHORTENED_EXAMPLE"];
+                    FormatPref_Example2.Text = LocalizationLib.Strings["TID_NUM_FORMAT_PREF_SHORTENED_EXAMPLE2"];
+                    break;
+                case FormatPrefs.ShortText:
+                    FormatPrefUI_PrefText.Text = LocalizationLib.Strings["TID_NUM_FORMAT_PREF_SUPERSHORTENED"];
+                    Txt_ChangeNumFormat.Text = LocalizationLib.Strings["TID_NUM_FORMAT_PREF_EXT_SHORTENED_EXAMPLE"];
+                    FormatPref_Example1.Text = LocalizationLib.Strings["TID_NUM_FORMAT_PREF_EXT_SHORTENED_EXAMPLE"];
+                    FormatPref_Example2.Text = LocalizationLib.Strings["TID_NUM_FORMAT_PREF_EXT_SHORTENED_EXAMPLE2"];
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void SetViewMode(ViewModes Mode)
+        {
+            ChangeView(Mode);
+            switch (Mode)
+            {
+                case ViewModes.Simple:
+                    ViewSelect_Nav_PrefText.Text = LocalizationLib.Strings["TID_VIEWMODE_SIMPLE"];
+                    break;
+                case ViewModes.Detailed:
+                    ViewSelect_Nav_PrefText.Text = LocalizationLib.Strings["TID_VIEWMODE_DETAILED"];
+                    break;
+                case ViewModes.TooMuchStuff:
+                    ViewSelect_Nav_PrefText.Text = LocalizationLib.Strings["TID_VIEWMODE_OVERCOMPLICATED"];
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void BindValues()
@@ -377,22 +522,10 @@ namespace EventTrackerWPF
 
         private void ProcProgressBar(double Percentage)
         {
-            double OffsetRightL = 8;
+            var WidthResult = ProgressMaxWidth * Percentage / 100.0;
+            var WidthResultView = Math.Round(WidthResult * 100) / 100.0;
 
-            double OffsetProcL = 3;
-
-            double OffsetProcT = 3.5;
-            double OffsetProcB = 4;
-
-            double OffsetT = 2;
-            double OffsetB = 3;
-
-            double MaxWidth = 1258;
-
-            var WidthResult = MaxWidth * Percentage / 100;
-            var WidthResultView = Math.Floor(WidthResult * 100) / 100;
-
-            if (WidthResultView <= 0)
+            if (WidthResult <= 0)
             {
                 WidthResult = 0;
                 ProgressBar_FLeft.Visibility = Visibility.Hidden;
@@ -405,15 +538,52 @@ namespace EventTrackerWPF
                 ProgressBar_FMid.Visibility = Visibility.Visible;
                 ProgressBar_FRight.Visibility = Visibility.Visible;
             }
-            if (WidthResult >= MaxWidth) WidthResult = MaxWidth;
 
-            if (WidthResultView <= 0 || WidthResultView >= MaxWidth) 
+            if (WidthResult >= ProgressMaxWidth) WidthResult = ProgressMaxWidth;
+
+            if (WidthResultView <= 0 || WidthResultView >= ProgressMaxWidth)
                 ProgressBar_FProc.Visibility = Visibility.Collapsed;
-            else ProgressBar_FProc.Visibility = Visibility.Visible;
+            else
+                ProgressBar_FProc.Visibility = Visibility.Visible;
 
-            ProgressBar_FRight.Margin = new Thickness(OffsetRightL + WidthResult, OffsetT, 0, OffsetB);
-            ProgressBar_FMid.Width = WidthResult;
-            ProgressBar_FProc.Margin = new Thickness(OffsetProcL + WidthResult, OffsetProcT, 0, OffsetProcB);
+            if (ProgressBar_FMid.RenderTransform is not ScaleTransform)
+            {
+                ProgressBar_FMid.Width = ProgressMaxWidth;
+                ProgressBar_FMid.RenderTransformOrigin = new Point(0, 0.5);
+                ProgressBar_FMid.RenderTransform = new ScaleTransform(1.0, 1.0);
+            }
+
+            if (ProgressBar_FProc.RenderTransform is not TranslateTransform)
+            {
+                ProgressBar_FProc.RenderTransform = new TranslateTransform();
+            }
+
+            if (ProgressBar_FRight.RenderTransform is not TranslateTransform)
+            {
+                ProgressBar_FRight.RenderTransform = new TranslateTransform();
+            }
+
+            // Avoid layout thrashing: only update when value changed sufficiently
+            if (double.IsNaN(LastWidthResultView) || Math.Abs(WidthResultView - LastWidthResultView) > UpdateEpsilon)
+            {
+                var Scale = ProgressMaxWidth == 0 ? 0 : (WidthResult / ProgressMaxWidth);
+                ((ScaleTransform)ProgressBar_FMid.RenderTransform).ScaleX = Math.Max(0, Math.Min(1, Scale));
+                LastWidthResultView = WidthResultView;
+            }
+
+            var ProcTranslateX = WidthResult;
+            if (double.IsNaN(LastProcTranslateX) || Math.Abs(ProcTranslateX - LastProcTranslateX) > UpdateEpsilon)
+            {
+                ((TranslateTransform)ProgressBar_FProc.RenderTransform).X = ProcTranslateX;
+                LastProcTranslateX = ProcTranslateX;
+            }
+
+            var RightTranslateX = WidthResult;
+            if (double.IsNaN(LastRightTranslateX) || Math.Abs(RightTranslateX - LastRightTranslateX) > UpdateEpsilon)
+            {
+                ((TranslateTransform)ProgressBar_FRight.RenderTransform).X = RightTranslateX;
+                LastRightTranslateX = RightTranslateX;
+            }
         }
 
         #region Controls
@@ -526,7 +696,7 @@ namespace EventTrackerWPF
                 RedButtonFunc = (Re, set) => { SaveSystem.Gems = 0; Count = 0; SoundIndexer.PlaySoundID("btn_click"); },
 
                 BlueButton = "Free gems",
-                BlueButtonFunc = (Ba, lls) => { SaveSystem.Gems += Random.Shared.Next(1, 184); Count += Random.Shared.NextInt64(0, 1000000000000); SoundIndexer.PlaySoundID("btn_click"); SaveSystem.Save(); }
+                BlueButtonFunc = (Ba, lls) => { SaveSystem.Gems += Random.Shared.Next(1, 184); SoundIndexer.PlaySoundID("btn_click"); SaveSystem.Save(); }
             };
 
             SoundIndexer.PlaySoundID("btn_click");
@@ -620,6 +790,155 @@ namespace EventTrackerWPF
 
             DynCounter_Num_CanMono.FontFamily = !Settings.AlternareFont ? Common.LilitaOneRes : Common.DeterminationMonoRes;
         }
+        private void BTN_SuperSecretSettings_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            // 1 in 50 chance
+            if (Random.Shared.Next(0, 50) == 6)
+            {
+                NavigateTo(RoomMan);
+                SoundIndexer.PlayLoopingSoundID("mus_man");
+
+                Title = string.Empty;
+                SplashTextTicker.Stop();
+            }
+            else
+            {
+                SoundIndexer.PlaySoundID("btn_click");
+                NavigateTo(SuperSecretSettingsUI);
+            }
+        }
+
+        private void RoomMan_Tree_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (!SaveSystem.Egg)
+            {
+                var Message = new AlertMessage()
+                {
+                    Title = string.Empty,
+                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_0"],
+
+                    BlueButton = LocalizationLib.Strings["TID_OK"],
+                    BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); }
+                };
+
+                Common.CreateAlert(Message);
+            }
+            else
+            {
+                var Message = new AlertMessage()
+                {
+                    Title = string.Empty,
+                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_0_DONE"],
+
+                    BlueButton = LocalizationLib.Strings["TID_OK"],
+                    BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); }
+                };
+
+                Common.CreateAlert(Message);
+            }
+        }
+
+        private void RoomMan_BTN_Man_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (!SaveSystem.Egg)
+            {
+                var Message3Yes = new AlertMessage()
+                {
+                    Title = string.Empty,
+                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_3_YES"],
+
+                    BlueButton = LocalizationLib.Strings["TID_OK"],
+                    BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); }
+                };
+
+                var Message3No = new AlertMessage()
+                {
+                    Title = string.Empty,
+                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_3_NO"],
+
+                    BlueButton = LocalizationLib.Strings["TID_OK"],
+                    BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); }
+                };
+
+                var Message2 = new AlertMessage()
+                {
+                    Title = string.Empty,
+                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_2"],
+
+                    BlueButton = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_2_YES"],
+                    BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("egg"); Common.CreateAlert(Message3Yes); SaveSystem.Eggs++; SaveSystem.Egg = true; },
+                    RedButton = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_2_NO"],
+                    RedButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); Common.CreateAlert(Message3No); SaveSystem.Egg = true;}
+                };
+
+                var Message1 = new AlertMessage()
+                {
+                    Title = string.Empty,
+                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_1"],
+
+                    BlueButton = LocalizationLib.Strings["TID_OK"],
+                    BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); Common.CreateAlert(Message2); }
+                };
+
+                Common.CreateAlert(Message1);
+            }
+            else
+            {
+                var Message4 = new AlertMessage()
+                {
+                    Title = string.Empty,
+                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_4"],
+
+                    BlueButton = LocalizationLib.Strings["TID_OK"],
+                    BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); }
+                };
+                Common.CreateAlert(Message4);
+            }
+        }
+
+        private void BTN_ChangeNumberFormat_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            NavigateTo(FormatPrefUI);
+        }
+
+        private void BTN_FormatPref_GoLeft_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            ChangeNumberPreference(NavLeft: true);
+        }
+
+        private void BTN_FormatPref_GoRight_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            ChangeNumberPreference(NavLeft: false);
+        }
+
+        private void BTN_ViewSelect_Nav_GoLeft_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            ChangeViewMode(NavLeft: true);
+        }
+
+        private void ViewSelect_Nav_GoRight_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            ChangeViewMode(NavLeft: false);
+        }
+        private void BTN_ChangeLanguage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            NavigateTo(LanguageSelectUI);
+        }
+        private void BTN_LangSelect_GoLeft_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void BTN_LangSelect_GoRight_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
 
         #endregion
 
@@ -641,19 +960,40 @@ namespace EventTrackerWPF
 
         private void GoBack()
         {
-            var ClosingMenu = NavigatedMenus.Pop();
-
-            ClosingMenu.Visibility = Visibility.Collapsed;
-            if (NavigatedMenus.Count == 0)
+            if (NavigatedMenus.Count > 0)
             {
-                MainMenuUI.Visibility = Visibility.Visible;
-                NavButtons.Visibility = Visibility.Collapsed;
+                var ClosingMenu = NavigatedMenus.Pop();
+
+                ClosingMenu.Visibility = Visibility.Collapsed;
+                if (NavigatedMenus.Count == 0)
+                {
+                    MainMenuUI.Visibility = Visibility.Visible;
+                    NavButtons.Visibility = Visibility.Collapsed;
+                }
+                else NavigatedMenus.Last().Visibility = Visibility.Visible;
+
+                if (ClosingMenu == RoomMan)
+                {
+                    ThemeSelect(Settings.SelectedTheme);
+                    SoundIndexer.StopLoopingSoundID("mus_man");
+
+                    SplashTextTicker.Start();
+                    ChangeSplashText();
+                }
             }
-            else NavigatedMenus.Last().Visibility = Visibility.Visible;
         }
 
         private void GoHome()
         {
+            if (RoomMan.Visibility == Visibility.Visible)
+            {
+                ThemeSelect(Settings.SelectedTheme);
+                SoundIndexer.StopLoopingSoundID("mus_man");
+
+                SplashTextTicker.Start();
+                ChangeSplashText();
+            }
+
             foreach (Grid UI in UserInterfaces.Children)
             {
                 if (UI != MainMenuUI)
@@ -667,7 +1007,7 @@ namespace EventTrackerWPF
         }
         #endregion
 
-        #region Animations & Theme Animations
+        #region Theme Animations
         private void StopAllThemeAnimations()
         {
             foreach (var Storyboard in RunningStoryboards)
@@ -776,10 +1116,6 @@ namespace EventTrackerWPF
                 }
             }
         }
-        private void RoomManTreeAnimsStart()
-        {
-
-        }
         #endregion
 
         #region Cutscene(s)
@@ -828,104 +1164,31 @@ namespace EventTrackerWPF
 
         #endregion
 
-        private void BTN_SuperSecretSettings_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (Random.Shared.Next(0, 2) == 1)
+            if (e.Key == Key.Escape && NavigatedMenus.Count > 0)
             {
-                NavigateTo(RoomMan);
-                SoundIndexer.PlayLoopingSoundID("mus_man");
-
-                Title = string.Empty;
-                SplashTextTicker.Stop();
-            }
-            else
-            {
-                SoundIndexer.PlaySoundID("btn_click");
-                NavigateTo(SuperSecretSettingsUI);
+                GoBack();
+                SoundIndexer.PlaySoundID("btn_go_back");
+                return;
             }
         }
 
-        private void RoomMan_Tree_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void ChangeLanguageDialog(object Sender, MouseButtonEventArgs Event, string LangName)
         {
-            if (!SaveSystem.Egg)
+            SoundIndexer.PlaySoundID("btn_click");
+            var Message = new AlertMessage()
             {
-                var Message = new AlertMessage()
-                {
-                    Title = string.Empty,
-                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_0"],
+                Title = LocalizationLib.Strings["TID_CONFIRM_LANGUAGE_CHANGE_TITLE"],
+                Description = LocalizationLib.Strings["TID_CONFIRM_LANGUAGE_CHANGE_DESC"],
 
-                    BlueButton = LocalizationLib.Strings["TID_OK"]
-                };
+                RedButton = LocalizationLib.Strings["TID_CANCEL"],
+                RedButtonFunc = (No, pe) => { SoundIndexer.PlaySoundID("btn_click"); },
 
-                Common.CreateAlert(Message);
-            }
-            else
-            {
-                var Message = new AlertMessage()
-                {
-                    Title = string.Empty,
-                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_0_DONE"],
-
-                    BlueButton = LocalizationLib.Strings["TID_OK"]
-                };
-
-                Common.CreateAlert(Message);
-            }
-        }
-
-        private void RoomMan_BTN_Man_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if (!SaveSystem.Egg)
-            {
-                var Message3Yes = new AlertMessage()
-                {
-                    Title = string.Empty,
-                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_3_YES"],
-
-                    BlueButton = LocalizationLib.Strings["TID_OK"]
-                };
-
-                var Message3No = new AlertMessage()
-                {
-                    Title = string.Empty,
-                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_3_NO"],
-
-                    BlueButton = LocalizationLib.Strings["TID_OK"]
-                };
-
-                var Message2 = new AlertMessage()
-                {
-                    Title = string.Empty,
-                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_2"],
-
-                    BlueButton = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_2_YES"],
-                    BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("egg"); Common.CreateAlert(Message3Yes); SaveSystem.Eggs++; SaveSystem.Egg = true; },
-                    RedButton = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_2_NO"],
-                    RedButtonFunc = (Be, pis) => { Common.CreateAlert(Message3No); SaveSystem.Egg = true; }
-                };
-
-                var Message1 = new AlertMessage()
-                {
-                    Title = string.Empty,
-                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_1"],
-
-                    BlueButton = LocalizationLib.Strings["TID_OK"],
-                    BlueButtonFunc = (Be, pis) => { Common.CreateAlert(Message2); }
-                };
-
-                Common.CreateAlert(Message1);
-            }
-            else
-            {
-                var Message4 = new AlertMessage()
-                {
-                    Title = string.Empty,
-                    Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_4"],
-
-                    BlueButton = LocalizationLib.Strings["TID_OK"]
-                };
-                Common.CreateAlert(Message4);
-            }
+                BlueButton = LocalizationLib.Strings["TID_OK"],
+                BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); Settings.Lang = LangName; System.Windows.Forms.Application.Restart(); }
+            };
+            Common.CreateAlert(Message);
         }
     }
 

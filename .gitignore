@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/BenchmarkSuite1
+/EventTrackerWPF/Report20251120-2255.diagsession

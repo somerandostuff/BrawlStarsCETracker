@@ -9,7 +9,7 @@ namespace EventTrackerWPF.CustomElements
     {
         public static readonly DependencyProperty TextProperty = 
             DependencyProperty.Register(nameof(Text), typeof(string), typeof(DrawTextOutlined),
-                new FrameworkPropertyMetadata("Sample text", FrameworkPropertyMetadataOptions.AffectsRender));
+                new FrameworkPropertyMetadata("Text", FrameworkPropertyMetadataOptions.AffectsRender));
 
         public string Text { get => (string)GetValue(TextProperty); set => SetValue(TextProperty, value); }
 
@@ -81,7 +81,7 @@ namespace EventTrackerWPF.CustomElements
 
         public DrawTextOutlined()
         {
-            CacheMode = null;
+            CacheMode = new BitmapCache();
         }
 
         protected override void OnRender(DrawingContext DrawingContext)
