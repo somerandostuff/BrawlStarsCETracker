@@ -267,7 +267,7 @@
             </Grid>
         </Grid>
         <Grid x:Name="UserInterfaces">
-            <Grid x:Name="MainMenuUI" Visibility="Hidden">
+            <Grid x:Name="MainMenuUI" Visibility="Visible">
                 <Grid Visibility="Hidden" x:Name="MoneyUI" VerticalAlignment="Top" HorizontalAlignment="Right" Height="55" Width="170" Margin="0,10,143,0" MouseLeftButtonUp="MoneyUI_MouseLeftButtonUp">
                     <Image CacheMode="BitmapCache" Source="/Assets/Left Notch Header.png" HorizontalAlignment="Left"/>
                     <Image CacheMode="BitmapCache" Source="/Assets/Right Notch Header.png" HorizontalAlignment="Right"/>
@@ -332,18 +332,18 @@
                             <Image CacheMode="BitmapCache"  Source="/Assets/Bars/Loading Bar Stencil Middle.png" HorizontalAlignment="Center" Stretch="Fill" Width="1253.5"/>
                         </Grid>
 
-                        <ExtraThings:DrawTextOutlined x:Name="Txt_ProgressPercent" Text="0%" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="64" StrokeThiccness="4.5" ShadowColor="Black" ShadowOffset="0, 3.65" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="1260"/>
+                        <ExtraThings:DrawTextOutlined x:Name="Txt_ProgressPercent" Text="-" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="64" StrokeThiccness="4.5" ShadowColor="Black" ShadowOffset="0, 3.65" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="1260"/>
                     </Grid>
                 </Grid>
                 <Grid x:Name="TooMuchStuffView">
                     <Grid x:Name="MiscStatusesTop" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,265" Height="30" Width="1260">
-                        <ExtraThings:DrawTextOutlined x:Name="Txt_MilestoneLeft" Text="0" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.65" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Width="420"/>
-                        <ExtraThings:DrawTextOutlined x:Name="Txt_MilestoneRight" Text="100,000,000" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.65" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Width="420"/>
+                        <ExtraThings:DrawTextOutlined x:Name="Txt_MilestoneLeft" Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.65" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Width="420"/>
+                        <ExtraThings:DrawTextOutlined x:Name="Txt_MilestoneRight" Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="24" StrokeThiccness="2" ShadowColor="Black" ShadowOffset="0, 1.65" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Width="420"/>
                     </Grid>
                     <Grid x:Name="MiscStatusesBottom" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,140" Height="40" Width="1260">
-                        <ExtraThings:DrawTextOutlined x:Name="Txt_ProgressBarOption" Text="Showing total progress" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="32" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 1.85" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Width="420"/>
-                        <ExtraThings:DrawTextOutlined x:Name="Txt_Approximation" Text="Speed: 0/s" Fill="Orange" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="32" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 1.85" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Width="420"/>
-                        <ExtraThings:DrawTextOutlined x:Name="Txt_ETA" Text="ETA: N/A" Fill="Lime" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="32" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 1.85" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Width="420"/>
+                        <ExtraThings:DrawTextOutlined x:Name="Txt_ProgressBarOption" Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="32" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 1.85" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Width="420"/>
+                        <ExtraThings:DrawTextOutlined x:Name="Txt_Approximation" Text="" Fill="Orange" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="32" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 1.85" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Width="420"/>
+                        <ExtraThings:DrawTextOutlined x:Name="Txt_ETA" Text="" Fill="Lime" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="32" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 1.85" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Width="420"/>
                     </Grid>
                 </Grid>
                 <Grid x:Name="FunctionButtons" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="475" Height="135">
@@ -397,8 +397,8 @@
                         <Image CacheMode="BitmapCache" Source="/Assets/Event Button.png" HorizontalAlignment="Left"/>
                         <Grid>
                             <Image CacheMode="BitmapCache" x:Name="EventInfoTab_Icon" Source="/Assets/Clock.png" VerticalAlignment="Center" HorizontalAlignment="Left" Width="450" Height="75" RenderOptions.ClearTypeHint="Enabled" Margin="15,-2,0,0"/>
-                            <ExtraThings:DrawTextOutlined x:Name="Txt_EventName" Text="EVENT NAME" StrokeThiccness="3" ShadowColor="Black" ShadowOffset="0, 1.75" VerticalAlignment="Bottom" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" Margin="95,0,0,38" Width="375" Height="46"/>
-                            <ExtraThings:DrawTextOutlined x:Name="Txt_EventDesc" Text="Event description" Fill="Lime" StrokeThiccness="1.75" ShadowColor="Black" ShadowOffset="0, 1.325" FontSize="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" Margin="95,0,0,18" Width="370" Height="28"/>
+                            <ExtraThings:DrawTextOutlined x:Name="Txt_EventName" Text="" StrokeThiccness="3" ShadowColor="Black" ShadowOffset="0, 1.75" VerticalAlignment="Bottom" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" Margin="95,0,0,38" Width="375" Height="46"/>
+                            <ExtraThings:DrawTextOutlined x:Name="Txt_EventDesc" Text="" Fill="Lime" StrokeThiccness="1.75" ShadowColor="Black" ShadowOffset="0, 1.325" FontSize="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" Margin="95,0,0,18" Width="370" Height="28"/>
                         </Grid>
                     </ExtraThings:GridButton>
                     <ExtraThings:GridButton x:Name="BTN_EventInfo" HorizontalAlignment="Right" VerticalAlignment="Top" Height="40" Width="38" Margin="0,-7,-11,0">
@@ -560,7 +560,7 @@
                 <ExtraThings:DrawTextOutlined x:Name="FormatPref_Example1"  Text="123.456 million" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="108" StrokeThiccness="8" ShadowColor="Black" ShadowOffset="0, 5" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="135,333,135,0"/>
                 <ExtraThings:DrawTextOutlined x:Name="FormatPref_Example2"  Text="123.456 million" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="108" StrokeThiccness="8" ShadowColor="Black" ShadowOffset="0, 5" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="135,456,135,0"/>
             </Grid>
-            <Grid x:Name="LanguageSelectUI" Visibility="Visible">
+            <Grid x:Name="LanguageSelectUI" Visibility="Hidden">
                 <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_LANGUAGE_TITLE], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="48" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="60"/>
                 <Grid x:Name="LanguageList">
                     <ExtraThings:GridButton x:Name="BTN_LangBtn_0" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="130,100,0,0">
@@ -597,61 +597,43 @@
                         <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
                     </ExtraThings:GridButton>
 
-                <Grid x:Name="BTN_LangBtn_8" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="130,330,0,0">
-                    <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
+                    <ExtraThings:GridButton x:Name="BTN_LangBtn_8" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="130,330,0,0">
                         <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
                         <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
                     </ExtraThings:GridButton>
-                </Grid>
-                    <Grid x:Name="BTN_LangBtn_9" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="415,330,0,0">
-                        <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
+                    <ExtraThings:GridButton x:Name="BTN_LangBtn_9" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="415,330,0,0">
                         <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
                         <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
                     </ExtraThings:GridButton>
-                </Grid>
-                <Grid x:Name="BTN_LangBtn_10" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="700,330,0,0">
-                    <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
+                    <ExtraThings:GridButton  x:Name="BTN_LangBtn_10" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="700,330,0,0">
                         <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
                         <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
                     </ExtraThings:GridButton>
-                </Grid>
-                <Grid x:Name="BTN_LangBtn_11" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="985,330,0,0">
-                    <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
+                    <ExtraThings:GridButton  x:Name="BTN_LangBtn_11" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="985,330,0,0">
                         <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
                         <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
                     </ExtraThings:GridButton>
-                </Grid>
 
-                <Grid x:Name="BTN_LangBtn_12" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="130,445,0,0">
-                    <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
+                    <ExtraThings:GridButton x:Name="BTN_LangBtn_12" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="130,445,0,0">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+                    <ExtraThings:GridButton x:Name="BTN_LangBtn_13" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="415,445,0,0">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+                    <ExtraThings:GridButton x:Name="BTN_LangBtn_14" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="700,445,0,0">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
+                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
+                    </ExtraThings:GridButton>
+                    <ExtraThings:GridButton x:Name="BTN_LangBtn_15" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="985,445,0,0">
                         <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
                         <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
                     </ExtraThings:GridButton>
                 </Grid>
-                <Grid x:Name="BTN_LangBtn_13" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="415,445,0,0">
-                    <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_ALT_FONT], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="22" StrokeThiccness="1.5" ShadowColor="Black" ShadowOffset="0, 1.5" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Height="70"/>
-                    <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
-                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
-                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
-                    </ExtraThings:GridButton>
-                </Grid>
-                <Grid x:Name="BTN_LangBtn_14" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="700,445,0,0">
-                    <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
-                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
-                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
-                    </ExtraThings:GridButton>
-                </Grid>
-                <Grid x:Name="BTN_LangBtn_15" Width="240" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="985,445,0,0">
-                    <ExtraThings:GridButton Height="90" VerticalAlignment="Bottom">
-                        <Image CacheMode="BitmapCache" Source="/Assets/Blue Button.png"/>
-                        <ExtraThings:DrawTextOutlined Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.5" VerticalAlignment="Top" Margin="0,-4,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="90"/>
-                    </ExtraThings:GridButton>
-                </Grid>
-
-                </Grid>
-                <Grid Width="900" Height="95" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,25">
+                <Grid x:Name="LanguageSelectUI_Page" Width="900" Height="95" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,25">
                     <Image CacheMode="BitmapCache" Source="/Assets/Nav Field Slice.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,7,20,12" />
-                    <ExtraThings:DrawTextOutlined x:Name="LanguageSelectUI_PageText" Text="{Binding Path=[TID_PAGE], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="48" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="135,18,135,0"/>
+                    <ExtraThings:DrawTextOutlined x:Name="LanguageSelectUI_PageText" Text="{Binding Path=[TID_PAGE], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="48" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="135,0,135,0"/>
                     <ExtraThings:GridButton x:Name="BTN_LangSelect_GoLeft" VerticalAlignment="Top" HorizontalAlignment="Left" MouseLeftButtonUp="BTN_LangSelect_GoLeft_MouseLeftButtonUp">
                         <Grid HorizontalAlignment="Left">
                             <Image CacheMode="BitmapCache" Source="/Assets/Blue Button Short.png" />

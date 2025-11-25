@@ -1,4 +1,12 @@
-{
-  "EN": "Localization/EN.csv",
-  "VI": "Localization/VI.csv"
-}
+﻿[
+  {
+    "LocaleID": "EN",
+    "LangName": "English",
+    "FilePath": "Localization/EN.csv"
+  },
+  {
+    "LocaleID": "VI",
+    "LangName": "Tiếng Việt",
+    "FilePath": "Localization/VI.csv"
+  }
+]

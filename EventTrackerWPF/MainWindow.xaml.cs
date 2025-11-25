@@ -41,6 +41,8 @@ namespace EventTrackerWPF
         double Count = 1e13;
         double CountDisp = 0;
 
+        // TODO: make mock data, then make a button that switch through every milestone
+
         double GemsDisp = 0;
 
         double Siner = 0;
@@ -56,15 +58,20 @@ namespace EventTrackerWPF
         private double LastRightTranslateX = double.NaN;
         private const double UpdateEpsilon = 0.5;
         private readonly List<Grid> LanguageMenuButtonAreas = [];
+        private readonly List<MouseButtonEventHandler?> LanguageMenuButtonHandlers = [];
+
 
         // Probably will be repurposed later to use on everything instead of just languages
         // Starts from 0 but will be displayed as 1 and so forth
-        private int LanguageMenuPages;
-        private int CurrentLanguageMenuPage;
-        private int MaxButtonsPerPage;
+        private int CurrentLanguageMenuPage = 0;
+        private int LanguageMenuPages = 0;
+        private int MaxButtonsPerPage = 0;
 
         public MainWindow()
         {
+            Settings.Load();
+            SaveSystem.Load();
+
             LocalizationLib.Locales = LocalizationLib.LoadLocales();
             LocalizationLib.Load(LocalizationLib.Locales.First(Q => Q.LocaleID == Settings.Lang).FilePath!);
 
@@ -82,9 +89,6 @@ namespace EventTrackerWPF
                 { "mus_man", "SFX/man.wav" },
                 { "egg", "SFX/snd_egg.wav" }
             });
-
-            Settings.Load();
-            SaveSystem.Load();
 
             InitializeComponent();
 
@@ -109,6 +113,8 @@ namespace EventTrackerWPF
             SplashTextTicker.AutoReset = true;
 
             LoadTitleSplashTexts();
+
+            LanguageMenuButtonHandlers = Enumerable.Repeat<MouseButtonEventHandler?>(null, MaxButtonsPerPage).ToList();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -141,13 +147,64 @@ namespace EventTrackerWPF
         private void PopulateLanguageSelectorView()
         {
             var LangsToShow = LocalizationLib.Locales
-                .Skip((CurrentLanguageMenuPage * MaxButtonsPerPage))
+                .Skip(CurrentLanguageMenuPage * MaxButtonsPerPage)
                 .Take(MaxButtonsPerPage)
                 .ToList();
 
+            if (LocalizationLib.Locales.Count <= 16)
+                LanguageSelectUI_Page.Visibility = Visibility.Collapsed;
+            else
+            {
+                LanguageSelectUI_Page.Visibility = Visibility.Visible;
+                LanguageSelectUI_PageText.Text = LocalizationLib.Strings["TID_PAGE"]
+                                                                .Replace("<CURRENT>", (CurrentLanguageMenuPage + 1).ToString("#,##0"))
+                                                                .Replace("<MAX_PAGES>", LanguageMenuPages.ToString("#,##0"));
+            }
+
             for (int Index = 0; Index < MaxButtonsPerPage; Index++)
             {
-                
+                if (Index < LangsToShow.Count)
+                {
+                    // Use once, then throw away
+                    int LocalIndex = Index;
+
+                    var Area = LanguageMenuButtonAreas[LocalIndex];
+
+                    if (LanguageMenuButtonHandlers[LocalIndex] != null)
+                        Area.MouseLeftButtonUp -= LanguageMenuButtonHandlers[LocalIndex]!;
+
+                    MouseButtonEventHandler Handler = (S, E) =>
+                    {
+                        SoundIndexer.PlaySoundID("btn_click");
+                        var Message = new AlertMessage()
+                        {
+                            Title = LocalizationLib.Strings["TID_CONFIRM_LANGUAGE_CHANGE_TITLE"],
+                            Description = LocalizationLib.Strings["TID_CONFIRM_LANGUAGE_CHANGE_DESC"],
+
+                            RedButton = LocalizationLib.Strings["TID_CANCEL"],
+                            RedButtonFunc = (No, pe) => { SoundIndexer.PlaySoundID("btn_click"); },
+
+                            BlueButton = LocalizationLib.Strings["TID_OK"],
+                            BlueButtonFunc = (Be, pis) => { Settings.Lang = LangsToShow[LocalIndex].LocaleID; Application.Current.Shutdown(); WinForms.Application.Restart(); }
+                        };
+                        Common.CreateAlert(Message);
+                    };
+
+                    LanguageMenuButtonHandlers[LocalIndex] = Handler;
+                    Area.MouseLeftButtonUp += Handler;
+
+                    Area.Visibility = Visibility.Visible;
+                    Area.Children.OfType<DrawTextOutlined>().First().Text = LangsToShow[Index].LangName ?? string.Empty;
+                }
+                else
+                {
+                    LanguageMenuButtonAreas[Index].Visibility = Visibility.Collapsed;
+                    if (LanguageMenuButtonHandlers[Index] != null)
+                    {
+                        LanguageMenuButtonAreas[Index].MouseLeftButtonUp -= LanguageMenuButtonHandlers[Index]!;
+                        LanguageMenuButtonHandlers[Index] = null;
+                    }
+                }
             }
         }
 
@@ -928,16 +985,21 @@ namespace EventTrackerWPF
         private void BTN_ChangeLanguage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             SoundIndexer.PlaySoundID("btn_click");
+            PopulateLanguageSelectorView();
             NavigateTo(LanguageSelectUI);
         }
         private void BTN_LangSelect_GoLeft_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-
+            SoundIndexer.PlaySoundID("btn_click");
+            CurrentLanguageMenuPage = CurrentLanguageMenuPage <= 0 ? 0 : CurrentLanguageMenuPage - 1;
+            PopulateLanguageSelectorView();
         }
 
         private void BTN_LangSelect_GoRight_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-
+            SoundIndexer.PlaySoundID("btn_click");
+            CurrentLanguageMenuPage = CurrentLanguageMenuPage >= LanguageMenuPages - 1 ? LanguageMenuPages - 1 : CurrentLanguageMenuPage + 1;
+            PopulateLanguageSelectorView();
         }
 
         #endregion
@@ -1172,23 +1234,6 @@ namespace EventTrackerWPF
                 SoundIndexer.PlaySoundID("btn_go_back");
                 return;
             }
-        }
-
-        private void ChangeLanguageDialog(object Sender, MouseButtonEventArgs Event, string LangName)
-        {
-            SoundIndexer.PlaySoundID("btn_click");
-            var Message = new AlertMessage()
-            {
-                Title = LocalizationLib.Strings["TID_CONFIRM_LANGUAGE_CHANGE_TITLE"],
-                Description = LocalizationLib.Strings["TID_CONFIRM_LANGUAGE_CHANGE_DESC"],
-
-                RedButton = LocalizationLib.Strings["TID_CANCEL"],
-                RedButtonFunc = (No, pe) => { SoundIndexer.PlaySoundID("btn_click"); },
-
-                BlueButton = LocalizationLib.Strings["TID_OK"],
-                BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); Settings.Lang = LangName; System.Windows.Forms.Application.Restart(); }
-            };
-            Common.CreateAlert(Message);
         }
     }
 
