@@ -6,7 +6,6 @@ namespace EventTrackerWPF.Librarbies
 {
     public static class Settings
     {
-        public static int MaxFPS { get; set; } = 60;
         public static string? Lang { get; set; } = "EN";
         public static bool AutoRefresh { get; set; } = false;
         public static bool AlternareFont { get; set; } = false;

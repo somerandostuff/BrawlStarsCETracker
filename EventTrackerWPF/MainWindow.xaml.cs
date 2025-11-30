@@ -13,6 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using SysTimer = System.Timers;
 using WinForms = System.Windows.Forms;
 
@@ -23,11 +24,10 @@ namespace EventTrackerWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly SysTimer.Timer TickDisplayer = new SysTimer.Timer(1000 / 30);
+        private readonly SysTimer.Timer DisplayTicker = new SysTimer.Timer(1000 / 60);
         private readonly SysTimer.Timer ClockTicker = new SysTimer.Timer(125);
         private readonly SysTimer.Timer SplashTextTicker = new SysTimer.Timer(TimeSpan.FromMinutes(5));
-
-        private static readonly DiscordRpcClient DiscordClient = new DiscordRpcClient(Common.DiscordClientID);
+        private readonly SysTimer.Timer AutoRefreshTicker = new SysTimer.Timer(TimeSpan.FromMinutes(1));
 
         public static SoundLibrarby SoundIndexer = new SoundLibrarby();
 
@@ -38,14 +38,29 @@ namespace EventTrackerWPF
 
         Stack<Grid> NavigatedMenus = [];
 
-        double Count = 1e13;
-        double CountDisp = 0;
+        double Count = 0, EstimatedCount = 0, CountDisp = 0;
+
+        double StartCount = 0, EndCount = 0;
+
+        double StartPercent = 0, EndPercent = 0;
+
+        double RangePercent, ProgressToRangePercent = 0;
+
+        double EndGoal = 1;
+
+        double RangeAmount = 0;
 
         // TODO: make mock data, then make a button that switch through every milestone
 
         double GemsDisp = 0;
 
         double Siner = 0;
+
+        bool FirstLoad = true;
+
+        bool AutofetchedSuccessfully = false;
+
+        public EventData? Data = null;
 
         List<string> SplashTextKeys = [];
 
@@ -96,14 +111,17 @@ namespace EventTrackerWPF
             LanguageMenuButtonAreas = [..LanguageList.Children.Cast<Grid>()];
             LanguageMenuPages = (int)Math.Ceiling((double)LocalizationLib.Locales.Count / MaxButtonsPerPage);
 
+
+            LanguageMenuButtonHandlers = Enumerable.Repeat<MouseButtonEventHandler?>(null, MaxButtonsPerPage).ToList();
+
             // Common.UseCustomFont(MainGrid, Settings.MainFontFamily, Settings.AltFontFamily);
 
             ChangeView(Settings.ViewMode);
             ToggleIconStyle();
 
-            TickDisplayer.Elapsed += TickDisplayer_Tick;
-            TickDisplayer.AutoReset = true;
-            TickDisplayer.Start();
+            DisplayTicker.Elapsed += DisplayTicker_Tick;
+            DisplayTicker.AutoReset = true;
+            DisplayTicker.Start();
 
             ClockTicker.Elapsed += ClockTicker_Tick;
             ClockTicker.AutoReset = true;
@@ -112,9 +130,10 @@ namespace EventTrackerWPF
             SplashTextTicker.Elapsed += SplashTextTicker_Tick;
             SplashTextTicker.AutoReset = true;
 
-            LoadTitleSplashTexts();
+            AutoRefreshTicker.Elapsed += AutoRefreshTicker_Tick;
+            AutoRefreshTicker.AutoReset = true;
 
-            LanguageMenuButtonHandlers = Enumerable.Repeat<MouseButtonEventHandler?>(null, MaxButtonsPerPage).ToList();
+            LoadTitleSplashTexts();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -124,14 +143,17 @@ namespace EventTrackerWPF
             SetViewMode(Settings.ViewMode);
             SetNumberPreference(Settings.FormatPref);
 
-            if (Settings.SelectedTheme == 0)
-            {
-                ThemeSelect(BackgroundThemes.Default);
-            }
-            else
-            {
-                ThemeSelect(Settings.SelectedTheme);
-            }
+            if (Settings.SelectedTheme == 0) ThemeSelect(BackgroundThemes.Default);
+            else ThemeSelect(Settings.SelectedTheme);
+
+            if (SaveSystem.Eggs > 0) BTN_Egg.Visibility = Visibility.Visible;
+
+            Count = SaveSystem.SavedEventScore;
+            EndGoal = SaveSystem.EndGoal;
+            RangeAmount = SaveSystem.ToNextGoal;
+
+            StartCount = SaveSystem.MilestoneStart;
+            EndCount = SaveSystem.MilestoneEnd;
 
             Chk_EnableAnimations.IsChecked = Settings.EnableAnimations;
             Chk_UseAltFont.IsChecked = Settings.AlternareFont;
@@ -140,7 +162,10 @@ namespace EventTrackerWPF
 
             Txt_LangName.Text = LocalizationLib.Locales.First(Q => Q.LocaleID == Settings.Lang).LangName ?? string.Empty;
 
-            BindValues();
+            Txt_AboutBuild.Text = Txt_AboutBuild.Text.Replace("<VERSION>", Common.VersionNumber);
+            Txt_EventEndsIn.Text = Txt_EventEndsIn.Text.Replace("<TIME>", Common.FormatTime(FormatPrefs.LongText, TimeSpan.FromSeconds(0)));
+            Txt_BuildDate.Text = Txt_BuildDate.Text.Replace("<DATE>", Common.LastUpdatedDate.ToString(LocalizationLib.Strings["TID_DATETIME_NOW_TOSTRING_FORMAT_DATEONLY"], new CultureInfo(LocalizationLib.Strings["TID_CULTUREINFO"])));
+
             // InitializeRPC();
         }
 
@@ -193,8 +218,17 @@ namespace EventTrackerWPF
                     LanguageMenuButtonHandlers[LocalIndex] = Handler;
                     Area.MouseLeftButtonUp += Handler;
 
+                    var Image = Area.Children.OfType<Image>().First();
+                    var TextArea = Area.Children.OfType<DrawTextOutlined>().First();
+
                     Area.Visibility = Visibility.Visible;
-                    Area.Children.OfType<DrawTextOutlined>().First().Text = LangsToShow[Index].LangName ?? string.Empty;
+                    if (LangsToShow[LocalIndex].LocaleID == Settings.Lang)
+                    {
+                        Image.Source = new BitmapImage(new Uri(Common.ResourcePath, "/Assets/Green Button.png"));
+                        Area.IsEnabled = false;
+                        Area.Opacity = 1;
+                    }
+                    TextArea.Text = LangsToShow[Index].LangName ?? string.Empty;
                 }
                 else
                 {
@@ -283,14 +317,138 @@ namespace EventTrackerWPF
         {
             Txt_Status.Text = LocalizationLib.Strings["TID_STATUS_FETCHING"];
 
-            var FetchResponse = await Common.CheckForEvent();
-            if (FetchResponse == FetchResponse.NotAvailable)
+            // Put async later when using real HTTP requests. This is using mock data for now.
+            await Task.Delay(500);
+
+            try
             {
-                Swoon();
+                Data = Common.FetchData();
+            }
+            catch (Exception EX)
+            {
+                var Message = new AlertMessage()
+                {
+                    Width = 1200,
+                    Height = 675,
+                    Title = LocalizationLib.Strings["TID_GENERIC_ERROR_LABEL"],
+                    Description =
+                        LocalizationLib.Strings["TID_GENERIC_TRYCATCH_ERROR_MESSAGE"]
+                                .Replace("<MESSAGE>", LocalizationLib.Strings["TID_GENERIC_TRYCATCH_ERROR_DESC"])
+                                .Replace("<EXC_NAME>", EX.GetType().Name)
+                                .Replace("<HRESULT>", EX.HResult.ToString()
+                                .Replace("<MESSAGE>", EX.Message)),
+                    BlueButton = LocalizationLib.Strings["TID_OK"],
+                    BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); }
+                };
+                Common.CreateAlert(Message);
+
+                Txt_Status.Text = LocalizationLib.Strings["TID_STATUS_FETCHING_FAIL"];
+
+                return;
+            }
+            finally
+            {
+                FirstLoad = false;
+
+                if (Data != null && Data.FetchStatus != FetchResponse.NotAvailable)
+                {
+                    Txt_Status.Text = string.Empty;
+                    EndGoal = Common.SimpleTextToNumber(Data.Milestones.Last().CountLabel);
+                    for (int Idx = 0; Idx < Data.Milestones.Count; Idx++)
+                    {
+                        if (Idx == 0 && Data.Progress < Data.Milestones[Idx].ProgressPercent)
+                        {
+                            StartPercent = 0;
+                            EndPercent = Data.Milestones[Idx].ProgressPercent;
+
+                            StartCount = 0;
+                            EndCount = Common.SimpleTextToNumber(Data.Milestones[Idx].CountLabel);
+
+                            RangePercent = EndPercent - StartPercent;
+                            ProgressToRangePercent = Data.Progress - StartPercent;
+
+                            RangeAmount = EndCount - StartCount;
+
+                            Count = StartCount + RangeAmount * (ProgressToRangePercent / RangePercent);
+
+                            break;
+                        }
+                        else if (Idx == Data.Milestones.Count - 1 && Data.Progress > Data.Milestones[Idx].ProgressPercent)
+                        {
+                            // Since the event has already reached the last milestone, 
+                            // we set the count to infinity (endless mode)
+                            // but keep the scaling consistent with the previous milestone
+
+                            double Start_ishCount = Common.SimpleTextToNumber(Data.Milestones[Idx - 1].CountLabel);
+
+                            StartPercent = Data.Milestones[Idx - 1].ProgressPercent;
+                            EndPercent = Data.Milestones[Idx].ProgressPercent;
+
+                            StartCount = Common.SimpleTextToNumber(Data.Milestones[Idx].CountLabel);
+                            EndCount = double.PositiveInfinity;
+
+                            RangePercent = EndPercent - StartPercent;
+                            ProgressToRangePercent = Data.Progress - EndPercent;
+
+                            RangeAmount = StartCount - Start_ishCount;
+
+                            Count = StartCount + RangeAmount * (ProgressToRangePercent / RangePercent);
+
+                            break;
+                        }
+                        else if (Idx > 0 && Data.Progress > Data.Milestones[Idx - 1].ProgressPercent && Data.Progress <= Data.Milestones[Idx].ProgressPercent)
+                        {
+                            StartPercent = Data.Milestones[Idx - 1].ProgressPercent;
+                            EndPercent = Data.Milestones[Idx].ProgressPercent;
+
+                            StartCount = Common.SimpleTextToNumber(Data.Milestones[Idx - 1].CountLabel);
+                            EndCount = Common.SimpleTextToNumber(Data.Milestones[Idx].CountLabel);
+
+                            RangePercent = EndPercent - StartPercent;
+                            ProgressToRangePercent = Data.Progress - StartPercent;
+
+                            RangeAmount = EndCount - StartCount;
+
+                            Count = StartCount + RangeAmount * (ProgressToRangePercent / RangePercent);
+
+                            break;
+                        }
+                    }
+
+                    Count = Math.Round(Count);
+                    RangeAmount = Math.Round(RangeAmount);
+
+                    SaveSystem.EndGoal = EndGoal;
+                    SaveSystem.SavedEventScore = Count;
+                    SaveSystem.ToNextGoal = RangeAmount;
+
+                    SaveSystem.MilestoneStart = StartCount;
+                    SaveSystem.MilestoneEnd = EndCount;
+
+                    AutofetchedSuccessfully = Common.LogResult(Count);
+
+                    CalculateAverage();
+                }
+                else Swoon();
             }
         }
 
-        private void TickDisplayer_Tick(object? Sender, EventArgs Event)
+        private void CalculateAverage()
+        {
+            if (SaveSystem.TrackedResults.Count > 1)
+            {
+                var CountDiff = SaveSystem.TrackedResults.Last().Value - SaveSystem.TrackedResults.First().Value;
+                var TimeDiff = SaveSystem.TrackedResults.Last().Key - SaveSystem.TrackedResults.First().Key;
+
+                EstimatedCount = CountDiff / TimeDiff;
+
+                Txt_Approximation.Text = LocalizationLib.Strings["TID_PROGRESS_SPEED"]
+                                                        .Replace("<SPEED>", Common.Beautify(EstimatedCount, Settings.FormatPref))
+                                                        .Replace("<TIME_UNIT>", LocalizationLib.Strings["TID_SECONDS_LONG_SINGULAR"]);
+            }
+        }
+
+        private void DisplayTicker_Tick(object? Sender, EventArgs Event)
         {
             CalculateDisplay();
 
@@ -299,11 +457,33 @@ namespace EventTrackerWPF
             {
                 DynCounter_Num_CanMono.Text = Common.Beautify(CountDisp, Settings.FormatPref);
                 MoneyCount.Text = Common.Beautify(GemsDisp, FormatPrefs.ShortText);
-                Txt_ProgressPercent.Text = Common.BeautifyPercentage(CountDisp / 1e11) + "%";
-                ProcProgressBar(CountDisp / 1e11);
+                Txt_ProgressPercent.Text = Common.BeautifyPercentage(CountDisp / EndGoal * 100) + "%";
+                ProcProgressBar(CountDisp / EndGoal * 100);
                 UpdateDynCounterPos();
+
+                if (StartCount > 0 && EndCount > 0)
+                {
+                    if (Settings.ShowMilestoneProgress)
+                    {
+                        Txt_MilestoneLeft.Text = Common.Beautify(StartCount, Settings.FormatPref);
+                        Txt_MilestoneRight.Text = Common.Beautify(EndCount, Settings.FormatPref);
+                    }
+                }
+
+                if (Count > EndGoal)
+                {
+                    Txt_NextMilestone.Text =
+                        LocalizationLib.Strings["TID_POINTS_TO_NEXT_MILESTONE_ALL_DONE"];
+                }
+                else
+                {
+                    Txt_NextMilestone.Text =
+                        LocalizationLib.Strings["TID_POINTS_TO_NEXT_MILESTONE"]
+                                       .Replace("<POINTS>", Common.Beautify(EndCount - CountDisp, Settings.FormatPref));
+                }
             });
 
+            // Man
             Dispatcher.Invoke(() =>
             {
                 if (RoomMan.Visibility == Visibility.Visible)
@@ -337,11 +517,31 @@ namespace EventTrackerWPF
             });
         }
 
+        private void AutoRefreshTicker_Tick(object? sender, ElapsedEventArgs e)
+        {
+            AutoRefresh();
+        }
+
+        private void AutoRefresh()
+        {
+            if (DateTimeOffset.UtcNow.Minute >= 26 && DateTimeOffset.UtcNow.Minute <= 34 ||
+                            DateTimeOffset.UtcNow.Minute >= 56 || DateTimeOffset.UtcNow.Minute <= 04 &&
+                            !AutofetchedSuccessfully
+                            )
+            {
+                FetchData();
+            }
+            else
+            {
+                AutofetchedSuccessfully = false;
+            }
+        }
+
         private void CalculateDisplay()
         {
             if (double.IsInfinity(Count))
             {
-                CountDisp = ConvertToInfinity(Count);
+                CountDisp = Common.ConvertToInfinity(Count);
             }
             else
             {
@@ -350,25 +550,9 @@ namespace EventTrackerWPF
 
             if (double.IsInfinity(SaveSystem.Gems))
             {
-                GemsDisp = ConvertToInfinity(SaveSystem.Gems);
+                GemsDisp = Common.ConvertToInfinity(SaveSystem.Gems);
             }
             else GemsDisp += (SaveSystem.Gems - GemsDisp) * .2325;
-        }
-
-        private static double ConvertToInfinity(double Number)
-        {
-            if (double.IsInfinity(Number))
-            {
-                if (Number <= double.NegativeInfinity)
-                {
-                    return double.NegativeInfinity;
-                }
-                if (Number >= double.PositiveInfinity)
-                {
-                    return double.PositiveInfinity;
-                }
-            }
-            return Number;
         }
 
         private void UpdateDynCounterPos()
@@ -443,11 +627,6 @@ namespace EventTrackerWPF
             SetNumberPreference((FormatPrefs)AllFormatPreferences.GetValue(NewIndex)!);
         }
 
-        private void ChangeLanguagePage(bool NavLeft)
-        {
-            
-        }
-
         private void ChangeViewMode(bool NavLeft)
         {
             var CurrentIndex = Array.IndexOf(AllViewModes, Settings.ViewMode);
@@ -512,12 +691,6 @@ namespace EventTrackerWPF
             }
         }
 
-        private void BindValues()
-        {
-            Txt_AboutBuild.Text = Txt_AboutBuild.Text.Replace("<VERSION>", Common.VersionNumber);
-            Txt_EventEndsIn.Text = Txt_EventEndsIn.Text.Replace("<TIME>", Common.FormatTime(FormatPrefs.LongText, TimeSpan.FromSeconds(0)));
-        }
-
         private void ToggleIconStyle()
         {
             if (Settings.UseOldIcon)
@@ -529,51 +702,6 @@ namespace EventTrackerWPF
             {
                 LogosCorner_OldStyle.Visibility = Visibility.Collapsed;
                 LogosCorner_NewStyle.Visibility = Visibility.Visible;
-            }
-        }
-
-        private void InitializeRPC()
-        {
-            try
-            {
-                DiscordClient.Initialize();
-            }
-            catch (Exception Exc)
-            {
-                var ErrorMessage = new AlertMessage()
-                {
-                    Title = LocalizationLib.Strings["TID_DISCORD_RPC_LOAD_FAIL_WARNING_TITLE"],
-                    Description = LocalizationLib.Strings["TID_DISCORD_RPC_LOAD_FAIL_WARNING_DESC"] + $"\n\n{Exc.GetType().Name}\n{Exc.Message}",
-
-                    BlueButton = LocalizationLib.Strings["TID_DISCORD_RPC_LOAD_FAIL_WARNING_YES"],
-                    BlueButtonFunc = (Be, pis) => { InitializeRPC(); },
-
-                    RedButton = LocalizationLib.Strings["TID_DISCORD_RPC_LOAD_FAIL_WARNING_NO"],
-                    RedButtonFunc = (No, pe) => { DiscordClient.Dispose(); }
-                };
-            }
-            finally
-            {
-                if (DiscordClient.IsInitialized)
-                {
-                    DiscordClient.SetPresence(new()
-                    {
-                        Type = ActivityType.Watching,
-                        Details = "Loading data...",
-                        State = "Waiting...",
-                        Buttons = [new() { Label = "chip", Url = "https://www.youtube.com/watch?v=WIRK_pGdIdA" }]
-                    });
-                }
-                else DiscordClient.Dispose();
-            }
-        }
-
-        private void SetPresenceMessage(string Details, string State)
-        {
-            if (DiscordClient.IsInitialized)
-            {
-                DiscordClient.UpdateDetails(Details);
-                DiscordClient.UpdateState(State);
             }
         }
 
@@ -819,13 +947,29 @@ namespace EventTrackerWPF
         {
             SoundIndexer.PlaySoundID("btn_click");
             Settings.AutoRefresh = Chk_AutoRefresh.IsChecked;
+            BTN_Refresh.IsEnabled = !Chk_AutoRefresh.IsChecked;
+
+        if (Chk_AutoRefresh.IsChecked)
+            {
+                var Message = new AlertMessage()
+                {
+                    Title = LocalizationLib.Strings["TID_AUTOREFRESH_ENABLED_TITLE"],
+                    Description = LocalizationLib.Strings["TID_AUTOREFRESH_ENABLED_DESC"],
+
+                    BlueButton = LocalizationLib.Strings["TID_OK"],
+                    BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); AutoRefresh(); }
+                };
+                Common.CreateAlert(Message);
+            }
         }
         private void BTN_GoToGitHubRepo_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             SoundIndexer.PlaySoundID("btn_click");
             string URL = LocalizationLib.Strings["TID_ABOUT_GITHUB_REPO_LINK"];
             Process.Start(new ProcessStartInfo(URL) { UseShellExecute = true });
-        }        
+        }
+
+        // WIP
         private void BTN_FontchangerrrrrMAIN_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var FontDialog = new WinForms.FontDialog();
@@ -923,7 +1067,7 @@ namespace EventTrackerWPF
                     Description = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_2"],
 
                     BlueButton = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_2_YES"],
-                    BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("egg"); Common.CreateAlert(Message3Yes); SaveSystem.Eggs++; SaveSystem.Egg = true; },
+                    BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("egg"); Common.CreateAlert(Message3Yes); SaveSystem.Eggs++; SaveSystem.Egg = true; BTN_Egg.Visibility = Visibility.Visible; },
                     RedButton = LocalizationLib.Strings["TID_MYSTERY_ROOM_DIALOG_2_NO"],
                     RedButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); Common.CreateAlert(Message3No); SaveSystem.Egg = true;}
                 };
@@ -1000,6 +1144,19 @@ namespace EventTrackerWPF
             SoundIndexer.PlaySoundID("btn_click");
             CurrentLanguageMenuPage = CurrentLanguageMenuPage >= LanguageMenuPages - 1 ? LanguageMenuPages - 1 : CurrentLanguageMenuPage + 1;
             PopulateLanguageSelectorView();
+        }
+        private void BTN_Egg_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("egg");
+            var Message4 = new AlertMessage()
+            {
+                Title = string.Empty,
+                Description = LocalizationLib.Strings["TID_MYSTERY_EGGS_OBTAINED"].Replace("<COUNT>", Common.Beautify(SaveSystem.Eggs, Settings.FormatPref)),
+
+                BlueButton = LocalizationLib.Strings["TID_OK"],
+                BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); }
+            };
+            Common.CreateAlert(Message4);
         }
 
         #endregion
@@ -1235,13 +1392,6 @@ namespace EventTrackerWPF
                 return;
             }
         }
-    }
-
-    public enum BarType
-    {
-        None,
-        Tracker,
-        TimeLeft
     }
 
     public enum BackgroundThemes

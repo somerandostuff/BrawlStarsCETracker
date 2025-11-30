@@ -10,6 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="References\**" />
+    <EmbeddedResource Remove="References\**" />
+    <None Remove="References\**" />
+    <Page Remove="References\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Assets\Active Checkbox.png" />
     <None Remove="Assets\Backgrounds\AvD_Angels\Angels Icon.png" />
     <None Remove="Assets\Backgrounds\AvD_Angels\Arch Gate Thing.png" />
@@ -103,6 +110,7 @@
     <None Remove="Assets\spr_blocktree_parts\spr_blocktree_parts_1.png" />
     <None Remove="Assets\spr_blocktree_parts\spr_blocktree_parts_2.png" />
     <None Remove="Assets\spr_blocktree_parts\spr_blocktree_parts_3.png" />
+    <None Remove="Assets\spr_egg.png" />
     <None Remove="Assets\spr_roaringknight_slash_white_horizontal.png" />
     <None Remove="Assets\Strip Popup Window Base.png" />
     <None Remove="Assets\Textbox Area Frameslice.png" />
@@ -342,6 +350,7 @@
     <Resource Include="Assets\spr_blocktree_parts\spr_blocktree_parts_1.png" />
     <Resource Include="Assets\spr_blocktree_parts\spr_blocktree_parts_2.png" />
     <Resource Include="Assets\spr_blocktree_parts\spr_blocktree_parts_3.png" />
+    <Resource Include="Assets\spr_egg.png" />
     <Resource Include="Assets\spr_roaringknight_slash_white_horizontal.png" />
     <Resource Include="Assets\Strip Popup Window Base.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
@@ -382,7 +391,6 @@
 
   <ItemGroup>
     <Folder Include="Assets\Backgrounds\AvD_Demons\" />
-    <Folder Include="References\" />
   </ItemGroup>
 
   <ItemGroup>

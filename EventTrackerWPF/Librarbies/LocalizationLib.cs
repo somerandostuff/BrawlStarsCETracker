@@ -101,7 +101,7 @@ namespace EventTrackerWPF.Librarbies
                 var Message = new AlertMessage()
                 {
                     Title = "I CAN'T READ!!!",
-                    Description = $"Couldn't find language data.\n" +
+                    Description = $"Couldn't find language data. Please commit reinstall.\n" +
                     "Exception type: " + Exc.GetType() + "\n" +
                     "Message: " + Exc.Message + "\n" +
                     "HResult: " + Exc.HResult + "\n",

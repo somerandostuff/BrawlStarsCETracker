@@ -1,7 +1,7 @@
-﻿using EventTrackerWPF.CustomElements;
+﻿using DiscordRPC;
+using EventTrackerWPF.CustomElements;
 using System;
 using System.Collections.Generic;
-using SysDrawing = System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -9,16 +9,18 @@ using System.Net.Http;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using WinMedia = System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using SysDrawing = System.Drawing;
+using WinMedia = System.Windows.Media;
 
 namespace EventTrackerWPF.Librarbies
 {
-    public class Common
+    public partial class Common
     {
         public static async Task<FetchResponse> CheckForEvent()
         {
@@ -66,6 +68,11 @@ namespace EventTrackerWPF.Librarbies
             }
         }
 
+        public static EventData FetchData()
+        {
+            return MockData.Data;
+        }
+
         public static void CreateAlert(AlertMessage Message)
         {
             var AlertWindow = new AlertWindow(Message);
@@ -77,7 +84,10 @@ namespace EventTrackerWPF.Librarbies
         }
 
         public const string VersionNumber = "1.1.0";
-        public const string LastUpdatedDate = "dd/mm/yyyy";
+        public static long LastUpdatedDateInUnixTimeSeconds = 1764166163;
+        public static DateTimeOffset LastUpdatedDate = DateTimeOffset.FromUnixTimeSeconds(LastUpdatedDateInUnixTimeSeconds);
+
+        private static readonly DiscordRpcClient DiscordClient = new DiscordRpcClient(DiscordClientID);
 
         public static readonly Uri ResourcePath = new("pack://application:,,,/");
 
@@ -87,9 +97,8 @@ namespace EventTrackerWPF.Librarbies
         public static readonly WinMedia.FontFamily LilitaOneRes = new(ResourcePath, "Assets/#Lilita One");
         public static readonly WinMedia.FontFamily DeterminationMonoRes = new(ResourcePath, "Assets/#Determination Mono Web");
 
-        public static BitmapImage RedButton_ViewMode = new BitmapImage(new Uri(ResourcePath, "Assets/Red Button.png"));
-        public static BitmapImage GreenButton_ViewMode = new BitmapImage(new Uri(ResourcePath, "Assets/Green Button.png"));
-
+        // Rewrite later, this function isn't in main priority right now
+        // Will do it after everything else is done to be honest
         public static void UseCustomFont(DependencyObject Parent, SysDrawing.Font? FontMain, SysDrawing.Font? FontAlt)
         {
             if (FontMain != null)
@@ -134,7 +143,39 @@ namespace EventTrackerWPF.Librarbies
             }
         }
 
-        public static List<string> InitFormatter()
+        public static bool LogResult(double Count)
+        {
+            var CurrentTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            if (SaveSystem.TrackedResults.Count >= 10)
+            {
+                SaveSystem.TrackedResults = SaveSystem.TrackedResults.TakeLast(10).ToDictionary();
+            }
+
+            if (SaveSystem.TrackedResults.Count == 0)
+            {
+                SaveSystem.TrackedResults[CurrentTime] = Count;
+                return true;
+            }
+            else
+            {
+                if (SaveSystem.TrackedResults.Last().Value == Count && SaveSystem.TrackedResults.Last().Key - CurrentTime >= 1800)
+                {
+                    SaveSystem.TrackedResults[CurrentTime] = Count;
+                    return true;
+                }
+                else if (SaveSystem.TrackedResults.Last().Value != Count)
+                {
+                    SaveSystem.TrackedResults[CurrentTime] = Count;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        private static List<string> InitFormatter()
         {
             List<string> FormatFromE6ToE32 =
                 [
@@ -190,7 +231,7 @@ namespace EventTrackerWPF.Librarbies
             return Notations;
         }
 
-        public static List<string> InitFormatterShort()
+        private static List<string> InitFormatterShort()
         {
             List<string> FormatFromE6ToE32 =
                 [
@@ -468,6 +509,107 @@ namespace EventTrackerWPF.Librarbies
 
             return EndResult;
         }
+
+        public static double SimpleTextToNumber(string? Text)
+        {
+            if (!string.IsNullOrWhiteSpace(Text))
+            {
+                var Match = FormattedNum().Match(Text.Trim());
+                if (Match.Success)
+                {
+                    string Number = Match.Groups[1].Value;
+                    string Suffix = Match.Groups[2].Value;
+
+                    if (string.IsNullOrWhiteSpace(Suffix))
+                    {
+                        return double.Parse(Number);
+                    }
+
+                    switch (Suffix)
+                    {
+                        case "k":
+                        case "K":
+                            return double.Parse(Number) * 1e03;
+                        case "M":
+                            return double.Parse(Number) * 1e06;
+                        case "B":
+                            return double.Parse(Number) * 1e09;
+                        case "T":
+                            return double.Parse(Number) * 1e12;
+                        case "Q":
+                        default:
+                            return double.Parse(Number) * 1e15;
+                    }
+                }
+                else return double.NaN;
+            }
+            else return 0;
+        }
+
+        public static double ConvertToInfinity(double Number)
+        {
+            if (double.IsInfinity(Number))
+            {
+                if (Number <= double.NegativeInfinity)
+                {
+                    return double.NegativeInfinity;
+                }
+                if (Number >= double.PositiveInfinity)
+                {
+                    return double.PositiveInfinity;
+                }
+            }
+            return Number;
+        }
+
+        public static void InitializeRPC()
+        {
+            try
+            {
+                DiscordClient.Initialize();
+            }
+            catch (Exception Exc)
+            {
+                var ErrorMessage = new AlertMessage()
+                {
+                    Title = LocalizationLib.Strings["TID_DISCORD_RPC_LOAD_FAIL_WARNING_TITLE"],
+                    Description = LocalizationLib.Strings["TID_DISCORD_RPC_LOAD_FAIL_WARNING_DESC"] + $"\n\n{Exc.GetType().Name}\n{Exc.Message}",
+
+                    BlueButton = LocalizationLib.Strings["TID_DISCORD_RPC_LOAD_FAIL_WARNING_YES"],
+                    BlueButtonFunc = (Be, pis) => { InitializeRPC(); },
+
+                    RedButton = LocalizationLib.Strings["TID_DISCORD_RPC_LOAD_FAIL_WARNING_NO"],
+                    RedButtonFunc = (No, pe) => { DiscordClient.Dispose(); }
+                };
+            }
+            finally
+            {
+                if (DiscordClient.IsInitialized)
+                {
+                    DiscordClient.SetPresence(new()
+                    {
+                        Type = ActivityType.Watching,
+                        Details = "Loading data...",
+                        State = "Waiting...",
+                        Buttons = [new() { Label = "chip", Url = "https://www.youtube.com/watch?v=WIRK_pGdIdA" }]
+                    });
+                }
+                else DiscordClient.Dispose();
+            }
+        }
+
+        public static void SetPresenceMessage(string Details, string State)
+        {
+            if (DiscordClient.IsInitialized)
+            {
+                DiscordClient.UpdateDetails(Details);
+                DiscordClient.UpdateState(State);
+            }
+        }
+
+
+        [GeneratedRegex(@"^([+-]?\d*\.?\d+)\s*([a-zA-Z]+)?$")]
+        private static partial Regex FormattedNum();
     }
     public class BrawlFeedLinks
     {
@@ -477,9 +619,51 @@ namespace EventTrackerWPF.Librarbies
         public const string PollAPI = "https://brawlstars-api.inbox.supercell.com/poll-api/poll/?pollId=";
     }
 
+    public static class MockData
+    {
+        public static readonly EventData Data = new()
+        {
+            HTTPStatusCode = 200,
+            FetchStatus = FetchResponse.Success,
+            Progress = 88.2925942216,
+            Milestones =
+            [
+                new EventMilestone()
+                {
+                    ProgressPercent = 25,
+                    CountLabel = "100M"
+                },
+                new EventMilestone()
+                {
+                    ProgressPercent = 50,
+                    CountLabel = "300M"
+                },
+                new EventMilestone()
+                {
+                    ProgressPercent = 75,
+                    CountLabel = "650M"
+                },
+                new EventMilestone()
+                {
+                    ProgressPercent = 100,
+                    CountLabel = "1.25B"
+                }
+            ]
+        };
+    }
+
     public class EventData
     {
         public int HTTPStatusCode { get; set; }
+        public FetchResponse FetchStatus { get; set; } = FetchResponse.NotAvailable;
+        public double Progress { get; set; } = 0;
+        public List<EventMilestone> Milestones { get; set; } = [];
+    }
+
+    public class EventMilestone
+    {
+        public double ProgressPercent { get; set; } = 0;
+        public string CountLabel { get; set; } = string.Empty;
     }
 
     public enum FetchResponse

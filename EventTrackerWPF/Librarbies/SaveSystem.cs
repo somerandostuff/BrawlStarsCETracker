@@ -8,13 +8,18 @@ namespace EventTrackerWPF.Librarbies
     {
         public static long Gems { get; set; }
         public static Dictionary<long, double> TrackedResults { get; set; } = [];
+        public static double SavedEventScore { get; set; } = 0;
+        public static double EndGoal { get; set; } = 1;
+        public static double ToNextGoal { get; set; } = 0;
+        public static double MilestoneStart { get; set; } = 0;
+        public static double MilestoneEnd { get; set; } = 0;
         public static bool Egg { get; set; } = false;
-
         public static int Eggs { get; set; } = 0;
 
         // How "TrackedResults" work:
         // long value   = timepoint tracked in seconds (UTC)
         // double value = recorded event score in that timepoint
+
 
         private const string SaveFileName = "SaveData.dat";
 
