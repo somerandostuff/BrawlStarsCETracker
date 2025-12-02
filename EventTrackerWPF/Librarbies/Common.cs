@@ -73,6 +73,32 @@ namespace EventTrackerWPF.Librarbies
             return MockData.Data;
         }
 
+        private static void ShowDialogBlur()
+        {
+            var MainWin = Application.Current?.Windows.OfType<MainWindow>().FirstOrDefault();
+            if (MainWin != null)
+            {
+                MainWin.Dispatcher.Invoke(() =>
+                {
+                    MainWin.DialogBlur.Visibility = Visibility.Visible;
+                });
+            }
+            return;
+        }
+
+        private static void HideDialogBlur()
+        {
+            var MainWin = Application.Current?.Windows.OfType<MainWindow>().FirstOrDefault();
+            if (MainWin != null)
+            {
+                MainWin.Dispatcher.Invoke(() =>
+                {
+                    MainWin.DialogBlur.Visibility = Visibility.Collapsed;
+                });
+            }
+            return;
+        }
+
         public static void CreateAlert(AlertMessage Message)
         {
             var AlertWindow = new AlertWindow(Message);
@@ -80,7 +106,48 @@ namespace EventTrackerWPF.Librarbies
             AlertWindow.Width = Message.Width;
             AlertWindow.Height = Message.Height;
 
-            AlertWindow.ShowDialog();
+            var MainWin = Application.Current?.Windows.OfType<MainWindow>().FirstOrDefault();
+            if (MainWin != null)
+            {
+                AlertWindow.Owner = MainWin;
+                AlertWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            }
+
+            ShowDialogBlur();
+            try
+            {
+                AlertWindow.ShowDialog();
+            }
+            finally
+            {
+                HideDialogBlur();
+            }
+            
+        }
+        public static void CreateTextboxAlert(AlertTextboxMessage Message)
+        {
+            var TextboxWindow = new TextboxWindow(Message);
+
+            TextboxWindow.Width = Message.Width;
+            TextboxWindow.Height = Message.Height;
+
+            var MainWin = Application.Current?.Windows.OfType<MainWindow>().FirstOrDefault();
+            if (MainWin != null)
+            {
+                TextboxWindow.Owner = MainWin;
+                TextboxWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            }
+
+            ShowDialogBlur();
+            try
+            {
+                TextboxWindow.ShowDialog();
+            }
+            finally
+            {
+                HideDialogBlur();
+            }
+
         }
 
         public const string VersionNumber = "1.1.0";
@@ -457,7 +524,7 @@ namespace EventTrackerWPF.Librarbies
                     {
                         EndResult = string.Format
                         ("{0:D1} " + (TimeCount.Hours == 1 || TimeCount.Hours == -1 ? "<HOUR> " : "<HOURS> ") +
-                        (TimeCount.Minutes == 0 ? string.Empty : ("{1:D1}" +
+                        (TimeCount.Minutes == 0 ? string.Empty : ("{1:D1} " +
                         (TimeCount.Minutes == 1 || TimeCount.Minutes == -1 ? "<MIN>" : "<MINS>"))), TimeCount.Hours, TimeCount.Minutes);
                     }
                     else
@@ -683,6 +750,17 @@ namespace EventTrackerWPF.Librarbies
         public string? RedButton { get; set; }
         public string? BlueButton { get; set; }
         public MouseButtonEventHandler RedButtonFunc { get; set; } = (Be, pis) => { };
+        public MouseButtonEventHandler BlueButtonFunc { get; set; } = (Be, pis) => { };
+    }
+    public class AlertTextboxMessage
+    {
+        public double Width { get; set; } = 800;
+        public double Height { get; set; } = 520;
+        public string? Title { get; set; }
+        public string? Description { get; set; }
+        public string? TextboxContent { get; set; }
+        public string? BlueButton { get; set; }
+        public bool BlueButtonCopiesTextboxContent { get; set; } = false;
         public MouseButtonEventHandler BlueButtonFunc { get; set; } = (Be, pis) => { };
     }
 }

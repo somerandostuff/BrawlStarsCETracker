@@ -24,7 +24,7 @@ namespace EventTrackerWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly SysTimer.Timer DisplayTicker = new SysTimer.Timer(1000 / 60);
+        private readonly SysTimer.Timer DisplayTicker = new SysTimer.Timer(1000 / 30);
         private readonly SysTimer.Timer ClockTicker = new SysTimer.Timer(125);
         private readonly SysTimer.Timer SplashTextTicker = new SysTimer.Timer(TimeSpan.FromMinutes(5));
         private readonly SysTimer.Timer AutoRefreshTicker = new SysTimer.Timer(TimeSpan.FromMinutes(1));
@@ -55,8 +55,6 @@ namespace EventTrackerWPF
         double GemsDisp = 0;
 
         double Siner = 0;
-
-        bool FirstLoad = true;
 
         bool AutofetchedSuccessfully = false;
 
@@ -348,8 +346,6 @@ namespace EventTrackerWPF
             }
             finally
             {
-                FirstLoad = false;
-
                 if (Data != null && Data.FetchStatus != FetchResponse.NotAvailable)
                 {
                     Txt_Status.Text = string.Empty;
@@ -445,6 +441,9 @@ namespace EventTrackerWPF
                 Txt_Approximation.Text = LocalizationLib.Strings["TID_PROGRESS_SPEED"]
                                                         .Replace("<SPEED>", Common.Beautify(EstimatedCount, Settings.FormatPref))
                                                         .Replace("<TIME_UNIT>", LocalizationLib.Strings["TID_SECONDS_LONG_SINGULAR"]);
+
+                Txt_ETA.Text = LocalizationLib.Strings["TID_ESTIMATED_TIME"]
+                                                .Replace("<TIME>", Common.FormatTime(Settings.FormatPref, TimeSpan.FromSeconds((EndCount - Count) / EstimatedCount)));
             }
         }
 
@@ -524,12 +523,13 @@ namespace EventTrackerWPF
 
         private void AutoRefresh()
         {
-            if (DateTimeOffset.UtcNow.Minute >= 26 && DateTimeOffset.UtcNow.Minute <= 34 ||
-                            DateTimeOffset.UtcNow.Minute >= 56 || DateTimeOffset.UtcNow.Minute <= 04 &&
-                            !AutofetchedSuccessfully
-                            )
+            if ((DateTimeOffset.UtcNow.Minute >= 26 && DateTimeOffset.UtcNow.Minute <= 34) ||
+                 DateTimeOffset.UtcNow.Minute >= 56 || DateTimeOffset.UtcNow.Minute <= 04)
             {
-                FetchData();
+                if (!AutofetchedSuccessfully)
+                {
+                    FetchData();
+                }
             }
             else
             {
@@ -568,6 +568,8 @@ namespace EventTrackerWPF
 
             DynCounter_ImgGrid.Width = Math.Max(MinImageX, MaxImageX - Offset);
             DynCounter_NumGrid.Width = Math.Min(DynCounter.Width - DynCounter_ImgGrid.Width, MaxNumberX);
+
+            DynCounter_Dummy.Width = TextSize.Width + DynCounter_Img.Width;
         }
 
         private void ChangeView(ViewModes Mode)
@@ -785,19 +787,6 @@ namespace EventTrackerWPF
             SaveSystem.Save();
         }
 
-        private void UptimeButton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            SoundIndexer.PlaySoundID("btn_click");
-            var Message = new AlertMessage()
-            {
-                Title = "Uptime timer",
-                Description = "This shows how long you have left the application running on your computer.\nIt's pretty self explainatory to be honest...",
-                BlueButton = "OK",
-
-                BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); }
-            };
-            Common.CreateAlert(Message);
-        }
         private void BTN_GoHome(object sender, MouseButtonEventArgs e)
         {
             SoundIndexer.PlaySoundID("btn_dismiss");
@@ -1236,6 +1225,25 @@ namespace EventTrackerWPF
             RunningStoryboards.Clear();
             RunningImages.Clear();
         }
+
+        private void DynCounterNum_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            var Message = new AlertTextboxMessage()
+            {
+                Title = LocalizationLib.Strings["TID_COPY_TO_SHARE_PROMPT_TITLE"],
+                Description = LocalizationLib.Strings["TID_COPY_TO_SHARE_PROMPT_DESC"],
+
+                TextboxContent = LocalizationLib.Strings["TID_COPY_TO_SHARE_PROMPT_CONTENT_GENERIC"]
+                                                .Replace("<SCORE>", Common.Beautify(Count, Settings.FormatPref)),
+
+                BlueButton = LocalizationLib.Strings["TID_COPY_TO_SHARE_PROMPT_CONFIRM"],
+                BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); },
+                BlueButtonCopiesTextboxContent = true
+            };
+            Common.CreateTextboxAlert(Message);
+        }
+
         private void Brawloween2025AnimsStart()
         {
             var Storyboard = (Storyboard)FindResource("BrawloweenTheme");

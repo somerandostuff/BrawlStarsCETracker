@@ -65,6 +65,10 @@
     <None Remove="Assets\Bars\Progress Bar Fore Right.png" />
     <None Remove="Assets\Bars\Progress Bar Fore.png" />
     <None Remove="Assets\Bars\Progress Bar Proc.png" />
+    <None Remove="Assets\Big Textbox Frameslice.png" />
+    <None Remove="Assets\Big Textbox Leftslice.png" />
+    <None Remove="Assets\Big Textbox Rightslice.png" />
+    <None Remove="Assets\Big Textbox.png" />
     <None Remove="Assets\Blue Button Short.png" />
     <None Remove="Assets\Blue Button Wide.png" />
     <None Remove="Assets\Blue Button.png" />
@@ -123,8 +127,8 @@
     <None Remove="Assets\Toggles ON.png" />
     <None Remove="Assets\you_dark_down.png" />
     <None Remove="background_angel1.png" />
+    <None Remove="Big Textbox Frameslice.png" />
     <None Remove="brawl-icon.ico" />
-    <None Remove="brawloween_2022_lobby.png" />
     <None Remove="Loading Bar Active Frameslice.png" />
     <None Remove="Loading Bar Active Leftslice.png" />
     <None Remove="Loading Bar Active Rightslice.png" />
@@ -251,6 +255,10 @@
     <Resource Include="Assets\Bars\Progress Bar Fore Right.png" />
     <Resource Include="Assets\Bars\Progress Bar Fore.png" />
     <Resource Include="Assets\Bars\Progress Bar Proc.png" />
+    <Resource Include="Assets\Big Textbox Frameslice.png" />
+    <Resource Include="Assets\Big Textbox Leftslice.png" />
+    <Resource Include="Assets\Big Textbox Rightslice.png" />
+    <Resource Include="Assets\Big Textbox.png" />
     <Resource Include="Assets\Blue Button Short.png" />
     <Resource Include="Assets\Blue Button Wide.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
@@ -374,13 +382,13 @@
     <Resource Include="Assets\you_dark_down.png" />
     <Resource Include="background_angel1.png" />
     <Resource Include="Assets\BS Star Wings.ico" />
-    <Resource Include="brawloween_2022_lobby.png" />
     <Resource Include="Assets\DeterminationMonoWeb.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\LilitaOne-Regular.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Big Textbox Frameslice.png" />
     <Resource Include="BS Star Wings.ico" />
   </ItemGroup>
 

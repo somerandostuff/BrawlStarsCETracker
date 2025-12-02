@@ -27,14 +27,12 @@ namespace EventTrackerWPF
 
             // Common.UseCustomFont(MainGrid, Settings.MainFontFamily, Settings.AltFontFamily);
 
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
             InstantiateDialog(Message);
         }
 
         private void AlertWindowTopBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            DragMove();
+            // DragMove();
         }
 
         private void InstantiateDialog(AlertMessage Message)

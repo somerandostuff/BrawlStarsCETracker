@@ -291,14 +291,17 @@
                 </Grid>
                 <Grid x:Name="SimpleView">
                     <Grid x:Name="DynCounter" VerticalAlignment="Center" HorizontalAlignment="Center" Width="1350" Height="220">
-                        <Grid VerticalAlignment="Top" Height="148">
-                            <Grid x:Name="DynCounter_ImgGrid" Width="675" HorizontalAlignment="Left">
-                                <Image CacheMode="BitmapCache"  x:Name="DynCounter_Img" Source="/Assets/Icons/Mastery Point.png" Height="146" Width="124" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                        <ExtraThings:GridButton x:Name="DynCounterNum" VerticalAlignment="Top" Height="148" MouseLeftButtonUp="DynCounterNum_MouseLeftButtonUp">
+                            <Grid>
+                                <Image x:Name="DynCounter_Dummy" Source="/Assets/Dummy.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Grid x:Name="DynCounter_ImgGrid" Width="675" HorizontalAlignment="Left">
+                                    <Image CacheMode="BitmapCache"  x:Name="DynCounter_Img" Source="/Assets/Icons/Mastery Point.png" Height="146" Width="124" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                                </Grid>
+                                <Grid x:Name="DynCounter_NumGrid" Width="675" HorizontalAlignment="Right">
+                                    <ExtraThings:DrawTextOutlined x:Name="DynCounter_Num_CanMono" Text="0" FontSize="128" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" StrokeThiccness="8" ShadowColor="Black" ShadowOffset="0, 4.5" Margin="8, 0, 0, 0"/>
+                                </Grid>
                             </Grid>
-                            <Grid x:Name="DynCounter_NumGrid" Width="675" HorizontalAlignment="Right">
-                                <ExtraThings:DrawTextOutlined x:Name="DynCounter_Num_CanMono" Text="0" FontSize="128" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" StrokeThiccness="8" ShadowColor="Black" ShadowOffset="0, 4.5" Margin="8, 0, 0, 0"/>
-                            </Grid>
-                        </Grid>
+                        </ExtraThings:GridButton>
                         <Grid VerticalAlignment="Top" Height="52" Margin="0, 148, 0, 0">
                             <ExtraThings:DrawTextOutlined x:Name="Txt_NextMilestone" Text="" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="32" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 1.85" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Width="1260"/>
                         </Grid>
@@ -414,7 +417,7 @@
                 <ExtraThings:GridButton x:Name="BTN_Settings" Width="122" Height="70" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,10,0" MouseLeftButtonUp="BTN_Settings_MouseLeftButtonUp">
                     <Image CacheMode="BitmapCache" Source="/Assets/Icons/Hamburger Button.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </ExtraThings:GridButton>
-                <ExtraThings:GridButton x:Name="BTN_Egg" Visibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="30" Height="35" Margin="-330,0,0,132" MouseLeftButtonUp="BTN_Egg_MouseLeftButtonUp">
+                <ExtraThings:GridButton x:Name="BTN_Egg" Visibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="30" Height="35" Margin="-440,0,0,15" MouseLeftButtonUp="BTN_Egg_MouseLeftButtonUp">
                     <Image Source="/Assets/spr_egg.png" RenderOptions.EdgeMode="Aliased"/>
                 </ExtraThings:GridButton>
             </Grid>
@@ -702,6 +705,7 @@
                     <Image CacheMode="BitmapCache" x:Name="Img_SwoonSlash" Source="/Assets/spr_roaringknight_slash_white_horizontal.png" Stretch="Uniform" RenderOptions.EdgeMode="Aliased" SnapsToDevicePixels="True"/>
                 </Grid>
             </Grid>
+            <StackPanel x:Name="DialogBlur" Visibility="Collapsed" Background="Black" Opacity="0.75" IsHitTestVisible="True"/>
         </Grid>
     </Grid>
     <Window.Resources>
