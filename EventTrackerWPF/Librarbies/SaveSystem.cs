@@ -6,7 +6,8 @@ namespace EventTrackerWPF.Librarbies
 {
     public static class SaveSystem
     {
-        public static long Gems { get; set; }
+        public static long Gems { get; set; } = 10;
+        public static string CurrentEventID { get; set; } = string.Empty;
         public static Dictionary<long, double> TrackedResults { get; set; } = [];
         public static double SavedEventScore { get; set; } = 0;
         public static double EndGoal { get; set; } = 1;
@@ -15,11 +16,6 @@ namespace EventTrackerWPF.Librarbies
         public static double MilestoneEnd { get; set; } = 0;
         public static bool Egg { get; set; } = false;
         public static int Eggs { get; set; } = 0;
-
-        // How "TrackedResults" work:
-        // long value   = timepoint tracked in seconds (UTC)
-        // double value = recorded event score in that timepoint
-
 
         private const string SaveFileName = "SaveData.dat";
 
@@ -107,9 +103,20 @@ namespace EventTrackerWPF.Librarbies
 
         public static void UseDefaultSettings()
         {
-            Gems = 10;
+            CurrentEventID = string.Empty;
             TrackedResults = [];
             Egg = false;
+            Eggs = 0;
+            SavedEventScore = 0;
+            EndGoal = 1;
+            ToNextGoal = 0;
+            MilestoneStart = 0;
+            MilestoneEnd = 0;
+        }
+
+        public static void ResetGems()
+        {
+            Gems = 10;
         }
 
         private static string DictionaryToText(Dictionary<long, double> Dict)
@@ -126,8 +133,8 @@ namespace EventTrackerWPF.Librarbies
             {
                 var Parts = Pair.Split(',');
                 if
-                    (Parts.Length == 2 && long.TryParse(Parts[0], out var Time) &&
-                                          double.TryParse(Parts[1], out var Value))
+                    (Parts.Length == 2 &&   long.TryParse(Parts[0], out var Time)
+                                       && double.TryParse(Parts[1], out var Value))
                 {
                     Dict[Time] = Value;
                 }

@@ -73,6 +73,8 @@ namespace EventTrackerWPF
         private readonly List<Grid> LanguageMenuButtonAreas = [];
         private readonly List<MouseButtonEventHandler?> LanguageMenuButtonHandlers = [];
 
+        private readonly Storyboard GlobalTextFadeOut;
+        private readonly Storyboard GlobalTextFadeIn;
 
         // Probably will be repurposed later to use on everything instead of just languages
         // Starts from 0 but will be displayed as 1 and so forth
@@ -100,7 +102,9 @@ namespace EventTrackerWPF
                 { "SWOON", "SFX/snd_swoon.wav" },
                 { "SWOON_IMPACT", "SFX/snd_swoon_fall.wav" },
                 { "mus_man", "SFX/man.wav" },
-                { "egg", "SFX/snd_egg.wav" }
+                { "egg", "SFX/snd_egg.wav" },
+                { "snd_cymbal", "SFX/snd_cymbal_reverse.wav" },
+                { "snd_oceanbagel", "SFX/snd_magicminer.wav" }
             });
 
             InitializeComponent();
@@ -132,6 +136,9 @@ namespace EventTrackerWPF
             AutoRefreshTicker.AutoReset = true;
 
             LoadTitleSplashTexts();
+
+            GlobalTextFadeOut = (Storyboard)FindResource("FadeOutForAnything");
+            GlobalTextFadeIn = (Storyboard)FindResource("FadeInForAnything");
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -313,7 +320,10 @@ namespace EventTrackerWPF
 
         public async void FetchData()
         {
+            GlobalTextFadeOut.Stop(Txt_Status);
+            
             Txt_Status.Text = LocalizationLib.Strings["TID_STATUS_FETCHING"];
+            Txt_Status.Fill = Brushes.White;
 
             // Put async later when using real HTTP requests. This is using mock data for now.
             await Task.Delay(500);
@@ -348,7 +358,24 @@ namespace EventTrackerWPF
             {
                 if (Data != null && Data.FetchStatus != FetchResponse.NotAvailable)
                 {
-                    Txt_Status.Text = string.Empty;
+                    GlobalTextFadeOut.Begin(Txt_Status, true);
+
+                    GlobalTextFadeOut.Completed += (Do, ne) =>
+                    {
+                        Txt_Status.Text = string.Empty;
+                        Txt_Status.Opacity = 1;
+                    };
+
+                    if (Data.EventID != SaveSystem.CurrentEventID && !string.IsNullOrWhiteSpace(SaveSystem.CurrentEventID))
+                    {
+                        Txt_Status.Fill = Brushes.Orange;
+                        Txt_Status.Text = LocalizationLib.Strings["TID_STATUS_FETCHING_RESET"];
+                    }
+                    else
+                    {
+                        Txt_Status.Text = LocalizationLib.Strings["TID_STATUS_FETCHING_SUCCESS"];
+                    }
+
                     EndGoal = Common.SimpleTextToNumber(Data.Milestones.Last().CountLabel);
                     for (int Idx = 0; Idx < Data.Milestones.Count; Idx++)
                     {
@@ -414,6 +441,8 @@ namespace EventTrackerWPF
                     Count = Math.Round(Count);
                     RangeAmount = Math.Round(RangeAmount);
 
+                    AutofetchedSuccessfully = Common.LogResult(Count, Data.EventID);
+
                     SaveSystem.EndGoal = EndGoal;
                     SaveSystem.SavedEventScore = Count;
                     SaveSystem.ToNextGoal = RangeAmount;
@@ -421,9 +450,11 @@ namespace EventTrackerWPF
                     SaveSystem.MilestoneStart = StartCount;
                     SaveSystem.MilestoneEnd = EndCount;
 
-                    AutofetchedSuccessfully = Common.LogResult(Count);
+                    SaveSystem.CurrentEventID = Data.EventID;
 
                     CalculateAverage();
+
+                    SaveSystem.Save();
                 }
                 else Swoon();
             }
@@ -437,13 +468,6 @@ namespace EventTrackerWPF
                 var TimeDiff = SaveSystem.TrackedResults.Last().Key - SaveSystem.TrackedResults.First().Key;
 
                 EstimatedCount = CountDiff / TimeDiff;
-
-                Txt_Approximation.Text = LocalizationLib.Strings["TID_PROGRESS_SPEED"]
-                                                        .Replace("<SPEED>", Common.Beautify(EstimatedCount, Settings.FormatPref))
-                                                        .Replace("<TIME_UNIT>", LocalizationLib.Strings["TID_SECONDS_LONG_SINGULAR"]);
-
-                Txt_ETA.Text = LocalizationLib.Strings["TID_ESTIMATED_TIME"]
-                                                .Replace("<TIME>", Common.FormatTime(Settings.FormatPref, TimeSpan.FromSeconds((EndCount - Count) / EstimatedCount)));
             }
         }
 
@@ -455,7 +479,7 @@ namespace EventTrackerWPF
             Dispatcher.Invoke(() =>
             {
                 DynCounter_Num_CanMono.Text = Common.Beautify(CountDisp, Settings.FormatPref);
-                MoneyCount.Text = Common.Beautify(GemsDisp, FormatPrefs.ShortText);
+                MoneyCount.Text = Common.BeautifyGemCount(GemsDisp);
                 Txt_ProgressPercent.Text = Common.BeautifyPercentage(CountDisp / EndGoal * 100) + "%";
                 ProcProgressBar(CountDisp / EndGoal * 100);
                 UpdateDynCounterPos();
@@ -479,6 +503,16 @@ namespace EventTrackerWPF
                     Txt_NextMilestone.Text =
                         LocalizationLib.Strings["TID_POINTS_TO_NEXT_MILESTONE"]
                                        .Replace("<POINTS>", Common.Beautify(EndCount - CountDisp, Settings.FormatPref));
+                }
+
+                if (EstimatedCount > 0)
+                {
+                    Txt_Approximation.Text = LocalizationLib.Strings["TID_PROGRESS_SPEED"]
+                                        .Replace("<SPEED>", Common.Beautify(EstimatedCount, Settings.FormatPref))
+                                        .Replace("<TIME_UNIT>", LocalizationLib.Strings["TID_SECONDS_LONG_SINGULAR"]);
+
+                    Txt_ETA.Text = LocalizationLib.Strings["TID_ESTIMATED_TIME"]
+                                                    .Replace("<TIME>", Common.FormatTime(Settings.FormatPref, TimeSpan.FromSeconds((EndCount - Count) / EstimatedCount)));
                 }
             });
 
@@ -713,25 +747,24 @@ namespace EventTrackerWPF
             var WidthResultView = Math.Round(WidthResult * 100) / 100.0;
 
             if (WidthResult <= 0)
-            {
                 WidthResult = 0;
-                ProgressBar_FLeft.Visibility = Visibility.Hidden;
-                ProgressBar_FMid.Visibility = Visibility.Hidden;
-                ProgressBar_FRight.Visibility = Visibility.Hidden;
+
+            if (WidthResult >= ProgressMaxWidth) WidthResult = ProgressMaxWidth;
+
+            if (WidthResultView <= 0 || WidthResultView >= ProgressMaxWidth)
+            {
+                ProgressBar_FLeft.Visibility = Visibility.Collapsed;
+                ProgressBar_FMid.Visibility = Visibility.Collapsed;
+                ProgressBar_FRight.Visibility = Visibility.Collapsed;
+                ProgressBar_FProc.Visibility = Visibility.Collapsed;
             }
             else
             {
                 ProgressBar_FLeft.Visibility = Visibility.Visible;
                 ProgressBar_FMid.Visibility = Visibility.Visible;
                 ProgressBar_FRight.Visibility = Visibility.Visible;
-            }
-
-            if (WidthResult >= ProgressMaxWidth) WidthResult = ProgressMaxWidth;
-
-            if (WidthResultView <= 0 || WidthResultView >= ProgressMaxWidth)
-                ProgressBar_FProc.Visibility = Visibility.Collapsed;
-            else
                 ProgressBar_FProc.Visibility = Visibility.Visible;
+            }
 
             if (ProgressBar_FMid.RenderTransform is not ScaleTransform)
             {
@@ -867,10 +900,10 @@ namespace EventTrackerWPF
                 Description = "Unnecessary bloat...",
 
                 RedButton = "Set gem to 0",
-                RedButtonFunc = (Re, set) => { SaveSystem.Gems = 0; Count = 0; SoundIndexer.PlaySoundID("btn_click"); },
+                RedButtonFunc = (Re, set) => { SaveSystem.Gems = 0; SoundIndexer.PlaySoundID("btn_click"); },
 
                 BlueButton = "Free gems",
-                BlueButtonFunc = (Ba, lls) => { SaveSystem.Gems += Random.Shared.Next(1, 184); SoundIndexer.PlaySoundID("btn_click"); SaveSystem.Save(); }
+                BlueButtonFunc = (Ba, lls) => { SaveSystem.Gems += Random.Shared.Next(1, 1000000000); SoundIndexer.PlaySoundID("btn_click"); SaveSystem.Save(); }
             };
 
             SoundIndexer.PlaySoundID("btn_click");
@@ -1148,6 +1181,75 @@ namespace EventTrackerWPF
             Common.CreateAlert(Message4);
         }
 
+        private void DynCounterNum_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            var Message = new AlertTextboxMessage()
+            {
+                Title = LocalizationLib.Strings["TID_COPY_TO_SHARE_PROMPT_TITLE"],
+                Description = LocalizationLib.Strings["TID_COPY_TO_SHARE_PROMPT_DESC"],
+
+                TextboxContent = LocalizationLib.Strings["TID_COPY_TO_SHARE_PROMPT_CONTENT_GENERIC"]
+                                                .Replace("<SCORE>", Common.Beautify(Count, Settings.FormatPref)),
+
+                BlueButton = LocalizationLib.Strings["TID_COPY_TO_SHARE_PROMPT_CONFIRM"],
+                BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); },
+                BlueButtonCopiesTextboxContent = true
+            };
+            Common.CreateTextboxAlert(Message);
+        }
+
+        private void BTN_SSS_ResetSettings_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            var Message = new AlertMessage()
+            {
+                Title = LocalizationLib.Strings["TID_SUPER_SECRET_SETTINGS_CLEAR_SETUP_CONFIRM_TITLE"],
+                Description = LocalizationLib.Strings["TID_SUPER_SECRET_SETTINGS_CLEAR_SETUP_CONFIRM_DESC"],
+
+                BlueButton = LocalizationLib.Strings["TID_SUPER_SECRET_SETTINGS_CLEAR_SETUP_CONFIRM_YES"],
+                BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); ResetDone(TrueIfSettingsElseMemory: true); },
+
+                RedButton = LocalizationLib.Strings["TID_SUPER_SECRET_SETTINGS_CLEAR_SETUP_CONFIRM_NO"],
+                RedButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); },
+            };
+            Common.CreateAlert(Message);
+        }
+
+        private void BTN_SSS_ResetMemory_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            var Message = new AlertMessage()
+            {
+                Title = LocalizationLib.Strings["TID_SUPER_SECRET_SETTINGS_CLEAR_MEMORY_CONFIRM_TITLE"],
+                Description = LocalizationLib.Strings["TID_SUPER_SECRET_SETTINGS_CLEAR_MEMORY_CONFIRM_DESC"],
+
+                BlueButton = LocalizationLib.Strings["TID_SUPER_SECRET_SETTINGS_CLEAR_MEMORY_CONFIRM_YES"],
+                BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); ResetDone(TrueIfSettingsElseMemory: false); },
+
+                RedButton = LocalizationLib.Strings["TID_SUPER_SECRET_SETTINGS_CLEAR_MEMORY_CONFIRM_NO"],
+                RedButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); },
+            };
+            Common.CreateAlert(Message);
+        }
+
+        private void BTN_SSS_ResetAll_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            SoundIndexer.PlaySoundID("btn_click");
+            var Message = new AlertMessage()
+            {
+                Title = LocalizationLib.Strings["TID_SUPER_SECRET_SETTINGS_RESET_ALL_CONFIRM_TITLE"],
+                Description = LocalizationLib.Strings["TID_SUPER_SECRET_SETTINGS_RESET_ALL_CONFIRM_DESC"],
+
+                BlueButton = LocalizationLib.Strings["TID_SUPER_SECRET_SETTINGS_RESET_ALL_CONFIRM_YES"],
+                BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); CrossingTheBarrierTypeshit(); },
+
+                RedButton = LocalizationLib.Strings["TID_SUPER_SECRET_SETTINGS_RESET_ALL_CONFIRM_NO"],
+                RedButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); },
+            };
+            Common.CreateAlert(Message);
+        }
+
         #endregion
 
         #region Basic Nav
@@ -1226,24 +1328,6 @@ namespace EventTrackerWPF
             RunningImages.Clear();
         }
 
-        private void DynCounterNum_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            SoundIndexer.PlaySoundID("btn_click");
-            var Message = new AlertTextboxMessage()
-            {
-                Title = LocalizationLib.Strings["TID_COPY_TO_SHARE_PROMPT_TITLE"],
-                Description = LocalizationLib.Strings["TID_COPY_TO_SHARE_PROMPT_DESC"],
-
-                TextboxContent = LocalizationLib.Strings["TID_COPY_TO_SHARE_PROMPT_CONTENT_GENERIC"]
-                                                .Replace("<SCORE>", Common.Beautify(Count, Settings.FormatPref)),
-
-                BlueButton = LocalizationLib.Strings["TID_COPY_TO_SHARE_PROMPT_CONFIRM"],
-                BlueButtonFunc = (Be, pis) => { SoundIndexer.PlaySoundID("btn_click"); },
-                BlueButtonCopiesTextboxContent = true
-            };
-            Common.CreateTextboxAlert(Message);
-        }
-
         private void Brawloween2025AnimsStart()
         {
             var Storyboard = (Storyboard)FindResource("BrawloweenTheme");
@@ -1264,9 +1348,6 @@ namespace EventTrackerWPF
             var StoryboardBaseLeftClouds = (Storyboard)Resources["AvD_AngelsTheme_LeftmostClouds"];
             var StoryboardBaseBottomHighClouds = (Storyboard)Resources["AvD_AngelsTheme_BottomHighClouds"];
             var StoryboardIcons = (Storyboard)FindResource("AvD_AngelsTheme_Icons");
-
-            RunningStoryboards.Clear();
-            RunningImages.Clear();
 
             StoryboardIcons.Begin();
             RunningStoryboards.Add(StoryboardIcons);
@@ -1384,6 +1465,92 @@ namespace EventTrackerWPF
                     SwoonImage.Visibility = Visibility.Collapsed;
                     UserInterfaces.Visibility = Visibility.Collapsed;
                 }
+            });
+
+            CutsceneManager.Start();
+        }
+
+        private void ResetDone(bool TrueIfSettingsElseMemory)
+        {
+            // How this works:
+            // 1. User confirms reset
+            // 2. Cutscene flash white then fade to black super fast + sound plays
+            // 3. Trigger the reset payload, then wait like 1 to 2 seconds then restart
+            CutsceneManager.AddEvent(new()
+            {
+                Delay = TimeSpan.Zero,
+                Action = () =>
+                {
+                    SoundIndexer.PlaySoundID("snd_oceanbagel");
+
+                    if (TrueIfSettingsElseMemory)
+                    {
+                        Settings.UseDefaultSettings();
+                        Settings.Save();
+                    }
+                    else
+                    {
+                        SaveSystem.UseDefaultSettings();
+                        SaveSystem.Save();
+                    }
+                }
+            });
+            CutsceneManager.AddEvent(new()
+            {
+                Delay = TimeSpan.Zero,
+                Action = () =>
+                {
+                    SolidColorWhiteFullscreen.Visibility = Visibility.Visible;
+                    SSS_ResetDone.Visibility = Visibility.Visible;
+
+                    GlobalTextFadeOut.Duration = TimeSpan.FromSeconds(0.3);
+                    GlobalTextFadeOut.Begin(SolidColorWhiteFullscreen, true);
+                }
+            });
+            CutsceneManager.AddEvent(new()
+            {
+                Delay = TimeSpan.FromSeconds(1.5),
+                Action = () =>
+                {
+                    Application.Current.Shutdown();
+                    WinForms.Application.Restart();
+                }
+            });
+
+            CutsceneManager.Start();
+        }
+
+        private void CrossingTheBarrierTypeshit()
+        {
+            CutsceneManager.AddEvent(new()
+            {
+                Delay = TimeSpan.Zero,
+                Action = () =>
+                {
+                    SoundIndexer.PlaySoundID("snd_cymbal");
+
+                    SaveSystem.UseDefaultSettings();
+                    SaveSystem.ResetGems();
+                    SaveSystem.Save();
+
+                    Settings.UseDefaultSettings();
+                    Settings.Save();
+                }
+            });
+            CutsceneManager.AddEvent(new()
+            {
+                Delay = TimeSpan.Zero,
+                Action = () =>
+                {
+                    SolidColorWhiteFullscreen.Visibility = Visibility.Visible;
+
+                    GlobalTextFadeIn.Begin(SolidColorWhiteFullscreen, true);
+                }
+            });
+            CutsceneManager.AddEvent(new()
+            {
+                Delay = TimeSpan.FromSeconds(5.5),
+                Action = Application.Current.Shutdown
             });
 
             CutsceneManager.Start();

@@ -126,14 +126,14 @@
     <None Remove="Assets\Toggles OFF.png" />
     <None Remove="Assets\Toggles ON.png" />
     <None Remove="Assets\you_dark_down.png" />
-    <None Remove="background_angel1.png" />
-    <None Remove="Big Textbox Frameslice.png" />
     <None Remove="brawl-icon.ico" />
     <None Remove="Loading Bar Active Frameslice.png" />
     <None Remove="Loading Bar Active Leftslice.png" />
     <None Remove="Loading Bar Active Rightslice.png" />
     <None Remove="Loading Bar Inactive Frameslice.png" />
     <None Remove="Loading Bar Inactive Rightslice.png" />
+    <None Remove="Report20250929-2215.diagsession" />
+    <None Remove="Report20251120-2255.diagsession" />
   </ItemGroup>
 
   <ItemGroup>
@@ -380,7 +380,6 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\you_dark_down.png" />
-    <Resource Include="background_angel1.png" />
     <Resource Include="Assets\BS Star Wings.ico" />
     <Resource Include="Assets\DeterminationMonoWeb.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -388,7 +387,6 @@
     <Resource Include="Assets\LilitaOne-Regular.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Big Textbox Frameslice.png" />
     <Resource Include="BS Star Wings.ico" />
   </ItemGroup>
 
@@ -435,7 +433,13 @@
     <None Update="SFX\menu_go_back_01.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="SFX\snd_cymbal_reverse.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="SFX\snd_egg.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SFX\snd_magicminer.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="SFX\snd_splat.wav">

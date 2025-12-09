@@ -210,12 +210,20 @@ namespace EventTrackerWPF.Librarbies
             }
         }
 
-        public static bool LogResult(double Count)
+        public static bool LogResult(double Count, string EventID)
         {
+            // Looks repetitive but I'm still putting it like this so it's easier to read for now
             var CurrentTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             if (SaveSystem.TrackedResults.Count >= 10)
             {
                 SaveSystem.TrackedResults = SaveSystem.TrackedResults.TakeLast(10).ToDictionary();
+            }
+
+            if (EventID != SaveSystem.CurrentEventID)
+            {
+                SaveSystem.TrackedResults.Clear();
+                SaveSystem.TrackedResults[CurrentTime] = Count;
+                return true;
             }
 
             if (SaveSystem.TrackedResults.Count == 0)
@@ -225,7 +233,7 @@ namespace EventTrackerWPF.Librarbies
             }
             else
             {
-                if (SaveSystem.TrackedResults.Last().Value == Count && SaveSystem.TrackedResults.Last().Key - CurrentTime >= 1800)
+                if (SaveSystem.TrackedResults.Last().Value == Count && CurrentTime - SaveSystem.TrackedResults.Last().Key >= 1800)
                 {
                     SaveSystem.TrackedResults[CurrentTime] = Count;
                     return true;
@@ -362,6 +370,17 @@ namespace EventTrackerWPF.Librarbies
             else
             {
                 return Number.ToString("0.######E0").Replace("∞", LocalizationLib.Strings["TID_INFINITY_SHORT"]);
+            }
+        }
+        public static string BeautifyGemCount(double Number)
+        {
+            if (Number < 1e7 && Number > -1e7)
+            {
+                return Number.ToString("#,##0");
+            }
+            else
+            {
+                return Number.ToString("0.###E0").Replace("∞", LocalizationLib.Strings["TID_INFINITY_SHORT"]);
             }
         }
 
@@ -517,7 +536,7 @@ namespace EventTrackerWPF.Librarbies
                     {
                         EndResult = string.Format
                         ("{0:D1} " + (TimeCount.Days == 1 || TimeCount.Days == -1 ? "<DAY> " : "<DAYS> ") +
-                        (TimeCount.Hours == 0 ? string.Empty : ("{1:D1}" +
+                        (TimeCount.Hours == 0 ? string.Empty : ("{1:D1} " +
                         (TimeCount.Hours == 1 || TimeCount.Hours == -1 ? "<HOUR>" : "<HOURS>"))), TimeCount.Days, TimeCount.Hours);
                     }
                     else if (TimeCount >= TimeSpan.FromHours(1))
@@ -690,9 +709,10 @@ namespace EventTrackerWPF.Librarbies
     {
         public static readonly EventData Data = new()
         {
+            EventID = "mock_data_017",
             HTTPStatusCode = 200,
             FetchStatus = FetchResponse.Success,
-            Progress = 88.2925942216,
+            Progress = 0,
             Milestones =
             [
                 new EventMilestone()
@@ -721,6 +741,7 @@ namespace EventTrackerWPF.Librarbies
 
     public class EventData
     {
+        public string EventID { get; set; } = string.Empty;
         public int HTTPStatusCode { get; set; }
         public FetchResponse FetchStatus { get; set; } = FetchResponse.NotAvailable;
         public double Progress { get; set; } = 0;

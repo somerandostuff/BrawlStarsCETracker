@@ -12,10 +12,10 @@ namespace EventTrackerWPF.Librarbies
         public static FormatPrefs FormatPref { get; set; } = FormatPrefs.None;
         public static ViewModes ViewMode { get; set; } = ViewModes.Simple;
         public static bool ShowMilestoneProgress { get; set; } = false;
-        public static bool SuperSecretSetting { get; set; } = false;
-        public static BackgroundThemes SelectedTheme { get; set; }
+        public static BackgroundThemes SelectedTheme { get; set; } = BackgroundThemes.Default;
         public static bool UseOldIcon { get; set; } = false;
         public static bool EnableAnimations { get; set; } = true;
+        
         //public static Font? MainFontFamily { get; set; }
         //public static Font? AltFontFamily { get; set; }
 
@@ -90,9 +90,11 @@ namespace EventTrackerWPF.Librarbies
             AutoRefresh = false;
             AlternareFont = false;
             FormatPref = FormatPrefs.None;
-            SuperSecretSetting = false;
+            ViewMode = ViewModes.Simple;
             EnableAnimations = true;
-            Lang = "EN";
+            UseOldIcon = false;
+            ShowMilestoneProgress = false;
+            SelectedTheme = BackgroundThemes.Default;
         }
 
         public static void UseDefaultLanguageAndSave()

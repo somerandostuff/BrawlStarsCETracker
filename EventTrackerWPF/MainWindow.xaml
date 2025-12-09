@@ -268,12 +268,12 @@
         </Grid>
         <Grid x:Name="UserInterfaces">
             <Grid x:Name="MainMenuUI" Visibility="Visible">
-                <Grid Visibility="Hidden" x:Name="MoneyUI" VerticalAlignment="Top" HorizontalAlignment="Right" Height="55" Width="170" Margin="0,10,143,0" MouseLeftButtonUp="MoneyUI_MouseLeftButtonUp">
+                <Grid Visibility="Visible" x:Name="MoneyUI" VerticalAlignment="Top" HorizontalAlignment="Right" Height="55" Width="225" Margin="0,10,143,0" MouseLeftButtonUp="MoneyUI_MouseLeftButtonUp">
                     <Image CacheMode="BitmapCache" Source="/Assets/Left Notch Header.png" HorizontalAlignment="Left"/>
                     <Image CacheMode="BitmapCache" Source="/Assets/Right Notch Header.png" HorizontalAlignment="Right"/>
-                    <Image CacheMode="BitmapCache" Source="/Assets/Header.png" HorizontalAlignment="Center" Width="157" Stretch="Fill"/>
-                    <Image CacheMode="BitmapCache"  Source="Assets/Icons/Gem.png" HorizontalAlignment="Left" Margin="-21,0,0,-2" Width="53"/>
-                    <ExtraThings:DrawTextOutlined x:Name="MoneyCount" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="38" Text="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="32,0,4,0"/>
+                    <Image CacheMode="BitmapCache" Source="/Assets/Header.png" HorizontalAlignment="Center" Width="210" Stretch="Fill"/>
+                    <Image CacheMode="BitmapCache"  Source="Assets/Icons/Gem.png" HorizontalAlignment="Left" Margin="-21,0,0,-2" Width="54"/>
+                    <ExtraThings:DrawTextOutlined x:Name="MoneyCount" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="38" Text="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="28,0,2,0"/>
                 </Grid>
                 <Grid x:Name="LogosCorner" HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Height="170" Margin="10,45,0,0" >
                     <ExtraThings:GridButton x:Name="BTN_LogoToggler" MouseLeftButtonUp="BTN_LogoToggler_MouseLeftButtonUp">
@@ -427,7 +427,30 @@
             </Grid>
             <Grid x:Name="SuperSecretSettingsUI" Visibility="Hidden">
                 <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_SUPER_SECRET_SETTINGS_TITLE], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="48" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="60"/>
-                <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_SUPER_SECRET_SETTINGS_DESC], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="48" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <Grid x:Name="SSS_ActualSettings">
+                    <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_SUPER_SECRET_SETTINGS_DESC], Source={x:Static Lib:LocalizationLib.Strings}}" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Margin="0,65,0,0" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="24" StrokeThiccness="2.25" ShadowColor="Black" ShadowOffset="0, 1.5"/>
+
+                    <ExtraThings:GridButton x:Name="BTN_SSS_ResetSettings" Width="315" Height="100" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,270" MouseLeftButtonUp="BTN_SSS_ResetSettings_MouseLeftButtonUp">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Button Yes.png"/>
+                        <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_SUPER_SECRET_SETTINGS_CLEAR_SETUP], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="40" StrokeThiccness="3.5" ShadowColor="Black" ShadowOffset="0, 2.625" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Width="315"/>
+                    </ExtraThings:GridButton>
+                    <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_SUPER_SECRET_SETTINGS_CLEAR_SETUP_DESC], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="28" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.25" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="335,0,20,270"/>
+
+                    <ExtraThings:GridButton x:Name="BTN_SSS_ResetMemory" Width="315" Height="100" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,80,0,0" MouseLeftButtonUp="BTN_SSS_ResetMemory_MouseLeftButtonUp">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Button Yes.png"/>
+                        <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_SUPER_SECRET_SETTINGS_CLEAR_MEMORY], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="40" StrokeThiccness="3.5" ShadowColor="Black" ShadowOffset="0, 2.625" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Width="315"/>
+                    </ExtraThings:GridButton>
+                    <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_SUPER_SECRET_SETTINGS_CLEAR_MEMORY_DESC], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="28" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.25" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="335,80,20,0"/>
+
+
+                    <ExtraThings:GridButton x:Name="BTN_SSS_ResetAll" Width="315" Height="100" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,430,0,0" MouseLeftButtonUp="BTN_SSS_ResetAll_MouseLeftButtonUp">
+                        <Image CacheMode="BitmapCache" Source="/Assets/Button No.png"/>
+                        <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_SUPER_SECRET_SETTINGS_RESET_ALL], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="40" StrokeThiccness="3.5" ShadowColor="Black" ShadowOffset="0, 2.625" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Width="315"/>
+                    </ExtraThings:GridButton>
+                    <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_SUPER_SECRET_SETTINGS_RESET_ALL_DESC], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="28" StrokeThiccness="2.5" ShadowColor="Black" ShadowOffset="0, 2.25" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="335,430,20,0"/>
+
+                </Grid>
+                <ExtraThings:DrawTextOutlined x:Name="RoomManSecretText" Visibility="Hidden" Text="{Binding Path=[TID_SUPER_SECRET_SETTINGS_SECRET_DESC], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="48" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             </Grid>
             <Grid x:Name="SettingsUI" Visibility="Hidden">
                 <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_SETTINGS_TITLE], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="48" StrokeThiccness="4" ShadowColor="Black" ShadowOffset="0, 3" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="60"/>
@@ -706,6 +729,11 @@
                 </Grid>
             </Grid>
             <StackPanel x:Name="DialogBlur" Visibility="Collapsed" Background="Black" Opacity="0.75" IsHitTestVisible="True"/>
+            <Grid x:Name="SSS_ResetDone" Visibility="Collapsed" Background="Black" Opacity="1" IsHitTestVisible="True">
+                <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_SUPER_SECRET_SETTINGS_PROGRAM_RESTARTS], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="108" ShadowColor="Black" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,0,75"/>
+                <ExtraThings:DrawTextOutlined Text="{Binding Path=[TID_SUPER_SECRET_SETTINGS_PROGRAM_RESTARTS_SUBTEXT], Source={x:Static Lib:LocalizationLib.Strings}}" FontFamily="pack://application:,,,/EventTrackerWPF;component/Assets/LilitaOne-Regular.ttf#Lilita One" FontSize="32" ShadowColor="Black" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,75,0,0"/>
+            </Grid>
+            <StackPanel x:Name="SolidColorWhiteFullscreen" Visibility="Collapsed" Background="White" Opacity="1" IsHitTestVisible="True"/>
         </Grid>
     </Grid>
     <Window.Resources>
@@ -784,6 +812,24 @@
                 From="0"
                 To="60"
                 Duration="0:00:15"/>
+        </Storyboard>
+        <Storyboard x:Key="FadeOutForAnything">
+            <DoubleAnimation
+                Storyboard.TargetProperty="Opacity"
+                From="1"
+                To="0"
+                BeginTime="0:00:00"
+                Duration="0:00:00.5"
+                AutoReverse="False"/>
+        </Storyboard>
+        <Storyboard x:Key="FadeInForAnything">
+            <DoubleAnimation
+                Storyboard.TargetProperty="Opacity"
+                From="0"
+                To="1"
+                BeginTime="0:00:00"
+                Duration="0:00:05.25"
+                AutoReverse="False"/>
         </Storyboard>
     </Window.Resources>
 </Window>
