@@ -2,6 +2,8 @@
 using System.Windows.Media;
 using System.Globalization;
 using System.Windows.Documents;
+using System.Text;
+using EventTrackerWPF.Librarbies;
 
 namespace EventTrackerWPF.CustomElements
 {
@@ -21,7 +23,7 @@ namespace EventTrackerWPF.CustomElements
 
         public static readonly DependencyProperty FontFamilyProperty =
             TextElement.FontFamilyProperty.AddOwner(typeof(DrawTextOutlined),
-                new FrameworkPropertyMetadata(new FontFamily("Arial"), FrameworkPropertyMetadataOptions.AffectsRender));
+                new FrameworkPropertyMetadata(new FontFamily("sans-serif"), FrameworkPropertyMetadataOptions.AffectsRender));
 
         public FontFamily FontFamily { get => (FontFamily)GetValue(FontFamilyProperty); set => SetValue(FontFamilyProperty, value); }
 
@@ -90,15 +92,23 @@ namespace EventTrackerWPF.CustomElements
 
             if (string.IsNullOrEmpty(Text)) return;
 
+            var (PlainText, ColorSpans) = ParseTextWithColorTags(Text, Fill);
+
             var FormattedText = new FormattedText(
-                Text,
+                PlainText,
                 CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,
-                new Typeface(FontFamily, FontStyles.Normal, FontWeights.Normal, FontStretches.Normal),
+                new Typeface(FontFamily, FontStyle, FontWeight, FontStretches.Normal),
                 FontSize, Fill,
                 VisualTreeHelper.GetDpi(this).PixelsPerDip);
 
             FormattedText.MaxTextWidth = ActualWidth;
             FormattedText.TextAlignment = HorizontalContentAlignment;
+
+            foreach (var Spanm in ColorSpans)
+            {
+                if (Spanm.Length > 0)
+                    FormattedText.SetForegroundBrush(Spanm.Brush, Spanm.Start, Spanm.Length);
+            }
 
             switch (VerticalContentAlignment)
             {
@@ -136,17 +146,19 @@ namespace EventTrackerWPF.CustomElements
 
             if (Fill != null)
             {
-                DrawingContext.DrawGeometry(Fill, null, Geometry);
+                DrawingContext.DrawText(FormattedText, new Point(X, Y));
             }
         }
 
         protected override Size MeasureOverride(Size AvailableSize)
         {
+            var PlainText = GetPlainText(Text);
+
             if (string.IsNullOrEmpty(Text))
                 return new Size(0, 0);
 
             var FormattedText = new FormattedText(
-                Text,
+                PlainText,
                 CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,
                 new Typeface(FontFamily, FontStyle, FontWeight, FontStretches.Normal),
                 FontSize, Fill,
@@ -165,14 +177,127 @@ namespace EventTrackerWPF.CustomElements
 
         public Size MeasureTextSize()
         {
+            var PlainText = GetPlainText(Text);
+
             var FormattedText = new FormattedText(
-                Text,
+                PlainText,
                 CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,
                 new Typeface(FontFamily, FontStyle, FontWeight, FontStretches.Normal),
                 FontSize, Fill,
                 VisualTreeHelper.GetDpi(this).PixelsPerDip);
 
             return new Size(FormattedText.Width, FormattedText.Height);
+        }
+
+        private static string GetPlainText(string Input)
+        {
+            if (string.IsNullOrEmpty(Input)) return string.Empty;
+            
+            var (PlainText, _) = ParseTextWithColorTags(Input, Brushes.White);
+            return PlainText;
+        }
+
+        private static (string PlainText, List<ColorSpan> Spans) ParseTextWithColorTags(string Input, Brush DefaultBruh)
+        {
+            var StrBuilder = new StringBuilder(Input?.Length ?? 00);
+            var ColorSpans = new List<ColorSpan>();
+
+            if (string.IsNullOrEmpty(Input)) return (string.Empty, ColorSpans);
+
+            int Indx = 0;
+            while (Indx < Input.Length)
+            {
+                if (Input[Indx] == '<' && Indx + 2 < Input.Length && Input[Indx + 1] == 'c')
+                {
+                    int RightBracketIndx = Input.IndexOf('>', Indx + 2);
+                    if (RightBracketIndx == -1)
+                    {
+                        StrBuilder.Append(Input[Indx]);
+                        Indx++;
+                        continue;
+                    }
+                    var ColorToken = Input.Substring(Indx + 2, RightBracketIndx - (Indx + 2)).Trim();
+
+                    int ClosingTagIndx = Input.IndexOf("</c>", RightBracketIndx + 1);
+                    if (ClosingTagIndx == -1)
+                    {
+                        StrBuilder.Append(Input[Indx]);
+                        Indx++;
+                        continue;
+                    }
+
+                    string InnerText = Input.Substring(RightBracketIndx + 1, ClosingTagIndx - (RightBracketIndx + 1));
+                    int StartIndx = StrBuilder.Length;
+                    StrBuilder.Append(InnerText);
+                    int Length = InnerText.Length;
+
+                    Brush Bruh = DefaultBruh;
+                    if (!string.IsNullOrEmpty(ColorToken))
+                    {
+                        if (TryParseBrushFromColorToken(ColorToken, out Brush ParsedBruh))
+                            Bruh = ParsedBruh;
+                    }
+
+                    ColorSpans.Add(new ColorSpan()
+                    {
+                        Start = StartIndx,
+                        Length = Length,
+                        Brush = Bruh
+                    });
+
+                    Indx = ClosingTagIndx + 4;
+                }
+                else
+                {
+                    StrBuilder.Append(Input[Indx]);
+                    Indx++;
+                }
+            }
+
+            return (StrBuilder.ToString(), ColorSpans);
+        }
+
+        private static bool TryParseBrushFromColorToken(string Token, out Brush Brush)
+        {
+            // THIS IS NORMAL OKAY?
+            if (!Token.StartsWith('#'))
+                Token = '#' + Token;
+
+            Brush = new SolidColorBrush(Colors.Black);
+            if (string.IsNullOrWhiteSpace(Token)) return false;
+
+            try
+            {
+                var Converter = new BrushConverter();
+                var Converted = Converter.ConvertFromString(Token);
+                if (Converted is Brush Bruh)
+                {
+                    Brush = Bruh;
+                    if (Brush.CanFreeze) Brush.Freeze();
+                    return true;
+                }
+
+                var ConvertedFallback = ColorConverter.ConvertFromString(Token);
+                if (ConvertedFallback is Color Coler)
+                {
+                    var SolidBruh = new SolidColorBrush(Coler);
+                    SolidBruh.Freeze();
+                    Bruh = SolidBruh;
+                    return true;
+                }
+            }
+            catch
+            {
+                // Don't need anything here.
+            }
+            return false;
+        }
+
+        private struct ColorSpan
+        {
+            public int Start;
+            public int Length;
+            public Brush Brush;
         }
     }
 }

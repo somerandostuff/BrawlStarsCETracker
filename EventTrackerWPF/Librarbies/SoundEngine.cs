@@ -33,6 +33,21 @@ namespace EventTrackerWPF.Librarbies
             AddMixerInput(new AutoDisposeFileReader(Input));
         }
 
+        public void PlaySound(string FileName, uint Gain)
+        {
+            var Input = new AudioFileReader(FileName);
+            var VolumeProvider = new VolumeSampleProvider(new AutoDisposeFileReader(Input)) { Volume = Gain / 100 };
+            AddMixerInput(VolumeProvider);
+        }
+
+        public void PlaySound(string FileName, uint Gain, uint Pitch)
+        {
+            var Input = new AudioFileReader(FileName);
+            var PitchProvider = new SmbPitchShiftingSampleProvider(new AutoDisposeFileReader(Input)) { PitchFactor = Pitch / 100 };
+            var VolumeProvider = new VolumeSampleProvider(PitchProvider) { Volume = Gain / 100 };
+            AddMixerInput(VolumeProvider);
+        }
+
         public void PlaySoundLoop(string Key, string FileName)
         {
             var CachedSound = new CachedSound(FileName);
@@ -40,6 +55,30 @@ namespace EventTrackerWPF.Librarbies
 
             ActiveLoopingSounds[Key] = LoopingProvider;
             AddMixerInput(LoopingProvider);
+        }
+
+        public void PlaySoundLoop(string Key, string FileName, uint Gain)
+        {
+            var CachedSound = new CachedSound(FileName);
+            var LoopingProvider = new LoopingCachedSoundSampleProvider(CachedSound);
+
+            ISampleProvider Provider = new VolumeSampleProvider(LoopingProvider) { Volume = Gain / 100 };
+
+            ActiveLoopingSounds[Key] = Provider;
+            AddMixerInput(Provider);
+        }
+
+        public void PlaySoundLoop(string Key, string FileName, uint Gain, uint Pitch)
+        {
+            var CachedSound = new CachedSound(FileName);
+            var LoopingProvider = new LoopingCachedSoundSampleProvider(CachedSound);
+
+            ISampleProvider Provider = LoopingProvider;
+            Provider = new SmbPitchShiftingSampleProvider(Provider) { PitchFactor = Pitch / 100 };
+            Provider = new VolumeSampleProvider(Provider) { Volume = Gain / 100 };
+
+            ActiveLoopingSounds[Key] = Provider;
+            AddMixerInput(Provider);
         }
 
         public void StopSoundLoop(string Key)

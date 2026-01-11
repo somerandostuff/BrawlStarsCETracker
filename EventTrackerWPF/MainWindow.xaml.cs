@@ -168,8 +168,15 @@ namespace EventTrackerWPF
             Txt_LangName.Text = LocalizationLib.Locales.First(Q => Q.LocaleID == Settings.Lang).LangName ?? string.Empty;
 
             Txt_AboutBuild.Text = Txt_AboutBuild.Text.Replace("<VERSION>", Common.VersionNumber);
-            Txt_EventEndsIn.Text = Txt_EventEndsIn.Text.Replace("<TIME>", Common.FormatTime(FormatPrefs.LongText, TimeSpan.FromSeconds(0)));
             Txt_BuildDate.Text = Txt_BuildDate.Text.Replace("<DATE>", Common.LastUpdatedDate.ToString(LocalizationLib.Strings["TID_DATETIME_NOW_TOSTRING_FORMAT_DATEONLY"], new CultureInfo(LocalizationLib.Strings["TID_CULTUREINFO"])));
+
+            Txt_EventEndsIn.Text = Txt_EventEndsIn.Text.Replace
+                ("<TIME>", Common.FormatTime(
+                    Settings.FormatPref,
+                    TimeSpan.FromSeconds(
+                        Common.EventEndDateInUnixTimeSeconds - DateTimeOffset.UtcNow.ToUnixTimeSeconds() >= 0 ?
+                        Common.EventEndDateInUnixTimeSeconds - DateTimeOffset.UtcNow.ToUnixTimeSeconds() : 0
+                        )));
 
             // InitializeRPC();
         }
@@ -443,6 +450,14 @@ namespace EventTrackerWPF
 
                     AutofetchedSuccessfully = Common.LogResult(Count, Data.EventID);
 
+                    if (AutofetchedSuccessfully && SaveSystem.TrackedResults.Count >= 2)
+                    {
+                        SaveSystem.Gems += (long)Math.Round
+                            (Count / 1e6 * Random.Shared.NextDouble() *
+                            ((SaveSystem.TrackedResults.Count + 1) / 2 +
+                              SaveSystem.Eggs * 6.66));
+                    }
+
                     SaveSystem.EndGoal = EndGoal;
                     SaveSystem.SavedEventScore = Count;
                     SaveSystem.ToNextGoal = RangeAmount;
@@ -493,16 +508,19 @@ namespace EventTrackerWPF
                     }
                 }
 
-                if (Count > EndGoal)
+                if (!(SaveSystem.SavedEventScore == 0 && SaveSystem.ToNextGoal == 0))
                 {
-                    Txt_NextMilestone.Text =
-                        LocalizationLib.Strings["TID_POINTS_TO_NEXT_MILESTONE_ALL_DONE"];
-                }
-                else
-                {
-                    Txt_NextMilestone.Text =
-                        LocalizationLib.Strings["TID_POINTS_TO_NEXT_MILESTONE"]
-                                       .Replace("<POINTS>", Common.Beautify(EndCount - CountDisp, Settings.FormatPref));
+                    if (Count > EndGoal)
+                    {
+                        Txt_NextMilestone.Text =
+                            LocalizationLib.Strings["TID_POINTS_TO_NEXT_MILESTONE_ALL_DONE"];
+                    }
+                    else
+                    {
+                        Txt_NextMilestone.Text =
+                            LocalizationLib.Strings["TID_POINTS_TO_NEXT_MILESTONE"]
+                                           .Replace("<POINTS>", Common.Beautify(EndCount - CountDisp, Settings.FormatPref));
+                    }
                 }
 
                 if (EstimatedCount > 0)
@@ -514,6 +532,9 @@ namespace EventTrackerWPF
                     Txt_ETA.Text = LocalizationLib.Strings["TID_ESTIMATED_TIME"]
                                                     .Replace("<TIME>", Common.FormatTime(Settings.FormatPref, TimeSpan.FromSeconds((EndCount - Count) / EstimatedCount)));
                 }
+
+                if (SaveSystem.Gems > 0 && MoneyUI.Visibility != Visibility.Visible)
+                    MoneyUI.Visibility = Visibility.Visible;
             });
 
             // Man
@@ -523,7 +544,8 @@ namespace EventTrackerWPF
                 {
                     StopAllThemeAnimations();
 
-                    // Leaf animations go here because in DELTARUNE source code Toby used sin/cos to move the leaves
+                    // Leaf animations go here because in DELTARUNE source code,
+                    // Toby used sin/cos to move the leaves,
                     // and these luxuries aren't supported by WPF XAML...
                     if (Settings.EnableAnimations)
                     {
@@ -547,6 +569,13 @@ namespace EventTrackerWPF
             Dispatcher.Invoke(() =>
             {
                 Txt_SystemClock.Text = DateTime.Now.ToString(LocalizationLib.Strings["TID_DATETIME_NOW_TOSTRING_FORMAT_DATEANDTIME"], new CultureInfo(LocalizationLib.Strings["TID_CULTUREINFO"]));
+                Txt_EventEndsIn.Text = LocalizationLib.Strings["TID_EVENT_ENDS_IN"].Replace
+                    ("<TIME>", Common.FormatTime(
+                        Settings.FormatPref,
+                        TimeSpan.FromSeconds(
+                            Common.EventEndDateInUnixTimeSeconds - DateTimeOffset.UtcNow.ToUnixTimeSeconds() >= 0 ?
+                            Common.EventEndDateInUnixTimeSeconds - DateTimeOffset.UtcNow.ToUnixTimeSeconds() : 0
+                            )));
             });
         }
 
@@ -753,17 +782,24 @@ namespace EventTrackerWPF
 
             if (WidthResultView <= 0 || WidthResultView >= ProgressMaxWidth)
             {
+                ProgressBar_FProc.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                ProgressBar_FProc.Visibility = Visibility.Visible;
+            }
+
+            if (WidthResultView <= 0)
+            {
                 ProgressBar_FLeft.Visibility = Visibility.Collapsed;
                 ProgressBar_FMid.Visibility = Visibility.Collapsed;
                 ProgressBar_FRight.Visibility = Visibility.Collapsed;
-                ProgressBar_FProc.Visibility = Visibility.Collapsed;
             }
             else
             {
                 ProgressBar_FLeft.Visibility = Visibility.Visible;
                 ProgressBar_FMid.Visibility = Visibility.Visible;
                 ProgressBar_FRight.Visibility = Visibility.Visible;
-                ProgressBar_FProc.Visibility = Visibility.Visible;
             }
 
             if (ProgressBar_FMid.RenderTransform is not ScaleTransform)
@@ -896,14 +932,17 @@ namespace EventTrackerWPF
         {
             var Message = new AlertMessage()
             {
-                Title = "WOW...",
-                Description = "Unnecessary bloat...",
+                Width = 900,
+                Height = 550,
 
-                RedButton = "Set gem to 0",
-                RedButtonFunc = (Re, set) => { SaveSystem.Gems = 0; SoundIndexer.PlaySoundID("btn_click"); },
+                Title = LocalizationLib.Strings["TID_GEMS_POPUP_TITLE"],
+                Description = LocalizationLib.Strings["TID_GEMS_POPUP_DESC"]
+                                + (SaveSystem.Gems >= 10_000_000 ? 
+                                LocalizationLib.Strings["TID_GEMS_POPUP_DESC2_IF_YOU_HAVE_MORE_THAN_10M_GEMS"]
+                                    .Replace("<COUNT>", Common.Beautify(SaveSystem.Gems, Settings.FormatPref)) : string.Empty),
 
-                BlueButton = "Free gems",
-                BlueButtonFunc = (Ba, lls) => { SaveSystem.Gems += Random.Shared.Next(1, 1000000000); SoundIndexer.PlaySoundID("btn_click"); SaveSystem.Save(); }
+                BlueButton = LocalizationLib.Strings["TID_GEMS_POPUP_OK"],
+                BlueButtonFunc = (Ba, lls) => { SoundIndexer.PlaySoundID("btn_click"); }
             };
 
             SoundIndexer.PlaySoundID("btn_click");
@@ -1028,6 +1067,18 @@ namespace EventTrackerWPF
             {
                 SoundIndexer.PlaySoundID("btn_click");
                 NavigateTo(SuperSecretSettingsUI);
+
+                // Consider yourself lucky if you hit the 1 in 50 BEFORE hitting the 1 in 10
+                if (Random.Shared.Next(0, 10) == 6)
+                {
+                    SSS_ActualSettings.Visibility = Visibility.Hidden;
+                    RoomManSecretText.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    SSS_ActualSettings.Visibility = Visibility.Visible;
+                    RoomManSecretText.Visibility = Visibility.Hidden;
+                }
             }
         }
 
@@ -1503,7 +1554,6 @@ namespace EventTrackerWPF
                     SolidColorWhiteFullscreen.Visibility = Visibility.Visible;
                     SSS_ResetDone.Visibility = Visibility.Visible;
 
-                    GlobalTextFadeOut.Duration = TimeSpan.FromSeconds(0.3);
                     GlobalTextFadeOut.Begin(SolidColorWhiteFullscreen, true);
                 }
             });
@@ -1565,6 +1615,10 @@ namespace EventTrackerWPF
                 GoBack();
                 SoundIndexer.PlaySoundID("btn_go_back");
                 return;
+            }
+            if (e.Key == Key.Y)
+            {
+                Common.CreateFontSelectWindow();
             }
         }
     }

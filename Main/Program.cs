@@ -13,7 +13,7 @@ namespace Main
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
-            Application.Run(new MortisTheMortalForm());
+            Application.Run(new MainForm());
         }
     }
 }

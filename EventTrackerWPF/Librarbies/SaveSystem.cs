@@ -116,7 +116,7 @@ namespace EventTrackerWPF.Librarbies
 
         public static void ResetGems()
         {
-            Gems = 10;
+            Gems = 0;
         }
 
         private static string DictionaryToText(Dictionary<long, double> Dict)

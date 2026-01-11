@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:EventTrackerWPF"
         xmlns:CustomElements="clr-namespace:EventTrackerWPF.CustomElements"
         mc:Ignorable="d"
-        Title="FontSelectWindow" Height="600" Width="1080" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" Background="#00FFFFFF">
+        Title="FontSelectWindow" Height="600" Width="1080" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" Background="#00FFFFFF" Loaded="Window_Loaded">
     <Grid x:Name="MainGrid">
         <Grid x:Name="AlertWindowTopBar" VerticalAlignment="Top" Height="100">
             <Grid x:Name="AlertWindowTopBarContent" MouseLeftButtonDown="AlertWindowTopBar_MouseLeftButtonDown"  Margin="0,0,15,0">
@@ -25,17 +25,9 @@
                 <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Assets/Popup Window Middle Center.png" Stretch="Fill" Margin="13,0,3,0"/>
                 <Image HorizontalAlignment="Left" VerticalAlignment="Center" Width="13.2" Source="/Assets/Popup Window Left Center.png" Stretch="Fill"/>
                 <Image HorizontalAlignment="Right" VerticalAlignment="Center" Width="13.2" Source="/Assets/Popup Window Right Center.png" Stretch="Fill" Margin="0,0,-9.2,0"/>
-                <ComboBox HorizontalAlignment="Left" Margin="83,94,0,0" VerticalAlignment="Top" Width="315" Height="69">
-                    <ComboBox.Background>
-                        <ImageBrush ImageSource="/Assets/Textbox Area Frameslice.png"/>
-                    </ComboBox.Background>
-                    <ComboBoxItem Content="ComboBoxItem"/>
-                    <ComboBoxItem Content="ComboBoxItem2"/>
-                    <ComboBoxItem Content="ComboBoxItem3"/>
-                    <ComboBoxItem Content="ComboBoxItem4"/>
-                    <ComboBoxItem Content="ComboBoxItem5"/>
-                    <ComboBoxItem Content="ComboBoxItem6"/>
-                </ComboBox>
+                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+                    
+                </ScrollViewer>
             </Grid>
         </Grid>
 

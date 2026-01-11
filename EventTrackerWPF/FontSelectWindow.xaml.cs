@@ -1,16 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Windows;
+using System.Windows.Input;
 
 namespace EventTrackerWPF
 {
@@ -19,6 +11,8 @@ namespace EventTrackerWPF
     /// </summary>
     public partial class FontSelectWindow : Window
     {
+        private List<string> FontNames = new List<string>();
+
         public FontSelectWindow()
         {
             InitializeComponent();
@@ -26,16 +20,18 @@ namespace EventTrackerWPF
 
         private void AlertWindowTopBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            DragMove();
+            // DragMove();
         }
 
         private void BTN_Cancel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            MainWindow.SoundIndexer.PlaySoundID("btn_click");
             Close();
         }
 
         private void BTN_OK_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            MainWindow.SoundIndexer.PlaySoundID("btn_click");
             Close();
         }
 
@@ -48,6 +44,15 @@ namespace EventTrackerWPF
         private void BTN_SingleOK_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             Close();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var SystemFonts = Fonts.SystemFontFamilies;
+            foreach (FontFamily Font in SystemFonts)
+            {
+                FontNames.Add(Font.Source);
+            }
         }
     }
 }

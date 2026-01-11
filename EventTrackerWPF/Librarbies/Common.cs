@@ -149,9 +149,29 @@ namespace EventTrackerWPF.Librarbies
             }
 
         }
+        public static void CreateFontSelectWindow()
+        {
+            var FontWindow = new FontSelectWindow();
+            var MainWin = Application.Current?.Windows.OfType<MainWindow>().FirstOrDefault();
+            if (MainWin != null)
+            {
+                FontWindow.Owner = MainWin;
+                FontWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            }
+            ShowDialogBlur();
+            try
+            {
+                FontWindow.ShowDialog();
+            }
+            finally
+            {
+                HideDialogBlur();
+            }
+        }
 
         public const string VersionNumber = "1.1.0";
-        public static long LastUpdatedDateInUnixTimeSeconds = 1764166163;
+        public static long LastUpdatedDateInUnixTimeSeconds = 1765293751;
+        public static long EventEndDateInUnixTimeSeconds = 1767885751;
         public static DateTimeOffset LastUpdatedDate = DateTimeOffset.FromUnixTimeSeconds(LastUpdatedDateInUnixTimeSeconds);
 
         private static readonly DiscordRpcClient DiscordClient = new DiscordRpcClient(DiscordClientID);
@@ -709,7 +729,7 @@ namespace EventTrackerWPF.Librarbies
     {
         public static readonly EventData Data = new()
         {
-            EventID = "mock_data_017",
+            EventID = "mock_data_04",
             HTTPStatusCode = 200,
             FetchStatus = FetchResponse.Success,
             Progress = 0,

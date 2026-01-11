@@ -44,16 +44,14 @@ namespace EventTrackerWPF.CustomElements
 
         private void UpdateVisuals()
         {
-            if (IsEnabled) Opacity = 1;
-            else Opacity = .5;
+            Opacity = IsEnabled ? 1 : .5;
         }
 
         private void AnimateButtonPress(double Scale)
         {
             foreach (UIElement ChildElem in Children)
             {
-                var Transform = ChildElem.RenderTransform as ScaleTransform;
-                if (Transform == null)
+                if (ChildElem.RenderTransform is not ScaleTransform Transform)
                 {
                     Transform = new ScaleTransform(1, 1);
                     ChildElem.RenderTransform = Transform;
@@ -72,8 +70,7 @@ namespace EventTrackerWPF.CustomElements
         {
             foreach (UIElement ChildElem in Children)
             {
-                var Transform = ChildElem.RenderTransform as ScaleTransform;
-                if (Transform == null)
+                if (ChildElem.RenderTransform is not ScaleTransform Transform)
                 {
                     Transform = new ScaleTransform(1, 1);
                     ChildElem.RenderTransform = Transform;
